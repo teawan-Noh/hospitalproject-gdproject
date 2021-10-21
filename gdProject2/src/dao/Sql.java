@@ -47,26 +47,23 @@ public class Sql {
 			+ "from notice n inner join manager m on n.mcode = m.mcode "
 			+ "where n.title like ? or n.content like ? order by n.ncode desc";
 	
+	//공지사항 조회수
+	public static final String NOTICE_CNT_SQL =
+			"update notice set cnt = cnt+1 where ncode=?";
+	
 	//공지사항 게시글 작성
 	public static final String NOTICE_INSERT_SQL =
 			"insert into notice values (ncode.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), 0)";
-	
-	//게시글 작성 파일 업로드
-	public static final String NOTICE_INSERT_FILE_SQL =
-			"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
 	
 	//게시글 상세보기
 	public static final String NOTICE_SELECT_BY_NCODE_SQL =
 			"select n.title, m.name, n.writedate, n.cnt, n.content "
 			+ "from notice n inner join manager m on n.mcode = m.mcode where ncode = ?";
 	
-	//게시글 상세보기 파일
-		public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
-				"select name from files where ncode = ?";
-	
 	//공지사항 게시글 수정
 	public static final String NOTICE_UPDATE_SQL =
 			"update notice set title =?, content =? where ncode =?";
+	
 	
 	//게시글 파일 수정
 	public static final String NOTICE_UPDATE_FILE_SQL =
@@ -75,4 +72,18 @@ public class Sql {
 	//공지사항 게시글 삭제
 	public static final String NOTICE_DELETE_SQL =
 			"delete from notice where ncode = ?";
+	
+	//공지사항 파일 삭제
+	public static final String NOTICE_DELETE_FILE_SQL =
+			"delete from files where ncode = ?";
+	
+	//게시글 작성 파일 업로드
+		public static final String NOTICE_INSERT_FILE_SQL =
+				"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
+
+	//게시글 상세보기 파일
+		public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
+				"select name from files where ncode = ?";
+
+
 }
