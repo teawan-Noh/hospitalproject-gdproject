@@ -1,6 +1,6 @@
 package model;
 
-public class qna {
+public class Qna {
 	private int qno;
 	private int pcode;
 	private String title;
@@ -9,9 +9,9 @@ public class qna {
 	private String img;
 	private int cnt;
 	
-	public qna() {}
+	public Qna() {}
 	
-	public qna(int qno, int pcode, String title, String content, String writedate, String img, int cnt) {
+	public Qna(int qno, int pcode, String title, String content, String writedate, String img, int cnt) {
 		super();
 		this.qno = qno;
 		this.pcode = pcode;

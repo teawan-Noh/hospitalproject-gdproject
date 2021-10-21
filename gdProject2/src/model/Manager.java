@@ -1,14 +1,14 @@
 package model;
 
-public class manager {
+public class Manager {
 	private int mcode;
 	private String name;
 	private String id;
 	private String pw;
 	
-	public manager() {}
+	public Manager() {}
 	
-	public manager(int mcode, String name, String id, String pw) {
+	public Manager(int mcode, String name, String id, String pw) {
 		super();
 		this.mcode = mcode;
 		this.name = name;
