@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="CSS/reset.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- 다음 우편번호 api-->
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/gdProject2/js/post.js"></script>
 </head>
 <body>
     <div class="container">
