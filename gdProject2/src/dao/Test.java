@@ -1,5 +1,5 @@
 package dao;
 
 public class Test {
-	//주석
+	//한글테스트
 }
