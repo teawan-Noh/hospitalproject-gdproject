@@ -29,7 +29,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .flex {
                 display: flex;
                 justify-content: space-around;
-                aligne-items: center;
+
             }
             .flex-vertical {
                 display: flex;
@@ -51,9 +51,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             ul li {
                 display: inline-block;
             }
-            #member-menu li{
-            	font-size: 16px;
-            	padding-top: 10px;
+            #member-menu li {
+                font-size: 16px;
+                padding-top: 10px;
             }
             #nav-menu li {
                 font-size: 24px;
@@ -82,8 +82,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <body>
         <div class="header">
             <div class="left">
-            <a href="/gdProject2"><div id="logo"></div></a>
-        </div>
+                <a href="/gdProject2"><div id="logo"></div></a>
+            </div>
             <div class="flex-vertical right">
                 <ul id="member-menu">
                     <li>로그인</li>

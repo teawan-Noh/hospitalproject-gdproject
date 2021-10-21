@@ -72,9 +72,9 @@ public class ReservationDaoImpl implements ReservationDao {
 						0,
 						null,
 						null,
-						resultSet.getString("career"),
-						resultSet.getString("tel"),
-						resultSet.getString("email")
+						null,
+						null,
+						null
 						);
 
 			
@@ -90,6 +90,49 @@ public class ReservationDaoImpl implements ReservationDao {
 			
 		}
 		return doctorList;
+	}
+
+	@Override
+	public Doctor selectDoctorByDcode(int dcode) {
+		Doctor doctor = null;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_DCODE_SQL);
+			pStatement.setInt(1, dcode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				doctor = new Doctor(
+						resultSet.getInt("dcode"),
+						resultSet.getInt("scode"),
+						null,
+						null,
+						resultSet.getString("name"),
+						null,
+						0,
+						0,
+						null,
+						null,
+						resultSet.getString("career"),
+						resultSet.getString("tel"),
+						resultSet.getString("email")
+						);
+
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return doctor;
 	}
 	
 }

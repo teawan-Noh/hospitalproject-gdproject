@@ -8,4 +8,5 @@ import model.Subject;
 public interface ReservationDao {
 	List<Subject> selectSubjectAll();
 	List<Doctor> selectDoctorWithSubject(String subjectName);
+	Doctor selectDoctorByDcode(int dcode);
 }

@@ -26,8 +26,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 margin: 50px;
             }
             .select {
-                border: 1px solid black;
+                border: 1px solid #468c91;
                 padding: 25px;
+                margin: 25px 0;
             }
             .card-list {
                 max-width: 800px;
@@ -40,37 +41,132 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 display: block;
                 font-size: 24px;
                 border: 1px solid #468c91;
-                border-radius: 10px;
-                padding: 20px 40px;
+                border-radius: 5px;
+                padding: 10px 40px;
                 margin: 10px;
                 color: #468c91;
             }
-            .card-box:hover {
+
+            .card-box.doctor {
+                display: block;
+                font-size: 24px;
+                border: 1px solid #468c91;
+                border-radius: 5px;
+                padding: 10px 0 0 0;
+                margin: 10px;
+                color: #468c91;
+            }
+            .card-box.doctor .flex {
+                margin: 0 40px;
+            }
+
+            .card-box:hover,
+            .card-box.active {
                 background-color: #468c91;
                 color: white;
+            }
+            .doctor-img {
+                background-image: url("img/doctor-img.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                filter: opacity(0.5) drop-shadow(0 0 0 #468c91);
+                margin: 25px 20px 25px 0;
+                width: 100px;
+                height: 100px;
+            }
+
+            .card-box button {
+                width: 100%;
+                background-color: #468c91;
+                color: white;
+                text-align: center;
+            }
+            .card-box:hover button {
+                background-color: white;
+                color: #468c91;
+            }
+            .doctor-name {
+                margin-top: 25px;
+            }
+            .doctor-subject {
+                font-size: 16px;
+            }
+            .doctor-code {
+                display: none;
             }
         </style>
         <script>
             $(function () {
-            	function XMLToString(oXML) {
-           		 
-            	    //code for IE
-            	    if (window.ActiveXObject) {
-            	        var oString = oXML.xml;
-            	        return oString;
-            	    }
-            	    // code for Chrome, Safari, Firefox, Opera, etc.
-            	    else {
-            	        return (new XMLSerializer()).serializeToString(oXML);
-            	    }
-            	}
-                var url = "subject-doctor";
+            	let subject = "";
+            	let dcode = "";
+                function XMLToString(oXML) {
+                    //code for IE
+                    if (window.ActiveXObject) {
+                        var oString = oXML.xml;
+                        return oString;
+                    }
+                    // code for Chrome, Safari, Firefox, Opera, etc.
+                    else {
+                        return new XMLSerializer().serializeToString(oXML);
+                    }
+                }
+		
                 $(".subject").click(function () {
-                    console.log($(this).text());
-                    $.get(url, { subject: $(this).text() }, function (data) {
-                    	console.log(XMLToString(data));
-                    	
-                    });
+                    $(".doctors")
+                        .children()
+                        .each(function (idx, item) {
+                            $(item).remove();
+                        });
+
+                    if ($(this).hasClass("active")) {
+                        $(this).removeClass("active");
+                        subject = "";
+                        dcode = "";
+                    } else {
+                        $(".subject").each(function (idx, item) {
+                            $(item).removeClass("active");
+                        });
+                        $(this).addClass("active");
+                        console.log($(this).text());
+                        let url = "subject-doctor";
+                        $.get(
+                            url,
+                            { subject: $(this).text() },
+                            function (data) {
+                                subject = $(data).find("subject").text();
+                                $(data)
+                                    .find("doctor")
+                                    .each(function (idx, item) {
+                                        $(".doctors").append(
+                                            '<li class="card-box doctor"><div class="flex"><div class="doctor-img">' +
+                                                "</div><div class='doctor-profile'><p class='doctor-name'>" +
+                                                $(item).find("name").text() +
+                                                "</p><p class='doctor-code'>" +
+                                                $(item).find("dcode").text() +
+                                                "</p><p class='doctor-subject'>" +
+                                                subject +
+                                                "</p></div></div>" +
+                                                "<button class='doctor-detail'>상세보기</button>" +
+                                                "</li>"
+                                        );
+                                    });
+                            }
+                        );
+                    }
+                });
+
+                $(document).on("click", ".doctor-detail", function () {
+                    //let url = "schedules";
+                    var dcode = $(this)
+                        .parent(".card-box")
+                        .children(".flex")
+                        .children(".doctor-profile")
+                        .children(".doctor-code")
+                        .text();
+                    console.log(dcode);
+                    //$.get(url, { dcode: dcode }, function (data) {});
+                    location.href = "doctor-detail?subject=" + subject + "&dcode=" + dcode;
                 });
             });
         </script>
@@ -78,7 +174,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <body>
         <jsp:include page="../components/header.jsp"></jsp:include>
         <div class="flex container-box">
-            <jsp:include page="../components/sidemenu.jsp"></jsp:include>
+            <jsp:include page="../components/sidemenu.jsp">
+            	<jsp:param name="side" value="${side}"/>
+            </jsp:include>
             <div class="content">
                 <ul>
                     <li>예약</li>
@@ -95,6 +193,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
                 <div class="select">
                     <h2>의료진 선택</h2>
+                    <ul class="card-list doctors"></ul>
                 </div>
                 <div class="select">
                     <h2>예약 날짜 선택</h2>

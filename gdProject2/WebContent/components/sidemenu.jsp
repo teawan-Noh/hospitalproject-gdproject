@@ -54,14 +54,26 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
     <body>
         <div class="side-bar">
-            <div class="flex side-title">
-                <h1>예약</h1>
-                <div id="side-img"></div>
-            </div>
-            <ul id="side-ul">
-                <li class="side-list">예약하기</li>
-                <li class="side-list">예약조회</li>
-            </ul>
+        	<c:if test="${side == 'reservation'}">
+	            <div class="flex side-title">
+	                <h1>예약</h1>
+	                <div id="side-img"></div>
+	            </div>
+	            <ul id="side-ul">
+	                <li class="side-list">예약하기</li>
+	                <li class="side-list">예약조회</li>
+	            </ul>
+            </c:if>
+            <c:if test="${side == 'doctor'}">
+            	<div class="flex side-title">
+	                <h1>의료진</h1>
+	                <div id="side-img"></div>
+	            </div>
+	            <ul id="side-ul">
+	                <li class="side-list">의료진 목록조회</li>
+	            </ul>
+            </c:if>
+
         </div>
     </body>
 </html>
