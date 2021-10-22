@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"
+uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,11 +65,24 @@ $(function(){
 		
 	});
 	
+	
+	
+	
 	//비밀번호 일치여부 판단
 	$("input[name='pwChk']").focusout(function(){
 		var pw_value = $("input[name='pw']").val();
 		var pwChk_value = $("input[name='pwChk']").val();
 		
+		//비밀번호 유효성 검사
+		var regulPw = /^[a-zA-Z0-9]{8,20}$/;
+		var regResult = regulPw.test(pw_value);
+		
+		if(!regResult){
+			alert("영어 대소문자,숫자만 가능하며, 8자리에서 20자리 사이로 입력해주세요.");
+			$("input[name='pw']").focus();
+		}
+		
+		//일치여부
 		if(pw_value != pwChk_value){
 			$("#pwChkSpan").html("일치하지 않습니다.");
 			$("#pwChkSpan").css({"color":"tomato"});
@@ -76,14 +91,139 @@ $(function(){
 			$("#pwChkSpan").html("일치합니다.");
 			$("#pwChkSpan").css({"color":"blue"});
 		}
+		
+		if(!pw_value){
+			alert("비밀번호를 입력해주세요.")
+			$("#pwChkSpan").html("");
+			return false;
+		}
+		
+		if(!pwChk_value){
+			alert("비밀번호 확인을 입력해주세요.")
+			$("#pwChkSpan").html("");
+			return false;
+		}
 	});
+	
+	//회원가입 버튼을 눌렀을때 나머지 유효성 검사
+	$("#join").click(function(){
+		
+		//아이디
+		var id_value = $("input[name='id']").val();
+		
+		if(!id_value){
+			alert("아이디를 입력해주세요.")
+			$("input[name='id']").focus();
+			return false;
+		}
+		
+		//비밀번호
+		var pw_value = $("input[name='pw']").val();
+		
+		if(!pw_value){
+			alert("비밀번호를 입력해주세요.")
+			$("input[name='pw']").focus();
+			return false;
+		}
+		
+		//비밀번호 확인
+		var pwChk_value = $("input[name='pwChk']").val();
+		
+		if(!pwChk_value){
+			alert("비밀번호 확인을 입력해주세요.")
+			$("input[name='pwChk']").focus();
+			return false;
+		}
+		
+		//닉네임
+		var nick_value = $("input[name='nickName']").val();
+		
+		if(!nick_value){
+			alert("닉네임을 입력해주세요.");
+			$("input[name='nickName']").focus();
+			return false;
+		}
+		
+		//이름
+		var name_value = $("input[name='name']").val();
+		
+		if(!name_value){
+			alert("이름을 입력해주세요.");
+			$("input[name='name']").focus();
+			return false;
+		}
+		
+		
+		//연락처
+		var tel_value = $("input[name='tel']").val();
+		
+		if(!tel_value){
+			alert("연락처를 입력해주세요.");
+			$("input[name='tel']").focus();
+			return false;
+		}
+		
+		//성별
+		var radio_checked = $("input:radio[name='gender']").is(":checked");
+		if(!radio_checked){
+			alert("성별을 선택해주세요.");
+			return false;
+		}
+		
+		//이메일
+		var email_value = $("input[name='email']").val();
+		
+		if(!email_value){
+			alert("이메일을 입력해주세요.");
+			$("input[name='email']").focus();
+			return false;
+		}
+		
+		//생년월일
+		var birth_value = $("input[name='birth']").val();
+		
+		if(!birth_value){
+			alert("생년월일을 입력해주세요.");
+			return false;
+		}
+		
+		//우편번호
+		var postcode_value = $("input[name='postcode']").val();
+		
+		if(!postcode_value){
+			alert("우편번호를 입력해주세요.");
+			$("input[name='postcode']").focus();
+			return false;
+		}
+		
+		//주소
+		var address_value = $("input[name='address']").val();
+		
+		if(!address_value){
+			alert("주소를 입력해주세요.");
+			$("input[name='address']").focus();
+			return false;
+		}
+		
+		//상세주소
+		var address2_value = $("input[name='address2']").val();
+		
+		if(!address2_value){
+			alert("상세주소를 입력해주세요.");
+			$("input[name='address2']").focus();
+			return false;
+		}
+		
+	});
+	
+	
 	
 });
 </script>
 </head>
 <body>
     <div class="container">
-    <header></header>
+    <header><jsp:include page="/components/header.jsp"></jsp:include></header>
     <div id="main" class="join">
         <div class="border">
             <section id="title" class="join_title">
@@ -102,6 +242,7 @@ $(function(){
 
                     <div class="mb-3">
                         <label for="pw" class="form-label smallTitle">비밀번호</label>
+                        <span class="chkResult" id="pwSpan"></span>
                         <label for="pwChk" class="form-label smallTitle" id="pwChkLabel">비밀번호 확인</label>
                         <span class="chkResult" id="pwChkSpan"></span><br>
                         <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" class="form-control">
@@ -117,14 +258,14 @@ $(function(){
 
                     <div class="mb-3">
                         <label for="tel" class="form-label smallTitle">연락처</label>
-                        <label for="radio" class="form-label smallTitle" id="genderLabel">성별</label><br>
+                        <label for="male" class="form-label smallTitle" id="genderLabel">성별</label><br>
 
-                        <input type="text" class="form-control" id="tel" placeholder="-을 빼고 입력해주세요">
+                        <input type="text" class="form-control" id="tel" name="tel" placeholder="예시) 010-0000-0000" >
 
                         <span id="radios">
-                            <input type="radio" id="radio" class="radio">남자
-                            <input type="radio" class="radio">여자
-                            <input type="radio" class="radio">기타
+                            <input type="radio" name="gender" class="radio" id="male" value="male">남자
+                            <input type="radio" name="gender" class="radio" id="female" value="female">여자
+                            <input type="radio" name="gender" class="radio" id="other" value="other">기타
                         </span>
                         
                     </div>
@@ -141,10 +282,10 @@ $(function(){
                         <input type="text" id="sample6_postcode" placeholder="우편번호" name="postcode" class="form-control">
                         <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" id="postcodeBtn"><br>
                         <input type="text" id="sample6_address" placeholder="주소" name="address" class="form-control">
-                        <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="addressDetail" class="form-control"><br>
+                        <input type="text" id="sample6_detailAddress" placeholder="상세주소" name="address2" class="form-control"><br>
                     </div>
                     <input type="submit" value="회원가입" id="join" name="join"/>
-                    <button type="button" id="cancle">취소</button>
+                    <button type="button" onclick="location.href='index.jsp'" id="cancle">취소</button>
                 </form>
                
             </section>
@@ -152,7 +293,7 @@ $(function(){
         </div>
 
     </div>
-    <footer></footer>
+    <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
    </div>
 </body>
 </html>

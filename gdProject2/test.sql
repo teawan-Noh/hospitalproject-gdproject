@@ -627,10 +627,6 @@ SELECT TABLE_NAME, CONSTRAINT_NAME
 FROM USER_CONSTRAINTS 
 WHERE TABLE_NAME = 'REST';
 
-alter table qna drop constraint fk_patient_to_qna;
-alter table qna add constraint fk_patient_to_qna
-foreign key (pcode) references qna(pcode) on delete cascade;
-
 alter table qna drop constraint FK_patient_TO_qna;
 alter table qna add constraint FK_patient_TO_qna 
 foreign key (pcode) references patient(pcode) on delete cascade;
@@ -646,10 +642,6 @@ foreign key (dcode) references doctor(dcode) on delete cascade;
 alter table comments drop constraint FK_qna_TO_comments;
 alter table comments add constraint FK_qna_TO_comments 
 foreign key (qno) references qna(qno) on delete cascade;
-
-alter table APPROVAL drop constraint FK_doctor_TO_approval;
-alter table APPROVAL add constraint FK_doctor_TO_approval 
-foreign key (dcode) references doctor(dcode) on delete cascade;
 
 alter table APPROVAL drop constraint FK_doctor_TO_approval;
 alter table APPROVAL add constraint FK_doctor_TO_approval 
