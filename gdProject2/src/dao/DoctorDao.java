@@ -2,10 +2,10 @@ package dao;
 
 import java.util.List;
 
-import model.subject;
+import model.Subject;
 
 
 
 public interface DoctorDao {
-	List<subject> selectSubjectAll();
+	List<Subject> selectSubjectAll();
 }

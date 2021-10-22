@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <link href = "css/main.css" rel = "stylesheet" type = "text/css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main"> 
