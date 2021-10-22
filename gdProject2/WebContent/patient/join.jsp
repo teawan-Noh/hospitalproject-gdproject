@@ -46,9 +46,6 @@ $(function(){
 			return false;
 		}
 		
-		
-		
-		
 		//ajax
 		var url = "idcheck";
 		
@@ -58,11 +55,27 @@ $(function(){
 			
 			if(result){
 				$("#idChk").html("사용가능한 아이디입니다.");
+				$("#idChk").css({"color":"blue"});
 			}else{
 				$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
 			}
 		});
 		
+	});
+	
+	//비밀번호 일치여부 판단
+	$("input[name='pwChk']").focusout(function(){
+		var pw_value = $("input[name='pw']").val();
+		var pwChk_value = $("input[name='pwChk']").val();
+		
+		if(pw_value != pwChk_value){
+			$("#pwChkSpan").html("일치하지 않습니다.");
+			$("#pwChkSpan").css({"color":"tomato"});
+			return false;
+		}else if(pw_value == pwChk_value){
+			$("#pwChkSpan").html("일치합니다.");
+			$("#pwChkSpan").css({"color":"blue"});
+		}
 	});
 	
 });
@@ -90,9 +103,9 @@ $(function(){
                     <div class="mb-3">
                         <label for="pw" class="form-label smallTitle">비밀번호</label>
                         <label for="pwChk" class="form-label smallTitle" id="pwChkLabel">비밀번호 확인</label>
-                        <span class="chkResult">일치하지않습니다.</span><br>
+                        <span class="chkResult" id="pwChkSpan"></span><br>
                         <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" class="form-control">
-                        <input type="text" name="pwChk" id="pwChk" placeholder="비밀번호를 한번 더 입력하세요" class="form-control">
+                        <input type="password" name="pwChk" id="pwChk" placeholder="비밀번호를 한번 더 입력하세요" class="form-control">
                     </div>
 
                     <div class="mb-3">
