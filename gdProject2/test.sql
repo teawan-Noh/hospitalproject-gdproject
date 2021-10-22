@@ -12,7 +12,7 @@ insert into subject values(subject_seq.nextval, '이비인후과', '염증과 관련된 급,
 insert into subject values(subject_seq.nextval, '정형외과', '사지와 척추에 있는 뼈와 관절 및 근육, 인대, 신경, 혈관 등 주위 조직에 대해서 연구하고, 질환과 외상을 진단하고 치료하는 분야입니다.', '031-123-4567');
 insert into subject values(subject_seq.nextval, '피부과', '피부과는 피부 질환으로 고통 받는 많은 환자들을 위해 진료를 제공하고 있습니다. 각 전문과의 우수한 의료진과 첨단의 의료장비를 갖추었으며 우수한 전문의료인을 양성합니다.', '031-123-4568');
 insert into subject values(subject_seq.nextval, '흉부외과', '흉부외과는 크게 심장외과와 폐,식도외과로 나누어져 있으며, 정확한 진단 및 치료를 시행하며, 최상의 서비스를 제공하기 위해 모든 의료진이 최선을 다하고 있습니다.', '031-123-4569');
-=======
+
 /*
 drop table patient cascade constraints;
 drop table qna cascade constraints;
@@ -675,4 +675,3 @@ alter table rest add constraint FK_APPROVAL_TO_REST
 foreign key (acode) references approval(acode) on delete cascade;
 
 delete from patient where pcode=1;
-

@@ -61,7 +61,6 @@
 <script>
 var myIndex = 0;
 carousel();
-
 function carousel() {
   var i;
   var x = document.getElementsByClassName("mySlides");
@@ -77,3 +76,4 @@ function carousel() {
 <jsp:include page="components/footer.jsp"></jsp:include>
 </body>
 </html>
+

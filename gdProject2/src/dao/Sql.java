@@ -28,7 +28,7 @@ public class Sql {
 	public static final String APPROVAL_INSERT_SQL = "insert into approval values (?, ?, sysdate, ?, ?)"; 
 	public static final String DOCTOR_RESERVATION_SELECT_SQL = "SELECT b.rcode, b.rsvdate, a.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode WHERE c.dcode = ? and to_char(b.rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') order by b.rsvdate asc";
 
-	
+
 	//odw
 	//회원가입
 	public static final String PATIENT_INSERT_SQL = 
@@ -36,7 +36,6 @@ public class Sql {
 	//회원가입-아이디중복확인
 		public static final String PATIENT_SELECT_CNT_BY_ID_SQL =
 	         "select count(*) as cnt from patient where id = ?";
-
 	//환자 로그인
 	public static final String PATIENT_LOGIN_SQL =
 				"select id, pw from patient where id =? and pw = ?";
