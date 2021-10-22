@@ -40,10 +40,8 @@ public class PatientController extends HttpServlet{
 			
 		}else if(action.equals("idcheck")) {
 			String id = req.getParameter("id_value");
-			System.out.println(id);
 			PatientDao dao = new PatientDaoImpl();
 			int cnt = dao.selectCntById(id);
-			System.out.println(cnt);
 			
 			if(cnt>0) {
 				req.setAttribute("useTF", false);

@@ -36,6 +36,20 @@ $(function(){
 			return false;
 		}
 		
+		//아이디 유효성 검사
+		var regulId = /^[a-zA-Z0-9]{4,20}$/;
+		
+		var regResult = regulId.test(id_value);
+		if(!regResult){
+			alert("영어 대소문자,숫자만 가능하며, 4자리에서 20자리 사이로 입력해주세요.");
+			$("#idChk").html("다시 입력해주세요.");
+			return false;
+		}
+		
+		
+		
+		
+		//ajax
 		var url = "idcheck";
 		
 		$.get(url,{"id_value":id_value},function(data){
@@ -48,7 +62,6 @@ $(function(){
 				$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
 			}
 		});
-		
 		
 	});
 	
