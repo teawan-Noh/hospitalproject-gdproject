@@ -1,0 +1,14 @@
+select * from subject order by name asc;
+delete from subject;
+drop sequence subject_seq;
+create sequence subject_seq;
+insert into subject values(subject_seq.nextval, '감염내과', '감염내과는 각종 미생물에 의한 감염병은 물론 원인을 모르는 열병(불명열) 환자, 에이즈, 결핵 환자 등을 진료하고 있습니다. 미생물에 의해 발생하는 모든 감염질환을 진단하고 치료하는 진료과입니다', '031-123-4560');
+insert into subject values(subject_seq.nextval, '내분비대사내과', '내분비-대사 내과에서는 신체의 각종 내분비 기관에서 분비되어 나오는 호르몬의 이상이나 호르몬 분비 장기 또는 표적 장기의 각종 질병들을 진단 치료합니다.', '031-123-4561');
+insert into subject values(subject_seq.nextval, '알레르기내과', '알레르기내과에서는 외부 물질에 대한 면역반응이 지나쳐서 과민반응을 일으키는 질환들을 진료하고 연구하는, 내과의 한 분과입니다. 특히 알레르기센터에 협조 진료합니다.', '031-123-4562');
+insert into subject values(subject_seq.nextval, '성형외과', '성형외과에서는 분야별로 소이증 클리닉, 두개 안면 클리닉, 안면신경마비 클리닉, 흑색종 클리닉, 하지 족부 재건 클리닉, 혈관기형 클리닉, 레이져 클리닉 등 특성화된 전문 클리닉을 운영하고 있습니다.', '031-123-4563');
+insert into subject values(subject_seq.nextval, '소아청소년과', '소아청소년과는 어린이와 청소년의 건강관리를 위한 3차 진료기관으로서 교육수련병원 그리고 연구기관의 면모를 갖추고 있습니다.', '031-123-4564');
+insert into subject values(subject_seq.nextval, '안과', '안과는 연간 110,000명 이상의 외래 환자 진료와 6,000건에 달하는 수술을 시행하는 국내 최대 안과 병원으로서 최고의 의료진이 최상의 서비스를 제공 하고 있습니다.', '031-123-4565');
+insert into subject values(subject_seq.nextval, '이비인후과', '염증과 관련된 급, 만성 중이염이나 삼출성 중이염염의 경우 수술적 치료가 필요할 수 있으며 현미경을 이용한 수술 방법부터 최근 내시경을 이용한 수술 방법까지 다양한 접근방법으로 시행하고 있습니다.', '031-123-4566');
+insert into subject values(subject_seq.nextval, '정형외과', '사지와 척추에 있는 뼈와 관절 및 근육, 인대, 신경, 혈관 등 주위 조직에 대해서 연구하고, 질환과 외상을 진단하고 치료하는 분야입니다.', '031-123-4567');
+insert into subject values(subject_seq.nextval, '피부과', '피부과는 피부 질환으로 고통 받는 많은 환자들을 위해 진료를 제공하고 있습니다. 각 전문과의 우수한 의료진과 첨단의 의료장비를 갖추었으며 우수한 전문의료인을 양성합니다.', '031-123-4568');
+insert into subject values(subject_seq.nextval, '흉부외과', '흉부외과는 크게 심장외과와 폐,식도외과로 나누어져 있으며, 정확한 진단 및 치료를 시행하며, 최상의 서비스를 제공하기 위해 모든 의료진이 최선을 다하고 있습니다.', '031-123-4569');

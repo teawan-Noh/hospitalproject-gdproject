@@ -63,7 +63,5 @@ public class JDBCUtil {
 				connection = null;
 			}
 		}
-		
-		
 	}
 }

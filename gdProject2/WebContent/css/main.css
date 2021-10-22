@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+.body {
+    width: 1200px;
+    font-family: Verdana,sans-serif;
+    margin:0
+}
+.sec1, .sec2 {
+    display: flex;
+    padding: 30px;
+    width: 1000px;
+    height: max-content;
+}
+.sec2 {
+    background-color: rgb(243, 243, 243);
+    display: inline-block;
+}
+.sec2 h1 {
+    text-align: center;
+}
+.mainmenu {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-left: 10px;
+    color: white;
+}
+.mainmenu:nth-child(1){
+    background-color: rgb(60, 108, 105);
+}
+.mainmenu:nth-child(2){
+    background-color: rgb(70, 145, 140);
+}
+.mainmenu:nth-child(3){
+    background-color: rgb(121, 161, 159);
+}
+.mainmenu:nth-child(4){
+    background-color: rgb(94, 186, 180);
+}
+.menu-content {
+    margin-top: 40px;
+}
+.mySlides {
+	margin-left: 100px;
+	transition-property: transform; /* transform 속성에대해, js코드에 의해 transform 스타일 추가된다*/
+    transition-duration: 1s; /* transition 지속시간 */
+}
