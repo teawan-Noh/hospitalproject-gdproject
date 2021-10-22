@@ -7,17 +7,13 @@
         <title>여기에 제목을 입력하십시오</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"rel="stylesheet"/>
         <link rel="stylesheet" href="css/default.css" />
         <link href = "css/main.css" rel = "stylesheet" type = "text/css">
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
-<body>
-<body>
+	<body>
         <jsp:include page="components/header.jsp"></jsp:include>
         
 	<div class="main"> 
