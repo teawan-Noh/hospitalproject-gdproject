@@ -5,11 +5,9 @@
 <head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href = "css/imageslider.css" rel = "stylesheet" type = "text/css">
 <link href = "css/main.css" rel = "stylesheet" type = "text/css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src = "js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src = "js/imageslider.js"></script>
 </head>
 <body>
 	<div class="main"> 
@@ -33,43 +31,38 @@
         </section>
         <section class="sec2">
             <h1>진료 과목 소개</h1>
-            <div class="image-slider" id="imageSlider1">
-                <div class="slider-body">
-                    <div class="image-list">
-                    <!-- 이미지 안나옴 -->
-                        <img src="./img/산부인과.jpg">
-                        <img src="img/소아청소년과.png">
-                        <img src="img/소화기내과.jpg">
-                        <img src="img/신경과.jpg">
-                        <img src="img/심장내과.jpg">
-                        <img src="img/외과.jpg">
-                        <img src="img/이비인후과.jpg">
-                        <img src="img/재활의학과.jpg">
-                        <img src="img/정신건강의학과.jpg">
-                        <img src="img/정형외과.jpg">
-                    </div>
-                    <ul class="index-nav">
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </div>
-            
-                <div class="slider-btn-prev">
-                    <h3><</h3>		
-                </div>
-                <div class="slider-btn-next">
-                    <h3>></h3>
-                </div>
-            </div>
+            <div class="w3-content w3-display-container">
+  				<img class="mySlides" src="img/감염내과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/내분비대사내과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/성형외과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/소아청소년과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/안과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/알레르기내과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/이비인후과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/정형외과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/피부과.jpg" style="width:700px">
+  				<img class="mySlides" src="img/흉부외과.jpg" style="width:700px">
+
+  				<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+ 				<button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+			</div>
         </section>
     </div>
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 3000); // Change image every 2 seconds
+}
+</script>
 </body>
 </html>

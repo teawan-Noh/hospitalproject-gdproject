@@ -2,6 +2,8 @@
 
 .body {
     width: 1200px;
+    font-family: Verdana,sans-serif;
+    margin:0
 }
 .sec1, .sec2 {
     display: flex;
@@ -39,16 +41,6 @@
 .menu-content {
     margin-top: 40px;
 }
-.subject-img {
-    width: 400px;
-    height: 200px;
-}
-.btn {
-    width: 10px;
-    height: 10px;
-    background-color: white;
-}
-
-.btn:hover {
-    background-color: rgb(70, 145, 140);
+.mySlides {
+	margin-left: 100px;
 }
