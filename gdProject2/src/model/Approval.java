@@ -1,15 +1,15 @@
 package model;
 
-public class approval {
+public class Approval {
 	private int acode;
 	private int dcode;
 	private String approvedate;
 	private String approved;
 	private String reason;
 	
-	public approval() {}
+	public Approval() {}
 	
-	public approval(int acode, int dcode, String approvedate, String approved, String reason) {
+	public Approval(int acode, int dcode, String approvedate, String approved, String reason) {
 		super();
 		this.acode = acode;
 		this.dcode = dcode;

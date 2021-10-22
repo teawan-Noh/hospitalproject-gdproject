@@ -1,6 +1,6 @@
 package model;
 
-public class notice {
+public class Notice {
 	private int ncode;
 	private int mcode;
 	private String title;
@@ -8,9 +8,9 @@ public class notice {
 	private String writedate;
 	private int cnt;
 	
-	public notice() {}
+	public Notice() {}
 	
-	public notice(int ncode, int mcode, String title, String content, String writedate, int cnt) {
+	public Notice(int ncode, int mcode, String title, String content, String writedate, int cnt) {
 		super();
 		this.ncode = ncode;
 		this.mcode = mcode;

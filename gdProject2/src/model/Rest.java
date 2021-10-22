@@ -1,14 +1,14 @@
 package model;
 
-public class rest {
+public class Rest {
 	private int rcode;
 	private int acode;
 	private String restdate;
 	private String day;
 	
-	public rest() {}
+	public Rest() {}
 	
-	public rest(int rcode, int acode, String restdate, String day) {
+	public Rest(int rcode, int acode, String restdate, String day) {
 		super();
 		this.rcode = rcode;
 		this.acode = acode;

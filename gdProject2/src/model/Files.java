@@ -1,6 +1,6 @@
 package model;
 
-public class files {
+public class Files {
 	private int fcode;
 	private int ncode;
 	private String uploaddate;
@@ -8,9 +8,9 @@ public class files {
 	private String beforename;
 	private int filesize;
 	
-	public files() {}
+	public Files() {}
 	
-	public files(int fcode, int ncode, String uploaddate, String name, String beforename, int filesize) {
+	public Files(int fcode, int ncode, String uploaddate, String name, String beforename, int filesize) {
 		super();
 		this.fcode = fcode;
 		this.ncode = ncode;
