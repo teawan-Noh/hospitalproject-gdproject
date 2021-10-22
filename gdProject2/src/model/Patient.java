@@ -1,6 +1,6 @@
 package model;
 
-public class patient {
+public class Patient {
 	private int pcode;
 	private String id;
 	private String pw;
@@ -14,9 +14,9 @@ public class patient {
 	private String address;
 	private String address2;
 	
-	public patient() {}
+	public Patient() {}
 	
-	public patient(int pcode, String id, String pw, String nickname, String name, String tel, String birth,
+	public Patient(int pcode, String id, String pw, String nickname, String name, String tel, String birth,
 			String gender, String email, int postcode, String address, String address2) {
 		this.pcode = pcode;
 		this.id = id;

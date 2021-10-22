@@ -1,14 +1,14 @@
 package model;
 
-public class subject {
+public class Subject {
 	private int scode;
 	private String name;
 	private String description;
 	private String tel;
 	
-	public subject() {}
+	public Subject() {}
 	
-	public subject(int scode, String name, String description, String tel) {
+	public Subject(int scode, String name, String description, String tel) {
 		super();
 		this.scode = scode;
 		this.name = name;

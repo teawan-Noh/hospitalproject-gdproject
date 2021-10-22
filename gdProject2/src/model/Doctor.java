@@ -1,6 +1,6 @@
 package model;
 
-public class doctor {
+public class Doctor {
 	private int dcode;
 	private int scode;
 	private String id;
@@ -15,9 +15,9 @@ public class doctor {
 	private String tel;
 	private String email;
 	
-	public doctor() {}
+	public Doctor() {}
 	
-	public doctor(int dcode, int scode, String id, String pw, String name, String birth, int licenseno, int postcode,
+	public Doctor(int dcode, int scode, String id, String pw, String name, String birth, int licenseno, int postcode,
 			String address, String address2, String career, String tel, String email) {
 		super();
 		this.dcode = dcode;

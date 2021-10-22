@@ -1,15 +1,15 @@
 package model;
 
-public class reservation {
+public class Reservation {
 	private int rcode;
 	private int pcode;
 	private int dcode;
 	private String rsvdate;
 	private String state;
 	
-	public reservation() {}
+	public Reservation() {}
 		
-	public reservation(int rcode, int pcode, int dcode, String rsvdate, String state) {
+	public Reservation(int rcode, int pcode, int dcode, String rsvdate, String state) {
 		super();
 		this.rcode = rcode;
 		this.pcode = pcode;

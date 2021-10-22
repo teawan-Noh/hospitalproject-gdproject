@@ -1,14 +1,14 @@
 package model;
 
-public class comments {
+public class Comments {
 	private int qno;
 	private int mcode;
 	private String writedate;
 	private String content;
 	
-	public comments() {}
+	public Comments() {}
 	
-	public comments(int qno, int mcode, String writedate, String content) {
+	public Comments(int qno, int mcode, String writedate, String content) {
 		super();
 		this.qno = qno;
 		this.mcode = mcode;
