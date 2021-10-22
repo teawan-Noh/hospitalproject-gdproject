@@ -52,15 +52,7 @@
                         <label for="tel" class="form-label smallTitle">연락처</label>
                         <label for="radio" class="form-label smallTitle" id="genderLabel">성별</label><br>
 
-                        <select name="firstTel" id="tel">
-                            <option value="010">010</option>
-                            <option value="011">011</option>
-                            <option value="02">02</option>
-                            <option value="031">031</option>
-                            <option value="032">032</option>
-                        </select>
-                        - <input type="text" name="middleTel" class="form-control" id="middleTel">
-                        - <input type="text" name="lastTel" class="form-control tel" id="lastTel">
+                        <input type="text" class="form-control" id="tel" placeholder="-을 빼고 입력해주세요">
 
                         <span id="radios">
                             <input type="radio" id="radio" class="radio">남자

@@ -114,10 +114,9 @@
 
 
 /* 연락처 input */
-#middleTel,#lastTel{
+#tel{
     display: inline;
-    width: 60px;
-    height: 25px;
+    width: 270px;
 }
 
 /* '성별' */
@@ -127,7 +126,7 @@
 
 /* radio버튼묶음div */
 #radios{
-    margin-left: 100px;
+    margin-left: 40px;
 }
 
 /* radio버튼 */

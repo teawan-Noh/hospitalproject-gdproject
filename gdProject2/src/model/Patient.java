@@ -104,6 +104,4 @@ public class Patient {
 		this.address2 = address2;
 	}
 	
-	
-	
 }

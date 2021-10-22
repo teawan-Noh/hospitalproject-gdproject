@@ -9,8 +9,8 @@ public class JDBCUtil {
 	
 	public static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-	public static final String USER = "scott";
-	public static final String PASSWORD = "tiger";
+	public static final String USER = "dawon";
+	public static final String PASSWORD = "1234";
 	
 	public static Connection getConnection() {
 		

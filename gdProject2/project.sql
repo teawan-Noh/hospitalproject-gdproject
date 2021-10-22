@@ -2,6 +2,8 @@ insert into PATIENT values (pcode.nextval, ?, ?, ?,?,?, to_date(?,'yyyy-mm-dd'),
 
 create sequence pcode;
 
+drop sequence pcode;
+
 update patient set pw = ?, postcode = ?, address = ?, address2 = ?, tel = ?, email = ? where pcode = ?
 
 delete from patient where pcode = ?
@@ -37,6 +39,6 @@ update notice set title =?, content =? where ncode =?
 update files set uploaddate=sysdate, name=?, beforename=?, filesize=? where fcode=?
 
 
+delete from patient;
 
-
-
+select * from patient;
