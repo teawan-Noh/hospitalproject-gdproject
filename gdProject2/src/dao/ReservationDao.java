@@ -10,5 +10,5 @@ public interface ReservationDao {
 	List<Subject> selectSubjectAll();
 	List<Doctor> selectDoctorWithSubject(String subjectName);
 	Doctor selectDoctorByDcode(int dcode);
-	Map<String, String> selectScheduleByDcode(int dcode);
+	List<Map<String, String>> selectScheduleByDcode(int dcode);
 }

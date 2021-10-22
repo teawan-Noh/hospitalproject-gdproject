@@ -199,11 +199,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         // 이벤트가 삭제되면 발생하는 이벤트
                         console.log(obj);
                     },
-                    dayRender: function (dayRenderInfo) {
-                        console.log(dayRenderInfo);
-                        //cell.css("background-color", "red");
-                    },
-
                     dateClick: function (date) {
                         var view = date.dayEl;
                         if (
@@ -226,10 +221,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     // 이벤트
                     events: [
                         {
-                            title: "All Day Event",
-                            start: "2021-10-22",
-                        },
-                        {
                             title: "주말",
                             daysOfWeek: ["0", "6"],
                         },
@@ -245,7 +236,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         .each(function (idx, item) {
                             $(item).remove();
                         });
-
+                    $("#calendar-container").hide();
                     if ($(this).hasClass("active")) {
                         $(this).removeClass("active");
                         subject = "";
@@ -295,6 +286,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         .text();
                     console.log(dcode);
 
+                    calendar.removeAllEvents();
+                    calendar.addEvent({
+                        title: "주말",
+                        daysOfWeek: ["0", "6"],
+                    });
                     var doctor = $(this).parent(".card-box.doctor");
                     if ($(doctor).hasClass("active")) {
                         $(doctor).removeClass("active");
@@ -306,10 +302,39 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         });
 
                         $(doctor).addClass("active");
+                        if ($("#calendar-container").is(":visible")) {
+                            $("#calendar-container").hide();
+                        }
                         $("#calendar-container").show();
+                        let url = "schedule";
+                        $.get(url, { dcode: dcode }, function (data) {
+                            console.log(XMLToString(data));
+                            $(data)
+                                .find("schedule")
+                                .each(function (idx, item) {
+                                    var restdate = $(item)
+                                        .find("restdate")
+                                        .text();
+                                    var day = $(item).find("day").text();
+                                    if (restdate != "") {
+                                        console.log(restdate);
+                                        calendar.addEvent({
+                                            title: "휴진",
+                                            start: restdate,
+                                            classNames: ["rest-children"],
+                                        });
+                                    } else if (day != "") {
+                                        console.log(day);
+                                        calendar.addEvent({
+                                            title: "휴진",
+                                            daysOfWeek: [String(day)],
+                                            classNames: ["rest-children"],
+                                        });
+                                    }
+                                });
+                        });
                     }
-                    let url = "schedules";
-                    $.get(url, { dcode: dcode }, function (data) {});
+
                     //location.href =
                     //    "doctor-detail?subject=" + subject + "&dcode=" + dcode;
                 });

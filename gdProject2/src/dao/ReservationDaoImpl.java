@@ -138,8 +138,8 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	public Map<String, String> selectScheduleByDcode(int dcode) {
-		Map<String, String> result = new HashMap<String, String>();
+	public List<Map<String, String>> selectScheduleByDcode(int dcode) {
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -148,16 +148,24 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_DCODE_SQL);
+			pStatement = connection.prepareStatement(Sql.SELECT_SCHEDULE_BY_DCODE_SQL);
 			pStatement.setInt(1, dcode);
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
+				Map<String, String> map = new HashMap<String, String>();
+				String restdate = resultSet.getString("restdate");
+				String day = resultSet.getString("day");
+				if(restdate != null) {
+					map.put("restdate", resultSet.getString("restdate"));
+				}
+				if(day != null) {
+					map.put("day", convertDay(resultSet.getString("day")));
+				}
+				result.add(map);
 				
-
 			}
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -165,11 +173,20 @@ public class ReservationDaoImpl implements ReservationDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 			
 		}
-		return null;
+		return result;
 	}
 	
 	public String convertDay(String dayString) {
-		return null;
+		String result = null;
+		String[] days = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+		
+		for(int i = 0; i < days.length; i++) {
+			if(dayString.equals(days[i])) {
+				return String.valueOf(i);
+			}
+		}
+		
+		return result;
 	}
 	
 }

@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,13 +62,23 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("doctor-detail")) {
 		int dcode = Integer.parseInt(req.getParameter("dcode"));
 		
-		
 		ReservationDao rdao = new ReservationDaoImpl();
 		req.setAttribute("side", "doctor");
 		
 	}
 	else if(action.equals("schedule")) {
 		ReservationDao rdao = new ReservationDaoImpl();
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		List<Map<String, String>> scheduleList = rdao.selectScheduleByDcode(dcode);
+		
+		for(Map<String, String> m: scheduleList) {
+			for(String key: m.keySet()) {
+				
+				System.out.println(String.format("Å° : %s, °ª : %s", key, m.get(key)));
+			}
+		}
+		
+		req.setAttribute("scheduleList", scheduleList);
 		
 	}
 	
