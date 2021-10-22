@@ -3,18 +3,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="join.css">
-    <link rel="stylesheet" href="CSS/reset.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- 다음 우편번호 api-->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<!-- css파일  -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/patient/join.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/reset.css">
+
+<!-- 부트스트랩 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+ 
+<!-- 다음 우편번호 api-->
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/gdProject2/js/post.js"></script>
+
+<!-- 자바스크립트 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	//아이디 중복확인
+	$("#idChkBtn").click(function(){
+		//사용자가 입력한 값 얻어오기
+		var id_value = $("input[name='id']").val();
+		//입력여부 검사
+		if(!id_value){
+			alert("아이디를 입력해주세요.")
+			$("input[name='id']").focus();
+			return false;
+		}
+		
+		var url = "idcheck";
+		
+		$.get(url,{"id_value":id_value},function(data){
+			var result_text = $(data).find("result").text();
+			var result = eval(result_text);
+			
+			if(result){
+				$("#idChk").html("사용가능한 아이디입니다.");
+			}else{
+				$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
+			}
+		});
+		
+		
+	});
+	
+});
+</script>
 </head>
 <body>
     <div class="container">
@@ -26,17 +65,19 @@
                 <p>회원 정보를 입력해주세요.</p>
             </section>
             <section id="form" class="form-group">
-                <form action="#" method="POST" name="join" id="join_form">
+                <form action="patient_input" method="POST" name="join" id="join_form">
                     <div class="mb-3">
-                        <label for="id" class="form-label smallTitle">아이디</label><br>
+                        <label for="id" class="form-label smallTitle">아이디</label>
+                        <span class="chkResult" id="idChk"></span>
+                        <br>
                         <input type="text" name="id" placeholder="아이디를 입력하세요" class="form-control" id="id"/>
-                        <button id="idChkBtn">중복확인</button>
+                        <button id="idChkBtn" type="button">중복확인</button>
                     </div>
 
                     <div class="mb-3">
                         <label for="pw" class="form-label smallTitle">비밀번호</label>
                         <label for="pwChk" class="form-label smallTitle" id="pwChkLabel">비밀번호 확인</label>
-                        <span id="pwChkResult">일치하지않습니다.</span><br>
+                        <span class="chkResult">일치하지않습니다.</span><br>
                         <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" class="form-control">
                         <input type="text" name="pwChk" id="pwChk" placeholder="비밀번호를 한번 더 입력하세요" class="form-control">
                     </div>

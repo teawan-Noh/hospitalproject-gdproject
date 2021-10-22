@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.PatientDao;
+import dao.PatientDaoImpl;
+
 
 @WebServlet(name="PatientController", urlPatterns= {"/patient_input","/idcheck","/patient_save"})
 //patient_input : 회원가입 화면, idcheck : 중복체크, patient_save : 저장
@@ -36,7 +39,17 @@ public class PatientController extends HttpServlet{
 			
 			
 		}else if(action.equals("idcheck")) {
+			String id = req.getParameter("id_value");
+			System.out.println(id);
+			PatientDao dao = new PatientDaoImpl();
+			int cnt = dao.selectCntById(id);
+			System.out.println(cnt);
 			
+			if(cnt>0) {
+				req.setAttribute("useTF", false);
+			}else {
+				req.setAttribute("useTF", true);
+			}
 			
 		}else if(action.equals("patient_save")) {
 			
@@ -45,11 +58,11 @@ public class PatientController extends HttpServlet{
 		
 		//페이지
 		String dispatcherUrl = null;
-		if(action.equals("customer_input")) {
+		if(action.equals("patient_input")) {
 			dispatcherUrl="/patient/join.jsp";
 		}else if(action.equals("idcheck")) {
-			dispatcherUrl="";
-		}else if(action.equals("customer_save")) {
+			dispatcherUrl="/ajax/idcheck.jsp";
+		}else if(action.equals("patient_save")) {
 			dispatcherUrl="";
 		}
 		

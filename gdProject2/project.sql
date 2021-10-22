@@ -42,3 +42,5 @@ update files set uploaddate=sysdate, name=?, beforename=?, filesize=? where fcod
 delete from patient;
 
 select * from patient;
+
+select count(*) from patient where id = 'id';

@@ -8,7 +8,7 @@ public class Sql {
 	
 	//회원가입-아이디중복확인
 		public static final String PATIENT_SELECT_CNT_BY_ID_SQL =
-		         "select count(*) from patient where id = ?";
+		         "select count(*) as cnt from patient where id = ?";
 	
 	
 		

@@ -87,7 +87,7 @@
 }
 
 /* 일치하지않습니다. */
-#pwChkResult{
+.chkResult{
     margin-left: 5px;
     font-size: 0.9rem;
     color: tomato;
