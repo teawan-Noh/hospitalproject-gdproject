@@ -1,15 +1,19 @@
 package dao;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import model.Qna;
-
+import model.Subject;
 
 public class Test {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		List<Subject> subjectList = rdao.selectSubjectAll();
+		
+		for(Subject s : subjectList) {
+			System.out.println(s.getName());
+		}
 		QnaDao dao = new QnaDaoImpl();
 		
 		
@@ -34,9 +38,7 @@ public class Test {
 		}
 		
 //		Qna selectByQno(int qno);
-//		Qna qna3 = dao.Qna selectByQno(int qno);
-
-		
+//		Qna qna3 = dao.Qna selectByQno(int qno);	
 	}
 
 }
