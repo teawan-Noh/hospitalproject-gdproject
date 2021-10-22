@@ -144,6 +144,15 @@ $(function(){
 			return false;
 		}
 		
+		var regulNickName = /^[a-zA-Z0-9가-힣]{2,20}$/;
+		var regNickNameResult = regulNickName.test(nick_value);
+		
+		if(!regNickNameResult){
+			alert("닉네임은 특수문자 제외 2자리 이상으로 입력해주세요.");
+			$("input[name='nickName']").focus();
+			return false;
+		}
+		
 		//이름
 		var name_value = $("input[name='name']").val();
 		
@@ -153,12 +162,29 @@ $(function(){
 			return false;
 		}
 		
+		var regulName = /^[a-zA-Z가-힣]{2,20}$/;
+		var regNameResult = regulName.test(name_value);
+		
+		if(!regNameResult){
+			alert("이름은 특수문자 제외 2자리 이상으로 입력해주세요.");
+			$("input[name='name']").focus();
+			return false;
+		}
 		
 		//연락처
 		var tel_value = $("input[name='tel']").val();
 		
 		if(!tel_value){
 			alert("연락처를 입력해주세요.");
+			$("input[name='tel']").focus();
+			return false;
+		}
+		
+		var regulTel = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+		var regTelResult = regulTel.test(tel_value);
+		
+		if(!regTelResult){
+			alert("전화번호는 010-0000-0000 형식으로 입력해주세요.");
 			$("input[name='tel']").focus();
 			return false;
 		}
@@ -175,6 +201,15 @@ $(function(){
 		
 		if(!email_value){
 			alert("이메일을 입력해주세요.");
+			$("input[name='email']").focus();
+			return false;
+		}
+		
+		var regulEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]{2,3}/;
+		var regEmailResult = regulEmail.test(email_value);
+		
+		if(!regEmailResult){
+			alert("이메일을 형식에 맞게 입력해주세요.");
 			$("input[name='email']").focus();
 			return false;
 		}
