@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Doctor;
 import model.Subject;
@@ -133,6 +135,41 @@ public class ReservationDaoImpl implements ReservationDao {
 			
 		}
 		return doctor;
+	}
+
+	@Override
+	public Map<String, String> selectScheduleByDcode(int dcode) {
+		Map<String, String> result = new HashMap<String, String>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_DCODE_SQL);
+			pStatement.setInt(1, dcode);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return null;
+	}
+	
+	public String convertDay(String dayString) {
+		return null;
 	}
 	
 }
