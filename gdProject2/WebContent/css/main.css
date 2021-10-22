@@ -43,4 +43,6 @@
 }
 .mySlides {
 	margin-left: 100px;
+	transition-property: transform; /* transform 속성에대해, js코드에 의해 transform 스타일 추가된다*/
+    transition-duration: 1s; /* transition 지속시간 */
 }
