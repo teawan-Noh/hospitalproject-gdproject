@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+</head>
 <style>
         .body {
             width: 1200px;
@@ -68,15 +69,25 @@
             border: none;
             border-radius: 3px;
             margin-top: 30px;
-            margin-left: 400px;
-
+            margin-left: 350px;
         }
+        #cancel {
+        	width: 70px;
+            height: 35px;
+            color: white;
+            background-color: rgb(70, 145, 140);
+            border: none;
+            border-radius: 3px;
+            margin-top: 30px;
+            margin-left: 20px;
+        }
+        
 </style>
 </head>
 <body>
-    <h1>의사 등록</h1>
+    <h1>개인정보수정</h1>
     <div class="container">
-        <form method="post" action="save_doctor">
+        <form method="post" action="update_doctor">
             <table>
                 <tr>
                     <th>성명</th>
@@ -132,32 +143,11 @@
                     <td><input type="email" name="email" placeholder="이메일을 입력해주세요."></td>
                 </tr>
             </table>
-            <button type = "submit" id = "savebtn">저장</button>
+            <div>
+            	<button type = "submit" id = "savebtn">저장</button>
+            	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
+            </div>
         </form>
     </div>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-    	function sample6_execDaumPostcode() {
-        	new daum.Postcode({
-            	oncomplete: function(data) {
-             
-                var addr = ''; // 주소 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-</script>
 </body>
 </html>
