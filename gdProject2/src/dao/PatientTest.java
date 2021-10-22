@@ -16,7 +16,7 @@ public class PatientTest {
 		Patient patient = new Patient();
 		
 		patient.setId("id1");
-		patient.setPw("1111");
+		patient.setPw("11111111");
 		patient.setNickname("환자1");
 		patient.setName("이름1");
 		patient.setTel("010-1111-1111");

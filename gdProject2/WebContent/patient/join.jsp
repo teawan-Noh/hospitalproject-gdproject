@@ -249,6 +249,10 @@ $(function(){
 			return false;
 		}
 		
+		
+		alert("가입되었습니다.");
+			
+		
 	});
 	
 	
@@ -266,7 +270,7 @@ $(function(){
                 <p>회원 정보를 입력해주세요.</p>
             </section>
             <section id="form" class="form-group">
-                <form action="patient_input" method="POST" name="join" id="join_form">
+                <form action="patient_save" method="POST" name="join" id="join_form">
                     <div class="mb-3">
                         <label for="id" class="form-label smallTitle">아이디</label>
                         <span class="chkResult" id="idChk"></span>
@@ -298,9 +302,9 @@ $(function(){
                         <input type="text" class="form-control" id="tel" name="tel" placeholder="예시) 010-0000-0000" >
 
                         <span id="radios">
-                            <input type="radio" name="gender" class="radio" id="male" value="male">남자
-                            <input type="radio" name="gender" class="radio" id="female" value="female">여자
-                            <input type="radio" name="gender" class="radio" id="other" value="other">기타
+                            <input type="radio" name="gender" class="radio" id="male" value="남">남자
+                            <input type="radio" name="gender" class="radio" id="female" value="여">여자
+                            <input type="radio" name="gender" class="radio" id="other" value="기타">기타
                         </span>
                         
                     </div>

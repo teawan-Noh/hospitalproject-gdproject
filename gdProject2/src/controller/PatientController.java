@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.PatientDao;
 import dao.PatientDaoImpl;
+import model.Patient;
 
 
 @WebServlet(name="PatientController", urlPatterns= {"/patient_input","/idcheck","/patient_save"})
@@ -50,7 +51,22 @@ public class PatientController extends HttpServlet{
 			}
 			
 		}else if(action.equals("patient_save")) {
+			String id = req.getParameter("id");
+			String pw = req.getParameter("pw");
+			String nickName = req.getParameter("nickName");
+			String name = req.getParameter("name");
+			String tel = req.getParameter("tel");
+			String birth = req.getParameter("birth");
+			String gender = req.getParameter("gender");
+			String email = req.getParameter("email");
+			int postcode = Integer.parseInt(req.getParameter("postcode"));
+			String address = req.getParameter("address");
+			String address2 = req.getParameter("address2");
 			
+			Patient patient = new Patient(id,pw,nickName,name,tel,birth,gender,email,postcode,address,address2);
+			req.setAttribute("patient", patient);
+			PatientDao dao = new PatientDaoImpl();
+			dao.insert(patient);
 		}
 		
 		
@@ -61,7 +77,7 @@ public class PatientController extends HttpServlet{
 		}else if(action.equals("idcheck")) {
 			dispatcherUrl="/ajax/idcheck.jsp";
 		}else if(action.equals("patient_save")) {
-			dispatcherUrl="";
+			dispatcherUrl="index.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

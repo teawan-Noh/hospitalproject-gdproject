@@ -31,6 +31,25 @@ public class Patient {
 		this.address = address;
 		this.address2 = address2;
 	}
+	
+	
+	//회원가입용
+	public Patient(String id, String pw, String nickname, String name, String tel, String birth, String gender,
+			String email, int postcode, String address, String address2) {
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.nickname = nickname;
+		this.name = name;
+		this.tel = tel;
+		this.birth = birth;
+		this.gender = gender;
+		this.email = email;
+		this.postcode = postcode;
+		this.address = address;
+		this.address2 = address2;
+	}
+
 	public int getPcode() {
 		return pcode;
 	}
