@@ -13,7 +13,7 @@ public interface PatientDao {
 	public void update(Patient patient);
 	
 	//È¸¿ø Å»Åð
-	public void delete(long pcode);
+	public void delete(int pcode);
 	
 	//·Î±×ÀÎ
 	Patient login(String id, String pw);
