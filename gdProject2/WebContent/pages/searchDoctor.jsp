@@ -7,11 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-		.body {
-            width: 1200px;
-        }
+		.main {
+            margin: 0 auto;
+            max-width: 1200px;
+        }	
 		.subject {
-            width: 1000px;
+            width: 1200px;
             height: max-content;
             padding: 20px;
         }
@@ -42,6 +43,9 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../components/header.jsp"></jsp:include>
+	<div class="main">
+        <jsp:include page="../components/sidemenu.jsp"></jsp:include>
 	<div>
         <a href = "index.jsp"><img src = "" alt = "집 아이콘"></a>
         > 의료진
@@ -68,6 +72,8 @@
     	${doctor}${doctor.subject}
     	</div>
     </c:forEach>
-    <hr align="left">
+    <hr>
+    </div>
+    <jsp:include page="../components/footer.jsp"></jsp:include>
 </body>
 </html>
