@@ -112,6 +112,13 @@ public class Doctor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		return "Doctor [dcode=" + dcode + ", scode=" + scode + ", id=" + id + ", pw=" + pw + ", name=" + name
+				+ ", birth=" + birth + ", licenseno=" + licenseno + ", postcode=" + postcode + ", address=" + address
+				+ ", address2=" + address2 + ", career=" + career + ", tel=" + tel + ", email=" + email + "]";
+	}
 	
 	
 }

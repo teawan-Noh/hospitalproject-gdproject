@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import dao.DoctorDao;
 import dao.DoctorDaoImpl;
+import dao.ManagerDao;
+import dao.ManagerDaoImpl;
 import dao.PatientDao;
 import dao.PatientDaoImpl;
 import model.Doctor;
+import model.Manager;
 import model.Patient;
 
 @WebServlet(name="LoginOutController", urlPatterns= {"/patient_login_input","/doctor_login_input","/manager_login_input","/patient_login","/doctor_login","/manager_login","/logout"})
@@ -60,6 +61,7 @@ public class LoginOutController extends HttpServlet{
 				int pcode = (int)session.getAttribute("pcode");
 				PatientDao pdao = new PatientDaoImpl();
 				Patient patient = pdao.selectByPcode(pcode);
+				System.out.println(patient.toString());
 				req.setAttribute("patient", patient);
 			}else {
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
@@ -78,7 +80,29 @@ public class LoginOutController extends HttpServlet{
 				int dcode = (int)session.getAttribute("dcode");
 				DoctorDao ddao = new DoctorDaoImpl();
 				Doctor doctor = ddao.selectByDcode(dcode);
+				System.out.println(doctor.toString());
 				req.setAttribute("patient", doctor);
+			}else {
+				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
+			}
+			
+			
+		}else if(action.equals("manager_login")) {
+			
+			String id = req.getParameter("id");
+			String pw = req.getParameter("pw");
+			
+			ManagerDao dao = new ManagerDaoImpl();
+			Manager m = dao.login(id, pw);
+			
+			if(m != null) {
+				HttpSession session = req.getSession();
+				session.setAttribute("mcode", m.getMcode());
+				int mcode = (int)session.getAttribute("mcode");
+				ManagerDao mdao = new ManagerDaoImpl();
+				Manager manager = mdao.selectByMcode(mcode);
+				System.out.println(manager.toString());
+				req.setAttribute("manager", manager);
 			}else {
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
 			}
@@ -89,6 +113,7 @@ public class LoginOutController extends HttpServlet{
 			
 			session.removeAttribute("pcode");
 			session.removeAttribute("dcode");
+			session.removeAttribute("mcode");
 		}
 		
 		//페이지
@@ -119,6 +144,16 @@ public class LoginOutController extends HttpServlet{
 				dispatcherUrl="/index.jsp";
 			}else {
 				dispatcherUrl="/doctor/doctorLogin.jsp";
+			}
+			
+		}else if(action.equals("manager_login")) {
+			
+			HttpSession session = req.getSession();
+			
+			if(session.getAttribute("mcode")!=null) {
+				dispatcherUrl="/index.jsp";
+			}else {
+				dispatcherUrl="/manager/managerLogin.jsp";
 			}
 			
 		}else if(action.equals("logout")) {

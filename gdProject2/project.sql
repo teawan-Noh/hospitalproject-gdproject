@@ -50,7 +50,12 @@ select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join man
 
 insert into notice values (ncode.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), 0);
 
+drop sequence ncode;
+
 CREATE SEQUENCE ncode;
+
+insert into manager values (ncode.nextval,'ȫ�浿','mhong','1234');
+select * from manager;
 
 insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)
 

@@ -8,14 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:if test="${pcode == null && dcode == null}">
+<c:if test="${pcode == null && dcode == null && mcode == null}">
 	<a href="patient_input">회원가입</a>
 	<a href="patient_login_input">환자 로그인</a>
 	<a href="doctor_login_input">의사 로그인</a>
 	<a href="manager_login_input">관리자 로그인</a>
 </c:if>
 
-<c:if test="${pcode != null || dcode != null}">
+<c:if test="${pcode != null || dcode != null || mcode != null}">
 	<a href="logout">로그아웃</a>
 </c:if>
 </body>
