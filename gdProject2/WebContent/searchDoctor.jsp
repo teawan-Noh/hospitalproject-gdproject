@@ -10,9 +10,9 @@
 		.main {
             margin: 0 auto;
             max-width: 1200px;
+            display: flex;
         }	
 		.subject {
-            width: 1200px;
             height: max-content;
             padding: 20px;
         }
@@ -43,13 +43,12 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../components/header.jsp"></jsp:include>
+	<jsp:include page="components/header.jsp"></jsp:include>
 	<div class="main">
-        <jsp:include page="../components/sidemenu.jsp"></jsp:include>
-	<div>
+        <jsp:include page="components/sidemenu.jsp"></jsp:include>
+	<div class = "content">
         <a href = "index.jsp"><img src = "" alt = "집 아이콘"></a>
         > 의료진
-    </div>
     <h1>의료진 검색</h1>
     <form method = "POST" action = "search_doctor">
     <select>
@@ -74,6 +73,7 @@
     </c:forEach>
     <hr>
     </div>
-    <jsp:include page="../components/footer.jsp"></jsp:include>
+    </div>
+    <jsp:include page="components/footer.jsp"></jsp:include>
 </body>
 </html>

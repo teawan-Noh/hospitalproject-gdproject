@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +8,23 @@
 <title>Insert title here</title>
 </head>
 <style>
-        .body {
-            width: 1200px;
+        .main{
+        	max-width: 1200px;
+        	margin: 0 auto;
+        	display: flex;
+        }
+        .content {
+        	margin: 20px;
         }
         input {
-            width: 300px;
-            height: 20px;
+            width: 550px;
+            height: 30px;
             border: 1px solid rgb(148, 147, 147);
         }
 
         #idcheck {
-            width: 70px;
-            height: 25px;
+            width: 100px;
+            height: 30px;
             color: white;
             background-color: rgb(70, 145, 140);
             border: none;
@@ -26,8 +32,8 @@
         }
 
         #postbtn {
-            width: 120px;
-            height: 25px;
+            width: 140px;
+            height: 30px;
             background-color: rgb(223, 220, 220);
             border: none;
             border-radius: 5px;
@@ -51,8 +57,6 @@
         tr {
             background-color: white;
             height: 30px;
-            width: 700px;
-            border-bottom: 1px solid #555;
         }
         td {
             padding: 5px;
@@ -69,7 +73,7 @@
             border: none;
             border-radius: 3px;
             margin-top: 30px;
-            margin-left: 350px;
+            margin-left: 200px;
         }
         #cancel {
         	width: 70px;
@@ -85,24 +89,24 @@
 </style>
 </head>
 <body>
-    <h1>개인정보수정</h1>
-    <div class="container">
-        <form method="post" action="update_doctor">
-            <table>
+	<jsp:include page="components/header.jsp"></jsp:include>
+	<div class = "main">
+		<jsp:include page="components/sidemenu.jsp"></jsp:include>
+		<div class ="content">
+    	<h1>개인정보수정</h1>
+        	<form method="post" action="update_doctor">
+            	<table border="1px solid">
                 <tr>
                     <th>성명</th>
-                    <td><input type="text" name="name" placeholder="이름을 입력해주세요." class="form-control"></td>
+                    <td>이름 불러오기</td>
                 </tr>
                 <tr>
                     <th>면허번호</th>
-                    <td><input type="text" name="licenseno" placeholder="의사면허번호를 입력해주세요."></td>
+                    <td>면허번호 불러오기</td>
                 </tr>
                 <tr>
                     <th>아이디</th>
-                    <td>
-                        <input type="text" name="id" placeholder="아이디를 입력해주세요.">
-                        <button type="button" id="idcheck">중복검사</button>
-                    </td>
+                    <td>아이디 불러오기</td>
                 </tr>
                 <tr>
                     <th>비밀번호</th>
@@ -124,14 +128,12 @@
                 </tr>
                 <tr>
                     <th>생년월일</th>
-                    <td>
-                        <input type = "date" name = "birth">
-                    </td>
+                    <td>생년월일 불러오기</td>
                 </tr>
                 <tr>
                     <th>경력사항</th>
                     <td>
-                        <textarea name="career" placeholder="내용을 입력해주세요." rows="5" cols="40"></textarea>    
+                        <textarea name="career" placeholder="내용을 입력해주세요." rows="5" cols="75"></textarea>    
                     </td>
                 </tr>
                 <tr>
@@ -148,6 +150,32 @@
             	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
             </div>
         </form>
+        </div>
     </div>
+    <jsp:include page="components/footer.jsp"></jsp:include>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+    	function sample6_execDaumPostcode() {
+        	new daum.Postcode({
+            	oncomplete: function(data) {
+             
+                var addr = ''; // 주소 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
 </body>
 </html>

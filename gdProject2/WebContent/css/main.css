@@ -1,17 +1,16 @@
 .main {
 	margin: 0 auto;
-    max-width: 1200px;	
+    max-width: 1200px;
 }
 .sec1 {
     display: flex;
-    padding: 30px;
-    width: 1200px;
+    justify-content: space-between;
     height: max-content;
     
 }
 .sec2 {
     background-color: rgb(243, 243, 243);
-    display: inline-block; 
+    display: inline-block;
     padding: 30px;
     width: 1200px;
     height: max-content;
@@ -22,9 +21,8 @@
 .mainmenu {
     width: 250px;
     height: 250px;
-    margin: 0 auto;
-    padding-top: 10px;
-    padding-left: 10px;
+    margin: 30px 0 30px 0;
+    padding: 20px;
     color: white;
 }
 .mainmenu:nth-child(1){

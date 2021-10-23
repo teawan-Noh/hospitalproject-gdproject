@@ -5,19 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+</head>
 <style>
-        .body {
-            width: 1200px;
+        .main{
+        	max-width: 1200px;
+        	margin: 0 auto;
+        	display: flex;
+        }
+        .content {
+        	margin: 20px;
         }
         input {
-            width: 300px;
-            height: 20px;
+            width: 550px;
+            height: 30px;
             border: 1px solid rgb(148, 147, 147);
         }
 
         #idcheck {
-            width: 70px;
-            height: 25px;
+            width: 100px;
+            height: 30px;
             color: white;
             background-color: rgb(70, 145, 140);
             border: none;
@@ -25,8 +31,8 @@
         }
 
         #postbtn {
-            width: 120px;
-            height: 25px;
+            width: 140px;
+            height: 30px;
             background-color: rgb(223, 220, 220);
             border: none;
             border-radius: 5px;
@@ -50,8 +56,6 @@
         tr {
             background-color: white;
             height: 30px;
-            width: 700px;
-            border-bottom: 1px solid #555;
         }
         td {
             padding: 5px;
@@ -68,19 +72,32 @@
             border: none;
             border-radius: 3px;
             margin-top: 30px;
-            margin-left: 400px;
-
+            margin-left: 200px;
         }
+        #cancel {
+        	width: 70px;
+            height: 35px;
+            color: white;
+            background-color: rgb(70, 145, 140);
+            border: none;
+            border-radius: 3px;
+            margin-top: 30px;
+            margin-left: 20px;
+        }
+        
 </style>
 </head>
 <body>
-    <h1>의사 등록</h1>
-    <div class="container">
-        <form method="post" action="save_doctor">
-            <table>
+	<jsp:include page="components/header.jsp"></jsp:include>
+	<div class = "main">
+		<jsp:include page="components/sidemenu.jsp"></jsp:include>
+		<div class ="content">
+    	<h1>의사 등록</h1>
+        	<form method="post" action="update_doctor">
+            	<table border="1px solid">
                 <tr>
                     <th>성명</th>
-                    <td><input type="text" name="name" placeholder="이름을 입력해주세요." class="form-control"></td>
+                    <td><input type="text" name="name" placeholder="이름을 입력해주세요."></td>
                 </tr>
                 <tr>
                     <th>면허번호</th>
@@ -120,7 +137,7 @@
                 <tr>
                     <th>경력사항</th>
                     <td>
-                        <textarea name="career" placeholder="내용을 입력해주세요." rows="5" cols="40"></textarea>    
+                        <textarea name="career" placeholder="내용을 입력해주세요." rows="5" cols="75"></textarea>    
                     </td>
                 </tr>
                 <tr>
@@ -132,10 +149,15 @@
                     <td><input type="email" name="email" placeholder="이메일을 입력해주세요."></td>
                 </tr>
             </table>
-            <button type = "submit" id = "savebtn">저장</button>
+            <div>
+            	<button type = "submit" id = "savebtn">저장</button>
+            	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
+            </div>
         </form>
+        </div>
     </div>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <jsp:include page="components/footer.jsp"></jsp:include>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     	function sample6_execDaumPostcode() {
         	new daum.Postcode({
