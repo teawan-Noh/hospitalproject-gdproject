@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,14 +17,19 @@
         	margin: 20px;
         }
         input {
-            width: 550px;
-            height: 30px;
-            border: 1px solid rgb(148, 147, 147);
+            width: 600px;
+            height: 40px;
+            border: 1px solid rgb(243, 243, 243);
+            border-radius: 5px;
+        }
+        textarea {
+        	border: 1px solid rgb(243, 243, 243);
+            border-radius: 5px;
         }
 
         #idcheck {
             width: 100px;
-            height: 30px;
+            height: 35px;
             color: white;
             background-color: rgb(70, 145, 140);
             border: none;
@@ -32,7 +38,7 @@
 
         #postbtn {
             width: 140px;
-            height: 30px;
+            height: 35px;
             background-color: rgb(223, 220, 220);
             border: none;
             border-radius: 5px;
@@ -42,6 +48,7 @@
             border-top: 4px solid rgb(70, 145, 140);
             border-left: none;
             border-right: none;
+            border-bottom: 1px solid rgb(223, 220, 220);
             padding-top: 0;
             border-collapse: collapse;
         }
@@ -49,13 +56,14 @@
         th {
             background-color: rgb(148, 220, 215);
             margin: 0;
-            padding: 0;
+            padding: 10px;
             color: #555;
             font-size: 0.9rem;
+            width: 150px;
         }
         tr {
             background-color: white;
-            height: 30px;
+            height: 45px;
         }
         td {
             padding: 5px;
@@ -72,7 +80,7 @@
             border: none;
             border-radius: 3px;
             margin-top: 30px;
-            margin-left: 200px;
+            margin-left: 350px;
         }
         #cancel {
         	width: 70px;
@@ -84,6 +92,9 @@
             margin-top: 30px;
             margin-left: 20px;
         }
+        #sample6_postcode, #id{
+        	width: 300px;
+        }
         
 </style>
 </head>
@@ -94,7 +105,7 @@
 		<div class ="content">
     	<h1>의사 등록</h1>
         	<form method="post" action="update_doctor">
-            	<table border="1px solid">
+            	<table>
                 <tr>
                     <th>성명</th>
                     <td><input type="text" name="name" placeholder="이름을 입력해주세요."></td>
@@ -104,9 +115,19 @@
                     <td><input type="text" name="licenseno" placeholder="의사면허번호를 입력해주세요."></td>
                 </tr>
                 <tr>
+                    <th>진료과</th>
+                    <td>
+                    	<select>
+                    		<c:forEach var="subject" items="${subjectList}">
+                    			<option value = "${subject.scode}">${subject.name}</option>
+                    		</c:forEach>
+                    	</select>
+                    </td>
+                </tr>
+                <tr>
                     <th>아이디</th>
                     <td>
-                        <input type="text" name="id" placeholder="아이디를 입력해주세요.">
+                        <input type="text" name="id" id="id" placeholder="아이디를 입력해주세요.">
                         <button type="button" id="idcheck">중복검사</button>
                     </td>
                 </tr>

@@ -17,14 +17,18 @@
         	margin: 20px;
         }
         input {
-            width: 550px;
-            height: 30px;
-            border: 1px solid rgb(148, 147, 147);
+            width: 600px;
+            height: 40px;
+            border: 1px solid rgb(243, 243, 243);
+            border-radius: 5px;
         }
-
+		textarea {
+        	border: 1px solid rgb(243, 243, 243);
+            border-radius: 5px;
+        }
         #idcheck {
             width: 100px;
-            height: 30px;
+            height: 35px;
             color: white;
             background-color: rgb(70, 145, 140);
             border: none;
@@ -33,7 +37,7 @@
 
         #postbtn {
             width: 140px;
-            height: 30px;
+            height: 35px;
             background-color: rgb(223, 220, 220);
             border: none;
             border-radius: 5px;
@@ -43,6 +47,7 @@
             border-top: 4px solid rgb(70, 145, 140);
             border-left: none;
             border-right: none;
+            border-bottom: 1px solid rgb(223, 220, 220);
             padding-top: 0;
             border-collapse: collapse;
         }
@@ -50,13 +55,14 @@
         th {
             background-color: rgb(148, 220, 215);
             margin: 0;
-            padding: 0;
+            padding: 10px;
             color: #555;
             font-size: 0.9rem;
+            width: 150px;
         }
         tr {
             background-color: white;
-            height: 30px;
+            height: 45px;
         }
         td {
             padding: 5px;
@@ -73,7 +79,7 @@
             border: none;
             border-radius: 3px;
             margin-top: 30px;
-            margin-left: 200px;
+            margin-left: 350px;
         }
         #cancel {
         	width: 70px;
@@ -84,6 +90,9 @@
             border-radius: 3px;
             margin-top: 30px;
             margin-left: 20px;
+        }
+        #sample6_postcode{
+        	width: 300px;
         }
         
 </style>
@@ -103,6 +112,10 @@
                 <tr>
                     <th>면허번호</th>
                     <td>면허번호 불러오기</td>
+                </tr>
+                 <tr>
+                    <th>진료과</th>
+                    <td>진료과 불러오기</td>
                 </tr>
                 <tr>
                     <th>아이디</th>
