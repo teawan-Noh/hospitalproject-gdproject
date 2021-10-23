@@ -14,13 +14,24 @@ public class Sql {
 		
 	//환자 로그인
 	public static final String PATIENT_LOGIN_SQL =
-				"select id, pw from patient where id =? and pw = ?";
+			"select * from patient where id =? and pw = ?";
+	
+	public static final String PATIENT_SELECT_BY_PCODE_SQL =
+			"select * from patient where pcode = ?";
+	
 	//의사 로그인
 	public static final String DOCTOR_LOGIN_SQL =
-			"select id, pw from doctor where id =? and pw =?";
+			"select * from doctor where id =? and pw =?";
+	
+	public static final String DOCTOR_SELECT_BY_PCODE_SQL =
+			"";
+	
 	//관리자 로그인
 	public static final String MANAGER_LOGIN_SQL =
-			"select id, pw from manager where id =? and pw =?";
+			"select * from manager where id =? and pw =?";
+	
+	public static final String MANAGER_SELECT_BY_PCODE_SQL =
+			"";
 	
 	
 	

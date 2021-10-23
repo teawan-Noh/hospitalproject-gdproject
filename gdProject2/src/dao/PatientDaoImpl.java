@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import model.Patient;
 
 public class PatientDaoImpl implements PatientDao{
@@ -81,8 +80,85 @@ public class PatientDaoImpl implements PatientDao{
 
 	@Override
 	public Patient login(String id, String pw) {
-		// TODO Auto-generated method stub
-		return null;
+		Patient patient = null;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.PATIENT_LOGIN_SQL);
+
+			pStatement.setString(1, id);
+			pStatement.setString(2, pw);
+
+			resultSet = pStatement.executeQuery();
+
+			if (resultSet.next()) {
+				patient = new Patient();
+				
+				patient.setPcode(resultSet.getInt("pcode"));
+				patient.setId(resultSet.getString("id"));
+				patient.setPw(resultSet.getString("pw"));
+				patient.setNickname(resultSet.getString("nickName"));
+				patient.setName(resultSet.getString("name"));
+				patient.setTel(resultSet.getString("tel"));
+				patient.setBirth(resultSet.getString("birth"));
+				patient.setGender(resultSet.getString("gender"));
+				patient.setEmail(resultSet.getString("email"));
+				patient.setPostcode(resultSet.getInt("postcode"));
+				patient.setAddress(resultSet.getString("address"));
+				patient.setAddress2(resultSet.getString("address2"));
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		return patient;
+	}
+
+	@Override
+	public Patient selectByPcode(int pcode) {
+		Patient patient = null;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.PATIENT_SELECT_BY_PCODE_SQL);
+
+			pStatement.setLong(1, pcode);
+
+			resultSet = pStatement.executeQuery();
+
+			if (resultSet.next()) {
+				patient = new Patient();
+
+				patient.setPcode(resultSet.getInt("pcode"));
+				patient.setId(resultSet.getString("id"));
+				patient.setPw(resultSet.getString("pw"));
+				patient.setNickname(resultSet.getString("nickName"));
+				patient.setName(resultSet.getString("name"));
+				patient.setTel(resultSet.getString("tel"));
+				patient.setBirth(resultSet.getString("birth"));
+				patient.setGender(resultSet.getString("gender"));
+				patient.setEmail(resultSet.getString("email"));
+				patient.setPostcode(resultSet.getInt("postcode"));
+				patient.setAddress(resultSet.getString("address"));
+				patient.setAddress2(resultSet.getString("address2"));
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		return patient;
 	}
 
 }

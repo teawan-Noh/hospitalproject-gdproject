@@ -103,3 +103,8 @@
     left: 200px;
 }
 
+#message{
+    position: absolute;
+    color: tomato;
+}
+

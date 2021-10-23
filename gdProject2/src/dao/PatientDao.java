@@ -17,4 +17,5 @@ public interface PatientDao {
 	
 	//·Î±×ÀÎ
 	Patient login(String id, String pw);
+	Patient selectByPcode(int pcode);
 }

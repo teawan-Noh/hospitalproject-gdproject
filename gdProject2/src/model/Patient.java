@@ -122,5 +122,14 @@ public class Patient {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
+
+	@Override
+	public String toString() {
+		return "Patient [pcode=" + pcode + ", id=" + id + ", pw=" + pw + ", nickname=" + nickname + ", name=" + name
+				+ ", tel=" + tel + ", birth=" + birth + ", gender=" + gender + ", email=" + email + ", postcode="
+				+ postcode + ", address=" + address + ", address2=" + address2 + "]";
+	}
+	
+	
 	
 }

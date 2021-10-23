@@ -1,9 +1,7 @@
 package dao;
 
 import java.sql.Connection;
-
 import dao.JDBCUtil;
-import model.Patient;
 
 public class PatientTest {
 	
@@ -13,7 +11,7 @@ public class PatientTest {
 		JDBCUtil.close(null, null, connection);
 		
 		PatientDao dao = new PatientDaoImpl();
-		Patient patient = new Patient();
+		/*Patient patient = new Patient();
 		
 		patient.setId("id1");
 		patient.setPw("11111111");
@@ -27,7 +25,9 @@ public class PatientTest {
 		patient.setAddress("서울");
 		patient.setAddress2("강동구");
 		
-		dao.insert(patient);
+		dao.insert(patient);*/
+		
+		System.out.println(dao.login("asdf", "12341234"));
 	}
 
 	
