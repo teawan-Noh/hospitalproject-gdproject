@@ -27,7 +27,7 @@ public class Sql {
 	public static final String APPROVAL_NOT_SELECT_SQL = "select * from approval natural join rest where approved != '승인' and dcode = ?";
 	public static final String APPROVAL_INSERT_SQL = "insert into approval values (?, ?, sysdate, ?, ?)"; 
 	public static final String DOCTOR_RESERVATION_SELECT_SQL = "SELECT b.rcode, b.rsvdate, a.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode WHERE c.dcode = ? and to_char(b.rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') order by b.rsvdate asc";
-
+	public static final String DOCTOR_INSERT_SQL = "insert into doctor values(doctor_seq.nextval, ?, ?, ?, ?, to_date(?,'yyyy-mm-dd'), ?, ?, ?, ?, ?, ?, ?)";
 
 	//odw
 	//회원가입
