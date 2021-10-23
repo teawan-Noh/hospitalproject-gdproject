@@ -14,6 +14,31 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/patient/patientLogin.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+    	$("#login").click(function(){
+    		//아이디
+    		var id_value = $("input[name='id']").val();
+    		
+    		if(!id_value){
+    			alert("아이디를 입력해주세요.")
+    			$("input[name='id']").focus();
+    			return false;
+    		}
+    		
+    		//비밀번호
+    		var pw_value = $("input[name='pw']").val();
+    		
+    		if(!pw_value){
+    			alert("비밀번호를 입력해주세요.")
+    			$("input[name='pw']").focus();
+    			return false;
+    		}
+    	});
+    });
+    </script>
 </head>
 
 <body>
@@ -26,7 +51,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <p>의사 로그인 페이지입니다.</p>
                 </section>
                 <section id="form" class="form-group">
-                    <form action="login" method="post" name="plogin">
+                    <form action="doctor_login" method="post" name="plogin">
                         <div class="mb-3">
                             <label for="id" class="form-label smallTitle">아이디</label><br>
                             <input type="text" name="id" placeholder="아이디를 입력하세요" class="form-control" id="id"/>
@@ -35,6 +60,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             <label for="pw" class="form-label smallTitle">비밀번호</label><br>
                             <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" class="form-control">
                         </div>
+                        <span id="message">${message}</span>
                             <input type="submit" value="로그인" id="login" name="login"/>
                         <button type="button" onclick="location.href='index.jsp'" id="toMain">메인페이지로</button>
                     </form>

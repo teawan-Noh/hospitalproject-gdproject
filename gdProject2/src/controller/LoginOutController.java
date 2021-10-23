@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.DoctorDao;
+import dao.DoctorDaoImpl;
 import dao.PatientDao;
 import dao.PatientDaoImpl;
+import model.Doctor;
 import model.Patient;
 
 @WebServlet(name="LoginOutController", urlPatterns= {"/patient_login_input","/doctor_login_input","/manager_login_input","/patient_login","/doctor_login","/manager_login","/logout"})
@@ -61,10 +65,30 @@ public class LoginOutController extends HttpServlet{
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
 			}
 			
+		}else if(action.equals("doctor_login")) {
+			String id = req.getParameter("id");
+			String pw = req.getParameter("pw");
+			
+			DoctorDao dao = new DoctorDaoImpl();
+			Doctor d = dao.login(id, pw);
+			
+			if(d != null) {
+				HttpSession session = req.getSession();
+				session.setAttribute("dcode", d.getDcode());
+				int dcode = (int)session.getAttribute("dcode");
+				DoctorDao ddao = new DoctorDaoImpl();
+				Doctor doctor = ddao.selectByDcode(dcode);
+				req.setAttribute("patient", doctor);
+			}else {
+				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
+			}
+			
+			
 		}else if(action.equals("logout")) {
 			HttpSession session = req.getSession();
 			
 			session.removeAttribute("pcode");
+			session.removeAttribute("dcode");
 		}
 		
 		//페이지
@@ -87,6 +111,15 @@ public class LoginOutController extends HttpServlet{
 				dispatcherUrl="/patient/patientLogin.jsp";
 			}
 			
+			
+		}else if(action.equals("doctor_login")) {
+			
+			HttpSession session = req.getSession();
+			if(session.getAttribute("dcode")!=null) {
+				dispatcherUrl="/index.jsp";
+			}else {
+				dispatcherUrl="/doctor/doctorLogin.jsp";
+			}
 			
 		}else if(action.equals("logout")) {
 			dispatcherUrl="/index.jsp";

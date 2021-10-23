@@ -23,15 +23,15 @@ public class Sql {
 	public static final String DOCTOR_LOGIN_SQL =
 			"select * from doctor where id =? and pw =?";
 	
-	public static final String DOCTOR_SELECT_BY_PCODE_SQL =
-			"";
+	public static final String DOCTOR_SELECT_BY_DCODE_SQL =
+			"select * from doctor where dcode = ?";
 	
 	//관리자 로그인
 	public static final String MANAGER_LOGIN_SQL =
 			"select * from manager where id =? and pw =?";
 	
-	public static final String MANAGER_SELECT_BY_PCODE_SQL =
-			"";
+	public static final String MANAGER_SELECT_BY_MCODE_SQL =
+			"select * from manager where mcode=?";
 	
 	
 	
