@@ -62,7 +62,9 @@ public class LoginOutController extends HttpServlet{
 			}
 			
 		}else if(action.equals("logout")) {
+			HttpSession session = req.getSession();
 			
+			session.removeAttribute("pcode");
 		}
 		
 		//∆‰¿Ã¡ˆ
