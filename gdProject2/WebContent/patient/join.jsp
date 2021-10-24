@@ -27,46 +27,46 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 $(function(){
 	
-	//아이디 중복확인
-	$("#idChkBtn").click(function(){
-		//사용자가 입력한 값 얻어오기
-		var id_value = $("input[name='id']").val();
-		//입력여부 검사
-		if(!id_value){
-			alert("아이디를 입력해주세요.")
-			$("input[name='id']").focus();
-			return false;
-		}
-		
-		//아이디 유효성 검사
-		var regulId = /^[a-zA-Z0-9]{4,20}$/;
-		
-		var regResult = regulId.test(id_value);
-		if(!regResult){
-			alert("영어 대소문자,숫자만 가능하며, 4자리에서 20자리 사이로 입력해주세요.");
-			$("#idChk").html("다시 입력해주세요.");
-			return false;
-		}
-		
-		//ajax
-		var url = "idcheck";
-		
-		$.get(url,{"id_value":id_value},function(data){
-			var result_text = $(data).find("result").text();
-			var result = eval(result_text);
-			
-			if(result){
-				$("#idChk").html("사용가능한 아이디입니다.");
-				$("#idChk").css({"color":"blue"});
-			}else{
-				$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
+		//아이디 중복확인
+		$("#idChkBtn").click(function(){
+			//사용자가 입력한 값 얻어오기
+			var id_value = $("input[name='id']").val();
+			//입력여부 검사
+			if(!id_value){
+				alert("아이디를 입력해주세요.")
+				$("input[name='id']").focus();
+				return false;
 			}
+			
+			//아이디 유효성 검사
+			var regulId = /^[a-zA-Z0-9]{4,20}$/;
+			
+			var regResult = regulId.test(id_value);
+			if(!regResult){
+				alert("영어 대소문자,숫자만 가능하며, 4자리에서 20자리 사이로 입력해주세요.");
+				$("#idChk").html("다시 입력해주세요.");
+				return false;
+			}
+			
+			//ajax
+			var url = "idcheck";
+			
+			$.get(url,{"id_value":id_value},function(data){
+				var result_text = $(data).find("result").text();
+				var result = eval(result_text);
+				
+				if(result){
+					$("#idChk").html("사용가능한 아이디입니다.");
+					$("#idChk").css({"color":"blue"});
+				}else{
+					$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
+					return false;
+				}
+			});
+			
+			$("#idChkBtncheck").prop("checked", true);
+			
 		});
-		
-	});
-	
-	
-	
 	
 	//비밀번호 일치여부 판단
 	$("input[name='pwChk']").focusout(function(){
@@ -116,6 +116,13 @@ $(function(){
 			$("input[name='id']").focus();
 			return false;
 		}
+		
+		
+		if($("#idChkBtncheck").is(":checked") != true){
+			alert("아이디 중복검사를 해주세요.")
+			return false;
+		}
+		
 		
 		//비밀번호
 		var pw_value = $("input[name='pw']").val();
@@ -277,6 +284,7 @@ $(function(){
                         <br>
                         <input type="text" name="id" placeholder="아이디를 입력하세요" class="form-control" id="id"/>
                         <button id="idChkBtn" type="button">중복확인</button>
+                        <input type="checkbox" id="idChkBtncheck" hidden="hidden"/>
                     </div>
 
                     <div class="mb-3">
