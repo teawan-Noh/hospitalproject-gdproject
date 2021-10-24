@@ -13,7 +13,7 @@ import dao.PatientDaoImpl;
 import model.Patient;
 
 
-@WebServlet(name="PatientController", urlPatterns= {"/patient_input","/idcheck","/patient_save"})
+@WebServlet(name="PatientController", urlPatterns= {"/patient_input","/idcheck","/patient_save","/patient_update"})
 //patient_input : 회원가입 화면, idcheck : 중복체크, patient_save : 저장
 public class PatientController extends HttpServlet{
 
@@ -67,6 +67,8 @@ public class PatientController extends HttpServlet{
 			req.setAttribute("patient", patient);
 			PatientDao dao = new PatientDaoImpl();
 			dao.insert(patient);
+		}else if(action.equals("patient_update")) {
+			
 		}
 		
 		
@@ -78,6 +80,8 @@ public class PatientController extends HttpServlet{
 			dispatcherUrl="/ajax/idcheck.jsp";
 		}else if(action.equals("patient_save")) {
 			dispatcherUrl="index.jsp";
+		}else if(action.equals("patient_update")) {
+			dispatcherUrl="/patient/patientUpdate.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
