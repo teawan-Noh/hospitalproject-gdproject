@@ -84,9 +84,9 @@
 </style>
 </head>
 <body>
-	<jsp:include page="components/header.jsp"></jsp:include>
+	<jsp:include page="../components/header.jsp"></jsp:include>
 	<div class="main">
-        <jsp:include page="components/sidemenu.jsp"></jsp:include>
+        <jsp:include page="../components/sidemenu.jsp"></jsp:include>
 	<div class = "content">
         <a href = "index.jsp"><img src = "" alt = "집 아이콘"></a>
         > 의료진
@@ -125,6 +125,6 @@
     <hr>
     </div>
     </div>
-    <jsp:include page="components/footer.jsp"></jsp:include>
+    <jsp:include page="../components/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -71,7 +71,7 @@
             margin-bottom: 5px;
         }
 
-        #savebtn {
+        #updatebtn {
             width: 70px;
             height: 35px;
             color: white;
@@ -98,32 +98,39 @@
 </style>
 </head>
 <body>
-	<jsp:include page="components/header.jsp"></jsp:include>
+	<jsp:include page="../components/header.jsp"></jsp:include>
 	<div class = "main">
-		<jsp:include page="components/sidemenu.jsp"></jsp:include>
+		<jsp:include page="../components/sidemenu.jsp"></jsp:include>
 		<div class ="content">
     	<h1>개인정보수정</h1>
-        	<form method="post" action="update_doctor">
+        	<form method="post" action="doctor_update">
             	<table border="1px solid">
                 <tr>
                     <th>성명</th>
-                    <td>이름 불러오기</td>
+                    <td>${doctor.name}</td>
                 </tr>
                 <tr>
                     <th>면허번호</th>
-                    <td>면허번호 불러오기</td>
+                    <td>${doctor.licenseno}</td>
                 </tr>
                  <tr>
                     <th>진료과</th>
-                    <td>진료과 불러오기</td>
+                    <td>
+						<select id="selectBox" name="selectsubject">
+                    		<option value = 0>진료과 선택</option>
+                    		<c:forEach var="subject" items="${subjectList}">
+                    			<option value = "${subject.scode}">${subject.name}</option>
+                    		</c:forEach>
+                    	</select>
+					</td>
                 </tr>
                 <tr>
                     <th>아이디</th>
-                    <td>아이디 불러오기</td>
+                    <td>${doctor.id}</td>
                 </tr>
                 <tr>
                     <th>비밀번호</th>
-                    <td><input type="password" name="pwd" placeholder="비밀번호를 입력해주세요."></td>
+                    <td><input type="password" name="pwd" value = "${doctor.pw}"></td>
                 </tr>
                 <tr>
                     <th>비밀번호 확인</th>
@@ -132,39 +139,40 @@
                 <tr>
                     <th>주소</th>
                     <td class = "post">
-                        <input type="text" id="sample6_postcode" placeholder="우편번호">
+                        <input type="text" id="sample6_postcode" value = "${doctor.postcode}">
                         <input type="button" id="postbtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                        <input type="text" id="sample6_address" placeholder="주소"><br>
-                        <input type="text" id="sample6_detailAddress" placeholder="상세주소"><br>
+                        <input type="text" id="sample6_address" value="${doctor.address}"><br>
+                        <input type="text" id="sample6_detailAddress" value="${doctor.address2}"><br>
+                        
                     </td> 
                 </tr>
                 <tr>
                     <th>생년월일</th>
-                    <td>생년월일 불러오기</td>
+                    <td>${doctor.birth}</td>
                 </tr>
                 <tr>
                     <th>경력사항</th>
                     <td>
-                        <textarea name="career" placeholder="내용을 입력해주세요." rows="5" cols="75"></textarea>    
+                        <textarea name="career" rows="5" cols="75">${doctor.career}</textarea>    
                     </td>
                 </tr>
                 <tr>
                     <th>휴대폰</th>
-                    <td><input type = "tel" name = "tel" placeholder="전화번호를 입력해주세요."></td>
+                    <td><input type = "tel" name = "tel" value="${doctor.tel}"></td>
                 </tr>
                 <tr>
                     <th>이메일</th>
-                    <td><input type="email" name="email" placeholder="이메일을 입력해주세요."></td>
+                    <td><input type="email" name="email" value="${doctor.email}"></td>
                 </tr>
             </table>
             <div>
-            	<button type = "submit" id = "savebtn">저장</button>
+            	<button type = "submit" id = "updatebtn">수정</button>
             	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
             </div>
         </form>
         </div>
     </div>
-    <jsp:include page="components/footer.jsp"></jsp:include>
+    <jsp:include page="../components/footer.jsp"></jsp:include>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     	function sample6_execDaumPostcode() {

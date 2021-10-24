@@ -70,6 +70,7 @@ function carousel() {
 }
 </script>
 <jsp:include page="components/footer.jsp"></jsp:include>
+<a href = "mypage?dcode=1">1번 의사 수정하기</a>
 </body>
 </html>
 
