@@ -12,13 +12,6 @@ import model.Subject;
 public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
-	public List<Subject> selectSubjectAll() {
-	
-		return null;
-	}
-
-
-	@Override
 	public Doctor login(String id, String pw) {
 		// TODO Auto-generated method stub
 		return null;
@@ -61,7 +54,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
 	public int selectCntById(String id) {
-int cnt = 1;
+		int cnt = 1;
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
