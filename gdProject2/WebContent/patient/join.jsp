@@ -8,7 +8,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+<title>회원가입</title>
 <!-- css파일  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/patient/join.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
@@ -30,10 +30,11 @@ $(function(){
 		//아이디 중복확인
 		$("#idChkBtn").click(function(){
 			//사용자가 입력한 값 얻어오기
-			var id_value = $("input[name='id']").val();
+			var id_value = $("input[name='id']").val().replace(/\s/gi, "");
 			//입력여부 검사
 			if(!id_value){
 				alert("아이디를 입력해주세요.")
+				$("input[name='id']").val('');
 				$("input[name='id']").focus();
 				return false;
 			}
@@ -70,22 +71,26 @@ $(function(){
 	
 	//비밀번호 일치여부 판단
 	$("input[name='pwChk']").focusout(function(){
-		var pw_value = $("input[name='pw']").val();
-		var pwChk_value = $("input[name='pwChk']").val();
+		var pw_value = $("input[name='pw']").val().replace(/\s/gi, "");
+		var pwChk_value = $("input[name='pwChk']").val().replace(/\s/gi, "");
 		
 		//비밀번호 유효성 검사
-		var regulPw = /^[a-zA-Z0-9]{8,20}$/;
+		var regulPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
 		var regResult = regulPw.test(pw_value);
 		
 		if(!regResult){
-			alert("영어 대소문자,숫자만 가능하며, 8자리에서 20자리 사이로 입력해주세요.");
+			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
+			$("input[name='pw']").val('');
 			$("input[name='pw']").focus();
+			
 		}
 		
 		//일치여부
 		if(pw_value != pwChk_value){
 			$("#pwChkSpan").html("일치하지 않습니다.");
 			$("#pwChkSpan").css({"color":"tomato"});
+			$('#pw').val('');
+			$('#pwChk').val('');
 			return false;
 		}else if(pw_value == pwChk_value){
 			$("#pwChkSpan").html("일치합니다.");
@@ -109,11 +114,12 @@ $(function(){
 	$("#join").click(function(){
 		
 		//아이디
-		var id_value = $("input[name='id']").val();
+		var id_value = $("input[name='id']").val().replace(/\s/gi, "");
 		
 		if(!id_value){
 			alert("아이디를 입력해주세요.")
 			$("input[name='id']").focus();
+			$("input[name='id']").val('');
 			return false;
 		}
 		
@@ -125,29 +131,32 @@ $(function(){
 		
 		
 		//비밀번호
-		var pw_value = $("input[name='pw']").val();
+		var pw_value = $("input[name='pw']").val().replace(/\s/gi, "");
 		
 		if(!pw_value){
 			alert("비밀번호를 입력해주세요.")
 			$("input[name='pw']").focus();
+			$("input[name='pw']").val('');
 			return false;
 		}
 		
 		//비밀번호 확인
-		var pwChk_value = $("input[name='pwChk']").val();
+		var pwChk_value = $("input[name='pwChk']").val().replace(/\s/gi, "");
 		
 		if(!pwChk_value){
 			alert("비밀번호 확인을 입력해주세요.")
 			$("input[name='pwChk']").focus();
+			$("input[name='pwChk']").val('');
 			return false;
 		}
 		
 		//닉네임
-		var nick_value = $("input[name='nickName']").val();
+		var nick_value = $("input[name='nickName']").val().replace(/\s/gi, "");
 		
 		if(!nick_value){
 			alert("닉네임을 입력해주세요.");
 			$("input[name='nickName']").focus();
+			$("input[name='nickName']").val('');
 			return false;
 		}
 		
@@ -161,11 +170,12 @@ $(function(){
 		}
 		
 		//이름
-		var name_value = $("input[name='name']").val();
+		var name_value = $("input[name='name']").val().replace(/\s/gi, "");
 		
 		if(!name_value){
 			alert("이름을 입력해주세요.");
 			$("input[name='name']").focus();
+			$("input[name='name']").val('');
 			return false;
 		}
 		
@@ -179,11 +189,12 @@ $(function(){
 		}
 		
 		//연락처
-		var tel_value = $("input[name='tel']").val();
+		var tel_value = $("input[name='tel']").val().replace(/\s/gi, "");
 		
 		if(!tel_value){
 			alert("연락처를 입력해주세요.");
 			$("input[name='tel']").focus();
+			$("input[name='tel']").val('');
 			return false;
 		}
 		
@@ -204,11 +215,12 @@ $(function(){
 		}
 		
 		//이메일
-		var email_value = $("input[name='email']").val();
+		var email_value = $("input[name='email']").val().replace(/\s/gi, "");
 		
 		if(!email_value){
 			alert("이메일을 입력해주세요.");
 			$("input[name='email']").focus();
+			$("input[name='email']").val('');
 			return false;
 		}
 		
@@ -230,11 +242,12 @@ $(function(){
 		}
 		
 		//우편번호
-		var postcode_value = $("input[name='postcode']").val();
+		var postcode_value = $("input[name='postcode']").val().replace(/\s/gi, "");
 		
 		if(!postcode_value){
 			alert("우편번호를 입력해주세요.");
 			$("input[name='postcode']").focus();
+			$("input[name='postcode']").val('');
 			return false;
 		}
 		

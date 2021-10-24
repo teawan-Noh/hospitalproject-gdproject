@@ -51,14 +51,14 @@ public class PatientController extends HttpServlet{
 			}
 			
 		}else if(action.equals("patient_save")) {
-			String id = req.getParameter("id");
-			String pw = req.getParameter("pw");
-			String nickName = req.getParameter("nickName");
-			String name = req.getParameter("name");
-			String tel = req.getParameter("tel");
+			String id = req.getParameter("id").replaceAll(" ", "");
+			String pw = req.getParameter("pw").replaceAll(" ", "");
+			String nickName = req.getParameter("nickName").replaceAll(" ", "");
+			String name = req.getParameter("name").replaceAll(" ", "");;
+			String tel = req.getParameter("tel").replaceAll(" ", "");;
 			String birth = req.getParameter("birth");
 			String gender = req.getParameter("gender");
-			String email = req.getParameter("email");
+			String email = req.getParameter("email").replaceAll(" ", "");;
 			int postcode = Integer.parseInt(req.getParameter("postcode"));
 			String address = req.getParameter("address");
 			String address2 = req.getParameter("address2");
