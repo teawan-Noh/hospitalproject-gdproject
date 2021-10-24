@@ -254,7 +254,7 @@ $(function(){
         .content {
         	margin: 20px;
         }
-        input {
+        input, select {
             width: 600px;
             height: 40px;
             border: 1px solid rgb(243, 243, 243);
@@ -286,7 +286,7 @@ $(function(){
             border-top: 4px solid rgb(70, 145, 140);
             border-left: none;
             border-right: none;
-            border-bottom: 1px solid rgb(223, 220, 220);
+            border-bottom: 4px solid rgb(70, 145, 140);
             padding-top: 0;
             border-collapse: collapse;
         }
@@ -296,12 +296,13 @@ $(function(){
             margin: 0;
             padding: 10px;
             color: #555;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             width: 150px;
         }
         tr {
             background-color: white;
             height: 45px;
+            border-bottom: 1px solid rgb(223, 220, 220) !important;
         }
         td {
             padding: 5px;

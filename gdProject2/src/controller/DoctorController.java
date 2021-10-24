@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -17,8 +18,14 @@ import dao.ReservationDaoImpl;
 import model.Doctor;
 import model.Subject;
 
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list"})
 public class DoctorController extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -70,6 +77,24 @@ public class DoctorController extends HttpServlet {
 			DoctorDao dao = new DoctorDaoImpl();
 			Doctor doctor = new Doctor(scode, id, pwd, name, birth, licenseno, postcode, address, address2, career, tel, email);
 			dao.insert(doctor);
+		} else if(action.equals("doctor_search")) {
+			ReservationDao dao = new ReservationDaoImpl();
+			List<Subject> subjectList = dao.selectSubjectAll();
+			req.setAttribute("subjectList", subjectList);
+		} else if(action.equals("doctor_list")) {
+			int scode = Integer.parseInt(req.getParameter("selectSubject"));
+			String dname = req.getParameter("dname").trim();
+			DoctorDao dao = new DoctorDaoImpl();
+			List<HashMap> doctorList = null;
+			if(dname == null) {
+				doctorList = dao.selectByscode(scode);
+			} else {
+				doctorList = dao.selectByNameAndScode(dname, scode);
+			}
+			
+			Subject selectSubject = dao.selectBycode(scode);
+			req.setAttribute("doctorList", doctorList);
+			req.setAttribute("selectSubject", selectSubject);
 		}
 		
 		String dispatcherUrl = null;
@@ -79,6 +104,10 @@ public class DoctorController extends HttpServlet {
 			dispatcherUrl="/ajax/idcheck.jsp";
 		} else if(action.equals("doctor_save")) {
 			dispatcherUrl = "doctor_input";
+		} else if(action.equals("doctor_search")) {
+			dispatcherUrl = "searchDoctor.jsp";
+		} else if(action.equals("doctor_list")) {
+			dispatcherUrl = "doctor_search";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

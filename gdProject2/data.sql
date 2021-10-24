@@ -28,3 +28,4 @@ insert into doctor values(doctor_seq.nextval, 7, 'sas27847', 'aigj34972', '진선�
 insert into doctor values(doctor_seq.nextval, 8, 'kwoopd98', 'angi732', '강준', to_date('1987-10-12','yyyy-mm-dd'), 079532, 29875, '서울특별시', '성동구', '2007~2010 구디병원 정형외과 교수, 2010~현재 구디병원 정형외과 전문의', '010-3683-0287', 'dknvi772@gdhp.com');
 insert into doctor values(doctor_seq.nextval, 9, 'lsmo081243', 'ahig48271', '채지수', to_date('1985-7-27','yyyy-mm-dd'), 093621, 38671, '서울특별시', '마포구', '2003~2007 구디병원 피부과 전임의, 2007~2010 구디병원 피부과 임상조교수, 2010~2014 구디병원 피부과 부교수, 2015~2018 구디병원 피부과 교수, 2018~현재 구디병원 피부과 과장', '010-9716-1686', 'ci7t61@gdhp.com');
 insert into doctor values(doctor_seq.nextval, 10, 's0ujg08', 'ainiey827', '석수민', to_date('1983-2-14','yyyy-mm-dd'), 325234, 14287, '경기도', '광명시', ' 2005~2007 구디병원 흉부외과 전문의, 2007~2010 구디병원 환자중심 삶의 질 연구소 소장, 2010~현재 구디병원 암센터장', '010-0273-1927', 'smoie712@gdhp.com');
+

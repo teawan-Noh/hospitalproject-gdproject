@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Doctor;
@@ -78,5 +80,159 @@ public class DoctorDaoImpl implements DoctorDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		return cnt;
+	}
+
+
+	@Override
+	public List<Doctor> selectAll() {
+		List<Doctor> doctorList = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_ALL_SQL);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				Doctor doctor = new Doctor();
+				
+				doctor.setDcode(resultSet.getInt("dcode"));
+				doctor.setScode(resultSet.getInt("scode"));
+				doctor.setId(resultSet.getString("id"));
+				doctor.setPw(resultSet.getString("pw"));
+				doctor.setName(resultSet.getString("name"));
+				doctor.setBirth(resultSet.getString("birth"));
+				doctor.setLicenseno(resultSet.getInt("licenseno"));
+				doctor.setPostcode(resultSet.getInt("postcode"));
+				doctor.setAddress(resultSet.getString("address"));
+				doctor.setAddress2(resultSet.getString("address2"));
+				doctor.setCareer(resultSet.getString("career"));
+				doctor.setTel(resultSet.getString("tel"));
+				doctor.setEmail(resultSet.getString("email"));
+				
+				
+				doctorList.add(doctor);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection); 
+		}
+		return doctorList;
+	}
+
+
+	@Override
+	public List<HashMap> selectByscode(int scode) {
+		List<HashMap> doctorList = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_SCODE_SQL);
+			pStatement.setInt(1, scode);
+			resultSet = pStatement.executeQuery();
+			//select d.dcode, d.scode, d.name, d.career, d.tel, d.email from doctor d join subject s on d.scode = s.scode where s.scode = ?
+			while(resultSet.next()) {
+				
+				HashMap<String, Comparable> doctorMap = new HashMap<>();
+				
+				doctorMap.put("dcode", resultSet.getInt("dcode"));
+				doctorMap.put("scode", resultSet.getInt("scode"));
+				doctorMap.put("name", resultSet.getString("dname"));
+				doctorMap.put("career", resultSet.getString("career"));
+				doctorMap.put("tel", resultSet.getString("tel"));
+				doctorMap.put("email", resultSet.getString("email"));
+				doctorMap.put("sname", resultSet.getString("sname"));
+				
+				doctorList.add(doctorMap);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection); 
+		}
+		return doctorList;
+	}
+
+
+	@Override
+	public Subject selectBycode(int scode) {
+		Subject subject = null;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {	
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.SUBJECT_SELECT_BY_SCODE_SQL);
+			pStatement.setInt(1, scode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {	
+				
+				subject = new Subject();
+				
+				subject.setScode(resultSet.getInt("scode"));
+				subject.setName(resultSet.getString("name"));
+				subject.setDescription(resultSet.getString("description"));
+				subject.setTel(resultSet.getString("tel"));
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		return subject;
+	}
+
+
+	@Override
+	public List<HashMap> selectByNameAndScode(String name, int scode) {
+		List<HashMap> doctorList = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_NAME_AND_SCODE_SQL);
+			pStatement.setString(1, '%'+name+'%');
+			pStatement.setInt(2, scode);
+			resultSet = pStatement.executeQuery();
+			//select d.dcode, d.scode, d.name, d.career, d.tel, d.email from doctor d join subject s on d.scode = s.scode where s.scode = ?
+			while(resultSet.next()) {
+				
+				HashMap<String, Comparable> doctorMap = new HashMap<>();
+				
+				doctorMap.put("dcode", resultSet.getInt("dcode"));
+				doctorMap.put("scode", resultSet.getInt("scode"));
+				doctorMap.put("name", resultSet.getString("dname"));
+				doctorMap.put("career", resultSet.getString("career"));
+				doctorMap.put("tel", resultSet.getString("tel"));
+				doctorMap.put("email", resultSet.getString("email"));
+				doctorMap.put("sname", resultSet.getString("sname"));
+				
+				doctorList.add(doctorMap);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection); 
+		}
+		return doctorList;
 	}
 }
