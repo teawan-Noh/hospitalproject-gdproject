@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 import model.Doctor;
@@ -55,5 +56,34 @@ public class DoctorDaoImpl implements DoctorDao {
 			JDBCUtil.close(null, pStatement, connection);
 		}
 		
+	}
+
+
+	@Override
+	public int selectCntById(String id) {
+int cnt = 1;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_CNT_BY_ID_SQL);
+
+			pStatement.setString(1, id);
+
+			resultSet = pStatement.executeQuery();
+
+			if (resultSet.next()) {
+				cnt=resultSet.getInt("cnt");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		return cnt;
 	}
 }
