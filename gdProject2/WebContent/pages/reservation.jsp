@@ -48,7 +48,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .fc-day-past .fc-daygrid-day-number,
             .fc-day-today .fc-daygrid-day-number,
             .fc-day-sat div a,
-            .fc-day-sun div a {
+            .fc-day-sun div a,
+            .rest div a {
                 color: #b8b8b8;
             }
             .fc .fc-daygrid-day.fc-day-today {
@@ -109,10 +110,19 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 margin: 0 40px;
             }
 
-            .card-box:hover,
-            .card-box.active {
+            .card-box:hover:not(.not-available),
+            .card-box.active:not(.not-available) {
                 background-color: #468c91;
                 color: white;
+            }
+            .card-box.not-available {
+                background-color: #b8b8b8;
+                border: none;
+                color: white;
+            }
+
+            .rsv-time .card-box {
+                font-size: 16px !important;
             }
             .doctor-img {
                 background-image: url("img/doctor-img.png");
@@ -145,6 +155,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .doctor-code {
                 display: none;
             }
+            .book {
+                margin-left: 0;
+            }
         </style>
         <script>
             $(function () {
@@ -152,6 +165,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 let dcode = "";
                 let rsvdate = "";
                 let rsvtime = "";
+                let dname = "";
+                // 환자 코드 임의 지정
+                let pcode = 2;
+
                 function XMLToString(oXML) {
                     //code for IE
                     if (window.ActiveXObject) {
@@ -189,16 +206,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     locale: "ko", // 한국어 설정
                     eventAdd: function (obj) {
                         // 이벤트가 추가되면 발생하는 이벤트
-                        console.log(obj);
+                        //console.log(obj);
                     },
                     eventChange: function (obj) {
                         // 이벤트가 수정되면 발생하는 이벤트
-                        console.log(obj);
+                        //console.log(obj);
                     },
                     eventRemove: function (obj) {
                         // 이벤트가 삭제되면 발생하는 이벤트
-                        console.log(obj);
+                        //console.log(obj);
                     },
+                    // 달력 날짜를 클릭할 때
                     dateClick: function (date) {
                         var view = date.dayEl;
                         if (
@@ -210,21 +228,94 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             alert("해당 날짜는 예약할 수 없습니다.");
                         } else {
                             rsvdate = date.dateStr;
-                            $("#selected").text(rsvdate);
-                            var schedule = date.dayEl.innerText.split("\n");
+                            rsvtime = "";
+                            $("#selected").remove();
+                            $("#reservation-time").prepend(
+                                "<h2 id='selected'>" + rsvdate + "</h2>"
+                            );
+                            $(".rsv-time")
+                                .children()
+                                .each(function (idx, item) {
+                                    $(item).remove();
+                                });
+
+                            var url = "rsv-time";
+                            // 스케줄 ajax
+
+                            let available = [
+                                // 예약 가능 리스트
+                                "09:00",
+                                "09:15",
+                                "09:30",
+                                "10:00",
+                                "10:15",
+                                "10:30",
+                                "11:00",
+                                "11:15",
+                                "11:30",
+                                "11:45",
+                                "13:00",
+                                "13:15",
+                                "13:30",
+                                "14:00",
+                                "14:15",
+                                "14:30",
+                                "15:00",
+                                "15:15",
+                                "15:30",
+                                "16:00",
+                                "16:15",
+                                "16:30",
+                                "17:00",
+                                "17:15",
+                                "17:30",
+                                "17:45",
+                            ];
+                            $.get(
+                                url,
+                                { dcode: dcode, rsvdate: rsvdate },
+                                function (data) {
+                                    let rsv = $(data).find("rsv");
+                                    let notavailable = [];
+                                    if (rsv != undefined) {
+                                        $(rsv).each(function (idx, item) {
+                                            notavailable.push(
+                                                $(item).text().trim()
+                                            );
+                                            console.log($(item).text().trim());
+                                        });
+                                        available.forEach(item => {
+                                            if (
+                                                notavailable.indexOf(item) == -1
+                                            ) {
+                                                $(".rsv-time").append(
+                                                    "<li class='card-box'>" +
+                                                        item +
+                                                        "</li>"
+                                                );
+                                            } else {
+                                                $(".rsv-time").append(
+                                                    "<li class='card-box not-available'>" +
+                                                        item +
+                                                        "</li>"
+                                                );
+                                            }
+                                        });
+                                    }
+                                }
+                            );
                         }
+                        // 일정 출력
+
+                        /*
                         var schedule = date.dayEl.innerText.split("\n");
                         console.log(schedule[1]);
                         console.log(date.dateStr);
                         console.log(date.dayEl);
+                        */
                     },
                     // 이벤트
-                    events: [
-                        {
-                            title: "주말",
-                            daysOfWeek: ["0", "6"],
-                        },
-                    ],
+                    events: [],
                 });
                 // 캘린더 랜더링
                 calendar.render();
@@ -241,8 +332,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $(this).removeClass("active");
                         subject = "";
                         dcode = "";
-                        console.log(subject);
-                        console.log(dcode);
+                        dname = "";
+                        rsvdate = "";
+                        rsvtime = "";
                     } else {
                         $(".subject").each(function (idx, item) {
                             $(item).removeClass("active");
@@ -255,6 +347,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             function (data) {
                                 subject = $(data).find("subject").text();
                                 dcode = "";
+                                dname = "";
+                                rsvdate = "";
+                                rsvtime = "";
                                 $(data)
                                     .find("doctor")
                                     .each(function (idx, item) {
@@ -271,74 +366,93 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                                 "</li>"
                                         );
                                     });
-                                console.log(subject);
-                                console.log(dcode);
                             }
                         );
                     }
                 });
 
+                // 의사 선택시 달력 표시
                 $(document).on("click", ".card-box.doctor .flex", function () {
                     //let url = "schedules";
-                    dcode = $(this)
-                        .children(".doctor-profile")
-                        .children(".doctor-code")
-                        .text();
-                    console.log(dcode);
 
                     calendar.removeAllEvents();
                     calendar.addEvent({
                         title: "주말",
                         daysOfWeek: ["0", "6"],
                     });
+
                     var doctor = $(this).parent(".card-box.doctor");
                     if ($(doctor).hasClass("active")) {
                         $(doctor).removeClass("active");
-                        doctor = "";
+                        dcode = "";
+                        dname = "";
+                        rsvdate = "";
+                        rsvtime = "";
                         $("#calendar-container").hide();
                     } else {
                         $(".card-box.doctor").each(function (idx, item) {
                             $(item).removeClass("active");
                         });
+                        $(".rest").each(function () {
+                            $(this)
+                                .children(".rest-children")
+                                .removeClass("rest-children");
+                            $(this).removeClass("rest");
+                        });
+                        $(".rsv-time")
+                            .children()
+                            .each(function (idx, item) {
+                                $(item).remove();
+                            });
+
+                        $("#selected").remove();
 
                         $(doctor).addClass("active");
-                        if ($("#calendar-container").is(":visible")) {
-                            $("#calendar-container").hide();
-                        }
                         $("#calendar-container").show();
+
                         let url = "schedule";
+                        dcode = $(this)
+                            .children(".doctor-profile")
+                            .children(".doctor-code")
+                            .text();
+                        dname = $(this)
+                            .children(".doctor-profile")
+                            .children(".doctor-name")
+                            .text();
+                        rsvdate = "";
+                        rsvtime = "";
+                        // Ajax
                         $.get(url, { dcode: dcode }, function (data) {
-                            console.log(XMLToString(data));
-                            $(data)
-                                .find("schedule")
-                                .each(function (idx, item) {
+                            var schedule = $(data).find("schedule");
+                            if (schedule.length > 0) {
+                                $(schedule).each(function (idx, item) {
                                     var restdate = $(item)
                                         .find("restdate")
                                         .text();
                                     var day = $(item).find("day").text();
                                     if (restdate != "") {
-                                        console.log(restdate);
                                         calendar.addEvent({
                                             title: "휴진",
                                             start: restdate,
                                             classNames: ["rest-children"],
                                         });
                                     } else if (day != "") {
-                                        console.log(day);
                                         calendar.addEvent({
                                             title: "휴진",
                                             daysOfWeek: [String(day)],
                                             classNames: ["rest-children"],
                                         });
                                     }
+                                    $(".rest-children")
+                                        .closest("td.fc-day")
+                                        .addClass("rest");
                                 });
+                            }
                         });
                     }
-
-                    //location.href =
-                    //    "doctor-detail?subject=" + subject + "&dcode=" + dcode;
                 });
 
+                // 의사 상세정보 페이지
                 $(document).on("click", ".doctor-detail", function () {
                     //let url = "schedules";
                     var code = $(this)
@@ -351,6 +465,64 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     //$.get(url, { dcode: dcode }, function (data) {});
                     location.href =
                         "doctor-detail?subject=" + subject + "&dcode=" + code;
+                });
+
+                // 시간 클릭
+                $(document).on("click", ".rsv-time .card-box", function () {
+                    if ($(this).hasClass("not-available")) {
+                        alert(
+                            "이미 예약된 시간입니다.\n다른 시간을 선택해주세요."
+                        );
+                    } else {
+                        $(".rsv-time .card-box").each(function () {
+                            $(this).removeClass("active");
+                        });
+                        rsvtime = $(this).text();
+                        $(this).addClass("active");
+                    }
+                });
+
+                // 예약하기 버튼 클릭
+                $(document).on("click", ".card-box.book", function () {
+                    if (subject == "") {
+                        alert("진료과를 선택해주세요.");
+                    } else if (dcode == "") {
+                        alert("담당 의사를 선택해주세요.");
+                    } else if (rsvdate == "") {
+                        alert("예약 날짜를 선택해주세요.");
+                    } else if (rsvtime == "") {
+                        alert("예약 시간을 선택해주세요.");
+                    } else {
+                        if (
+                            confirm(
+                                "진료과 : " +
+                                    subject +
+                                    "\n담당 의사 : " +
+                                    dname +
+                                    "\n예약 시간 : " +
+                                    rsvdate +
+                                    " " +
+                                    rsvtime +
+                                    "\n정말 예약하시겠습니까?"
+                            ) == true
+                        ) {
+                            alert("예약이 완료되었습니다.");
+                            var url = "book";
+                            $.post(
+                                url,
+                                {
+                                    pcode: pcode,
+                                    dcode: dcode,
+                                    rsvdate: rsvdate + " " + rsvtime,
+                                },
+                                function (data) {
+                                    if (data != 0) {
+                                        location.href = "index.jsp";
+                                    }
+                                }
+                            );
+                        }
+                    }
                 });
             });
         </script>
@@ -383,11 +555,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <h2>예약 날짜 선택</h2>
                     <div id="calendar-container">
                         <div id="calendar"></div>
-                        <div>
-                            <p id="selected">날짜를 선택해주세요.</p>
+                        <br />
+                        <div id="reservation-time">
+                            <h2 id="selected"></h2>
+                            <ul class="card-list rsv-time"></ul>
                         </div>
                     </div>
                 </div>
+                <button class="card-box book">예약하기</button>
             </div>
         </div>
         <jsp:include page="../components/footer.jsp"></jsp:include>

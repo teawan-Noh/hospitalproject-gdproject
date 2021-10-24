@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Doctor;
+import model.Reservation;
 import model.Subject;
 
 public class ReservationDaoImpl implements ReservationDao {
@@ -176,6 +177,72 @@ public class ReservationDaoImpl implements ReservationDao {
 		return result;
 	}
 	
+
+
+	@Override
+	public List<Reservation> selectReservationByDcodeAndRsvDate(int dcode, String rsvdate) {
+		List<Reservation> rsvList = new ArrayList<Reservation>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.SELECT_RESERVATION_BY_DCODE_AND_RSVDATE_SQL);
+			pStatement.setInt(1, dcode);
+			pStatement.setString(2, rsvdate);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Reservation reservation = new Reservation(
+						resultSet.getInt("rcode"),
+						resultSet.getInt("pcode"),
+						resultSet.getInt("dcode"),
+						resultSet.getString("rsvdate"),
+						resultSet.getString("state")
+						);
+				rsvList.add(reservation);
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return rsvList;
+	}
+	
+	@Override
+	public int insertReservation(int pcode, int dcode, String rsvdate) {
+			int cnt = 0;
+			Connection connection = null;
+			PreparedStatement pStatement = null;
+			
+			
+			try {
+				connection = JDBCUtil.getConnection();
+				pStatement = connection.prepareStatement(Sql.RESERVATION_INSERT_SQL);
+				pStatement.setInt(1, pcode);
+				pStatement.setInt(2, dcode);
+				pStatement.setString(3, rsvdate);
+				cnt = pStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			} finally {
+				JDBCUtil.close(null, pStatement, connection);
+				
+			}
+			return cnt;
+		
+	}
+		
 	public String convertDay(String dayString) {
 		String result = null;
 		String[] days = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
@@ -188,5 +255,6 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		return result;
 	}
-	
+
+
 }

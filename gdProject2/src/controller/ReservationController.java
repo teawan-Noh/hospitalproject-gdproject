@@ -1,8 +1,13 @@
 package controller;
 
 import java.io.IOException;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +23,7 @@ import dao.ReservationDaoImpl;
 
 
 @WebServlet(name="ReservationController", 
-urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail"})
+urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail", "/rsv-time", "/book"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -81,6 +86,43 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		req.setAttribute("scheduleList", scheduleList);
 		
 	}
+	else if(action.equals("rsv-time")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		String rsvdate = req.getParameter("rsvdate");
+		
+		List<Reservation> rsvList = rdao.selectReservationByDcodeAndRsvDate(dcode, rsvdate);
+		List<String> availableList = new ArrayList<String>();
+		
+		for(Reservation rsv: rsvList) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				Date date = sdf.parse(rsv.getRsvdate());
+				String time = String.format("%02d", date.getHours()) + ":" + String.format("%02d", date.getMinutes());
+				availableList.add(time);
+			} catch (ParseException e) {
+				// TODO 磊悼 积己等 catch 喉废
+				e.printStackTrace();
+			}
+		}
+		req.setAttribute("rsvList", availableList);
+		
+	}
+	else if(action.equals("book")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		
+		int pcode = Integer.parseInt(req.getParameter("pcode"));
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		String rsvdate = req.getParameter("rsvdate");
+		
+		System.out.println(pcode);
+		System.out.println(dcode);
+		System.out.println(rsvdate);
+		
+		int cnt = rdao.insertReservation(pcode, dcode, rsvdate);
+		res.getWriter().print(cnt);
+	}
+	
 	
 	// 其捞瘤 贸府
 	String dispatcherUrl = null;
@@ -97,7 +139,11 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("schedule")) {
 		dispatcherUrl = "ajax/schedule.jsp";
 	}
-	
+	else if(action.equals("rsv-time")) {
+		dispatcherUrl = "ajax/rsv-time.jsp";
+	}
+	else if(action.equals("book")) {
+	}
 	
 	
 	if(dispatcherUrl != null) {
