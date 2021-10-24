@@ -22,7 +22,7 @@ public class Sql {
 	public static final String RESERVATION_DETAIL_SELECT_SQL = "SELECT a.name, a.tel, b.rsvdate, c.name, d.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode INNER JOIN subject d ON c.scode = d.scode WHERE a.pcode = ?";
 	public static final String DOCTOR_LIST_SELECT_SQL = "select d.name, s.name from doctor d join subject s on d.scode = s.scode order by s.name asc, d.name asc";
 	public static final String DOCTOR_DETAIL_SELECT_SQL = "select d.name, s.name, d.career from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
-	public static final String DOCTOR_UPDATE_SQL = "update doctor set pw = ?, postcode = ?, address = ?, address2 = ?, career = ?, tel = ?, email = ? where dcode = ?";
+	public static final String DOCTOR_UPDATE_SQL = "update doctor set name = ?, scode = ?, pw = ?, postcode = ?, address = ?, address2 = ?, career = ?, tel = ?, email = ? where dcode = ?";
 	public static final String APPROVAL_SELECT_SQL = "select * from approval natural join rest where approved = '½ÂÀÎ' and dcode = ?";
 	public static final String APPROVAL_NOT_SELECT_SQL = "select * from approval natural join rest where approved != '½ÂÀÎ' and dcode = ?";
 	public static final String APPROVAL_INSERT_SQL = "insert into approval values (?, ?, sysdate, ?, ?)"; 
@@ -33,6 +33,8 @@ public class Sql {
 	public static final String DOCTOR_SELECT_BY_SCODE_SQL = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.email, s.name as sname from doctor d join subject s on d.scode = s.scode where s.scode = ?";
 	public static final String SUBJECT_SELECT_BY_SCODE_SQL = "select * from subject where scode = ?";
 	public static final String DOCTOR_SELECT_BY_NAME_AND_SCODE_SQL = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.email, s.name as sname from doctor d join subject s on d.scode = s.scode where d.name like ? and  s.scode = ?";
+	public static final String DOCTOR_DELETE_SQL = "delete from doctor where dcode = ?";
+	public static final String DOCTOR_SELECT_BY_DCODE = "select * from doctor where dcode = ?";
 	//odw
 	//È¸¿ø°¡ÀÔ
 	public static final String PATIENT_INSERT_SQL = 

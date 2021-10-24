@@ -8,11 +8,20 @@ import model.Subject;
 
 
 public interface DoctorDao {
-	Doctor login(String id, String pw);
+	
 	void insert(Doctor doctor);
+	void delete(int dcode);
+	void update(Doctor doctor);
+	
+	Doctor login(String id, String pw);
 	int selectCntById(String id);
+	
+	Subject selectBycode(int scode);
+	
+	Doctor selectBydcode(int dcode);
+	
 	List<Doctor> selectAll();
 	List<HashMap> selectByscode(int scode);
-	Subject selectBycode(int scode);
 	List<HashMap> selectByNameAndScode(String name, int scode);
+	
 }

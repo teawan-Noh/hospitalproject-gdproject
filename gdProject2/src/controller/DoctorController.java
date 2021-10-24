@@ -18,7 +18,7 @@ import dao.ReservationDaoImpl;
 import model.Doctor;
 import model.Subject;
 
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage"})
 public class DoctorController extends HttpServlet {
 
 	/**
@@ -95,19 +95,30 @@ public class DoctorController extends HttpServlet {
 			Subject selectSubject = dao.selectBycode(scode);
 			req.setAttribute("doctorList", doctorList);
 			req.setAttribute("selectSubject", selectSubject);
+		} else if(action.equals("mypage")) {
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			DoctorDao dao = new DoctorDaoImpl();
+			Doctor doctor = dao.selectBydcode(dcode);
+			req.setAttribute("doctor", doctor);
+			
+			ReservationDao rdao = new ReservationDaoImpl();
+			List<Subject> subjectList = rdao.selectSubjectAll();
+			req.setAttribute("subjectList", subjectList);
 		}
 		
 		String dispatcherUrl = null;
 		if(action.equals("doctor_input")) {
-			dispatcherUrl = "inputDoctor.jsp";
+			dispatcherUrl = "/pages/inputDoctor.jsp";
 		} else if(action.equals("didcheck")) {
 			dispatcherUrl="/ajax/idcheck.jsp";
 		} else if(action.equals("doctor_save")) {
 			dispatcherUrl = "doctor_input";
 		} else if(action.equals("doctor_search")) {
-			dispatcherUrl = "searchDoctor.jsp";
+			dispatcherUrl = "/pages/searchDoctor.jsp";
 		} else if(action.equals("doctor_list")) {
 			dispatcherUrl = "doctor_search";
+		} else if(action.equals("mypage")) {
+			dispatcherUrl = "/pages/updateDoctor.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
