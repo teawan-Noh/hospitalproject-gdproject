@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,8 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import model.Doctor;
+import model.Reservation;
 import model.Subject;
+import page.PageManager;
+import page.PageRowResult;
 
 public class ReservationDaoImpl implements ReservationDao {
 
@@ -138,8 +143,8 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 
 	@Override
-	public Map<String, String> selectScheduleByDcode(int dcode) {
-		Map<String, String> result = new HashMap<String, String>();
+	public List<Map<String, String>> selectScheduleByDcode(int dcode) {
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -148,13 +153,125 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.DOCTOR_SELECT_BY_DCODE_SQL);
+			pStatement = connection.prepareStatement(Sql.SELECT_SCHEDULE_BY_DCODE_SQL);
 			pStatement.setInt(1, dcode);
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
+				Map<String, String> map = new HashMap<String, String>();
+				String restdate = resultSet.getString("restdate");
+				String day = resultSet.getString("day");
+				if(restdate != null) {
+					map.put("restdate", resultSet.getString("restdate"));
+				}
+				if(day != null) {
+					map.put("day", convertDay(resultSet.getString("day")));
+				}
+				result.add(map);
 				
+			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return result;
+	}
+	
+
+
+	@Override
+	public List<Reservation> selectReservationByDcodeAndRsvDate(int dcode, String rsvdate) {
+		List<Reservation> rsvList = new ArrayList<Reservation>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.SELECT_RESERVATION_BY_DCODE_AND_RSVDATE_SQL);
+			pStatement.setInt(1, dcode);
+			pStatement.setString(2, rsvdate);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Reservation reservation = new Reservation(
+						resultSet.getInt("rcode"),
+						resultSet.getInt("pcode"),
+						resultSet.getInt("dcode"),
+						resultSet.getString("rsvdate"),
+						resultSet.getString("state")
+						);
+				rsvList.add(reservation);
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return rsvList;
+	}
+	
+	@Override
+	public int insertReservation(int pcode, int dcode, String rsvdate) {
+			int cnt = 0;
+			Connection connection = null;
+			PreparedStatement pStatement = null;
+			
+			
+			try {
+				connection = JDBCUtil.getConnection();
+				pStatement = connection.prepareStatement(Sql.RESERVATION_INSERT_SQL);
+				pStatement.setInt(1, pcode);
+				pStatement.setInt(2, dcode);
+				pStatement.setString(3, rsvdate);
+				cnt = pStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			} finally {
+				JDBCUtil.close(null, pStatement, connection);
+				
+			}
+			return cnt;
+		
+	}
+	
+	@Override
+	public List<Reservation> selectReservationPageAll(int requestPage) {
+		// TODO 자동 생성된 메소드 스텁
+		List<Reservation> rsvList = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_SELECT_PAGE_SQL);
+			
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			pStatement.setInt(1, prr.getRowStartNumber());
+			pStatement.setInt(2, prr.getRowEndNumber());
+			
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Reservation reservation = new Reservation();
+				
+				
+				rsvList.add(reservation);
 			}
 
 			
@@ -165,11 +282,22 @@ public class ReservationDaoImpl implements ReservationDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 			
 		}
-		return null;
+		
+		return rsvList;
 	}
-	
+		
 	public String convertDay(String dayString) {
-		return null;
+		String result = null;
+		String[] days = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
+		
+		for(int i = 0; i < days.length; i++) {
+			if(dayString.equals(days[i])) {
+				return String.valueOf(i);
+			}
+		}
+		
+		return result;
 	}
-	
+
+
 }
