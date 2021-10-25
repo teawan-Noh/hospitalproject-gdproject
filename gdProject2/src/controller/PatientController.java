@@ -88,10 +88,18 @@ public class PatientController extends HttpServlet{
 			String address2 = req.getParameter("address2");
 			int pcode = Integer.parseInt(req.getParameter("pcode"));
 			
+			
 			Patient patient = new Patient(pcode,pw,nickName,tel,email,postcode,address,address2);
 			req.setAttribute("patient", patient);
 			PatientDao dao = new PatientDaoImpl();
 			dao.update(patient);
+			
+		}else if(action.equals("patient_delete")) {
+			int pcode = Integer.parseInt(req.getParameter("pcode"));
+			PatientDao dao = new PatientDaoImpl();
+			dao.delete(pcode);
+			HttpSession session = req.getSession();
+			session.removeAttribute("pcode");
 		}
 		
 		
@@ -106,7 +114,9 @@ public class PatientController extends HttpServlet{
 		}else if(action.equals("patient_detail")) {
 			dispatcherUrl="/pages/patientDetail.jsp";
 		}else if(action.equals("patient_update")) {
-			
+			dispatcherUrl="index.jsp";
+		}else if(action.equals("patient_delete")) {
+			dispatcherUrl="index.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

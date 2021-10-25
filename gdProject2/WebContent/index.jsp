@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 </head>
 <body>
@@ -21,7 +19,7 @@
 	<a href="logout">로그아웃</a>
 </c:if>
 <c:if test="${pcode != null}">
-	<a href="patient_detail" id="patientUpdate">마이페이지</a>
+	<a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a>
 </c:if>
 </body>
 </html>
