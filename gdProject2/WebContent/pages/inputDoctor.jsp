@@ -10,7 +10,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	
 	//아이디 중복확인
 	$("#idcheck").click(function(){
 		//사용자가 입력한 값 얻어오기
