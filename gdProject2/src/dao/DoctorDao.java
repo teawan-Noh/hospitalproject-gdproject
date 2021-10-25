@@ -18,10 +18,10 @@ public interface DoctorDao {
 	
 	Subject selectBycode(int scode);
 	
-	Doctor selectBydcode(int dcode);
 	
 	List<Doctor> selectAll();
 	List<HashMap> selectByscode(int scode);
 	List<HashMap> selectByNameAndScode(String name, int scode);
+	List<HashMap> selectBydcode(int dcode);
 	
 }

@@ -18,7 +18,7 @@ import dao.ReservationDaoImpl;
 import model.Doctor;
 import model.Subject;
 
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage", "/doctor_update"})
 public class DoctorController extends HttpServlet {
 
 	/**
@@ -77,10 +77,12 @@ public class DoctorController extends HttpServlet {
 			DoctorDao dao = new DoctorDaoImpl();
 			Doctor doctor = new Doctor(scode, id, pwd, name, birth, licenseno, postcode, address, address2, career, tel, email);
 			dao.insert(doctor);
+			
 		} else if(action.equals("doctor_search")) {
 			ReservationDao dao = new ReservationDaoImpl();
 			List<Subject> subjectList = dao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
+			
 		} else if(action.equals("doctor_list")) {
 			int scode = Integer.parseInt(req.getParameter("selectSubject"));
 			String dname = req.getParameter("dname").trim();
@@ -91,19 +93,31 @@ public class DoctorController extends HttpServlet {
 			} else {
 				doctorList = dao.selectByNameAndScode(dname, scode);
 			}
-			
 			Subject selectSubject = dao.selectBycode(scode);
 			req.setAttribute("doctorList", doctorList);
 			req.setAttribute("selectSubject", selectSubject);
+			
 		} else if(action.equals("mypage")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
-			Doctor doctor = dao.selectBydcode(dcode);
-			req.setAttribute("doctor", doctor);
-			
+			List<HashMap> doctorList = dao.selectBydcode(dcode);
+			req.setAttribute("doctor", doctorList);
 			ReservationDao rdao = new ReservationDaoImpl();
 			List<Subject> subjectList = rdao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
+		} else if(action.equals("doctor_update")) {
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			String pw = req.getParameter("pwd");
+			int postcode = Integer.parseInt(req.getParameter("postcode"));
+			String address = req.getParameter("address");
+			String address2 = req.getParameter("address2");
+			String career = req.getParameter("career");
+			String tel = req.getParameter("tel");
+			String email = req.getParameter("email");
+			
+			Doctor doctor = new Doctor(dcode, pw, postcode, address, address2, career, tel, email);
+			DoctorDao dao = new DoctorDaoImpl();
+			dao.update(doctor);
 		}
 		
 		String dispatcherUrl = null;
@@ -119,6 +133,8 @@ public class DoctorController extends HttpServlet {
 			dispatcherUrl = "doctor_search";
 		} else if(action.equals("mypage")) {
 			dispatcherUrl = "/pages/updateDoctor.jsp";
+		} else if(action.equals("doctor_update")) {
+			dispatcherUrl = "mypage";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

@@ -267,17 +267,15 @@ public class DoctorDaoImpl implements DoctorDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.DOCTOR_UPDATE_SQL);
-			//update doctor set name = ?, scode = ?, pw = ?, postcode = ?, address = ?, address2 = ?, career = ?, tel = ?, email = ? where dcode = ?
-			pStatement.setString(1, doctor.getName()); 
-			pStatement.setInt(2, doctor.getScode()); 
-			pStatement.setString(3, doctor.getPw());
-			pStatement.setInt(4, doctor.getPostcode());
-			pStatement.setString(5, doctor.getAddress());
-			pStatement.setString(6, doctor.getAddress2());
-			pStatement.setString(7, doctor.getCareer());
-			pStatement.setString(8, doctor.getTel());
-			pStatement.setString(9, doctor.getEmail());
-			pStatement.setInt(10, doctor.getDcode());
+			
+			pStatement.setString(1, doctor.getPw());
+			pStatement.setInt(2, doctor.getPostcode());
+			pStatement.setString(3, doctor.getAddress());
+			pStatement.setString(4, doctor.getAddress2());
+			pStatement.setString(5, doctor.getCareer());
+			pStatement.setString(6, doctor.getTel());
+			pStatement.setString(7, doctor.getEmail());
+			pStatement.setInt(8, doctor.getDcode());
 			
 			pStatement.executeUpdate();
 			
@@ -291,9 +289,9 @@ public class DoctorDaoImpl implements DoctorDao {
 
 
 	@Override
-	public Doctor selectBydcode(int dcode) {
-		Doctor doctor = null;
-		
+	public List<HashMap> selectBydcode(int dcode) {
+		List<HashMap> doctorList = new ArrayList<>();
+
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -304,23 +302,26 @@ public class DoctorDaoImpl implements DoctorDao {
 			pStatement.setInt(1, dcode);
 			resultSet = pStatement.executeQuery();
 			
-			if(resultSet.next()) {
+			while(resultSet.next()) {
 				
-				doctor = new Doctor();
+				HashMap<String, Comparable> doctorMap = new HashMap<>();
 				
-				doctor.setDcode(resultSet.getInt("dcode"));
-				doctor.setScode(resultSet.getInt("scode"));
-				doctor.setId(resultSet.getString("id"));
-				doctor.setPw(resultSet.getString("pw"));
-				doctor.setName(resultSet.getString("name"));
-				doctor.setBirth(resultSet.getString("birth"));
-				doctor.setLicenseno(resultSet.getInt("licenseno"));
-				doctor.setPostcode(resultSet.getInt("postcode"));
-				doctor.setAddress(resultSet.getString("address"));
-				doctor.setAddress2(resultSet.getString("address2"));
-				doctor.setCareer(resultSet.getString("career"));
-				doctor.setTel(resultSet.getString("tel"));
-				doctor.setEmail(resultSet.getString("email"));
+				doctorMap.put("dcode", resultSet.getInt("dcode"));
+				doctorMap.put("scode", resultSet.getInt("scode"));
+				doctorMap.put("sname", resultSet.getString("sname"));
+				doctorMap.put("id", resultSet.getString("id"));
+				doctorMap.put("pw", resultSet.getString("pw"));
+				doctorMap.put("name", resultSet.getString("dname"));
+				doctorMap.put("birth", resultSet.getString("birth"));
+				doctorMap.put("licenseno", resultSet.getInt("licenseno"));
+				doctorMap.put("postcode", resultSet.getInt("postcode"));
+				doctorMap.put("address", resultSet.getString("address"));
+				doctorMap.put("address2", resultSet.getString("address2"));
+				doctorMap.put("career", resultSet.getString("career"));
+				doctorMap.put("tel", resultSet.getString("tel"));
+				doctorMap.put("email", resultSet.getString("email"));
+				
+				doctorList.add(doctorMap);
 			}
 		
 		} catch (Exception e) {
@@ -328,6 +329,6 @@ public class DoctorDaoImpl implements DoctorDao {
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		return doctor;
+		return doctorList;
 	}
 }

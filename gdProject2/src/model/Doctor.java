@@ -52,6 +52,21 @@ public class Doctor {
 		this.tel = tel;
 		this.email = email;
 	}
+	
+	
+
+	public Doctor(int dcode, String pw, int postcode, String address, String address2, String career, String tel,
+			String email) {
+		super();
+		this.dcode = dcode;
+		this.pw = pw;
+		this.postcode = postcode;
+		this.address = address;
+		this.address2 = address2;
+		this.career = career;
+		this.tel = tel;
+		this.email = email;
+	}
 
 	public int getDcode() {
 		return dcode;

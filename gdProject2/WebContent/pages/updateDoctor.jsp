@@ -6,6 +6,137 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function(){
+$("input[name='pwdchk']").focusout(function(){
+	var pwd_value = $("input[name='pwd']").val().replace(/\s/gi, "");
+	var pwdchk_value = $("input[name='pwdchk']").val().replace(/\s/gi, "");
+	
+	//비밀번호 유효성 검사
+	var regulPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;;
+	var regResult = regulPw.test(pwd_value);
+	
+	if(!regResult){
+		alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
+		$("input[name='pwd']").val('');
+		$("input[name='pwd']").focus();
+	}
+	
+	//일치여부
+	if(pwd_value != pwdchk_value){
+		$("#pwChkSpan").html("일치하지 않습니다.");
+		$("#pwChkSpan").css({"color":"tomato"});
+		$("input[name='pwd']").val('');
+		$("input[name='pwdchk']").val('');
+		$("input[name='pwd']").focus();
+		return false;
+	}else if(pwd_value == pwdchk_value){
+		$("#pwChkSpan").html("일치합니다.");
+		$("#pwChkSpan").css({"color":"blue"});
+	}
+	
+	if(!pwd_value){
+		alert("비밀번호를 입력해주세요.")
+		$("#pwChkSpan").html("");
+		return false;
+	}
+	
+	if(!pwdchk_value){
+		alert("비밀번호 확인을 입력해주세요.")
+		$("#pwChkSpan").html("");
+		return false;
+	}
+});
+
+//회원가입 버튼을 눌렀을때 나머지 유효성 검사
+$("#updatebtn").click(function(){
+	
+	//비밀번호
+	var pwd_value = $("input[name='pwd']").val().replace(/\s/gi, "");
+	
+	if(!pwd_value){
+		alert("비밀번호를 입력해주세요.")
+		$("input[name='pwd']").focus();
+		return false;
+	}
+	
+	//비밀번호 확인
+	var pwdchk_value = $("input[name='pwdchk']").val().replace(/\s/gi, "");
+	
+	if(!pwdchk_value){
+		alert("비밀번호 확인을 입력해주세요.")
+		$("input[name='pwdchk']").focus();
+		return false;
+	}
+	
+	//우편번호
+	var postcode_value = $("input[name='postcode']").val().replace(/\s/gi, "");
+	
+	if(!postcode_value){
+		alert("우편번호를 입력해주세요.");
+		$("input[name='postcode']").focus();
+		return false;
+	}
+	
+	//주소
+	var address_value = $("input[name='address']").val();
+	
+	if(!address_value){
+		alert("주소를 입력해주세요.");
+		$("input[name='address']").focus();
+		return false;
+	}
+	
+	//상세주소
+	var address2_value = $("input[name='address2']").val();
+	
+	if(!address2_value){
+		alert("상세주소를 입력해주세요.");
+		$("input[name='address2']").focus();
+		return false;
+	}
+	
+	//연락처
+	var tel_value = $("input[name='tel']").val().replace(/\s/gi, "");
+	
+	if(!tel_value){
+		alert("연락처를 입력해주세요.");
+		$("input[name='tel']").focus();
+		return false;
+	}
+	
+	var regulTel = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+	var regTelResult = regulTel.test(tel_value);
+	
+	if(!regTelResult){
+		alert("전화번호는 010-0000-0000 형식으로 입력해주세요.");
+		$("input[name='tel']").focus();
+		return false;
+	}
+
+	//이메일
+	var email_value = $("input[name='email']").val().replace(/\s/gi, "");
+	
+	if(!email_value){
+		alert("이메일을 입력해주세요.");
+		$("input[name='email']").focus();
+		return false;
+	}
+	
+	var regulEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]{2,3}/;
+	var regEmailResult = regulEmail.test(email_value);
+	
+	if(!regEmailResult){
+		alert("이메일을 형식에 맞게 입력해주세요.");
+		$("input[name='email']").focus();
+		return false;
+	}
+	
+	alert("수정되었습니다.");
+});
+});
+</script>
 </head>
 <style>
         .main{
@@ -103,7 +234,8 @@
 		<jsp:include page="../components/sidemenu.jsp"></jsp:include>
 		<div class ="content">
     	<h1>개인정보수정</h1>
-        	<form method="post" action="doctor_update">
+        	<form method="post" action="doctor_update?dcode=1">
+        	<c:forEach var="doctor" items="${doctor}">
             	<table border="1px solid">
                 <tr>
                     <th>성명</th>
@@ -115,14 +247,7 @@
                 </tr>
                  <tr>
                     <th>진료과</th>
-                    <td>
-						<select id="selectBox" name="selectsubject">
-                    		<option value = 0>진료과 선택</option>
-                    		<c:forEach var="subject" items="${subjectList}">
-                    			<option value = "${subject.scode}">${subject.name}</option>
-                    		</c:forEach>
-                    	</select>
-					</td>
+                    <td>${doctor.sname}</td>
                 </tr>
                 <tr>
                     <th>아이디</th>
@@ -134,15 +259,18 @@
                 </tr>
                 <tr>
                     <th>비밀번호 확인</th>
-                    <td><input type="password" name="pwdchk" placeholder="비밀번호를 다시 입력해주세요."></td>
+                    <td>
+                    	<input type="password" name="pwdchk" placeholder="비밀번호를 다시 입력해주세요.">
+                    	<span class="chkResult" id="pwChkSpan"></span>
+                    </td>
                 </tr>
                 <tr>
                     <th>주소</th>
                     <td class = "post">
-                        <input type="text" id="sample6_postcode" value = "${doctor.postcode}">
+                        <input type="text" id="sample6_postcode" name = "postcode" value = "${doctor.postcode}" readonly>
                         <input type="button" id="postbtn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                        <input type="text" id="sample6_address" value="${doctor.address}"><br>
-                        <input type="text" id="sample6_detailAddress" value="${doctor.address2}"><br>
+                        <input type="text" id="sample6_address" name = "address" value="${doctor.address}"><br>
+                        <input type="text" id="sample6_detailAddress" name = "address2" value="${doctor.address2}"><br>
                         
                     </td> 
                 </tr>
@@ -165,6 +293,7 @@
                     <td><input type="email" name="email" value="${doctor.email}"></td>
                 </tr>
             </table>
+            </c:forEach>
             <div>
             	<button type = "submit" id = "updatebtn">수정</button>
             	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
