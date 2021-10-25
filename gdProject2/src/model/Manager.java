@@ -47,6 +47,11 @@ public class Manager {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+
+	@Override
+	public String toString() {
+		return "Manager [mcode=" + mcode + ", name=" + name + ", id=" + id + ", pw=" + pw + "]";
+	}
 	
 	
 	

@@ -1,0 +1,110 @@
+@charset "UTF-8";
+#main {
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
+#border{
+    width: 600px;
+    height: 600px;
+    border: 1px solid rgb(180, 180, 180);
+    position: relative;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#title{
+    position: absolute;
+    margin: 0;
+    top: 40px;
+    left: 200px;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    height: 100px;
+}
+
+/* 회원정보 제목 */
+#title h1{
+    margin-left: 45px;
+}
+
+/* 회원정보 설명 */
+#title p{
+    font-size: 1.1rem;
+    left: 10px;
+    font-weight: bold;
+    color: rgb(180, 180, 180);
+}
+
+/* 폼태그 */
+#form{
+    position: absolute;
+    top: 150px;
+    left: 20%;
+    width: 600px;
+    height: auto;
+}
+
+/* input간 사이너비간격 */
+.mb-3{
+    margin-top: 30px;
+}
+
+.smallTitle{
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+/* 아이디input */
+#id{
+    width: 300px;
+    display: inline;
+    margin-left: 40px;
+}
+
+/* 비밀번호 input */
+#pw{
+    width: 300px;
+    display: inline;
+    margin-left: 40px;
+}
+
+/* 회원가입 버튼 */
+#login{
+    position: absolute;
+    background-color: rgb(70, 145, 140);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    height: 35px;
+    width: 150px;
+    margin-top: 50px;
+    font-weight: 700;
+    margin-left: 30px;
+}
+
+/* 메인페이지로 버튼 */
+#toMain{
+    position: absolute;
+    background-color: rgb(70, 145, 140);
+    color: #fff;
+    border-radius: 3px;
+    border: none;
+    height: 35px;
+    width: 150px;
+    font-weight: 700;
+    margin-top: 50px;
+    left: 200px;
+}
+
+#message{
+    position: absolute;
+    color: tomato;
+}
+

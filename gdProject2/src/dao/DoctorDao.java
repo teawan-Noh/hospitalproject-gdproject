@@ -24,4 +24,5 @@ public interface DoctorDao {
 	List<HashMap> selectByNameAndScode(String name, int scode);
 	List<HashMap> selectBydcode(int dcode);
 	
+	Doctor selectByDcode(int dcode);
 }

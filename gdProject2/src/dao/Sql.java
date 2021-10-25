@@ -49,17 +49,26 @@ public class Sql {
 	         "select count(*) as cnt from patient where id = ?";
 	//환자 로그인
 	public static final String PATIENT_LOGIN_SQL =
-				"select id, pw from patient where id =? and pw = ?";
+			"select * from patient where id =? and pw = ?";
+	
+	public static final String PATIENT_SELECT_BY_PCODE_SQL =
+			"select * from patient where pcode = ?";
+	
 	//의사 로그인
 	public static final String DOCTOR_LOGIN_SQL =
-			"select id, pw from doctor where id =? and pw =?";
+			"select * from doctor where id =? and pw =?";
+	
 	//관리자 로그인
 	public static final String MANAGER_LOGIN_SQL =
-			"select id, pw from manager where id =? and pw =?";
-
+			"select * from manager where id =? and pw =?";
+	
+	public static final String MANAGER_SELECT_BY_MCODE_SQL =
+			"select * from manager where mcode=?";
+	
 	//환자 개인정보수정
 	public static final String PATIENT_UPDATE_SQL = 
-			"update patient set pw = ?, postcode = ?, address = ?, address2 = ?, tel = ?, email = ? where pcode = ?";
+			"update patient set pw = ?,nickname = ?,postcode = ?,address = ?,address2 = ?,tel = ?,email = ? where pcode = ?";
+
 	//환자 탈퇴
 	public static final String PATIENT_DELETE_SQL =
 			"delete from patient where pcode = ?";
