@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 <jsp:include page="../common/bootstrapInclude.jsp"/>
 <style>
-	
 	.table{
 		text-align: center;
 	}
@@ -31,12 +30,12 @@
     		<i class="fas fa-chevron-right"></i>
     		소통정보
     		<i class="fas fa-chevron-right"></i>
-       		Q&A
+			Q&A
     	</div>
     	<div class="show_class">
-    		<h2>게시글 작성</h2>
+    		<h2>게시글 수정</h2>
     	</div>	
-		<form method="post" action="board_save" enctype="multipart/form-data">
+		<form method="post" action="board_modify" enctype="multipart/form-data">
 		
 		<table border="1" class="table">
 		<tbody>
