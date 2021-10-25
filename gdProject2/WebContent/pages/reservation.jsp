@@ -167,7 +167,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 let rsvtime = "";
                 let dname = "";
                 // 환자 코드 임의 지정
-                let pcode = 2;
+                let pcode = ${pcode};
+                console.log(pcode);
 
                 function XMLToString(oXML) {
                     //code for IE

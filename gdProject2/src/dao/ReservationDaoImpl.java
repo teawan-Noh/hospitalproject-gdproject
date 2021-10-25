@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,9 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import model.Doctor;
 import model.Reservation;
 import model.Subject;
+import page.PageManager;
+import page.PageRowResult;
 
 public class ReservationDaoImpl implements ReservationDao {
 
@@ -241,6 +245,45 @@ public class ReservationDaoImpl implements ReservationDao {
 			}
 			return cnt;
 		
+	}
+	
+	@Override
+	public List<Reservation> selectReservationPageAll(int requestPage) {
+		// TODO 자동 생성된 메소드 스텁
+		List<Reservation> rsvList = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_SELECT_PAGE_SQL);
+			
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			pStatement.setInt(1, prr.getRowStartNumber());
+			pStatement.setInt(2, prr.getRowEndNumber());
+			
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Reservation reservation = new Reservation();
+				
+				
+				rsvList.add(reservation);
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+		return rsvList;
 	}
 		
 	public String convertDay(String dayString) {

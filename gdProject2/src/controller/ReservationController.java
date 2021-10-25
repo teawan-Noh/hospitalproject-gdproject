@@ -23,7 +23,7 @@ import dao.ReservationDaoImpl;
 
 
 @WebServlet(name="ReservationController", 
-urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail", "/rsv-time", "/book"})
+urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail", "/rsv-time", "/book", "/reservation-list"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -53,6 +53,9 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		ReservationDao rdao = new ReservationDaoImpl();
 		List<Subject> subjectList = rdao.selectSubjectAll();
 		
+		int pcode = 2; // req.getParameter("pcode");
+		
+		req.setAttribute("pcode", pcode);
 		req.setAttribute("side", "reservation");
 		req.setAttribute("subjectList", subjectList);
 	}
@@ -122,6 +125,15 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		int cnt = rdao.insertReservation(pcode, dcode, rsvdate);
 		res.getWriter().print(cnt);
 	}
+	else if(action.equals("reservation-list")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+
+		int pcode = 2; // req.getParameter("pcode");
+
+		
+		req.setAttribute("side", "reservation");
+		
+	}
 	
 	
 	// 페이지 처리
@@ -143,6 +155,9 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		dispatcherUrl = "ajax/rsv-time.jsp";
 	}
 	else if(action.equals("book")) {
+	}
+	else if(action.equals("reservation-list")) {
+		dispatcherUrl = "pages/reservation-list.jsp";
 	}
 	
 	

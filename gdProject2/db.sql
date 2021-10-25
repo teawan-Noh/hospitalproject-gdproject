@@ -551,3 +551,9 @@ update reservation set rsvdate = to_date('2021-10-26 9:30:00', 'yyyy-mm-dd HH24:
 create sequence rsv_seq start with 12;
 insert into reservation values(rsv_seq.nextval, 2, 2, to_date('2021-10-26 17:45', 'yyyy-mm-dd HH24:MI'), '예약');
 delete from reservation where rcode <= 25 and 12 <= rcode;
+
+-- 페이지 처리
+select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = 2 order by rcode desc) rsvs;
+
+
+select memoid, name, age from (select rownum as rn, memos.* from (select * from memo order by memoid desc) memos) where rn between 14 and 16
