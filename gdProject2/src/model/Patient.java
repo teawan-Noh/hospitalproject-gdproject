@@ -31,9 +31,44 @@ public class Patient {
 		this.address = address;
 		this.address2 = address2;
 	}
+	
+	
+	//회원가입용
+	public Patient(String id, String pw, String nickname, String name, String tel, String birth, String gender,
+			String email, int postcode, String address, String address2) {
+		super();
+		this.id = id;
+		this.pw = pw;
+		this.nickname = nickname;
+		this.name = name;
+		this.tel = tel;
+		this.birth = birth;
+		this.gender = gender;
+		this.email = email;
+		this.postcode = postcode;
+		this.address = address;
+		this.address2 = address2;
+	}
+	
+	//update용
+	public Patient(int pcode,String pw, String nickname, String tel, String email, int postcode, String address,
+			String address2) {
+		super();
+		this.pcode = pcode;
+		this.pw = pw;
+		this.nickname = nickname;
+		this.tel = tel;
+		this.email = email;
+		this.postcode = postcode;
+		this.address = address;
+		this.address2 = address2;
+	}
+
 	public int getPcode() {
 		return pcode;
 	}
+	
+
 	public void setPcode(int pcode) {
 		this.pcode = pcode;
 	}
@@ -103,7 +138,13 @@ public class Patient {
 	public void setAddress2(String address2) {
 		this.address2 = address2;
 	}
-	
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "Patient [pcode=" + pcode + ", id=" + id + ", pw=" + pw + ", nickname=" + nickname + ", name=" + name
+				+ ", tel=" + tel + ", birth=" + birth + ", gender=" + gender + ", email=" + email + ", postcode="
+				+ postcode + ", address=" + address + ", address2=" + address2 + "]";
+	}
+
 }
