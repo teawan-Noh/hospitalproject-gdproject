@@ -23,9 +23,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <header><jsp:include page="/components/header.jsp"></jsp:include></header>
 
 	<div id="main">
-	<jsp:include page="/components/sidemenu.jsp">
-                <jsp:param name="side" value="patient"/>
-            </jsp:include>
+	<div class="flex container-box">
+            <jsp:include page="/components/sidemenu.jsp"></jsp:include>
         <div class="content">
         
             <h2>개인정보수정</h2>
@@ -92,14 +91,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </tr>
                 </table>
                 <div>
-                    <button type="submit" id="save">저장</button>
+                    <button type="submit" id="save" onclick="location.href = 'patient_update'">저장</button>
                     <button type="button" id="cancel" onclick="location.href = 'index.jsp'">취소</button>
                     <button type="button" id="out" onclick="location.href = 'index.jsp'">탈퇴</button>
                 </div>
             </form>
         
         </div>
-    
+    </div>
     </div>
     <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
    </div>

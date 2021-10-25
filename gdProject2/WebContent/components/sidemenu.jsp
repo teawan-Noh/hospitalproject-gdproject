@@ -49,6 +49,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 width: 75px;
                 height: 75px;
             }
+            
+            #patientMenu{
+            	 text-decoration:none;
+            	 color:#555;
+            }
         </style>
     </head>
 
@@ -79,7 +84,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             		<div id="side-img"></div>
             	</div>
             	<ul id="side-ul">
-	                <li class="side-list">개인정보수정</li>
+	                <li class="side-list"><a href="patient_update" id="patientMenu">개인정보수정</a></li>
 	            </ul>
             </c:if>
 

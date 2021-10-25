@@ -11,11 +11,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/reset.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/patient/patientLogin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/patientLogin.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
     $(function(){
     	$("#login").click(function(){
@@ -39,6 +39,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     	});
     });
     </script>
+
 </head>
 
 <body>
@@ -48,10 +49,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <div id="border">
                 <section id="title" class="login_title">
                     <h1>로그인</h1>
-                    <p>회원 정보를 입력해주세요.</p>
+                    <p>관리자 로그인 페이지입니다.</p>
                 </section>
                 <section id="form" class="form-group">
-                    <form action="patient_login" method="post" name="plogin">
+                    <form action="manager_login" method="post" name="plogin">
                         <div class="mb-3">
                             <label for="id" class="form-label smallTitle">아이디</label><br>
                             <input type="text" name="id" placeholder="아이디를 입력하세요" class="form-control" id="id"/>

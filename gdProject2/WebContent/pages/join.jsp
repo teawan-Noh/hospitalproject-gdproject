@@ -10,7 +10,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입</title>
 <!-- css파일  -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/patient/join.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/join.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
 
 <!-- 부트스트랩 -->

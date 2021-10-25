@@ -68,13 +68,50 @@ public class PatientDaoImpl implements PatientDao{
 
 	@Override
 	public void update(Patient patient) {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.PATIENT_UPDATE_SQL);
+			//pw = ?,nickname = ?,postcode = ?,address = ?,address2 = ?,tel = ?,email = ? where pcode = ?
+			
+			pStatement.setString(1, patient.getPw());
+			pStatement.setString(2, patient.getNickname());
+			pStatement.setInt(3, patient.getPostcode());
+			pStatement.setString(4, patient.getAddress());
+			pStatement.setString(5, patient.getAddress2());
+			pStatement.setString(6, patient.getTel());
+			pStatement.setString(7, patient.getEmail());
+			pStatement.setInt(8, patient.getPcode());
+
+			pStatement.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(null, pStatement, connection);
+		}
 		
 	}
 
 	@Override
 	public void delete(int pcode) {
-		// TODO Auto-generated method stub
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.PATIENT_DELETE_SQL);
+
+			pStatement.setLong(1, pcode);
+			pStatement.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(null, pStatement, connection);
+		}
 		
 	}
 

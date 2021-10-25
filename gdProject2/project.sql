@@ -4,7 +4,7 @@ create sequence pcode;
 
 drop sequence pcode;
 
-update patient set pw = ?, postcode = ?, address = ?, address2 = ?, tel = ?, email = ? where pcode = ?
+
 
 delete from patient where pcode = ?
 
@@ -75,5 +75,7 @@ update files set uploaddate=sysdate, name=?, beforename=?, filesize=? where fcod
 delete from patient;
 
 select * from patient;
+
+update patient set pw = '12345',nickname = '±ñµû»ß¾ß',gender='¿©', postcode = 60000, address = '¼­¿ï', address2 = '°­³²', tel = '010-2222-2222', email = 'sample@email.com' where pcode = 8;
 
 select count(*) from patient where id = 'id';

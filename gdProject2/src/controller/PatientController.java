@@ -68,20 +68,20 @@ public class PatientController extends HttpServlet{
 			PatientDao dao = new PatientDaoImpl();
 			dao.insert(patient);
 		}else if(action.equals("patient_update")) {
-			
+			req.setAttribute("side", "patient");
 		}
 		
 		
 		//∆‰¿Ã¡ˆ
 		String dispatcherUrl = null;
 		if(action.equals("patient_input")) {
-			dispatcherUrl="/patient/join.jsp";
+			dispatcherUrl="/pages/join.jsp";
 		}else if(action.equals("idcheck")) {
 			dispatcherUrl="/ajax/idcheck.jsp";
 		}else if(action.equals("patient_save")) {
 			dispatcherUrl="index.jsp";
 		}else if(action.equals("patient_update")) {
-			dispatcherUrl="/patient/patientUpdate.jsp";
+			dispatcherUrl="/pages/patientUpdate.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

@@ -37,7 +37,7 @@ public class Sql {
 	
 	//환자 개인정보수정
 	public static final String PATIENT_UPDATE_SQL = 
-			"update patient set pw = ?, postcode = ?, address = ?, address2 = ?, tel = ?, email = ? where pcode = ?";
+			"update patient set pw = ?,nickname = ?,postcode = ?,address = ?,address2 = ?,tel = ?,email = ? where pcode = ?";
 	
 	//환자 탈퇴
 	public static final String PATIENT_DELETE_SQL =
