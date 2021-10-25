@@ -18,7 +18,7 @@ import model.Qna;
 import validator.QnaValidator;
 
 @WebServlet(name="QnaController", 
-	urlPatterns= {"/qna_input", "/qna_save", "/qna_search", "/qna_detail", "/qna_update", "/qna_delete"})
+	urlPatterns= {"/qna_list", "/qna_save", "/qna_search", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"})
 public class QnaController extends HttpServlet{
 
 	@Override
@@ -31,16 +31,19 @@ public class QnaController extends HttpServlet{
 		process(req,resp);
 	}
 	
-	private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, NumberFormatException {
 		req.setCharacterEncoding("UTF-8");
 		String uri = req.getRequestURI();
-		
 		int lastIndex = uri.lastIndexOf("/");
-		
 		String action = uri.substring(lastIndex+1);
 		System.out.println(action);
 		
-		if(action.equals("qna_input")) {
+		if(action.equals("qna_list")) {
+			
+			QnaDao dao = new QnaDaoImpl();
+			List<HashMap> qnaList = dao.selectAll();
+			
+			req.setAttribute("qnaList", qnaList);
 		}
 		
 		else if(action.equals("qna_save")) {
@@ -83,8 +86,8 @@ public class QnaController extends HttpServlet{
 			
 			QnaDao dao = new QnaDaoImpl();
 			
-			Qna qna = dao.selectByQno(qno);
-			
+			HashMap qna = dao.selectByQno(qno);
+			System.out.println("실행되나2");
 			req.setAttribute("qnadetail", qna);
 			
 		}
@@ -117,28 +120,32 @@ public class QnaController extends HttpServlet{
 		
 		String dispatcherUrl = null;
 		
-		if(action.equals("qna_input")) {
-			dispatcherUrl = "jsp/memo/memo.jsp";
+		if(action.equals("qna_list")) {
+			dispatcherUrl = "qna/qnaList.jsp";
 		}
 		else if(action.equals("qna_save")) {
 			
-			dispatcherUrl = "jsp/memo/memo.jsp";
+			dispatcherUrl = "qna/qnaList.jsp";
 		}
 		else if(action.equals("qna_search")) {
 			
-			dispatcherUrl = "jsp/memo/list.jsp";
+			dispatcherUrl = "qna/qnaList.jsp";
 		}
 		else if(action.equals("qna_detail")) {
 			
-			dispatcherUrl = "jsp/memo/detail.jsp";
+			dispatcherUrl = "qna/qnaDetail.jsp";
+		}
+		else if(action.equals("qna_modify")) {
+			
+			dispatcherUrl = "qna/qnaModify.jsp";
 		}
 		else if(action.equals("qna_update")) {
 			
-			dispatcherUrl = "jsp/memo/memo_search.jsp";
+			dispatcherUrl = "qna/qnaModify.jsp";
 		}
 		else if(action.equals("qna_delete")) {
 			
-			dispatcherUrl = "jsp/memo/list.jsp"; 
+			dispatcherUrl = "qna/qnaList.jsp"; 
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

@@ -160,8 +160,8 @@ public class QnaDaoImpl implements QnaDao{
 		return qnaList;
 	}
 	@Override
-	public Qna selectByQno(int qno) {
-		Qna memo = null;
+	public HashMap selectByQno(int qno) {
+		HashMap<String, String> qnaDetail = null;
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -169,7 +169,7 @@ public class QnaDaoImpl implements QnaDao{
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_NO_SQL);
+			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_QNO_SQL);
 			
 			//select memoid, name, age from memo where memoid=?
 			pStatement.setInt(1, qno);
@@ -177,21 +177,33 @@ public class QnaDaoImpl implements QnaDao{
 			
 			if(resultSet.next()) {
 				
-				Qna qna = new Qna();
+				qnaDetail = new HashMap<>();
 				
-				qna.setQno(resultSet.getInt("memoid"));
-				qna.setContent(resultSet.getString("name"));
-//				qna.setAge(resultSet.getInt("age"));
+				qnaDetail.put("qno", Integer.toString(resultSet.getInt("qno")));
+				qnaDetail.put("title", resultSet.getString("title"));
+				qnaDetail.put("nickname", resultSet.getString("nickname"));
+				qnaDetail.put("writedate", resultSet.getString("writedate"));
+				qnaDetail.put("cnt", Integer.toString(resultSet.getInt("cnt")));
+				qnaDetail.put("img", resultSet.getString("img"));
+				qnaDetail.put("content", resultSet.getString("content"));
+				qnaDetail.put("ccontent", resultSet.getString("ccontent"));
+				qnaDetail.put("cwritedate", resultSet.getString("cwritedate"));
+				qnaDetail.put("id", resultSet.getString("id"));
 				
 			}
 			
-		} catch (Exception e) {
+		}
+		catch(NumberFormatException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
 			e.getStackTrace();
-		} finally {
+		}
+		finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		
-		return memo;
+		return qnaDetail;
 	}
 	
 	@Override

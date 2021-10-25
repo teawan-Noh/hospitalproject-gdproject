@@ -642,10 +642,6 @@ SELECT TABLE_NAME, CONSTRAINT_NAME
 FROM USER_CONSTRAINTS 
 WHERE TABLE_NAME = 'REST';
 
-alter table qna drop constraint fk_patient_to_qna;
-alter table qna add constraint fk_patient_to_qna
-foreign key (pcode) references qna(pcode) on delete cascade;
-
 alter table qna drop constraint FK_patient_TO_qna;
 alter table qna add constraint FK_patient_TO_qna 
 foreign key (pcode) references patient(pcode) on delete cascade;

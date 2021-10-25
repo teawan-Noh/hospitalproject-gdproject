@@ -14,5 +14,5 @@ public interface QnaDao {
 	
 	List<HashMap> selectAll();
 	List<HashMap> selectByNickname(String nickname);
-	Qna selectByQno(int qno);
+	HashMap selectByQno(int qno);
 }
