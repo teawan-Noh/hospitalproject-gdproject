@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -18,8 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.*;
+import page.PageDao;
+import page.PageDaoImpl;
+import page.PageGroupResult;
+import page.PageManager;
 import dao.ReservationDao;
 import dao.ReservationDaoImpl;
+import dao.Sql;
 
 
 @WebServlet(name="ReservationController", 
@@ -126,11 +132,22 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		res.getWriter().print(cnt);
 	}
 	else if(action.equals("reservation-list")) {
+		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
+
 		ReservationDao rdao = new ReservationDaoImpl();
+		PageDao pdao = new PageDaoImpl();
 
 		int pcode = 2; // req.getParameter("pcode");
-
 		
+		List<Map<String, String>> rsvList = rdao.selectReservationPageAll(pcode, requestPage);
+		int cnt = pdao.getCount(pcode);
+		
+		PageManager pm = new PageManager(requestPage);
+		PageGroupResult pgr = pm.getPageGroupResult(cnt);
+		
+		req.setAttribute("pageGroupResult", pgr);
+		
+		req.setAttribute("rsvList", rsvList);
 		req.setAttribute("side", "reservation");
 		
 	}

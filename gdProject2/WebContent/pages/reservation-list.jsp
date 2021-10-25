@@ -134,6 +134,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <script>
             $(function () {
                 let pcode = 2;
+                var list1 = new Array();
+                <c:forEach items="${rsvList}" var="rsv">
+                	list1.push("${rsv.rsvdate}");
+                    $("#rsv-mylist tbody").append(
+                    "<tr><td>"+ "${rsv.rn}"
+                    + "</td><td>" + "${rsv.rsvdate}" +
+                    "</td><td>" + "${rsv.rn}"
+                    + "</td><td>" + "${rsv.name}"
+                    + "</td><td>" + "${rsv.state}"
+                    + "</td></tr>");
+                </c:forEach>;
+                for (var i = 0; i < list1.length; i++) {
+                    console.log(list1[i]);
+                }
             });
         </script>
     </head>
@@ -149,7 +163,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <li>예약조회</li>
                 </ul>
                 <h1>예약조회</h1>
-                <table class="table">
+                <table id="rsv-mylist" class="table">
                     <thead class="table-head">
                         <tr>
                             <th>No.</th>
@@ -160,29 +174,58 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>11</td>
-                            <td>2021-10-10</td>
-                            <td>11:15</td>
-                            <td>외과</td>
-                            <td>예약</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>2021-10-10</td>
-                            <td>11:15</td>
-                            <td>외과</td>
-                            <td>예약</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>2021-10-10</td>
-                            <td>11:15</td>
-                            <td>외과</td>
-                            <td>예약</td>
-                        </tr>
+
                     </tbody>
                 </table>
+                <ul class="pagination justify-content-center">
+                    <c:if test="${pageGroupResult.beforePage}">
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber - 1}"
+                                >before</a
+                            >
+                        </li>
+                    </c:if>
+                    <c:forEach
+                        var="index"
+                        begin="${pageGroupResult.groupStartNumber}"
+                        end="${pageGroupResult.groupEndNumber}"
+                    >
+                        <c:choose>
+                            <c:when
+                                test="${pageGroupResult.selectPageNumber == index}"
+                            >
+                                <li class="page-item active">
+                                    <a
+                                        class="page-link"
+                                        href="reservation-list?reqPage=${index}"
+                                        >${index}</a
+                                    >
+                                </li>
+                            </c:when>
+
+                            <c:otherwise>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="reservation-list?reqPage=${index}"
+                                        >${index}</a
+                                    >
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${pageGroupResult.afterPage}">
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber + 1}"
+                                >after</a
+                            >
+                        </li>
+                    </c:if>
+                </ul>
             </div>
         </div>
         <jsp:include page="../components/footer.jsp"></jsp:include>

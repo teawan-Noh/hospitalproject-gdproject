@@ -10,10 +10,9 @@ public class Sql {
 	public static final String RESERVATION_INSERT_SQL = "insert into reservation values(rsv_seq.nextval, ?, ?, to_date(?, 'yyyy-mm-dd HH24:MI'), '¿¹¾à')";
 
 	
-	public static final String MEMO_COUNT_SQL = "select count(*) as cnt from memo";
+	public static final String RESERVATION_COUNT_PCODE_SQL = "select count(*) as cnt from reservation where pcode = ?";
 
 	
-	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rcode desc) rsvs) result where rn between ? and ?";
+	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, r.rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rcode desc) rsvs) result where rn between ? and ?";
 	
-
 }

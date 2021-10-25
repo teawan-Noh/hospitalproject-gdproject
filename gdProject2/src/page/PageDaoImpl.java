@@ -11,7 +11,7 @@ import dao.Sql;
 public class PageDaoImpl implements PageDao {
 
 	@Override
-	public int getCount(String sql) {
+	public int getCount(int pcode) {
 		// TODO 자동 생성된 메소드 스텁
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -19,7 +19,8 @@ public class PageDaoImpl implements PageDao {
 		int cnt = -1;
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(sql);
+			pStatement = connection.prepareStatement(Sql.RESERVATION_COUNT_PCODE_SQL);
+			pStatement.setInt(1, pcode);
 			resultSet = pStatement.executeQuery();
 			
 			if(resultSet.next()) {

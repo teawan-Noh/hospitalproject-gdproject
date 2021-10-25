@@ -248,9 +248,9 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 	
 	@Override
-	public List<Reservation> selectReservationPageAll(int requestPage) {
+	public List<Map<String, String>> selectReservationPageAll(int pcode, int requestPage) {
 		// TODO 자동 생성된 메소드 스텁
-		List<Reservation> rsvList = new ArrayList<>();
+		List<Map<String, String>> rsvList = new ArrayList<>();
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -262,16 +262,22 @@ public class ReservationDaoImpl implements ReservationDao {
 			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
-			pStatement.setInt(1, prr.getRowStartNumber());
-			pStatement.setInt(2, prr.getRowEndNumber());
+			pStatement.setInt(1, pcode);
+			pStatement.setInt(2, prr.getRowStartNumber());
+			pStatement.setInt(3, prr.getRowEndNumber());
 			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				Reservation reservation = new Reservation();
-				
-				
-				rsvList.add(reservation);
+				Map<String, String> result = new HashMap<>();
+				result.put("rn", resultSet.getString("rn"));
+				result.put("rcode", resultSet.getString("rcode"));
+				result.put("pcode", resultSet.getString("pcode"));
+				result.put("rsvdate", resultSet.getString("rsvdate"));
+				result.put("scode", resultSet.getString("scode"));
+				result.put("name", resultSet.getString("name"));
+				result.put("state", resultSet.getString("state"));
+				rsvList.add(result);
 			}
 
 			
