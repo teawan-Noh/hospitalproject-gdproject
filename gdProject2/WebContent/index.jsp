@@ -33,7 +33,7 @@ $(function(){
 	<a href="logout">로그아웃</a>
 </c:if>
 <c:if test="${pcode != null}">
-	<a href="patient_update" id="patientUpdate">마이페이지</a>
+	<a href="patient_detail" id="patientUpdate">마이페이지</a>
 </c:if>
 </body>
 </html>

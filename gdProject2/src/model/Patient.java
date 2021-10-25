@@ -49,10 +49,26 @@ public class Patient {
 		this.address = address;
 		this.address2 = address2;
 	}
+	
+	//update¿ë
+	public Patient(int pcode,String pw, String nickname, String tel, String email, int postcode, String address,
+			String address2) {
+		super();
+		this.pcode = pcode;
+		this.pw = pw;
+		this.nickname = nickname;
+		this.tel = tel;
+		this.email = email;
+		this.postcode = postcode;
+		this.address = address;
+		this.address2 = address2;
+	}
 
 	public int getPcode() {
 		return pcode;
 	}
+	
+
 	public void setPcode(int pcode) {
 		this.pcode = pcode;
 	}
