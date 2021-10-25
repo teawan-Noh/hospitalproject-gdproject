@@ -113,7 +113,7 @@ public class Sql {
 				"select name from files where ncode = ?";
 		//ntw
 	//qna Å×ÀÌºí
-	public static final String QNA_SELECT_ALL_SQL 
+		public static final String QNA_SELECT_ALL_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
 			+ " from qna q inner join patient p"
 			+ " on q.pcode = p.pcode"
@@ -128,7 +128,7 @@ public class Sql {
 	
 	public static final String QNA_SELECT_BY_SUBJECT_SQL 
 		= "select * from bbs where subject like ? order by no desc";
-	
+
 	public static final String QNA_SELECT_BY_NO_SQL 
 		= "select * from bbs where no = ?";
 
@@ -140,8 +140,6 @@ public class Sql {
 
 	public static final String QNA_DELETE_SQL 
 		= "delete from bbs where no = ?";
-	
-	
 
 	public static final String QNA_CNT_UPDATE_SQL 
 		= "update bbs set cnt = ? where no = ?";
