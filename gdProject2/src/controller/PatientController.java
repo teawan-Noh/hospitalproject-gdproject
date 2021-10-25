@@ -70,13 +70,14 @@ public class PatientController extends HttpServlet{
 			
 			
 		}else if(action.equals("patient_detail")) {
+			req.setAttribute("side", "patient");
+			
 			HttpSession session = req.getSession();
 			int pcode = (int)session.getAttribute("pcode");
 			PatientDao dao = new PatientDaoImpl();
 			Patient patient = dao.selectByPcode(pcode);
 			req.setAttribute("patient", patient);
 		}else if(action.equals("patient_update")) {
-			req.setAttribute("side", "patient");
 			
 			String pw = req.getParameter("pw").replaceAll(" ", "");
 			String nickName = req.getParameter("nickName").replaceAll(" ", "");
