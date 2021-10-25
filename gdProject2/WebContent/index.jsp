@@ -30,7 +30,7 @@
         <jsp:include page="components/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-            <div class = "mainmenu">
+            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
                 <h3 class="menu-title">예약</h3>
                 <p class="menu-content">진료 예약을 하실 수 있습니다.</p>
             </div>

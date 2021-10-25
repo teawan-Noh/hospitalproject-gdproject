@@ -39,7 +39,7 @@
         .doctor_detail {
             background-color: rgb(70, 145, 140);
             width: 447px;
-            height: 50px;
+            height: 51px;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -71,15 +71,19 @@
         	margin-left: 10px;
         	font-size: 1.5rem;
         }
-        .img {
-        	width : 120px;
-        	height: 120px;
-        	background-color: green;
-        	margin: 10px;
-        }
         .subject span {
         	font-size: 1.3rem;
         }
+         .img {
+                background-image: url("img/doctor-img.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                filter: opacity(0.5) drop-shadow(0 0 0 #468c91);
+                margin: 25px 20px 25px 25px;
+                width: 100px;
+                height: 100px;
+            }
         
 </style>
 </head>
@@ -111,15 +115,14 @@
     	<c:if test="${!empty doctorList}">
     		<c:forEach var = "doctor" items = "${doctorList}">
             	<div class = "doctor">
-            		<img src = "" alt ="사람사진" class = "img">
+            		<div class = "img"></div>
      				<h4>${doctor.name}교수</h4><h5>[${doctor.sname}]</h5>
-    				<div class = "doctor_detail">
+    				<div class = "doctor_detail" onclick="location.href ='doctor_detail?dcode=${doctor.dcode}'">
                 		상세보기
             		</div>
             	</div>
     		</c:forEach>
-    	</c:if>
-    	        
+    	</c:if>   
     </div>
     
     <hr>

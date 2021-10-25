@@ -18,7 +18,7 @@ import dao.ReservationDaoImpl;
 import model.Doctor;
 import model.Subject;
 
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage", "/doctor_update"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage", "/doctor_update", "/doctor_detail"})
 public class DoctorController extends HttpServlet {
 
 	/**
@@ -118,6 +118,11 @@ public class DoctorController extends HttpServlet {
 			Doctor doctor = new Doctor(dcode, pw, postcode, address, address2, career, tel, email);
 			DoctorDao dao = new DoctorDaoImpl();
 			dao.update(doctor);
+		} else if(action.equals("doctor_detail")) {
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			DoctorDao dao = new DoctorDaoImpl();
+			List<HashMap> doctorList = dao.selectBydcode(dcode);
+			req.setAttribute("doctor", doctorList);
 		}
 		
 		String dispatcherUrl = null;
@@ -135,6 +140,8 @@ public class DoctorController extends HttpServlet {
 			dispatcherUrl = "/pages/updateDoctor.jsp";
 		} else if(action.equals("doctor_update")) {
 			dispatcherUrl = "mypage";
+		} else if(action.equals("doctor_detail")) {
+			dispatcherUrl = "/pages/doctor-detail.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
