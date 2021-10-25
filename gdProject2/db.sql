@@ -553,7 +553,7 @@ insert into reservation values(rsv_seq.nextval, 2, 2, to_date('2021-10-26 17:45'
 delete from reservation where rcode <= 25 and 12 <= rcode;
 
 -- 페이지 처리
-select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = 2 order by rcode desc) rsvs) result where rn between 5 and 8;
+select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = 3 order by rcode desc) rsvs) result;
 
 
 select memoid, name, age from (select rownum as rn, memos.* from (select * from memo order by memoid desc) memos) where rn between 14 and 16
