@@ -88,14 +88,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <ul id="member-menu">
                     <li>로그인</li>
                     <li>
-                        <select>
-                            <option>환자</option>
-                            <option>의사</option>
-                            <option>관리자</option>
+                        <select onchange="if(this.value) location.href=(this.value)">
+                        	<option value="">선택</option>
+                            <option value="patient_login_input">환자</option>
+                            <option value="doctor_login_input">의사</option>
+                            <option value="manager_login_input">관리자</option>
                         </select>
                     </li>
                     <li>|</li>
-                    <li>회원가입</li>
+                    <li><a href="patient_input">회원가입</a></li>
                 </ul>
                 <ul id="nav-menu">
                     <li>
@@ -104,7 +105,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </li>
                     <li>의료진</li>
                     <li>소통정보</li>
-                    <li>공지사항</li>
+                    <li><a href="notice_list">공지사항</a></li>
                     <li>
                         <a href="#"><div id="search"></div></a>
                     </li>

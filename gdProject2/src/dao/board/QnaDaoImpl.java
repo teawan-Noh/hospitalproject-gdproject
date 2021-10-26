@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import dao.common.JDBCUtil;
-import dao.common.Sql;
+import common.JDBCUtil;
+import common.Sql;
 import model.board.Qna;
 
 public class QnaDaoImpl implements QnaDao{

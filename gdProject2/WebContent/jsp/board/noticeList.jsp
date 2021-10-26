@@ -17,11 +17,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 
 <body>
-    <div class="container">
-    <header><jsp:include page="/components/header.jsp"></jsp:include></header>
+	<div class="container">
         <div id="main">
             <form action="#" method="post" id="form">
-                <h2>공지사항</h2>
+                <h2 id="h2">공지사항</h2>
                 <input type="search" id="search" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." />
                 <button type="submit" id="searchBtn" name="searchBtn">검색</button>
             </form>
@@ -109,10 +108,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </tr>
                 </tbody>
             </table>
+            <p id="info">※내역을 클릭하면 상세조회가 가능합니다.</p>
+            <button type="button" id="write">글쓰기</button>
         </div>
-		<p id="info">※내역을 클릭하면 상세조회가 가능합니다.</p>
-		<footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
-    </div>
+	</div>
 </body>
 
 </html>

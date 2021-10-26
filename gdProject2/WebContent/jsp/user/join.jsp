@@ -80,8 +80,11 @@ $(function(){
 		
 		if(!regResult){
 			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
+			$("#pwChkSpan").html("");
 			$("input[name='pw']").val('');
+			$("input[name='pwChk']").val('');
 			$("input[name='pw']").focus();
+			
 			
 		}
 		
@@ -91,6 +94,7 @@ $(function(){
 			$("#pwChkSpan").css({"color":"tomato"});
 			$('#pw').val('');
 			$('#pwChk').val('');
+			setTimeout(function(){$("#pw").focus();}, 1);
 			return false;
 		}else if(pw_value == pwChk_value){
 			$("#pwChkSpan").html("일치합니다.");
@@ -282,7 +286,7 @@ $(function(){
 </head>
 <body>
     <div class="container">
-    <header><jsp:include page="/components/header.jsp"></jsp:include></header>
+    <header><jsp:include page="../common/header.jsp"></jsp:include></header>
     <div id="main" class="join">
         <div class="border">
             <section id="title" class="join_title">
@@ -353,7 +357,7 @@ $(function(){
         </div>
 
     </div>
-    <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
+    <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
    </div>
 </body>
 </html>

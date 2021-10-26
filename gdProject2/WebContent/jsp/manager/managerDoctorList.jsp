@@ -65,9 +65,9 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../components/header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div class = "main">
-		<jsp:include page="../components/sidemenu.jsp"></jsp:include>
+		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
 		<div class ="content">
 			<div class="show_path">
         	<i class="fas fa-home"></i>
@@ -147,6 +147,6 @@
 	</ul>
         </div>
     </div>
-    <jsp:include page="../components/footer.jsp"></jsp:include>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

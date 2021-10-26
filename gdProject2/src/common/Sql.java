@@ -1,4 +1,4 @@
-package dao.common;
+package common;
 
 public class Sql {
 
@@ -82,7 +82,7 @@ public class Sql {
 	//공지사항 전체목록
 	public static final String NOTICE_SELECT_ALL_SQL =
 			"select n.ncode, n.title, m.name, n.writedate, n.cnt "
-			+ "from notice n inner join manager "
+			+ "from notice n inner join manager m "
 			+ "on n.mcode = m.mcode order by n.ncode desc";
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =

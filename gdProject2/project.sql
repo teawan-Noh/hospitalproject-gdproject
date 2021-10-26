@@ -49,12 +49,27 @@ select id, pw from manager where id =? and pw =?
 select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode where n.title like ? or n.content like ? order by n.ncode desc
 
 insert into notice values (ncode.nextval, ?, ?, ?, sysdate, 0);
-insert into notice values (ncode.nextval, 1,'공지사항 제목입니다.','공지사항 내용입니다.',sysdate,0);
+
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다1','공지사항 내용입니다1',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다2','공지사항 내용입니다2',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다3','공지사항 내용입니다3',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다4','공지사항 내용입니다4',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다5','공지사항 내용입니다5',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다6','공지사항 내용입니다6',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다7','공지사항 내용입니다7',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다8','공지사항 내용입니다8',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다9','공지사항 내용입니다9',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다10','공지사항 내용입니다10',sysdate,0);
+
 
 delete from notice;
 select * from notice;
 
+select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
+select * from manager;
 drop sequence ncode;
+
+select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc
 
 CREATE SEQUENCE ncode;
 
@@ -89,3 +104,5 @@ delete from notice;
 update patient set pw = '12345',nickname = '깐따삐야',gender='여', postcode = 60000, address = '서울', address2 = '강남', tel = '010-2222-2222', email = 'sample@email.com' where pcode = 8;
 
 select count(*) from patient where id = 'id';
+
+
