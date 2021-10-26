@@ -1,8 +1,15 @@
 package controller;
 
 import java.io.IOException;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Map;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +23,7 @@ import dao.ReservationDaoImpl;
 
 
 @WebServlet(name="ReservationController", 
-urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail"})
+urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail", "/rsv-time", "/book", "/reservation-list"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -46,6 +53,9 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		ReservationDao rdao = new ReservationDaoImpl();
 		List<Subject> subjectList = rdao.selectSubjectAll();
 		
+		int pcode = 2; // req.getParameter("pcode");
+		
+		req.setAttribute("pcode", pcode);
 		req.setAttribute("side", "reservation");
 		req.setAttribute("subjectList", subjectList);
 	}
@@ -60,15 +70,71 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("doctor-detail")) {
 		int dcode = Integer.parseInt(req.getParameter("dcode"));
 		
-		
 		ReservationDao rdao = new ReservationDaoImpl();
 		req.setAttribute("side", "doctor");
 		
 	}
 	else if(action.equals("schedule")) {
 		ReservationDao rdao = new ReservationDaoImpl();
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		List<Map<String, String>> scheduleList = rdao.selectScheduleByDcode(dcode);
+		
+		for(Map<String, String> m: scheduleList) {
+			for(String key: m.keySet()) {
+				
+				System.out.println(String.format("키 : %s, 값 : %s", key, m.get(key)));
+			}
+		}
+		
+		req.setAttribute("scheduleList", scheduleList);
 		
 	}
+	else if(action.equals("rsv-time")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		String rsvdate = req.getParameter("rsvdate");
+		
+		List<Reservation> rsvList = rdao.selectReservationByDcodeAndRsvDate(dcode, rsvdate);
+		List<String> availableList = new ArrayList<String>();
+		
+		for(Reservation rsv: rsvList) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				Date date = sdf.parse(rsv.getRsvdate());
+				String time = String.format("%02d", date.getHours()) + ":" + String.format("%02d", date.getMinutes());
+				availableList.add(time);
+			} catch (ParseException e) {
+				// TODO 자동 생성된 catch 블록
+				e.printStackTrace();
+			}
+		}
+		req.setAttribute("rsvList", availableList);
+		
+	}
+	else if(action.equals("book")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		
+		int pcode = Integer.parseInt(req.getParameter("pcode"));
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		String rsvdate = req.getParameter("rsvdate");
+		
+		System.out.println(pcode);
+		System.out.println(dcode);
+		System.out.println(rsvdate);
+		
+		int cnt = rdao.insertReservation(pcode, dcode, rsvdate);
+		res.getWriter().print(cnt);
+	}
+	else if(action.equals("reservation-list")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+
+		int pcode = 2; // req.getParameter("pcode");
+
+		
+		req.setAttribute("side", "reservation");
+		
+	}
+	
 	
 	// 페이지 처리
 	String dispatcherUrl = null;
@@ -85,7 +151,14 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("schedule")) {
 		dispatcherUrl = "ajax/schedule.jsp";
 	}
-	
+	else if(action.equals("rsv-time")) {
+		dispatcherUrl = "ajax/rsv-time.jsp";
+	}
+	else if(action.equals("book")) {
+	}
+	else if(action.equals("reservation-list")) {
+		dispatcherUrl = "pages/reservation-list.jsp";
+	}
 	
 	
 	if(dispatcherUrl != null) {

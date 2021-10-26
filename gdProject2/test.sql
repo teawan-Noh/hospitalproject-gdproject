@@ -662,10 +662,6 @@ alter table APPROVAL drop constraint FK_doctor_TO_approval;
 alter table APPROVAL add constraint FK_doctor_TO_approval 
 foreign key (dcode) references doctor(dcode) on delete cascade;
 
-alter table APPROVAL drop constraint FK_doctor_TO_approval;
-alter table APPROVAL add constraint FK_doctor_TO_approval 
-foreign key (dcode) references doctor(dcode) on delete cascade;
-
 alter table rest drop constraint FK_APPROVAL_TO_REST;
 alter table rest add constraint FK_APPROVAL_TO_REST 
 foreign key (acode) references approval(acode) on delete cascade;

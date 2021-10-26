@@ -62,7 +62,7 @@
 	    <br/>
 	  	<div>
             <button type = "submit" >수정</button>
-            <button type = "button" onclick="location.href = 'qna/qnaList.jsp'">취소</button>
+            <button type = "button" onclick="location.href = 'pages/qnaList.jsp'">취소</button>
         </div>
 	    
  		</form>

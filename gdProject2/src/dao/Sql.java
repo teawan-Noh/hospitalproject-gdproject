@@ -6,7 +6,12 @@ public class Sql {
 	public static final String SUBJECT_SELECT_ALL_SQL = "select * from subject";
 	public static final String DOCTOR_SELECT_BY_SUBJECT_NAME_SQL = "select d.dcode, d.scode, d.name, d.career, d.tel, d.email from doctor d join subject s on d.scode = s.scode where s.name = ?";
 	public static final String DOCTOR_SELECT_BY_DCODE_SQL = "select name, tel, email, career from doctor where dcode = ?";
-	public static final String SELECT_SCHEDULE_BY_DCODE_SQL = "select restdate, day from rest r join approval a on r.acode = a.acode where a.dcode = ? and approved='승인'";
+	public static final String SELECT_SCHEDULE_BY_DCODE_SQL = "select to_char(restdate, 'yyyy-mm-dd') restdate, day from rest r join approval a on r.acode = a.acode where a.dcode = ? and approved='승인'";
+	public static final String SELECT_RESERVATION_BY_DCODE_AND_RSVDATE_SQL = "select * from reservation where dcode = ? and to_char(rsvdate, 'yyyy-mm-dd') = ? and state = '예약' order by rsvdate";
+	public static final String RESERVATION_INSERT_SQL = "insert into reservation values(rsv_seq.nextval, ?, ?, to_date(?, 'yyyy-mm-dd HH24:MI'), '예약')";
+	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rcode desc) rsvs) result where rn between ? and ?";
+	
+	public static final String MEMO_COUNT_SQL = "select count(*) as cnt from memo";
 	
 	//CUSTOMER
 	public static final String CUSTOMER_INSERT_SQL = "insert into CUSTOMER values(customerseq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -27,8 +32,14 @@ public class Sql {
 	public static final String APPROVAL_NOT_SELECT_SQL = "select * from approval natural join rest where approved != '승인' and dcode = ?";
 	public static final String APPROVAL_INSERT_SQL = "insert into approval values (?, ?, sysdate, ?, ?)"; 
 	public static final String DOCTOR_RESERVATION_SELECT_SQL = "SELECT b.rcode, b.rsvdate, a.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode WHERE c.dcode = ? and to_char(b.rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') order by b.rsvdate asc";
-
-
+	public static final String DOCTOR_INSERT_SQL = "insert into doctor values(doctor_seq.nextval, ?, ?, ?, ?, to_date(?,'yyyy-mm-dd'), ?, ?, ?, ?, ?, ?, ?)";
+	public static final String DOCTOR_SELECT_CNT_BY_ID_SQL = "select count(*) as cnt from doctor where id = ?";
+	public static final String DOCTOR_SELECT_ALL_SQL = "select * from doctor";
+	public static final String DOCTOR_SELECT_BY_SCODE_SQL = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.email, s.name as sname from doctor d join subject s on d.scode = s.scode where s.scode = ?";
+	public static final String SUBJECT_SELECT_BY_SCODE_SQL = "select * from subject where scode = ?";
+	public static final String DOCTOR_SELECT_BY_NAME_AND_SCODE_SQL = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.email, s.name as sname from doctor d join subject s on d.scode = s.scode where d.name like ? and  s.scode = ?";
+	public static final String DOCTOR_DELETE_SQL = "delete from doctor where dcode = ?";
+	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, d.birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	//odw
 	//회원가입
 	public static final String PATIENT_INSERT_SQL = 
@@ -38,17 +49,26 @@ public class Sql {
 	         "select count(*) as cnt from patient where id = ?";
 	//환자 로그인
 	public static final String PATIENT_LOGIN_SQL =
-				"select id, pw from patient where id =? and pw = ?";
+			"select * from patient where id =? and pw = ?";
+	
+	public static final String PATIENT_SELECT_BY_PCODE_SQL =
+			"select * from patient where pcode = ?";
+	
 	//의사 로그인
 	public static final String DOCTOR_LOGIN_SQL =
-			"select id, pw from doctor where id =? and pw =?";
+			"select * from doctor where id =? and pw =?";
+	
 	//관리자 로그인
 	public static final String MANAGER_LOGIN_SQL =
-			"select id, pw from manager where id =? and pw =?";
-
+			"select * from manager where id =? and pw =?";
+	
+	public static final String MANAGER_SELECT_BY_MCODE_SQL =
+			"select * from manager where mcode=?";
+	
 	//환자 개인정보수정
 	public static final String PATIENT_UPDATE_SQL = 
-			"update patient set pw = ?, postcode = ?, address = ?, address2 = ?, tel = ?, email = ? where pcode = ?";
+			"update patient set pw = ?,nickname = ?,postcode = ?,address = ?,address2 = ?,tel = ?,email = ? where pcode = ?";
+
 	//환자 탈퇴
 	public static final String PATIENT_DELETE_SQL =
 			"delete from patient where pcode = ?";
@@ -91,9 +111,9 @@ public class Sql {
 	//게시글 상세보기 파일
 		public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";
-	//ntw
+		//ntw
 	//qna 테이블
-	public static final String QNA_SELECT_ALL_SQL 
+		public static final String QNA_SELECT_ALL_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
 			+ " from qna q inner join patient p"
 			+ " on q.pcode = p.pcode"

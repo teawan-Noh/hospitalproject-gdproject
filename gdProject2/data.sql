@@ -1,22 +1,7 @@
-insert into PATIENT values (pcode.nextval, ?, ?, ?,?,?, to_date(?,'yyyy-mm-dd'),?,?,?,?,?)
-
-create sequence pcode;
-
-drop sequence pcode;
-
-
-
-delete from patient where pcode = ?
-
-
-select count(*) from patient where id = ?
-
-
-select id, pw from patient where id =? and pw = ?
-
---진료과
+select * from subject order by name asc;
+delete from subject;
+drop sequence subject_seq;
 create sequence subject_seq;
-select * from subject;
 insert into subject values(subject_seq.nextval, '감염내과', '감염내과는 각종 미생물에 의한 감염병은 물론 원인을 모르는 열병(불명열) 환자, 에이즈, 결핵 환자 등을 진료하고 있습니다. 미생물에 의해 발생하는 모든 감염질환을 진단하고 치료하는 진료과입니다', '031-123-4560');
 insert into subject values(subject_seq.nextval, '내분비대사내과', '내분비-대사 내과에서는 신체의 각종 내분비 기관에서 분비되어 나오는 호르몬의 이상이나 호르몬 분비 장기 또는 표적 장기의 각종 질병들을 진단 치료합니다.', '031-123-4561');
 insert into subject values(subject_seq.nextval, '알레르기내과', '알레르기내과에서는 외부 물질에 대한 면역반응이 지나쳐서 과민반응을 일으키는 질환들을 진료하고 연구하는, 내과의 한 분과입니다. 특히 알레르기센터에 협조 진료합니다.', '031-123-4562');
@@ -28,11 +13,11 @@ insert into subject values(subject_seq.nextval, '정형외과', '사지와 척추에 있는 
 insert into subject values(subject_seq.nextval, '피부과', '피부과는 피부 질환으로 고통 받는 많은 환자들을 위해 진료를 제공하고 있습니다. 각 전문과의 우수한 의료진과 첨단의 의료장비를 갖추었으며 우수한 전문의료인을 양성합니다.', '031-123-4568');
 insert into subject values(subject_seq.nextval, '흉부외과', '흉부외과는 크게 심장외과와 폐,식도외과로 나누어져 있으며, 정확한 진단 및 치료를 시행하며, 최상의 서비스를 제공하기 위해 모든 의료진이 최선을 다하고 있습니다.', '031-123-4569');
 
-select id, pw from doctor where id =? and pw =?
-create sequence doctor_seq;
+drop table doctor;
 select * from doctor;
 delete from doctor;
-
+drop sequence doctor_seq;
+create sequence doctor_seq;
 insert into doctor values(doctor_seq.nextval, 1, 'dknv1234', 'skng9710s', '이철진', to_date('1971-6-19','yyyy-mm-dd'), 797202, 12345, '서울특별시', '구로구', '1997~2002 구디병원 홍보실 실장, 2002~2007 구디병원 폐연구소장, 2007~2010 구디병원 중환자 진료부장, 2010~2014 구디병원 감염내과 과장, 2015~현재 구디병원 내과 주임교수', '010-2325-5145', 'abcd@gdhp.com');
 insert into doctor values(doctor_seq.nextval, 2, 'cmen0173', 'dkng0982', '최근수', to_date('1984-8-23','yyyy-mm-dd'), 298273, 08623, '경기도', '파주시', '2011~2015 구디병원 내분비대사내과 주임교수 및 임상과장, 2009~2015 구디병원 의학유전학과장, 2015~2016 대한골다공증학회 회장, 2016~현재 구디병원 노인보건연구센터 소장', '010-9374-2074', 'qert@gdhp.com');
 insert into doctor values(doctor_seq.nextval, 3, 'aknasf82', 'asong832', '박진웅', to_date('1972-1-27','yyyy-mm-dd'), 973623, 28616, '서울특별시', '양천구', '1997~2002 구디병원 지역의약품안전센터 센터장 역임, 2002~2007 구디병원 첨단의학연구원장 역임, 2007~2010 구디병원 의학연구협력센터장 역임, 2010~현재 구디병원 의료원장', '010-3972-7718', 'qtw34@gdhp.com');
@@ -44,38 +29,3 @@ insert into doctor values(doctor_seq.nextval, 8, 'kwoopd98', 'angi732', '강준', 
 insert into doctor values(doctor_seq.nextval, 9, 'lsmo081243', 'ahig48271', '채지수', to_date('1985-7-27','yyyy-mm-dd'), 093621, 38671, '서울특별시', '마포구', '2003~2007 구디병원 피부과 전임의, 2007~2010 구디병원 피부과 임상조교수, 2010~2014 구디병원 피부과 부교수, 2015~2018 구디병원 피부과 교수, 2018~현재 구디병원 피부과 과장', '010-9716-1686', 'ci7t61@gdhp.com');
 insert into doctor values(doctor_seq.nextval, 10, 's0ujg08', 'ainiey827', '석수민', to_date('1983-2-14','yyyy-mm-dd'), 325234, 14287, '경기도', '광명시', ' 2005~2007 구디병원 흉부외과 전문의, 2007~2010 구디병원 환자중심 삶의 질 연구소 소장, 2010~현재 구디병원 암센터장', '010-0273-1927', 'smoie712@gdhp.com');
 
-select id, pw from manager where id =? and pw =?
-
-select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode where n.title like ? or n.content like ? order by n.ncode desc
-
-insert into notice values (ncode.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), 0);
-
-drop sequence ncode;
-
-CREATE SEQUENCE ncode;
-
-insert into manager values (ncode.nextval,'홍길동','mhong','1234');
-select * from manager;
-
-insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)
-
-create sequence fcode;
-
-select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = ?
-
-delete from notice where ncode = ?
-
-select name from files where ncode = ?
-
-update notice set title =?, content =? where ncode =?
-
-update files set uploaddate=sysdate, name=?, beforename=?, filesize=? where fcode=?
-
-
-delete from patient;
-
-select * from patient;
-
-update patient set pw = '12345',nickname = '깐따삐야',gender='여', postcode = 60000, address = '서울', address2 = '강남', tel = '010-2222-2222', email = 'sample@email.com' where pcode = 8;
-
-select count(*) from patient where id = 'id';

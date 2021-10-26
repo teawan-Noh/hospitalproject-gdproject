@@ -11,6 +11,7 @@ public class JDBCUtil {
 	public static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	public static final String username = "scott";
 	public static final String password = "tiger";
+
 	
 	public static Connection getConnection() {
 		

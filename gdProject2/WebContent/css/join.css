@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+#main {
+	margin: 0 auto;
+	max-width: 1200px;
+}
+
 /* 회원가입 겉 회색 테두리 */
 .border{
     width: 1000px;
@@ -11,6 +16,8 @@
     left: 0;
     right: 0;
     bottom: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 /* 회원가입 제목,내용 위치 */
@@ -205,3 +212,4 @@
     font-weight: 700;
     margin-left: 30px;
 }
+
