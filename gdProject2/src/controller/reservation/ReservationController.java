@@ -133,13 +133,6 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		res.getWriter().print(cnt);
 	}
 	else if(action.equals("reservation-list")) {
-		String termStr= req.getParameter("term");
-		if(termStr == null) {
-			termStr = "-9999";
-		}
-		int term = Integer.parseInt(termStr);
-
-
 		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
 
 		ReservationDao rdao = new ReservationDaoImpl();
@@ -148,7 +141,7 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		int pcode = 2; // req.getParameter("pcode");
 		
 		List<Map<String, String>> rsvList = rdao.selectReservationPage(pcode, requestPage);
-		int cnt = pdao.getCount(pcode);
+		int cnt = pdao.getCountPatient(pcode);
 		
 		PageManager pm = new PageManager(requestPage);
 		PageGroupResult pgr = pm.getPageGroupResult(cnt);
@@ -157,26 +150,23 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		
 		req.setAttribute("rsvList", rsvList);
 		req.setAttribute("side", "reservation");
-		
 	}
 	else if(action.equals("reservation-detail")) {
+		String user = req.getParameter("user");
 		ReservationDao rdao = new ReservationDaoImpl();
 		int rcode = Integer.parseInt(req.getParameter("rcode"));
 		Map<String, String> rsvInfo = rdao.selectReservationByRcode(rcode);
 
 		System.out.println(rsvInfo.get("pname"));
-		
-		req.setAttribute("side", "reservation");
+		if(user != null) {
+			req.setAttribute("side", "task");
+		}
+		else {
+			req.setAttribute("side", "reservation");
+		}
 		req.setAttribute("rsvInfo", rsvInfo);
 	}
 	else if(action.equals("reservation-doctor-list")) {
-		String termStr= req.getParameter("term");
-		if(termStr == null) {
-			termStr = "-9999";
-		}
-		int term = Integer.parseInt(termStr);
-
-
 		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
 
 		ReservationDao rdao = new ReservationDaoImpl();
@@ -185,7 +175,7 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		int dcode = 1; // req.getParameter("pcode");
 		
 		List<Map<String, String>> rsvList = rdao.selectReservationByDcodePage(dcode, requestPage);
-		int cnt = pdao.getCount(dcode);
+		int cnt = pdao.getCountPatient(dcode); // ¼öÁ¤
 		
 		PageManager pm = new PageManager(requestPage);
 		PageGroupResult pgr = pm.getPageGroupResult(cnt);

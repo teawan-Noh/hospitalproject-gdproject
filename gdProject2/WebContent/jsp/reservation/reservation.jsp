@@ -465,7 +465,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     console.log(code);
                     //$.get(url, { dcode: dcode }, function (data) {});
                     location.href =
-                        "doctor-detail?subject=" + subject + "&dcode=" + code;
+                        "doctor_detail?subject=" + subject + "&dcode=" + code;
                 });
 
                 // 시간 클릭

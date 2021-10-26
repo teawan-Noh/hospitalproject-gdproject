@@ -324,9 +324,7 @@ List<Map<String, String>> rsvList = new ArrayList<>();
 				result.put("pcode", resultSet.getString("pcode"));
 				result.put("rsvdate", rsvDate[0]);
 				result.put("rsvtime", rsvDate[1]);
-				result.put("scode", resultSet.getString("scode"));
 				result.put("name", resultSet.getString("name"));
-				result.put("state", resultSet.getString("state"));
 				rsvList.add(result);
 			}
 

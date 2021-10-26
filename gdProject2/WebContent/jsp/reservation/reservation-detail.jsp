@@ -194,7 +194,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         					</c:if>
                         </tr>
                 </table>
-               	<c:if test="${rsvInfo.state == '예약'}">
+               	<c:if test="${rsvInfo.state == '예약' && side == 'reservation'}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
                 	<button type="button" id="rsv-delete" class="btn btn-danger">삭제</button>

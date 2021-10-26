@@ -149,8 +149,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     + "<td>"+ "${rsv.rn}" + "</td>"
                     + "<td>" + "${rsv.rsvdate}" + "</td>"
                     + "<td>" + "${rsv.rsvtime}" + "</td>"
-                    + "<td>" + "${rsv.name}" + "</td>"
-                    + "<td>" + "${rsv.state}" + "</td></tr>");
+                    + "<td>" + "${rsv.name}" + "</td></tr>");
                 </c:forEach>
 
                 $("#rsv-mylist tbody")
@@ -158,6 +157,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     .click(function (idx, item) {
                         var rcode = $(this).find(".table-rcode").text();
                         $("#form-rcode").val(rcode);
+                        $("#form-user").val("doctor");
                         $("#form").submit();
                     });
 
@@ -184,14 +184,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             <th>No.</th>
                             <th>예약일자</th>
                             <th>예약시간</th>
-                            <th>진료과</th>
-                            <th>예약 상태</th>
+                            <th>환자명</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
                 <form style="display: none" action="reservation-detail" method="POST" id="form">
   					<input type="hidden" id="form-rcode" name="rcode" value=""/>
+  					<input type="hidden" id="form-user" name="user" value=""/>
 				</form>
                 <ul class="pagination justify-content-center">
                     <c:if test="${pageGroupResult.beforePage}">

@@ -15,7 +15,7 @@ public class Sql {
 	
 	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
 
-	public static final String RESERVATION_SELECT_PAGE_DOCTOR_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.dcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
+	public static final String RESERVATION_SELECT_PAGE_DOCTOR_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.pcode, p.name from reservation r inner join patient p on r.pcode = p.pcode where r.dcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
 	
 	
 	//CUSTOMER

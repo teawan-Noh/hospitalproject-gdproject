@@ -11,7 +11,7 @@ import common.Sql;
 public class PageDaoImpl implements PageDao {
 
 	@Override
-	public int getCount(int pcode) {
+	public int getCountPatient(int pcode) {
 		// TODO 자동 생성된 메소드 스텁
 		Connection connection = null;
 		PreparedStatement pStatement = null;
