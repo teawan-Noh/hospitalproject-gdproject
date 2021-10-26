@@ -323,9 +323,12 @@ $(function(){
                         <input type="text" class="form-control" id="tel" name="tel" placeholder="예시) 010-0000-0000" >
 
                         <span id="radios">
-                            <input type="radio" name="gender" class="radio" id="male" value="남">남자
-                            <input type="radio" name="gender" class="radio" id="female" value="여">여자
-                            <input type="radio" name="gender" class="radio" id="other" value="기타">기타
+                            <input type="radio" name="gender" class="radio" id="male" value="남">
+                            <label for="male" class="form-label">남자</label>
+                            <input type="radio" name="gender" class="radio" id="female" value="여">
+                            <label for="female" class="form-label">여자</label>
+                            <input type="radio" name="gender" class="radio" id="other" value="기타">
+                            <label for="other" class="form-label">기타</label>
                         </span>
                         
                     </div>

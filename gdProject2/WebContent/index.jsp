@@ -5,6 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+   
+   $("#patientUpdate").click(function(){
+      var inputString = prompt('현재 비밀번호를 입력해주세요.');
+      $.ajax({
+           type: 'POST',
+           url: 'patient_detail?pcode=${pcode}',
+           data: {'prompt':inputString},
+           success: console.log("prompt값 전송 성공")
+         });
+
+   });
+   
+});
+
+</script>
 <title>Insert title here</title>
 </head>
 <body>
