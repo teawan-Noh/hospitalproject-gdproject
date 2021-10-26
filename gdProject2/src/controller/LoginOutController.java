@@ -58,33 +58,27 @@ public class LoginOutController extends HttpServlet{
 			if(p != null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("pcode", p.getPcode());
-				int pcode = (int)session.getAttribute("pcode");
-				PatientDao pdao = new PatientDaoImpl();
-				Patient patient = pdao.selectByPcode(pcode);
-				System.out.println(patient.toString());
-				req.setAttribute("patient", patient);
+				System.out.println(p.toString());
+				req.setAttribute("patient", p);
 			}else {
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
 			}
 			
 		}else if(action.equals("doctor_login")) {
-			String id = req.getParameter("id");
-			String pw = req.getParameter("pw");
-			
-			DoctorDao dao = new DoctorDaoImpl();
-			Doctor d = dao.login(id, pw);
-			
-			if(d != null) {
-				HttpSession session = req.getSession();
-				session.setAttribute("dcode", d.getDcode());
-				int dcode = (int)session.getAttribute("dcode");
-				DoctorDao ddao = new DoctorDaoImpl();
-				Doctor doctor = ddao.selectByDcode(dcode);
-				System.out.println(doctor.toString());
-				req.setAttribute("doctor", doctor);
-			}else {
-				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
-			}
+	         String id = req.getParameter("id");
+	         String pw = req.getParameter("pw");
+	         
+	         DoctorDao dao = new DoctorDaoImpl();
+	         Doctor d = dao.login(id, pw);
+	         
+	         if(d != null) {
+	            HttpSession session = req.getSession();
+	            session.setAttribute("dcode", d.getDcode());
+	            System.out.println(d.toString());
+	            req.setAttribute("doctor", d);
+	         }else {
+	            req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
+	         }
 			
 			
 		}else if(action.equals("manager_login")) {
@@ -98,11 +92,8 @@ public class LoginOutController extends HttpServlet{
 			if(m != null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("mcode", m.getMcode());
-				int mcode = (int)session.getAttribute("mcode");
-				ManagerDao mdao = new ManagerDaoImpl();
-				Manager manager = mdao.selectByMcode(mcode);
-				System.out.println(manager.toString());
-				req.setAttribute("manager", manager);
+				System.out.println(m.toString());
+				req.setAttribute("manager", m);
 			}else {
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
 			}
