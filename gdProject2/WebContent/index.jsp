@@ -25,12 +25,15 @@
 		<a href="logout">로그아웃</a>
 	</c:if>
 	<c:if test="${pcode != null}">
-		<a href="patient_detail" id="patientUpdate">마이페이지</a>
+		<a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a>
+	</c:if>
+	<c:if test = "${dcode != null}">
+		<a href = "mypage?dcode=${dcode}">마이페이지</a>
 	</c:if>
         <jsp:include page="components/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-            <div class = "mainmenu">
+            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
                 <h3 class="menu-title">예약</h3>
                 <p class="menu-content">진료 예약을 하실 수 있습니다.</p>
             </div>

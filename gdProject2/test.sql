@@ -667,3 +667,12 @@ alter table rest add constraint FK_APPROVAL_TO_REST
 foreign key (acode) references approval(acode) on delete cascade;
 
 delete from patient where pcode=1;
+select * from reservation;
+create sequence rsv_seq;
+create sequence pcode;
+drop sequence pcode;
+delete from patient;
+select * from patient;
+select * from rest;
+select * from approval;
+create sequence approval_seq;

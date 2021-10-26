@@ -18,7 +18,7 @@ import dao.ReservationDaoImpl;
 import model.Doctor;
 import model.Subject;
 
-@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage", "/doctor_update"})
+@WebServlet(name = "DoctorController", urlPatterns = {"/doctor_input", "/doctor_save", "/didcheck", "/doctor_search", "/doctor_list", "/mypage", "/doctor_update", "/doctor_detail"})
 public class DoctorController extends HttpServlet {
 
 	/**
@@ -82,7 +82,7 @@ public class DoctorController extends HttpServlet {
 			ReservationDao dao = new ReservationDaoImpl();
 			List<Subject> subjectList = dao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
-			
+			req.setAttribute("side", "doctor");
 		} else if(action.equals("doctor_list")) {
 			int scode = Integer.parseInt(req.getParameter("selectSubject"));
 			String dname = req.getParameter("dname").trim();
@@ -96,7 +96,7 @@ public class DoctorController extends HttpServlet {
 			Subject selectSubject = dao.selectBycode(scode);
 			req.setAttribute("doctorList", doctorList);
 			req.setAttribute("selectSubject", selectSubject);
-			
+			req.setAttribute("side", "doctor");
 		} else if(action.equals("mypage")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
@@ -118,6 +118,11 @@ public class DoctorController extends HttpServlet {
 			Doctor doctor = new Doctor(dcode, pw, postcode, address, address2, career, tel, email);
 			DoctorDao dao = new DoctorDaoImpl();
 			dao.update(doctor);
+		} else if(action.equals("doctor_detail")) {
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			DoctorDao dao = new DoctorDaoImpl();
+			List<HashMap> doctorList = dao.selectBydcode(dcode);
+			req.setAttribute("doctor", doctorList);
 		}
 		
 		String dispatcherUrl = null;
@@ -135,6 +140,8 @@ public class DoctorController extends HttpServlet {
 			dispatcherUrl = "/pages/updateDoctor.jsp";
 		} else if(action.equals("doctor_update")) {
 			dispatcherUrl = "mypage";
+		} else if(action.equals("doctor_detail")) {
+			dispatcherUrl = "/pages/doctor-detail.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
