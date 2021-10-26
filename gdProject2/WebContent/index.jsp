@@ -49,7 +49,7 @@
                 <h3 class="menu-title">의료진정보</h3>
                 <p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
             </div>
-        </section>
+        </section> 
         <section class="sec2">
             <h1>진료 과목 소개</h1>
             <div class="w3-content w3-display-container">
