@@ -17,11 +17,11 @@ public interface NoticeDao {
 	List <Notice> selectAll();
 	
 	//공지사항 게시글 상세보기
-	Notice selectByNcode(long ncode);
+	Notice selectByNcode(int ncode);
 	
 	//공지사항 제목,내용으로 검색
 	List <Notice> selectByTitleContent(String name);
 	
 	//조회수
-	void count(long ncode);
+	void count(int ncode);
 }

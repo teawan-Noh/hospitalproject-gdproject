@@ -48,7 +48,11 @@ select id, pw from manager where id =? and pw =?
 
 select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode where n.title like ? or n.content like ? order by n.ncode desc
 
-insert into notice values (ncode.nextval, ?, ?, ?, to_date(?,'yyyy-mm-dd'), 0);
+insert into notice values (ncode.nextval, ?, ?, ?, sysdate, 0);
+insert into notice values (ncode.nextval, 1,'공지사항 제목입니다.','공지사항 내용입니다.',sysdate,0);
+
+delete from notice;
+select * from notice;
 
 drop sequence ncode;
 
@@ -57,7 +61,7 @@ CREATE SEQUENCE ncode;
 insert into manager values (ncode.nextval,'홍길동','mhong','1234');
 select * from manager;
 
-insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)
+insert into files values(fcode.nextval,?, to_date(?, 'YYYY-mm-dd'), ?,?,?)
 
 create sequence fcode;
 
@@ -75,6 +79,12 @@ update files set uploaddate=sysdate, name=?, beforename=?, filesize=? where fcod
 delete from patient;
 
 select * from patient;
+
+select * from manager;
+
+select * from notice;
+
+delete from notice;
 
 update patient set pw = '12345',nickname = '깐따삐야',gender='여', postcode = 60000, address = '서울', address2 = '강남', tel = '010-2222-2222', email = 'sample@email.com' where pcode = 8;
 

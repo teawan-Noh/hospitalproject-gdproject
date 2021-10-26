@@ -85,15 +85,22 @@ function carousel() {
 }
 
 $(function(){
-	
-	$("#patientUpdate").click(function(){
-		var inputString = prompt('현재 비밀번호를 입력해주세요.');
-		alert(inputString);
-	});
-	
+   
+   $("#patientUpdate").click(function(){
+      var inputString = prompt('현재 비밀번호를 입력해주세요.');
+      $.ajax({
+           type: 'POST',
+           url: 'patient_detail?pcode=${pcode}',
+           data: {'prompt':inputString},
+           success: console.log("prompt값 전송 성공")
+         });
+
+   });
+   
 });
 </script>
 <jsp:include page="components/footer.jsp"></jsp:include>
+
 </body>
 </html>
 
