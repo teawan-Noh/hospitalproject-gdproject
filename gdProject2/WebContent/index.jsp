@@ -25,12 +25,15 @@
 		<a href="logout">로그아웃</a>
 	</c:if>
 	<c:if test="${pcode != null}">
-		<a href="patient_detail" id="patientUpdate">마이페이지</a>
+		<a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a>
+	</c:if>
+	<c:if test = "${dcode != null}">
+		<a href = "mypage?dcode=${dcode}">마이페이지</a>
 	</c:if>
         <jsp:include page="components/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-            <div class = "mainmenu">
+            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
                 <h3 class="menu-title">예약</h3>
                 <p class="menu-content">진료 예약을 하실 수 있습니다.</p>
             </div>
@@ -41,7 +44,7 @@
             <div class = "mainmenu">
                 <h3 class="menu-title">소통정보</h3>
                 <p class="menu-content">우리 병원에 궁금한 점을 남겨주시면 담당자가 확인 후 직접 답변해드립니다.</p>
-            </div>
+            </div> 
             <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_search'">
                 <h3 class="menu-title">의료진정보</h3>
                 <p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>

@@ -78,10 +78,8 @@ public class LoginOutController extends HttpServlet{
 				HttpSession session = req.getSession();
 				session.setAttribute("dcode", d.getDcode());
 				int dcode = (int)session.getAttribute("dcode");
-				DoctorDao ddao = new DoctorDaoImpl();
-				Doctor doctor = ddao.selectByDcode(dcode);
-				System.out.println(doctor.toString());
-				req.setAttribute("patient", doctor);
+				System.out.println(d.toString());
+				req.setAttribute("doctor", d);
 			}else {
 				req.setAttribute("message", "존재하지 않는 아이디거나 비밀번호가 일치하지 않습니다.");
 			}

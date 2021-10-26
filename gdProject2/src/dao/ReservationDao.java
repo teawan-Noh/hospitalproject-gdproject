@@ -16,5 +16,11 @@ public interface ReservationDao {
 	List<Reservation> selectReservationByDcodeAndRsvDate(int dcode, String rsvdate);
 	
 	int insertReservation(int pcode, int dcode, String rsvdate);
-	List<Reservation> selectReservationPageAll(int requestPage);
+	List<Map<String, String>> selectReservationPage(int pcode, int requestPage);
+	
+	List<Map<String, String>> selectReservationByDcodePage(int dcode, int requestPage);
+
+	Map<String, String> selectReservationByRcode(int rcode);
+	
+	
 }

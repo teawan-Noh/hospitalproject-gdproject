@@ -548,12 +548,18 @@ select * from reservation where dcode = 1 and to_char(rsvdate, 'yyyy-mm-dd') = '
 select * from reservation where rcode = 11;
 select * from reservation;
 update reservation set rsvdate = to_date('2021-10-26 9:30:00', 'yyyy-mm-dd HH24:MI:SS') where rcode = 11;
+
+
 create sequence rsv_seq start with 12;
 insert into reservation values(rsv_seq.nextval, 2, 2, to_date('2021-10-26 17:45', 'yyyy-mm-dd HH24:MI'), '예약');
 delete from reservation where rcode <= 25 and 12 <= rcode;
 
 -- 페이지 처리
-select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = 2 order by rcode desc) rsvs) result where rn between 5 and 8;
+select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.rsvdate between add_months(sysdate, -9999) and sysdate and r.pcode = 2 order by rcode desc) rsvs) result;
 
 
 select memoid, name, age from (select rownum as rn, memos.* from (select * from memo order by memoid desc) memos) where rn between 14 and 16
+
+
+SELECT p.name pname, p.tel, r.rsvdate, d.name dname, s.name sname FROM patient p INNER JOIN reservation r ON p.pcode = r.pcode INNER JOIN doctor d ON r.dcode = d.dcode INNER JOIN subject s ON d.scode = s.scode WHERE r.rcode = 2;
+

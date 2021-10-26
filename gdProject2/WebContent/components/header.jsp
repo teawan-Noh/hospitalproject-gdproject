@@ -98,7 +98,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     <li>회원가입</li>
                 </ul>
                 <ul id="nav-menu">
-                    <li>예약</li>
+                    <li>
+                    <a href="reservation">예약
+                    </a>
+                    </li>
                     <li>의료진</li>
                     <li>소통정보</li>
                     <li>공지사항</li>

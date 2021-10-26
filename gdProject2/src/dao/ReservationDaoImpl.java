@@ -248,9 +248,9 @@ public class ReservationDaoImpl implements ReservationDao {
 	}
 	
 	@Override
-	public List<Reservation> selectReservationPageAll(int requestPage) {
+	public List<Map<String, String>> selectReservationPage(int pcode, int requestPage) {
 		// TODO 자동 생성된 메소드 스텁
-		List<Reservation> rsvList = new ArrayList<>();
+		List<Map<String, String>> rsvList = new ArrayList<>();
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -262,16 +262,70 @@ public class ReservationDaoImpl implements ReservationDao {
 			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
-			pStatement.setInt(1, prr.getRowStartNumber());
-			pStatement.setInt(2, prr.getRowEndNumber());
+			pStatement.setInt(1, pcode);
+			pStatement.setInt(2, prr.getRowStartNumber());
+			pStatement.setInt(3, prr.getRowEndNumber());
 			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				Reservation reservation = new Reservation();
-				
-				
-				rsvList.add(reservation);
+				Map<String, String> result = new HashMap<>();
+				String[] rsvDate = resultSet.getString("rsvdate").split(" ");
+				result.put("rn", resultSet.getString("rn"));
+				result.put("rcode", resultSet.getString("rcode"));
+				result.put("pcode", resultSet.getString("pcode"));
+				result.put("rsvdate", rsvDate[0]);
+				result.put("rsvtime", rsvDate[1]);
+				result.put("scode", resultSet.getString("scode"));
+				result.put("name", resultSet.getString("name"));
+				result.put("state", resultSet.getString("state"));
+				rsvList.add(result);
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+		return rsvList;
+	}
+	
+	@Override
+	public List<Map<String, String>> selectReservationByDcodePage(int dcode, int requestPage) {
+List<Map<String, String>> rsvList = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_SELECT_PAGE_DOCTOR_SQL);
+			
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			pStatement.setInt(1, dcode);
+			pStatement.setInt(2, prr.getRowStartNumber());
+			pStatement.setInt(3, prr.getRowEndNumber());
+			
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Map<String, String> result = new HashMap<>();
+				String[] rsvDate = resultSet.getString("rsvdate").split(" ");
+				result.put("rn", resultSet.getString("rn"));
+				result.put("rcode", resultSet.getString("rcode"));
+				result.put("pcode", resultSet.getString("pcode"));
+				result.put("rsvdate", rsvDate[0]);
+				result.put("rsvtime", rsvDate[1]);
+				result.put("scode", resultSet.getString("scode"));
+				result.put("name", resultSet.getString("name"));
+				result.put("state", resultSet.getString("state"));
+				rsvList.add(result);
 			}
 
 			
@@ -298,6 +352,47 @@ public class ReservationDaoImpl implements ReservationDao {
 		
 		return result;
 	}
+
+	@Override
+	public Map<String, String> selectReservationByRcode(int rcode) {
+		// TODO 자동 생성된 메소드 스텁
+		
+		Map<String, String> result = new HashMap<>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_DETAIL_SELECT_SQL);
+			
+			pStatement.setInt(1, rcode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				String[] rsvDate = resultSet.getString("rsvdate").split(" ");
+				result.put("pname", resultSet.getString("pname"));
+				result.put("tel", resultSet.getString("tel"));
+				result.put("rsvdate", rsvDate[0]);
+				result.put("rsvtime", rsvDate[1]);
+				result.put("sname", resultSet.getString("sname"));
+				result.put("dname", resultSet.getString("dname"));
+				result.put("state", resultSet.getString("state"));
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+		return result;
+	}
+
 
 
 }

@@ -74,7 +74,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			resultSet = pStatement.executeQuery();
 
 			if (resultSet.next()) {
-doctor = new Doctor();
+				doctor = new Doctor();
 				
 				doctor.setDcode(resultSet.getInt("dcode"));
 				doctor.setScode(resultSet.getInt("scode"));
