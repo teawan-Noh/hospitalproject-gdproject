@@ -11,7 +11,7 @@
 <style>
 	.header, .writeButton{
 		display: flex;
-		flex-direction: row-reverse;
+		justify-content: flex-end
 		padding: 10px 0;
 	}
 	h1{
@@ -46,7 +46,7 @@ function button_click() {
         </div>
 		<div class="header">
 			<div>
-				<form method="post" action="board_list">
+				<form method="post" action="qna_list">
 					<select name="search">
 						<option value='nickname'>작성자</option>
 		  				<option value='titleContent'>제목+내용</option>
@@ -68,17 +68,15 @@ function button_click() {
 			    </tr>
 		   </thead>
 		   <tbody>
-		   		<c:forEach var="board" items="${boardList}">
-			    
+		   		<c:forEach var="qna" items="${qnaList}">
 			    <tr>
-			      <td>${board.no}</td>
-			      <td><a href="board_detail?no=${board.no}">${board.subject}</a></td>
-			      <td>${board.id}</td>
-			      <fmt:parseDate value="${board.wdate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+			      <td>${qna.qno}</td>
+			      <td><a href="qna_detail?qno=${qna.qno}">${qna.title}</a></td>
+			      <td>${qna.nickname}</td>
+			      <fmt:parseDate value="${qna.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      <td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
-			      <td>${board.cnt}</td>
+			      <td>${qna.cnt}</td>
 			    </tr>
-			    
 			    </c:forEach>
 			  </tbody>
 			</table>

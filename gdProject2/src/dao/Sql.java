@@ -134,20 +134,37 @@ public class Sql {
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_SUBJECT_SQL 
-		= "select * from bbs where subject like ? order by no desc";
+		= "select * from qna where subject like ? order by no desc";
 
-	public static final String QNA_SELECT_BY_NO_SQL 
-		= "select * from bbs where no = ?";
+	public static final String QNA_SELECT_BY_QNO_SQL 
+		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
+			+ " from qna q" 
+			+ " inner join patient p on q.pcode = p.pcode" 
+			+ " inner join comments c on q.qno = c.qno" 
+			+ " inner join manager m on c.mcode = m.mcode" 
+			+ " where q.qno = ?";
 
 	public static final String QNA_INSERT_SQL 
-		= "insert into qna values (qnaseq.nextval, 1, '질문19', '질문일번입니다', sysdate, 'image경로1', 0)";
+		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update bbs set subject = ?, content = ? where no = ?";
+		= "update qna set subject = ?, content = ? where no = ?";
 
 	public static final String QNA_DELETE_SQL 
-		= "delete from bbs where no = ?";
+		= "delete from qna where no = ?";
 
 	public static final String QNA_CNT_UPDATE_SQL 
-		= "update bbs set cnt = ? where no = ?";
+		= "update qna set cnt = ? where no = ?";
+	//매니저
+	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 
+		= "select d.dcode, d.name as dname, s.name as sname, d.licenseno, d.scode" 
+				+ " from doctor d" 
+				+ " inner join subject s on d.scode = s.scode" 
+				+ " where d.scode = ?";
+	
+	public static final String MG_SUBJECT_SELECT_ALL_SQL
+		= "select scode, name from subject";
+	
+	public static final String MG_DOCTOR_DELETE_SQL =
+			"delete from doctor where dcode = ?";
 }
