@@ -21,7 +21,7 @@ import common.page.PageGroupResult;
 import common.page.PageManager;
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
-	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})
+	urlPatterns= {"/mg_doctor_list", "/mg_search_doctor", "/mg_doctor_delete"})
 public class ManagerController extends HttpServlet{
 
 	@Override
@@ -46,7 +46,7 @@ public class ManagerController extends HttpServlet{
 			List<Subject> subjectList = dao.selectAll();
 			
 			req.setAttribute("subjectList", subjectList);
-			
+			req.setAttribute("side", "manager");
 		}
 			
 		if(action.equals("mg_search_doctor")) {
@@ -55,7 +55,7 @@ public class ManagerController extends HttpServlet{
 			List<Subject> subjectList = dao.selectAll();
 				
 			req.setAttribute("subjectList", subjectList);
-				
+			req.setAttribute("side", "manager");
 			String subjectcode = req.getParameter("subject");
 			if(subjectcode.equals("list")) {
 				int scode = 0;
@@ -82,6 +82,7 @@ public class ManagerController extends HttpServlet{
 			List<Subject> subjectList = dao.selectAll();
 			
 			req.setAttribute("subjectList", subjectList);
+			req.setAttribute("side", "manager");
 		}
 		
 		else if(action.equals("mg_search_patient")) {

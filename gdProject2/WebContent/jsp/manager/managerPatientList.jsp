@@ -7,19 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../common/bootstrapInclude.jsp"/>
-<script type="text/javascript">
-$(document).ready(function(){
-	//select
-	var subject = "${subject_val}";
-	
-	$('select option').each(function(){
-		if(subject == $(this).val()){
-			$(this).attr('selected','selected')
-		}
-	});
-	
-});
-</script>
 </head>
 <style>
         .main{
@@ -67,22 +54,22 @@ $(document).ready(function(){
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<div class="main">
+	<div class = "main">
 		<jsp:include page="../common/sidemenu.jsp">
         	<jsp:param name="side" value="${side}" />
         </jsp:include>
-		<div class="content">
+		<div class ="content">
 			<div class="content_path">
         		<i class="fas fa-home"></i>
         		<i class="fas fa-chevron-right"></i>
         		업무관리
         		<i class="fas fa-chevron-right"></i>
-        		진료과별의사조회
+        		환자조회
         	</div>
     		<div class="content_class">
-        		<h1>진료과별의사조회</h1>
+        		<h1>환자조회</h1>
         	</div>
-    		<div class="content_header">
+    		<div class = "content_header">
     			<form method="post" action="mg_search_doctor">
     				<select name='subject'>
 						<option value='list'>진료과목</option>
@@ -93,7 +80,7 @@ $(document).ready(function(){
     				<button type = "submit" id="submitbtn">검색</button>
     			</form>
     		</div>
-    		<div class="content_body">
+    		<div class = "content_body">
     			<table class="table">
     				<thead>
     					<tr>
