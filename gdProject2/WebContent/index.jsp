@@ -96,7 +96,7 @@ $(function(){
          });
 
    });
-   
+    
 });
 </script>
 <jsp:include page="jsp/common/footer.jsp"></jsp:include>
