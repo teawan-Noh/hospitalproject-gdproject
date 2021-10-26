@@ -3,8 +3,7 @@ package validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import formError.QnaError;
-import model.Qna;
+import model.board.Qna;
 	
 public class QnaValidator {
    
