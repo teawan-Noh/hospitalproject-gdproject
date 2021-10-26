@@ -44,7 +44,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
 <body>
     <div class="container">
-        <header><jsp:include page="/components/header.jsp"></jsp:include></header>
+        <header><jsp:include page="/jsp/common/header.jsp"></jsp:include></header>
         <div id="main">
             <div id="border">
                 <section id="title" class="login_title">
@@ -68,7 +68,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </section>
             </div>
         </div>
-        <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
+        <footer><jsp:include page="/jsp/common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 

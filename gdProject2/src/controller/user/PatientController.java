@@ -107,13 +107,13 @@ public class PatientController extends HttpServlet{
 		//∆‰¿Ã¡ˆ
 		String dispatcherUrl = null;
 		if(action.equals("patient_input")) {
-			dispatcherUrl="/pages/join.jsp";
+			dispatcherUrl="/jsp/user/join.jsp";
 		}else if(action.equals("idcheck")) {
 			dispatcherUrl="/ajax/idcheck.jsp";
 		}else if(action.equals("patient_save")) {
 			dispatcherUrl="index.jsp";
 		}else if(action.equals("patient_detail")) {
-			dispatcherUrl="/pages/patientDetail.jsp";
+			dispatcherUrl="/jsp/patient/patientDetail.jsp";
 		}else if(action.equals("patient_update")) {
 			dispatcherUrl="index.jsp";
 		}else if(action.equals("patient_delete")) {

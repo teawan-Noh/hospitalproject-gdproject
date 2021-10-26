@@ -229,9 +229,9 @@ $("#updatebtn").click(function(){
 </style>
 </head>
 <body>
-	<jsp:include page="../components/header.jsp"></jsp:include>
+	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 	<div class = "main">
-		<jsp:include page="../components/sidemenu.jsp"></jsp:include>
+		<jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
 		<div class ="content">
     	<h1>개인정보수정</h1>
     	<c:forEach var="doctor" items="${doctor}">
@@ -302,7 +302,7 @@ $("#updatebtn").click(function(){
         </c:forEach>
         </div>
     </div>
-    <jsp:include page="../components/footer.jsp"></jsp:include>
+    <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     	function sample6_execDaumPostcode() {

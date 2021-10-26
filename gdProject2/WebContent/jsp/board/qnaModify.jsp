@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div class="container mt-3" >
-		<jsp:include page="../components/header.jsp"></jsp:include>
+		<jsp:include page="/jsp/common/header.jsp"></jsp:include>
 			
 		<div class="show_path">
     		<i class="fas fa-home"></i>
@@ -67,6 +67,6 @@
 	    
  		</form>
 	</div>
-	 <jsp:include page="../components/footer.jsp"></jsp:include>
+	 <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
 </body>
 </html>

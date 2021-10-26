@@ -59,7 +59,7 @@ public class NoticeController extends HttpServlet{
 		//∆‰¿Ã¡ˆ
 		String dispatcherUrl = null;
 		if(action.equals("notice_list")) {
-			dispatcherUrl="/pages/noticeList.jsp";
+			dispatcherUrl="/jsp/board/noticeList.jsp";
 		}else if(action.equals("notice_input")) {
 			dispatcherUrl="";
 		}else if(action.equals("notice_detail")) {

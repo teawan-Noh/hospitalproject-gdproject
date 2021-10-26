@@ -1,4 +1,4 @@
-package page;
+package common.page;
 
 public class PageRowResult {
 	private int rowStartNumber; // 화면에 보여줄 시작 줄 번호

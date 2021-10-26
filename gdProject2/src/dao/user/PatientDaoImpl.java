@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import dao.common.JDBCUtil;
-import dao.common.Sql;
+import common.JDBCUtil;
+import common.Sql;
 import model.user.Patient;
 
 public class PatientDaoImpl implements PatientDao{

@@ -3,8 +3,8 @@ package dao.ask;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import dao.common.JDBCUtil;
-import dao.common.Sql;
+import common.JDBCUtil;
+import common.Sql;
 import model.ask.Approval;
 
 public class ApprovalDaoImpl implements ApprovalDao {

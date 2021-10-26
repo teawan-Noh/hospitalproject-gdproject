@@ -66,9 +66,9 @@ pageEncoding="UTF-8"%>
         </style>
     </head>
     <body>
-        <jsp:include page="../components/header.jsp"></jsp:include>
+        <jsp:include page="/jsp/common/header.jsp"></jsp:include>
         <div class="flex container-box">
-            <jsp:include page="../components/sidemenu.jsp"></jsp:include>
+            <jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
             <div class="content">
                 <ul>
                     <li>의료진</li>
@@ -100,6 +100,6 @@ pageEncoding="UTF-8"%>
                 </div>
             </div>
         </div>
-        <jsp:include page="../components/footer.jsp"></jsp:include>
+        <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
     </body>
 </html>

@@ -1,12 +1,12 @@
-package page;
+package common.page;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import dao.common.JDBCUtil;
-import dao.common.Sql;
+import common.JDBCUtil;
+import common.Sql;
+
 
 public class PageDaoImpl implements PageDao {
 
