@@ -68,6 +68,32 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
         </div>
         <footer><jsp:include page="/jsp/common/footer.jsp"></jsp:include></footer>
+=======
+        <header><jsp:include page="../common/header.jsp"></jsp:include></header>
+        <div id="main">
+            <div id="border">
+                <section id="title" class="login_title">
+                    <h1>로그인</h1>
+                    <p>의사 로그인 페이지입니다.</p>
+                </section>
+                <section id="form" class="form-group">
+                    <form action="doctor_login" method="post" name="plogin">
+                        <div class="mb-3">
+                            <label for="id" class="form-label smallTitle">아이디</label><br>
+                            <input type="text" name="id" placeholder="아이디를 입력하세요" class="form-control" id="id"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pw" class="form-label smallTitle">비밀번호</label><br>
+                            <input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요" class="form-control">
+                        </div>
+                        <span id="message">${message}</span>
+                            <input type="submit" value="로그인" id="login" name="login"/>
+                        <button type="button" onclick="location.href='index.jsp'" id="toMain">메인페이지로</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 

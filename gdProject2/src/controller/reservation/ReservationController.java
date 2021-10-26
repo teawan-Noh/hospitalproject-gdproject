@@ -22,8 +22,7 @@ import common.page.PageManager;
 import dao.ask.ReservationDao;
 import dao.ask.ReservationDaoImpl;
 import model.ask.Reservation;
-import model.user.Doctor;
-import model.user.Subject;
+import model.user.*;
 
 
 @WebServlet(name="ReservationController", 
@@ -200,13 +199,13 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	String dispatcherUrl = null;
 	
 	if(action.equals("reservation")) {
-		dispatcherUrl = "/jsp/reservation/reservation.jsp";
+		dispatcherUrl = "jsp/reservation/reservation.jsp";
 	}
 	else if(action.equals("subject-doctor")) {
 		dispatcherUrl = "ajax/subject-doctor.jsp";
 	}
 	else if(action.equals("doctor-detail")) {
-		dispatcherUrl = "/jsp/reservation/doctor-detail.jsp";
+		dispatcherUrl = "jsp/doctor/doctor-detail.jsp";
 	}
 	else if(action.equals("schedule")) {
 		dispatcherUrl = "ajax/schedule.jsp";
@@ -217,13 +216,13 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("book")) {
 	}
 	else if(action.equals("reservation-list")) {
-		dispatcherUrl = "/jsp/reservation/reservation-list.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-list.jsp";
 	}
 	else if(action.equals("reservation-detail")) {
-		dispatcherUrl = "/jsp/reservation/reservation-detail.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-detail.jsp";
 	}
 	else if(action.equals("reservation-doctor-list")) {
-		dispatcherUrl = "/jsp/reservation/reservation-doctor-list.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-doctor-list.jsp";
 	}
 	
 	

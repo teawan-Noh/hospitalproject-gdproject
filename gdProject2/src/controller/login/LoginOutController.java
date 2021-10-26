@@ -112,21 +112,21 @@ public class LoginOutController extends HttpServlet{
 		//∆‰¿Ã¡ˆ
 		String dispatcherUrl = null;
 		if(action.equals("patient_login_input")) {
-			dispatcherUrl="/pages/patientLogin.jsp";
+			dispatcherUrl="jsp/user/patientLogin.jsp";
 			
 		}else if(action.equals("doctor_login_input")) {
-			dispatcherUrl="pages/doctorLogin.jsp";
+			dispatcherUrl="jsp/user/doctorLogin.jsp";
 			
 		}else if(action.equals("manager_login_input")) {
-			dispatcherUrl="pages/managerLogin.jsp";
+			dispatcherUrl="jsp/user/managerLogin.jsp";
 			
 		}else if(action.equals("patient_login")) {
 			
 			HttpSession session = req.getSession();
 			if(session.getAttribute("pcode")!=null) {
-				dispatcherUrl="/index.jsp";
+				dispatcherUrl="index.jsp";
 			}else {
-				dispatcherUrl="/jsp/user/patientLogin.jsp";
+				dispatcherUrl="jsp/user/patientLogin.jsp";
 			}
 			
 			
@@ -134,9 +134,9 @@ public class LoginOutController extends HttpServlet{
 			
 			HttpSession session = req.getSession();
 			if(session.getAttribute("dcode")!=null) {
-				dispatcherUrl="/index.jsp";
+				dispatcherUrl="index.jsp";
 			}else {
-				dispatcherUrl="/jsp/user/doctorLogin.jsp";
+				dispatcherUrl="jsp/user/doctorLogin.jsp";
 			}
 			
 		}else if(action.equals("manager_login")) {
@@ -144,13 +144,13 @@ public class LoginOutController extends HttpServlet{
 			HttpSession session = req.getSession();
 			
 			if(session.getAttribute("mcode")!=null) {
-				dispatcherUrl="/index.jsp";
+				dispatcherUrl="index.jsp";
 			}else {
 				dispatcherUrl="/jsp/user/managerLogin.jsp";
 			}
 			
 		}else if(action.equals("logout")) {
-			dispatcherUrl="/index.jsp";
+			dispatcherUrl="index.jsp";
 		}
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
 		dispatcher.forward(req, resp);

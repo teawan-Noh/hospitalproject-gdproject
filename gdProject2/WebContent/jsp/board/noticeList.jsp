@@ -18,7 +18,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
 <body>
     <div class="container">
+<<<<<<< HEAD
     <header><jsp:include page="/jsp/common/header.jsp"></jsp:include></header>
+=======
+    <header><jsp:include page="../common/header.jsp"></jsp:include></header>
+>>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <div id="main">
             <form action="#" method="post" id="form">
                 <h2>공지사항</h2>
@@ -111,7 +115,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </table>
         </div>
 		<p id="info">※내역을 클릭하면 상세조회가 가능합니다.</p>
-		<footer><jsp:include page="/jsp/common/footer.jsp"></jsp:include></footer>
+		<footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 

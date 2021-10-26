@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import common.JDBCUtil;
 import common.Sql;
 
-
 public class PageDaoImpl implements PageDao {
 
 	@Override

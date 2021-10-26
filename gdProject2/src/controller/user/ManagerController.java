@@ -1,6 +1,7 @@
 package controller.user;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Subject;
+
+import common.page.PageDao;
+import common.page.PageDaoImpl;
+import common.page.PageGroupResult;
+import common.page.PageManager;
 
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
@@ -96,15 +102,13 @@ public class ManagerController extends HttpServlet{
 		String dispatcherUrl = null;
 		
 		if(action.equals("mg_doctor_list")) {
-			dispatcherUrl = "/jsp/manager/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_search_doctor")) {
-			
-			dispatcherUrl = "/jsp/manager/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_doctor_delete")) {
-			
-			dispatcherUrl = "/jsp/manager/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 //		else if(action.equals("mg_approval_detail")) {
 //			

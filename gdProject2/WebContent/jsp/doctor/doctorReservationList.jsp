@@ -48,9 +48,17 @@
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+=======
+	<jsp:include page="../common/header.jsp"></jsp:include>
+>>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
 	<div class = "main">
+<<<<<<< HEAD
 		<jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
+=======
+		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
+>>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
 		<div class ="content">
     		<h1>예약정보 조회</h1>
     		<div class = "content-header">
@@ -82,6 +90,6 @@
     		</div>
         </div>
     </div>
-    <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

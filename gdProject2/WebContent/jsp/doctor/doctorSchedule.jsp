@@ -107,14 +107,14 @@
     </style>
   </head>
   <body>
-  	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+  	<jsp:include page="../common/header.jsp"></jsp:include>
   	<div class = "main">
-  		<jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
+  		<jsp:include page="../common/sidemenu.jsp"></jsp:include>]
   		<div class = "content">
   		  	<h1>진료 스케줄 조회</h1>
     		<div id="calendar"></div>
   		</div>
   	</div>
-    <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+    <jsp:include page="../common/footer.jsp"></jsp:include>
   </body>
 </html>

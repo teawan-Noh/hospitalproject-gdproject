@@ -529,9 +529,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </script>
     </head>
     <body>
-        <jsp:include page="/jsp/common/header.jsp"></jsp:include>
+        <jsp:include page="../common/header.jsp"></jsp:include>
         <div class="flex container-box">
-            <jsp:include page="/jsp/common/sidemenu.jsp">
+            <jsp:include page="../common/sidemenu.jsp">
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
@@ -565,7 +565,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </div>
                 <button class="card-box book">예약하기</button>
             </div>
-        </div>
-        <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+        </div> 
+        <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>
 </html>

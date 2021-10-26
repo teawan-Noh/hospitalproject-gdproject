@@ -343,9 +343,9 @@ $(function(){
 </style>
 </head>
 <body>
-	<jsp:include page="/jsp/common/header.jsp"></jsp:include>
+	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div class = "main">
-		<jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
+		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
 		<div class ="content">
     	<h1>의사 등록</h1>
         	<form method="post" action="doctor_save">
@@ -426,7 +426,11 @@ $(function(){
         </form>
         </div>
     </div>
+<<<<<<< HEAD
     <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
+=======
+    <jsp:include page="../common/footer.jsp"></jsp:include>
+>>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     	function sample6_execDaumPostcode() {
