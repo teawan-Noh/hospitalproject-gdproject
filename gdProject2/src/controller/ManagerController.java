@@ -50,7 +50,7 @@ public class ManagerController extends HttpServlet{
 			
 		if(action.equals("mg_search_doctor")) {
 				
-			ManagerDao dao = new ManagerDaoImpl();
+			ManagerDao dao = new ManagerDaoImpl(); 
 			List<Subject> subjectList = dao.selectAll();
 				
 			req.setAttribute("subjectList", subjectList);
