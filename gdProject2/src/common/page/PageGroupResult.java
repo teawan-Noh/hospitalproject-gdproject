@@ -1,4 +1,4 @@
-package page;
+package common.page;
 
 public class PageGroupResult {
 	private int groupStartNumber; // 링크 시작 번호

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -20,13 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.ask.ReservationDao;
 import dao.ask.ReservationDaoImpl;
-import dao.common.Sql;
 import model.ask.Reservation;
 import model.user.*;
-import page.PageDao;
-import page.PageDaoImpl;
-import page.PageGroupResult;
-import page.PageManager;
+import common.page.PageDao;
+import common.page.PageDaoImpl;
+import common.page.PageGroupResult;
+import common.page.PageManager;
 
 
 @WebServlet(name="ReservationController", 
@@ -203,13 +201,13 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	String dispatcherUrl = null;
 	
 	if(action.equals("reservation")) {
-		dispatcherUrl = "pages/reservation.jsp";
+		dispatcherUrl = "jsp/reservation/reservation.jsp";
 	}
 	else if(action.equals("subject-doctor")) {
 		dispatcherUrl = "ajax/subject-doctor.jsp";
 	}
 	else if(action.equals("doctor-detail")) {
-		dispatcherUrl = "pages/doctor-detail.jsp";
+		dispatcherUrl = "jsp/doctor/doctor-detail.jsp";
 	}
 	else if(action.equals("schedule")) {
 		dispatcherUrl = "ajax/schedule.jsp";
@@ -220,13 +218,13 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	else if(action.equals("book")) {
 	}
 	else if(action.equals("reservation-list")) {
-		dispatcherUrl = "pages/reservation-list.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-list.jsp";
 	}
 	else if(action.equals("reservation-detail")) {
-		dispatcherUrl = "pages/reservation-detail.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-detail.jsp";
 	}
 	else if(action.equals("reservation-doctor-list")) {
-		dispatcherUrl = "pages/reservation-doctor-list.jsp";
+		dispatcherUrl = "jsp/reservation/reservation-doctor-list.jsp";
 	}
 	
 	

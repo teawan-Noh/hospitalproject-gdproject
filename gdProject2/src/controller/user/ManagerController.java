@@ -1,6 +1,7 @@
 package controller.user;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Subject;
-import page.PageDao;
-import page.PageDaoImpl;
-import page.PageGroupResult;
-import page.PageManager;
+import common.page.PageDao;
+import common.page.PageDaoImpl;
+import common.page.PageGroupResult;
+import common.page.PageManager;
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})

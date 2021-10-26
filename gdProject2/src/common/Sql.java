@@ -1,4 +1,4 @@
-package dao.common;
+package common;
 
 public class Sql {
 
