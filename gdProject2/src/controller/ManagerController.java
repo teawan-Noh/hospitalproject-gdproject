@@ -18,7 +18,6 @@ import page.PageDao;
 import page.PageDaoImpl;
 import page.PageGroupResult;
 import page.PageManager;
-import page.PageSql;
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})
@@ -47,18 +46,6 @@ public class ManagerController extends HttpServlet{
 			
 			req.setAttribute("subjectList", subjectList);
 			
-			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
-			
-			//총 줄수 가져오기
-			PageDao pageDao = new PageDaoImpl();
-			int cnt = pageDao.getCount(PageSql.MEMO_COUNT_SQL);
-			
-			//getPageGroupResult(cnt)
-			PageManager pm = new PageManager(requestPage);
-			PageGroupResult pgr = pm.getPageGroupResult(cnt);
-			
-			req.setAttribute("memoList", memoList);
-			req.setAttribute("pageGroupResult", pgr); //링크 시작넘버, 끝넘버 객체
 		}
 			
 		if(action.equals("mg_search_doctor")) {
