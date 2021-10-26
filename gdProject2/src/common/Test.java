@@ -1,4 +1,4 @@
-package dao.common;
+package common;
 
 import java.util.HashMap;
 import java.util.List;

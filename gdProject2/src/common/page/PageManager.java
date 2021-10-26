@@ -1,4 +1,4 @@
-package page;
+package common.page;
 
 public class PageManager {
 	private int requestPage;

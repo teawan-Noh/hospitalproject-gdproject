@@ -14,10 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Subject;
-import page.PageDao;
-import page.PageDaoImpl;
-import page.PageGroupResult;
-import page.PageManager;
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})
