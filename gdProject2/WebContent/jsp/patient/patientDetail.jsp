@@ -20,11 +20,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
 <div class="container">
-<header><jsp:include page="/components/header.jsp"></jsp:include></header>
+<header><jsp:include page="../common/header.jsp"></jsp:include></header>
 
 	<div id="main">
 	<div class="flex container-box">
-            <jsp:include page="/components/sidemenu.jsp"></jsp:include>
+            <jsp:include page="../common/sidemenu.jsp"></jsp:include>
         <div class="content">
         
             <h2>개인정보수정</h2>
@@ -100,7 +100,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </div>
     </div>
     </div>
-    <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
+    <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
    </div>
 </body>
 </html>

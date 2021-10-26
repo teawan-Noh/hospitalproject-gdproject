@@ -30,7 +30,7 @@
 	<c:if test = "${dcode != null}">
 		<a href = "mypage?dcode=${dcode}">마이페이지</a>
 	</c:if>
-        <jsp:include page="components/header.jsp"></jsp:include>  
+        <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
             <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
@@ -99,7 +99,7 @@ $(function(){
    
 });
 </script>
-<jsp:include page="components/footer.jsp"></jsp:include>
+<jsp:include page="jsp/common/footer.jsp"></jsp:include>
 
 </body>
 </html>

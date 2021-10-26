@@ -127,21 +127,21 @@ public class DoctorController extends HttpServlet {
 		
 		String dispatcherUrl = null;
 		if(action.equals("doctor_input")) {
-			dispatcherUrl = "/pages/inputDoctor.jsp";
+			dispatcherUrl = "jsp/doctor/inputDoctor.jsp";
 		} else if(action.equals("didcheck")) {
-			dispatcherUrl="/ajax/idcheck.jsp";
+			dispatcherUrl="ajax/idcheck.jsp";
 		} else if(action.equals("doctor_save")) {
 			dispatcherUrl = "doctor_input";
 		} else if(action.equals("doctor_search")) {
-			dispatcherUrl = "/pages/searchDoctor.jsp";
+			dispatcherUrl = "jsp/doctor/searchDoctor.jsp";
 		} else if(action.equals("doctor_list")) {
 			dispatcherUrl = "doctor_search";
 		} else if(action.equals("mypage")) {
-			dispatcherUrl = "/pages/updateDoctor.jsp";
+			dispatcherUrl = "jsp/doctor/updateDoctor.jsp";
 		} else if(action.equals("doctor_update")) {
 			dispatcherUrl = "mypage";
 		} else if(action.equals("doctor_detail")) {
-			dispatcherUrl = "/pages/doctor-detail.jsp";
+			dispatcherUrl = "jsp/doctor/doctor-detail.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

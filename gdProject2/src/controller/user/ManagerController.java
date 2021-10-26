@@ -100,15 +100,15 @@ public class ManagerController extends HttpServlet{
 		String dispatcherUrl = null;
 		
 		if(action.equals("mg_doctor_list")) {
-			dispatcherUrl = "pages/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_search_doctor")) {
 			
-			dispatcherUrl = "pages/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_doctor_delete")) {
 			
-			dispatcherUrl = "pages/managerDoctorList.jsp";
+			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 //		else if(action.equals("mg_approval_detail")) {
 //			
