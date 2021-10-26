@@ -33,6 +33,7 @@ $(function(){
 	<a href="patient_login_input">환자 로그인</a>
 	<a href="doctor_login_input">의사 로그인</a>
 	<a href="manager_login_input">관리자 로그인</a>
+	<a href="notice_">공지사항</a>
 </c:if>
 
 <c:if test="${pcode != null || dcode != null || mcode != null}">

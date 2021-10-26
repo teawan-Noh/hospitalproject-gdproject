@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name="NoticeController", urlPatterns= {"/private/notice_input","/notice_detail","/private/notice_save","/notice_update","/notice_delete","/notice_search"})
+@WebServlet(name="NoticeController", urlPatterns= {"/notice_list","/private/notice_input","/private/notice_save","/notice_detail","/notice_update","/notice_delete","/notice_search"})
 public class NoticeController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,9 @@ public class NoticeController extends HttpServlet{
 		String action = uri.substring(lastIndex+1);
 		
 		//로직
-		if(action.equals("notice_input")) {
+		if(action.equals("notice_list")) {
+			
+		}else if(action.equals("notice_input")) {
 			
 			
 			
@@ -56,7 +58,9 @@ public class NoticeController extends HttpServlet{
 		
 		//페이지
 		String dispatcherUrl = null;
-		if(action.equals("notice_input")) {
+		if(action.equals("notice_list")) {
+			dispatcherUrl="/pages/noticeList.jsp";
+		}else if(action.equals("notice_input")) {
 			dispatcherUrl="";
 		}else if(action.equals("notice_detail")) {
 			dispatcherUrl="";

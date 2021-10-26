@@ -9,6 +9,9 @@ h2{
     display: inline-block;
 }
 
+#form{
+    margin-top: 50px;
+}
 
 table{
     width: 1015px;
@@ -46,4 +49,9 @@ th,td{
     background-color: rgb(70, 145, 140);
     border: none;
     border-radius: 3px;
+}
+
+#info{
+    margin-left: 970px;
+    font-size: 0.9rem;
 }
