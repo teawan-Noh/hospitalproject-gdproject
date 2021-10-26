@@ -30,7 +30,7 @@
 	<c:if test = "${dcode != null}">
 		<a href = "mypage?dcode=${dcode}">마이페이지</a>
 	</c:if>
-        <jsp:include page="components/header.jsp"></jsp:include>  
+        <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
             <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
@@ -49,7 +49,7 @@
                 <h3 class="menu-title">의료진정보</h3>
                 <p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
             </div>
-        </section>
+        </section> 
         <section class="sec2">
             <h1>진료 과목 소개</h1>
             <div class="w3-content w3-display-container">
@@ -85,7 +85,7 @@ function carousel() {
 }
 
 $(function(){
-   
+    
    $("#patientUpdate").click(function(){
       var inputString = prompt('현재 비밀번호를 입력해주세요.');
       $.ajax({
@@ -96,10 +96,10 @@ $(function(){
          });
 
    });
-   
+    
 });
 </script>
-<jsp:include page="components/footer.jsp"></jsp:include>
+<jsp:include page="jsp/common/footer.jsp"></jsp:include>
 
 </body>
 </html>

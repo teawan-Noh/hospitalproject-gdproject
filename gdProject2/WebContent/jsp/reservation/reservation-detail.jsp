@@ -144,9 +144,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </script>
     </head>
     <body>
-        <jsp:include page="../components/header.jsp"></jsp:include>
+        <jsp:include page="../common/header.jsp"></jsp:include>
         <div class="flex container-box">
-            <jsp:include page="../components/sidemenu.jsp">
+            <jsp:include page="../common/sidemenu.jsp">
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
@@ -202,6 +202,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </c:if>
             </div>
         </div>
-        <jsp:include page="../components/footer.jsp"></jsp:include>
+        <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>
 </html>

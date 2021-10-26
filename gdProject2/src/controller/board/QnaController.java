@@ -121,31 +121,31 @@ public class QnaController extends HttpServlet{
 		String dispatcherUrl = null;
 		
 		if(action.equals("qna_list")) {
-			dispatcherUrl = "pages/qnaList.jsp";
+			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_save")) {
 			
-			dispatcherUrl = "pages/qnaList.jsp";
+			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_search")) {
 			
-			dispatcherUrl = "pages/qnaList.jsp";
+			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_detail")) {
 			
-			dispatcherUrl = "pages/qnaDetail.jsp";
+			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		else if(action.equals("qna_modify")) {
 			
-			dispatcherUrl = "pages/qnaModify.jsp";
+			dispatcherUrl = "jsp/board/qnaModify.jsp";
 		}
 		else if(action.equals("qna_update")) {
 			
-			dispatcherUrl = "pages/qnaModify.jsp";
+			dispatcherUrl = "jsp/board/qnaModify.jsp";
 		}
 		else if(action.equals("qna_delete")) {
 			
-			dispatcherUrl = "pages/qnaList.jsp"; 
+			dispatcherUrl = "jsp/board/qnaList.jsp"; 
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

@@ -282,7 +282,7 @@ $(function(){
 </head>
 <body>
     <div class="container">
-    <header><jsp:include page="/components/header.jsp"></jsp:include></header>
+    <header><jsp:include page="../common/header.jsp"></jsp:include></header>
     <div id="main" class="join">
         <div class="border">
             <section id="title" class="join_title">
@@ -353,7 +353,7 @@ $(function(){
         </div>
 
     </div>
-    <footer><jsp:include page="/components/footer.jsp"></jsp:include></footer>
+    <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
    </div>
 </body>
 </html>
