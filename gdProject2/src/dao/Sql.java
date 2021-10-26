@@ -148,4 +148,16 @@ public class Sql {
 
 	public static final String QNA_CNT_UPDATE_SQL 
 		= "update qna set cnt = ? where no = ?";
+	//¸Å´ÏÀú
+	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 
+		= "select d.dcode, d.name as dname, s.name as sname, d.licenseno, d.scode" 
+				+ " from doctor d" 
+				+ " inner join subject s on d.scode = s.scode" 
+				+ " where d.scode = ?";
+	
+	public static final String MG_SUBJECT_SELECT_ALL_SQL
+		= "select scode, name from subject";
+	
+	public static final String MG_DOCTOR_DELETE_SQL =
+			"delete from doctor where dcode = ?";
 }
