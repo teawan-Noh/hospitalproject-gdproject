@@ -12,11 +12,11 @@ public class Sql {
 
 	
 	public static final String RESERVATION_COUNT_PCODE_SQL = "select count(*) as cnt from reservation where pcode = ?";
-
 	
-	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, r.rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
+	public static final String RESERVATION_SELECT_PAGE_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
 
-	public static final String MEMO_COUNT_SQL = "select count(*) as cnt from memo";
+	public static final String RESERVATION_SELECT_PAGE_DOCTOR_SQL = "select * from (select rownum as rn, rsvs.* from (select r.rcode, r.pcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.state, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.dcode = ? order by rsvdate desc) rsvs) result where rn between ? and ?";
+	
 	
 	//CUSTOMER
 	public static final String CUSTOMER_INSERT_SQL = "insert into CUSTOMER values(customerseq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -28,8 +28,9 @@ public class Sql {
 	public static final String CUSTOMER_LOGIN_SQL = "select * from customer where id = ? and password = ?";
 	
 	//jsh
-	public static final String RESERVATION_LIST_SELECT_SQL = "select rcode, rsvdate, ds.name, state from (select d.dcode, d.scode, s.name from doctor d join subject on d.scode = s.scode) ds join reservation on r.dcode = ds.dcode where pcode = ? order by rcode desc";
-	public static final String RESERVATION_DETAIL_SELECT_SQL = "SELECT a.name, a.tel, b.rsvdate, c.name, d.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode INNER JOIN subject d ON c.scode = d.scode WHERE a.pcode = ?";
+	public static final String RESERVATION_LIST_SELECT_SQL = "select rcode, to_char(rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, ds.name, state from (select d.dcode, d.scode, s.name from doctor d join subject on d.scode = s.scode) ds join reservation on r.dcode = ds.dcode where pcode = ? order by rcode desc";
+	// 환자 코드 대신 예약 코드로 조회(edit by jp)
+	public static final String RESERVATION_DETAIL_SELECT_SQL = "SELECT p.name pname, p.tel, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.state, d.name dname, s.name sname FROM patient p INNER JOIN reservation r ON p.pcode = r.pcode INNER JOIN doctor d ON r.dcode = d.dcode INNER JOIN subject s ON d.scode = s.scode WHERE r.rcode = ?";
 	public static final String DOCTOR_LIST_SELECT_SQL = "select d.name, s.name from doctor d join subject s on d.scode = s.scode order by s.name asc, d.name asc";
 	public static final String DOCTOR_DETAIL_SELECT_SQL = "select d.name, s.name, d.career from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	public static final String DOCTOR_UPDATE_SQL = "update doctor set pw = ?, postcode = ?, address = ?, address2 = ?, career = ?, tel = ?, email = ? where dcode = ?";

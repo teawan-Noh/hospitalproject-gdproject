@@ -172,10 +172,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </jsp:include>
             <div class="content">
                 <ul>
-                    <li>예약</li>
-                    <li>예약조회</li>
+                    <li>업무관리</li>
+                    <li>예약정보 조회</li>
                 </ul>
-                <h1>예약조회</h1>
+                <h1>예약정보 조회</h1>
                 <br />
 
                 <table id="rsv-mylist" class="table">

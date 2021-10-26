@@ -78,6 +78,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <li class="side-list">의료진 목록조회</li>
 	            </ul>
             </c:if>
+            <c:if test="${side == 'task'}">
+            	<div class="flex side-title">
+	                <h1>업무관리</h1>
+	                <div id="side-img"></div>
+	            </div>
+	            <ul id="side-ul">
+	                <li class="side-list">진료 스케줄 조회</li>
+	                <li class="side-list">휴진 신청</li>
+	                <li class="side-list">예약정보 조회</li>
+	            </ul>
+            </c:if>
         	
 
         </div>

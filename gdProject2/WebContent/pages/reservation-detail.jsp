@@ -130,37 +130,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .table-head {
                 background-color: #b8b8b8;
             }
-            .table-rcode{
-            	display: none;
+            .table-rcode {
+                display: none;
             }
-            .radios{
+            .rsv-change{
             	float: right;
             }
-            .radios label{
-            	margin-left: 5px;
-            }
-      
         </style>
         <script>
             $(function () {
-                <c:forEach items="${rsvList}" var="rsv">
-                    $("#rsv-mylist tbody").append(
-                    "<tr><td class='table-rcode'>" + "${rsv.rcode}" + "</td>"
-                    + "<td>"+ "${rsv.rn}" + "</td>"
-                    + "<td>" + "${rsv.rsvdate}" + "</td>"
-                    + "<td>" + "${rsv.rsvtime}" + "</td>"
-                    + "<td>" + "${rsv.name}" + "</td>"
-                    + "<td>" + "${rsv.state}" + "</td></tr>");
-                </c:forEach>
-
-                $("#rsv-mylist tbody")
-                    .find("tr")
-                    .click(function (idx, item) {
-                        var rcode = $(this).find(".table-rcode").text();
-                        $("#form-rcode").val(rcode);
-                        $("#form").submit();
-                    });
-
+                let pcode = 2;
             });
         </script>
     </head>
@@ -177,71 +156,50 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
                 <h1>예약조회</h1>
                 <br />
-
                 <table id="rsv-mylist" class="table">
-                    <thead class="table-head">
-                        <tr>
-                            <th>No.</th>
-                            <th>예약일자</th>
-                            <th>예약시간</th>
-                            <th>진료과</th>
-                            <th>예약 상태</th>
+                        <tr id="table-pname">
+                            <th>성명</th>
+                            <c:if test="${rsvInfo.pname != null}">
+                    			<td>${rsvInfo.pname}</td>
+                			</c:if>
                         </tr>
-                    </thead>
-                    <tbody></tbody>
+                        <tr id="table-tel">
+                            <th>연락처</th>
+                            <c:if test="${rsvInfo.tel != null}">
+                				<td>${rsvInfo.tel}</td>
+            				</c:if>
+                        </tr>
+                        <tr id="table-rsvdate">
+                            <th>예약일자</th>
+                            <c:if test="${rsvInfo.rsvdate != null}">
+            					<td>${rsvInfo.rsvdate}</td>
+        					</c:if>
+                        </tr>
+                        <tr id="table-rsvtime">
+                            <th>예약시간</th>
+                            <c:if test="${rsvInfo.rsvtime != null}">
+            					<td>${rsvInfo.rsvtime}</td>
+        					</c:if>
+                        </tr>
+                        <tr id="table-sname">
+                            <th>진료과</th>
+                            <c:if test="${rsvInfo.sname != null}">
+            					<td>${rsvInfo.sname}</td>
+        					</c:if>
+                        </tr>
+                        <tr id="table-dname">
+                            <th>담당교수</th>
+                            <c:if test="${rsvInfo.dname != null}">
+            					<td>${rsvInfo.dname}</td>
+        					</c:if>
+                        </tr>
                 </table>
-                <form style="display: none" action="reservation-detail" method="POST" id="form">
-  					<input type="hidden" id="form-rcode" name="rcode" value=""/>
-				</form>
-                <ul class="pagination justify-content-center">
-                    <c:if test="${pageGroupResult.beforePage}">
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber - 1}"
-                                >before</a
-                            >
-                        </li>
-                    </c:if>
-                    <c:forEach
-                        var="index"
-                        begin="${pageGroupResult.groupStartNumber}"
-                        end="${pageGroupResult.groupEndNumber}"
-                    >
-                        <c:choose>
-                            <c:when
-                                test="${pageGroupResult.selectPageNumber == index}"
-                            >
-                                <li class="page-item active">
-                                    <a
-                                        class="page-link"
-                                        href="reservation-list?reqPage=${index}"
-                                        >${index}</a
-                                    >
-                                </li>
-                            </c:when>
-
-                            <c:otherwise>
-                                <li class="page-item">
-                                    <a
-                                        class="page-link"
-                                        href="reservation-list?reqPage=${index}"
-                                        >${index}</a
-                                    >
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${pageGroupResult.afterPage}">
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber + 1}"
-                                >after</a
-                            >
-                        </li>
-                    </c:if>
-                </ul>
+               	<c:if test="${rsvInfo.state == '예약'}">
+                <div class="rsv-change">
+                	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
+                	<button type="button" id="rsv-delete" class="btn btn-danger">삭제</button>
+                </div>
+                </c:if>
             </div>
         </div>
         <jsp:include page="../components/footer.jsp"></jsp:include>

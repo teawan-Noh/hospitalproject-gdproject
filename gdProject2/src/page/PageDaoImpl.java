@@ -38,4 +38,5 @@ public class PageDaoImpl implements PageDao {
 		return cnt;
 	}
 
+
 }

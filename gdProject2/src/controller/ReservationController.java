@@ -29,7 +29,9 @@ import dao.Sql;
 
 
 @WebServlet(name="ReservationController", 
-urlPatterns= {"/reservation", "/subject-doctor", "/schedule", "/doctor-detail", "/rsv-time", "/book", "/reservation-list"})
+urlPatterns= {"/reservation", "/subject-doctor", "/schedule", 
+		"/doctor-detail", "/rsv-time", "/book", "/reservation-list",
+		"/reservation-detail", "/reservation-doctor-list"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -132,6 +134,13 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		res.getWriter().print(cnt);
 	}
 	else if(action.equals("reservation-list")) {
+		String termStr= req.getParameter("term");
+		if(termStr == null) {
+			termStr = "-9999";
+		}
+		int term = Integer.parseInt(termStr);
+
+
 		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
 
 		ReservationDao rdao = new ReservationDaoImpl();
@@ -139,7 +148,7 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 
 		int pcode = 2; // req.getParameter("pcode");
 		
-		List<Map<String, String>> rsvList = rdao.selectReservationPageAll(pcode, requestPage);
+		List<Map<String, String>> rsvList = rdao.selectReservationPage(pcode, requestPage);
 		int cnt = pdao.getCount(pcode);
 		
 		PageManager pm = new PageManager(requestPage);
@@ -151,8 +160,44 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		req.setAttribute("side", "reservation");
 		
 	}
+	else if(action.equals("reservation-detail")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		int rcode = Integer.parseInt(req.getParameter("rcode"));
+		Map<String, String> rsvInfo = rdao.selectReservationByRcode(rcode);
+
+		System.out.println(rsvInfo.get("pname"));
+		
+		req.setAttribute("side", "reservation");
+		req.setAttribute("rsvInfo", rsvInfo);
+	}
+	else if(action.equals("reservation-doctor-list")) {
+		String termStr= req.getParameter("term");
+		if(termStr == null) {
+			termStr = "-9999";
+		}
+		int term = Integer.parseInt(termStr);
+
+
+		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
+
+		ReservationDao rdao = new ReservationDaoImpl();
+		PageDao pdao = new PageDaoImpl();
+
+		int dcode = 1; // req.getParameter("pcode");
+		
+		List<Map<String, String>> rsvList = rdao.selectReservationByDcodePage(dcode, requestPage);
+		int cnt = pdao.getCount(dcode);
+		
+		PageManager pm = new PageManager(requestPage);
+		PageGroupResult pgr = pm.getPageGroupResult(cnt);
+		
+		req.setAttribute("pageGroupResult", pgr);
+		
+		req.setAttribute("rsvList", rsvList);
+		req.setAttribute("side", "task");
+	}
 	
-	
+		
 	// 페이지 처리
 	String dispatcherUrl = null;
 	
@@ -175,6 +220,12 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	}
 	else if(action.equals("reservation-list")) {
 		dispatcherUrl = "pages/reservation-list.jsp";
+	}
+	else if(action.equals("reservation-detail")) {
+		dispatcherUrl = "pages/reservation-detail.jsp";
+	}
+	else if(action.equals("reservation-doctor-list")) {
+		dispatcherUrl = "pages/reservation-doctor-list.jsp";
 	}
 	
 	
