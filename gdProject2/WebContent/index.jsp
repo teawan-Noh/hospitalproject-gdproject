@@ -41,7 +41,7 @@
             <div class = "mainmenu">
                 <h3 class="menu-title">소통정보</h3>
                 <p class="menu-content">우리 병원에 궁금한 점을 남겨주시면 담당자가 확인 후 직접 답변해드립니다.</p>
-            </div>
+            </div> 
             <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_search'">
                 <h3 class="menu-title">의료진정보</h3>
                 <p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
