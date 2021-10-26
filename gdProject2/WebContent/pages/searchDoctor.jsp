@@ -14,6 +14,7 @@
         }
         .content {
         	margin: 20px;
+        	max-width: 900px;
         }
 		.subject {
             height: max-content;
@@ -22,23 +23,17 @@
         }
         .doctor {
             position: relative;
-            width: 450px;
+            width: 380px;
             height: 210px;
             background-color: white;
             border: 3px solid rgb(70, 145, 140);
             margin: 20px;
             display: flex;
         }
-        .doctor h4 {
-        	margin-top: 45px;
-     
-        }
-        .doctor h5 {
-        	margin-top: 50px;
-        }
+
         .doctor_detail {
             background-color: rgb(70, 145, 140);
-            width: 447px;
+            width: 377px;
             height: 51px;
             position: absolute;
             bottom: 0;
@@ -51,7 +46,7 @@
         hr {
             background-color: rgb(70, 145, 140);
             height: 3px;
-            width: 1000px;
+            width: 900px;
         }
         #select, input {
         	width: 300px;
@@ -83,7 +78,10 @@
                 margin: 25px 20px 25px 25px;
                 width: 100px;
                 height: 100px;
-            }
+        }
+        .name {
+        	margin-top: 40px;
+        }
         
 </style>
 </head>
@@ -116,7 +114,10 @@
     		<c:forEach var = "doctor" items = "${doctorList}">
             	<div class = "doctor">
             		<div class = "img"></div>
-     				<h4>${doctor.name}교수</h4><h5>[${doctor.sname}]</h5>
+            		<div class = "name">
+     					<span class = "dname">${doctor.name}교수</span><br>
+     					<span class = "sname">[${doctor.sname}]</span>
+     				</div>
     				<div class = "doctor_detail" onclick="location.href ='doctor_detail?dcode=${doctor.dcode}'">
                 		상세보기
             		</div>

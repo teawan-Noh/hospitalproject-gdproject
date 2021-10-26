@@ -82,7 +82,7 @@ public class DoctorController extends HttpServlet {
 			ReservationDao dao = new ReservationDaoImpl();
 			List<Subject> subjectList = dao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
-			
+			req.setAttribute("side", "doctor");
 		} else if(action.equals("doctor_list")) {
 			int scode = Integer.parseInt(req.getParameter("selectSubject"));
 			String dname = req.getParameter("dname").trim();
@@ -96,7 +96,7 @@ public class DoctorController extends HttpServlet {
 			Subject selectSubject = dao.selectBycode(scode);
 			req.setAttribute("doctorList", doctorList);
 			req.setAttribute("selectSubject", selectSubject);
-			
+			req.setAttribute("side", "doctor");
 		} else if(action.equals("mypage")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();

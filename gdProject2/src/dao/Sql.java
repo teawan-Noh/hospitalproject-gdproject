@@ -30,7 +30,7 @@ public class Sql {
 	public static final String DOCTOR_UPDATE_SQL = "update doctor set pw = ?, postcode = ?, address = ?, address2 = ?, career = ?, tel = ?, email = ? where dcode = ?";
 	public static final String APPROVAL_SELECT_SQL = "select * from approval natural join rest where approved = '½ÂÀÎ' and dcode = ?";
 	public static final String APPROVAL_NOT_SELECT_SQL = "select * from approval natural join rest where approved != '½ÂÀÎ' and dcode = ?";
-	public static final String APPROVAL_INSERT_SQL = "insert into approval values (?, ?, sysdate, ?, ?)"; 
+	public static final String APPROVAL_INSERT_SQL = "insert into approval values (approval_seq.nextval, ?, ?, ?, ?)"; 
 	public static final String DOCTOR_RESERVATION_SELECT_SQL = "SELECT b.rcode, b.rsvdate, a.name FROM patient a INNER JOIN reservation b ON a.pcode = b.pcode INNER JOIN doctor c ON b.dcode = c.dcode WHERE c.dcode = ? and to_char(b.rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') order by b.rsvdate asc";
 	public static final String DOCTOR_INSERT_SQL = "insert into doctor values(doctor_seq.nextval, ?, ?, ?, ?, to_date(?,'yyyy-mm-dd'), ?, ?, ?, ?, ?, ?, ?)";
 	public static final String DOCTOR_SELECT_CNT_BY_ID_SQL = "select count(*) as cnt from doctor where id = ?";
@@ -39,7 +39,7 @@ public class Sql {
 	public static final String SUBJECT_SELECT_BY_SCODE_SQL = "select * from subject where scode = ?";
 	public static final String DOCTOR_SELECT_BY_NAME_AND_SCODE_SQL = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.email, s.name as sname from doctor d join subject s on d.scode = s.scode where d.name like ? and  s.scode = ?";
 	public static final String DOCTOR_DELETE_SQL = "delete from doctor where dcode = ?";
-	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, d.birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
+	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, to_char(d.birth,'yyyy-mm-dd') as birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	//odw
 	//È¸¿ø°¡ÀÔ
 	public static final String PATIENT_INSERT_SQL = 

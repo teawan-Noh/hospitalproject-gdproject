@@ -38,6 +38,9 @@ pageEncoding="UTF-8"%>
                 margin-top: 25px;
                 font-size: 2rem !important;
             }
+            .table {
+            	margin-top: 30px;
+            }
             .sname {
                 font-size: 20px;
             }
@@ -87,7 +90,7 @@ pageEncoding="UTF-8"%>
     										<tr><td>${word}</td></tr>
 										</c:forEach>
                 				</table>
-                				<form method = "post" action = "reservation?dcode=${doctor.dcode}">
+                				<form method = "post" action = "reservation?dcode=${doctor.dcode}&scode=${doctor.scode}">
                 					<button type = "button" id = "backbtn" onclick="location.href = 'doctor_search'">목록으로 돌아가기</button>
                 					<button type = "submit" id = "reservationbtn">예약</button>
                 				</form>

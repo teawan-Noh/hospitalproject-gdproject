@@ -234,8 +234,8 @@ $("#updatebtn").click(function(){
 		<jsp:include page="../components/sidemenu.jsp"></jsp:include>
 		<div class ="content">
     	<h1>개인정보수정</h1>
-        	<form method="post" action="doctor_update?dcode=1">
-        	<c:forEach var="doctor" items="${doctor}">
+    	<c:forEach var="doctor" items="${doctor}">
+        	<form method="post" action="doctor_update?dcode=${doctor.dcode}">
             	<table border="1px solid">
                 <tr>
                     <th>성명</th>
@@ -293,12 +293,13 @@ $("#updatebtn").click(function(){
                     <td><input type="email" name="email" value="${doctor.email}"></td>
                 </tr>
             </table>
-            </c:forEach>
+            
             <div>
             	<button type = "submit" id = "updatebtn">수정</button>
             	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
             </div>
         </form>
+        </c:forEach>
         </div>
     </div>
     <jsp:include page="../components/footer.jsp"></jsp:include>
