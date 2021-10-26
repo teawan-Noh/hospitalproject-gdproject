@@ -85,7 +85,7 @@ function carousel() {
 }
 
 $(function(){
-   
+    
    $("#patientUpdate").click(function(){
       var inputString = prompt('현재 비밀번호를 입력해주세요.');
       $.ajax({
