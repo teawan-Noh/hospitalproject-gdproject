@@ -25,6 +25,8 @@
 </head>
 <body>
 	<div class="container mt-3" >
+		<jsp:include page="../components/header.jsp"></jsp:include>
+			
 		<div class="show_path">
     		<i class="fas fa-home"></i>
     		<i class="fas fa-chevron-right"></i>
@@ -58,13 +60,13 @@
 		</tbody>	
 	    </table>
 	    <br/>
-	    <div class="button">
-	    	<input class="button" type="submit" value="수정">
-	    </div>
- 	</form>
-	    <div class="button">
-	    	<a href="board_delete?boardno=${board.no}"><button class="button">삭제</button></a>
-	    </div>
-</div>
+	  	<div>
+            <button type = "submit" >수정</button>
+            <button type = "button" onclick="location.href = 'qna/qnaList.jsp'">취소</button>
+        </div>
+	    
+ 		</form>
+	</div>
+	 <jsp:include page="../components/footer.jsp"></jsp:include>
 </body>
 </html>

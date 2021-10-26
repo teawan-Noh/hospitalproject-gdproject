@@ -48,8 +48,10 @@ function button_click() {
 			<div>
 				<form method="post" action="board_list">
 					<select name="search">
-						<option value='nickname'>작성자</option>
-		  				<option value='titleContent'>제목+내용</option>
+						<option value=''>진료과목</option>
+						<c:forEach var="subject" items="${subjectList}">
+		  					<option value='${subjectList.scode}'>${subjectList.name}</option>
+		  				</c:forEach>
 					</select>
 					<input type="text" name="search" placeholder="검색어를 입력해주세요" />
 					<button type="submit">검색</button>
