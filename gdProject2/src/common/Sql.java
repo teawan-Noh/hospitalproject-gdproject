@@ -208,10 +208,16 @@ public class Sql {
 			+ " on d.dcode = r.dcode" 
 			+ " where d.name like ?"
 			+ " order by r.rcode desc";
-	//수정중
+	
 	public static final String MG_REST_SELECT_BY_RCODE_SQL
 		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " where rcode = ?";
+	
+	public static final String MG_REST_UPDATE_APPROVE_SQL
+		= "update rest set approved = '승인' where rcode = ?";
+	
+	public static final String MG_REST_UPDATE_REJECT_SQL
+		= "update rest set approved = '거절' where rcode = ?";
 }

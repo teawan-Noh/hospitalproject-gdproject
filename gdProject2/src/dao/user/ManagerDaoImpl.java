@@ -369,25 +369,49 @@ public class ManagerDaoImpl implements ManagerDao {
 	}
 
 	@Override
-	public void updateApprovedOnRest(Rest rest) {
-//		Connection connection = null;
-//		PreparedStatement pStatement = null;
-//		
-//		try {
-//			connection = JDBCUtil.getConnection();
-//			pStatement = connection.prepareStatement(Sql.);
-//			//update bbs set subject = ?, content = ? where no = ?
-//			pStatement.setString(1, rest.get()); // ?값 셋팅 
-//			
-//			pStatement.executeUpdate();
-//			
-//		} catch (Exception e) {
-//			e.getStackTrace();
-//			
-//		} finally {
-//			
-//			JDBCUtil.close(null, pStatement, connection);
-//		}
+	public void updateRestApprove(int rcode) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_REST_UPDATE_APPROVE_SQL);
+			//update rest set approved = '승인' where rcode = ?
+			pStatement.setInt(1, rcode); // ?값 셋팅 
+			
+			pStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			
+		} finally {
+			
+			JDBCUtil.close(null, pStatement, connection);
+		}
+		
+	}
+
+
+	@Override
+	public void updateRestReject(int rcode) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_REST_UPDATE_REJECT_SQL);
+			//update rest set approved = '승인' where rcode = ?
+			pStatement.setInt(1, rcode); // ?값 셋팅 
+			
+			pStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			
+		} finally {
+			
+			JDBCUtil.close(null, pStatement, connection);
+		}
 		
 	}
 

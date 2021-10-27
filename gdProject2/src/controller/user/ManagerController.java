@@ -24,7 +24,8 @@ import common.page.PageManager;
 
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
-					"/mg_patient_list", "/mg_patient_search", "/mg_rest_list", "/mg_rest_search", "/mg_rest_detail"})
+					"/mg_patient_list", "/mg_patient_search", "/mg_rest_list", "/mg_rest_search", "/mg_rest_detail",
+					"/mg_rest_approve", "/mg_rest_reject"})
 public class ManagerController extends HttpServlet{
 
 	@Override
@@ -139,6 +140,26 @@ public class ManagerController extends HttpServlet{
 			HashMap<String, String> restDetail = dao.selectRestByRcode(rcode);
 			req.setAttribute("restdetail", restDetail);
 		}
+		else if(action.equals("mg_rest_approve")) {
+			
+			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			ManagerDao dao = new ManagerDaoImpl(); 
+			dao.updateRestApprove(rcode);
+			
+			List<HashMap<String, String>> restList = dao.selectRestAll();
+			
+			req.setAttribute("restList", restList);
+		}
+		else if(action.equals("mg_rest_reject")) {
+			
+			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			ManagerDao dao = new ManagerDaoImpl(); 
+			dao.updateRestReject(rcode);
+			
+			List<HashMap<String, String>> restList = dao.selectRestAll();
+			
+			req.setAttribute("restList", restList);
+		}
 		
 		String dispatcherUrl = null;
 		
@@ -170,6 +191,14 @@ public class ManagerController extends HttpServlet{
 		else if(action.equals("mg_rest_detail")) {
 			
 			dispatcherUrl = "jsp/manager/managerRestApprovalDetail.jsp";
+		}
+		else if(action.equals("mg_rest_approve")) {
+			
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
+		}
+		else if(action.equals("mg_rest_reject")) {
+			
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

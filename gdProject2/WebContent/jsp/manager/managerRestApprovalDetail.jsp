@@ -103,10 +103,10 @@
 	   			</table>
     		</div>
     		<div class="approve_reject_button">
-    			<a href="rest_update?qno=${qnadetail.qno}">
+    			<a href="mg_rest_approve?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">승인</button>
 		   		</a>
-    			<a href="qna_delete?qno=${qnadetail.qno}">
+    			<a href="mg_rest_reject?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">거절</button>
 		   		</a>
 	    	</div>

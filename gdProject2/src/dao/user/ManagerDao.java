@@ -23,5 +23,6 @@ public interface ManagerDao {
 	List<HashMap<String, String>> selectRestAll();
 	List<HashMap<String, String>> selectRestByName(String name);
 	HashMap<String, String> selectRestByRcode(int rcode);
-	void updateApprovedOnRest(Rest rest);
+	void updateRestApprove(int rcode);
+	void updateRestReject(int rcode);
 }
