@@ -118,7 +118,7 @@ public class Sql {
 	//게시글 상세보기 파일
 		public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";
-		//ntw
+	//ntw
 	//qna 테이블
 		public static final String QNA_SELECT_ALL_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
@@ -156,6 +156,7 @@ public class Sql {
 	public static final String QNA_CNT_UPDATE_SQL 
 		= "update qna set cnt = ? where no = ?";
 	//매니저
+	//의사조회
 	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 
 		= "select d.dcode, d.name as dname, s.name as sname, d.licenseno, d.scode" 
 				+ " from doctor d" 
@@ -165,6 +166,25 @@ public class Sql {
 	public static final String MG_SUBJECT_SELECT_ALL_SQL
 		= "select scode, name from subject";
 	
-	public static final String MG_DOCTOR_DELETE_SQL =
-			"delete from doctor where dcode = ?";
+	public static final String MG_DOCTOR_DELETE_SQL 
+		= "delete from doctor where dcode = ?";
+	//환자조회
+	public static final String MG_PATIENT_SELECT_ALL_SQL 
+		= "select pcode, name, birth from patient order by name asc";
+	
+	public static final String MG_PATIENT_SELECT_BY_NAME_SQL 
+		= "select pcode, name, birth from patient where name like ? order by name asc";
+	//승인관리
+	public static final String MG_APPROVAL_SELECT_ALL_SQL 
+		= "select a.acode, d.name as dname, a.approvedate, a.approved" 
+				+ " from doctor d inner join approval a" 
+				+ " on d.dcode = a.dcode" 
+				+ " order by a.acode desc";
+	
+	public static final String MG_APPROVAL_SELECT_BY_NAME_SQL 
+		= "select a.acode, d.name as dname, a.approvedate, a.approved" 
+			+ " from doctor d inner join approval a" 
+			+ " on d.dcode = a.dcode" 
+			+ " where d.name like ?"
+			+ " order by a.acode desc";
 }

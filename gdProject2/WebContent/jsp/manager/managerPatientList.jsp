@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,13 +71,8 @@
         		<h1>환자조회</h1>
         	</div>
     		<div class = "content_header">
-    			<form method="post" action="mg_search_doctor">
-    				<select name='subject'>
-						<option value='list'>진료과목</option>
-						<c:forEach var="subject" items="${subjectList}">
-							<option value='${subject.scode}'>${subject.name}</option>
-						</c:forEach>
-					</select>
+    			<form method="post" action="mg_patient_search">
+    				<input type="text" name="search" placeholder="이름으로 검색" />
     				<button type = "submit" id="submitbtn">검색</button>
     			</form>
     		</div>
@@ -84,22 +80,21 @@
     			<table class="table">
     				<thead>
     					<tr>
-    						<th>의사코드</th>
+    						<th>회원번호</th>
     						<th>성명</th>
-    						<th class="subject"> 진료과</th>
-    						<th>의사면허번호</th>
-    						<th>계정삭제</th>
+    						<th>생년월일</th>
+    						<th>예약관리</th>
     					</tr>
     				</thead>
     				<tbody>
-    					<c:forEach var="doctor" items="${doctorList}">
+    					<c:forEach var="patient" items="${patientList}">
     						<tr>
-    							<td>${doctor.dcode}</td>
-    							<td>${doctor.dname}</td>
-    							<td class="subject">${doctor.sname}</td>
-    							<td>${doctor.licenseno}</td>
+    							<td>${patient.pcode}</td>
+    							<td>${patient.name}</td>
+    							<fmt:parseDate value="${patient.birth}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
     							<td>
-    								<a href="mg_doctor_delete?dcode=${doctor.dcode}"><button class="button">삭제</button></a>
+    								<a href="#?pcode=${patient.pcode}"><button class="button">예약조회</button></a>
     							</td>
     						</tr>
     					</c:forEach>
