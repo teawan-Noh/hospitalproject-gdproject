@@ -136,7 +136,7 @@ public class QnaDaoImpl implements QnaDao{
 			//select q.qno, q.title, p.nickname, q.writedate, q.cnt 
 			//from qna q inner join patient p on q.pcode = p.pcode 
 			//where p.nickname = ? order by q.qno desc;
-			pStatement.setString(1, nickname);
+			pStatement.setString(1, '%'+nickname+'%');
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -174,7 +174,6 @@ public class QnaDaoImpl implements QnaDao{
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_QNO_SQL);
 			
-			//select memoid, name, age from memo where memoid=?
 			pStatement.setInt(1, qno);
 			resultSet = pStatement.executeQuery();
 			
@@ -192,7 +191,6 @@ public class QnaDaoImpl implements QnaDao{
 				qnaDetail.put("ccontent", resultSet.getString("ccontent"));
 				qnaDetail.put("cwritedate", resultSet.getString("cwritedate"));
 				qnaDetail.put("id", resultSet.getString("id"));
-				
 			}
 			
 		}
@@ -231,6 +229,47 @@ public class QnaDaoImpl implements QnaDao{
 			JDBCUtil.close(null, pStatement, connection);
 		}
 		
+	}
+
+	@Override
+	public List<HashMap> selectByTitleOrContent(String searchValue) {
+		List<HashMap> qnaList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_TITLE_OR_CONTENT_SQL);
+			//select q.qno, q.title, p.nickname, q.writedate, q.cnt 
+			//from qna q inner join patient p on q.pcode = p.pcode 
+			//where p.nickname = ? order by q.qno desc;
+			pStatement.setString(1, '%'+searchValue+'%');
+			pStatement.setString(2, '%'+searchValue+'%');
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				HashMap<String, String> hm = new HashMap<>();
+				
+				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
+				hm.put("title", resultSet.getString("title"));
+				hm.put("nickname", resultSet.getString("nickname"));
+				hm.put("writedate", resultSet.getString("writedate"));
+				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
+				qnaList.add(hm);
+			}
+			
+		}
+		catch(SQLException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return qnaList;
 	}
 
 	

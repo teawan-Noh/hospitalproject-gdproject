@@ -71,33 +71,32 @@
         		Q&A
         	</div>
     		<div class="content_class">
-        		<h2>게시글 수정</h2>
+        		<h2>게시글 작성</h2>
         	</div>
-    		
-    		<form method="post" action="board_modify" enctype="multipart/form-data">
+    		<form method="post" action="qna_save" enctype="multipart/form-data">
 			<table border="1" class="table">
 			<tbody>
 				<tr>
 			   		<td>제목 </td>
 			   		<td class="input_box">
-						<input type="text" name="subject" value="${qnadetail.title}"/>  <br/>
+						<input type="text" name="subject" placeholder="제목을 입력해주세요"/> <br/>
 					</td>
 				</tr>
 				<tr>
 			   		<td>내용 </td>
-			   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
+			   		<td class="input_box"><textarea cols="50" rows="10" name="content" placeholder="내용을 입력해주세요"></textarea> </td>
 				</tr>
 				<tr>
 			   		<td>첨부파일 </td>
 			   		<td class="input_box">
-					<input type="file" name="filename"/>${qnadetail.img}<br />
+					<input type="file" name="filename"/><br />
 			   		</td>
 				</tr>
 			</tbody>	
 		    </table>
 		    <br/>
 		  	<div class="approve_reject_button">
-	            <button class="submitbtn" type = "submit" >수정</button>
+	            <button class="submitbtn" type = "submit" >작성완료</button>
 	            <button class="submitbtn" type = "button" onclick="location.href = 'jsp/qnaList.jsp'">취소</button>
 	        </div>
  			</form>

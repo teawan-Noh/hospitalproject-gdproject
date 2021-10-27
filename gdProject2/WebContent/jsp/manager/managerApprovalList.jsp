@@ -1,25 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/jsp/common/bootstrapInclude.jsp"/>
-<script type="text/javascript">
-$(document).ready(function(){
-	//select
-	var subject = "${subject_val}";
-	
-	$('select option').each(function(){
-		if(subject == $(this).val()){
-			$(this).attr('selected','selected')
-		}
-	});
-	
-});
-</script>
+<jsp:include page="../common/bootstrapInclude.jsp"/>
 </head>
 <style>
         .main{
@@ -42,13 +30,7 @@ $(document).ready(function(){
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
-       	#submitbtn {
+       	.submitbtn {
        		width: 75px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
@@ -67,53 +49,45 @@ $(document).ready(function(){
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
-	<div class="main">
+	<div class = "main">
 		<jsp:include page="../common/sidemenu.jsp">
         	<jsp:param name="side" value="${side}" />
         </jsp:include>
-		<div class="content">
+		<div class ="content">
 			<div class="content_path">
         		<i class="fas fa-home"></i>
         		<i class="fas fa-chevron-right"></i>
         		업무관리
         		<i class="fas fa-chevron-right"></i>
-        		진료과별의사조회
+        		승인관리
         	</div>
     		<div class="content_class">
-        		<h2>진료과별의사조회</h2>
+        		<h2>승인관리</h2>
         	</div>
-    		<div class="content_header">
-    			<form method="post" action="mg_doctor_search">
-    				<select name='subject'>
-						<option value='list'>진료과목</option>
-						<c:forEach var="subject" items="${subjectList}">
-							<option value='${subject.scode}'>${subject.name}</option>
-						</c:forEach>
-					</select>
-    				<button type = "submit" id="submitbtn">검색</button>
+    		<div class = "content_header">
+    			<form method="post" action="mg_approval_search">
+    				<input type="text" name="search" placeholder="이름으로 검색" />
+    				<button type = "submit" class="submitbtn">검색</button>
     			</form>
     		</div>
-    		<div class="content_body">
+    		<div class = "content_body">
     			<table class="table">
     				<thead>
     					<tr>
-    						<th>의사코드</th>
-    						<th>성명</th>
-    						<th class="subject"> 진료과</th>
-    						<th>의사면허번호</th>
-    						<th>계정삭제</th>
+    						<th>No.</th>
+    						<th>신청자</th>
+    						<th>신청일</th>
+    						<th>상태</th>
     					</tr>
     				</thead>
     				<tbody>
-    					<c:forEach var="doctor" items="${doctorList}">
+    					<c:forEach var="approval" items="${approvalList}">
     						<tr>
-    							<td>${doctor.dcode}</td>
-    							<td>${doctor.dname}</td>
-    							<td class="subject">${doctor.sname}</td>
-    							<td>${doctor.licenseno}</td>
-    							<td>
-    								<a href="mg_doctor_delete?dcode=${doctor.dcode}"><button class="button">삭제</button></a>
-    							</td>
+    							<td>${approval.rcode}</td>
+    							<td>${approval.dname}</td>
+    							<fmt:parseDate value="${approval.approvedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
+    							<td><a href="mg_approval_detail?acode=${approval.rcode}">${approval.approved}</a></td>
     						</tr>
     					</c:forEach>
     				</tbody>
@@ -129,12 +103,12 @@ $(document).ready(function(){
 					<c:choose>
 						<c:when test="${pageGroupResult.selectPageNumber == index}">
 						<li class="page-item active">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
+							<a class="page-link" href="memo_search?reqPage=${index}">${index}</a>
 						</li>
 						</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
+							<a class="page-link" href="memo_search?reqPage=${index}">${index}</a>
 						</li>
 				</c:otherwise>
 				</c:choose>
@@ -142,7 +116,7 @@ $(document).ready(function(){
 		
 				<c:if test="${pageGroupResult.afterPage}">
 				<li class="page-item">
-					<a class="page-link" href="mg_doctor_search?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
+					<a class="page-link" href="memo_search?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
 				</li>
 				</c:if>
 				</ul>
