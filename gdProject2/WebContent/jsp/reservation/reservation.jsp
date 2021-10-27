@@ -158,6 +158,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             #book {
                 margin-left: 0;
             }
+            button.card-box{
+            	display: inline-block;
+            	margin-left: 0;
+            }
         </style>
         <script>
             $(function () {
@@ -227,6 +231,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     },
                     // 달력 날짜를 클릭할 때
                     dateClick: function (date) {
+                    	console.log(date);
                         var view = date.dayEl;
                         if (
                             !$(view).hasClass("fc-day-future") ||
@@ -475,10 +480,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 });
                             }
                         });
-                        if(rsvdate != "" && setting){
-                        	calendar.fullCalendar.dateClick(rsvdate);
-                        }
-                        else if(rsvdate == "" && setting){
+                        if(setting){
                         	setting = false;
                         }
                         else{
@@ -570,6 +572,43 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	});
                 }
                 
+                $(document).on("click", ".card-box.cancel", function(){
+                	$("#form-cancel").submit();
+                })
+                $(document).on("click", ".card-box.update", function(){
+                	if (subject == "") {
+                        alert("진료과를 선택해주세요.");
+                    } else if (dcode == "") {
+                        alert("담당 의사를 선택해주세요.");
+                    } else if (rsvdate == "") {
+                        alert("예약 날짜를 선택해주세요.");
+                    } else if (rsvtime == "") {
+                        alert("예약 시간을 선택해주세요.");
+                    } else {
+                        if (
+                            confirm(
+                                "진료과 : " +
+                                    subject +
+                                    "\n담당 의사 : " +
+                                    dname +
+                                    "\n예약 시간 : " +
+                                    rsvdate +
+                                    " " +
+                                    rsvtime +
+                                    "\n정말 예약하시겠습니까?"
+                            ) == true
+                        ) {
+                            alert("예약이 완료되었습니다.");
+                            var url = "reservation-update";
+                           	$("input[name=pcode]").val(pcode);
+                           	$("input[name=rcode]").val(${rcode});
+                           	$("input[name=dcode]").val(dcode);
+                           	$("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
+                           	$("#form-update").submit();
+                        }
+                    }
+                })
+                
             });
         </script>
     </head>
@@ -612,10 +651,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<button id="book" class="card-box book">예약하기</button>
                 </c:if>
                 <c:if test="${rcode != 0}">
-                	<button class="card-box book">수정하기</button>
-                	<button class="card-box book">취소하기</button>
+                	<button class="card-box update">수정하기</button>
+                	<button class="card-box cancel">취소하기</button>
                 </c:if>
-                
+                <form style="display: none;" id="form-cancel" action="reservation-detail" method="post">
+                	<input type="hidden" name="rcode" value="${rcode}"/>
+                </form>
+                <form style="display: none;" id="form-update" action="reservation-update" method="post">
+                	<input type="hidden" name="pcode" value=""/>
+                	<input type="hidden" name="rcode" value=""/>
+                	<input type="hidden" name="dcode" value=""/>
+                	<input type="hidden" name="rsvdate" value=""/>
+                </form>
             </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>

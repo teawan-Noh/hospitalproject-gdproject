@@ -23,6 +23,8 @@ public class Sql {
 
 	public static final String RESERVATION_DELETE_SQL = "delete from reservation where rcode = ?";
 	
+	public static final String RESERVATION_UPDATE_SQL = "update reservation set pcode = ?, dcode = ?, rsvdate = to_date(?, 'yyyy-mm-dd HH24:MI'), state = '¿¹¾à' where rcode = ?";
+	
 	//CUSTOMER
 	public static final String CUSTOMER_INSERT_SQL = "insert into CUSTOMER values(customerseq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String CUSTOMER_SELECT_BY_CODE_SQL = "select * from customer where customerseq = ?";

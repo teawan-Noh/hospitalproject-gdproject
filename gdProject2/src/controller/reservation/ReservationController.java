@@ -31,7 +31,7 @@ import model.user.Subject;
 urlPatterns= {"/reservation", "/subject-doctor", "/schedule", 
 		"/doctor-detail", "/rsv-time", "/book", "/reservation-list",
 		"/reservation-detail", "/reservation-doctor-list",
-		"/reservation-delete"})
+		"/reservation-delete", "/reservation-update"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -218,8 +218,17 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		
 		rdao.deleteReservation(rcode);
 	}
-	
+	else if(action.equals("reservation-update")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		int rcode = Integer.parseInt(req.getParameter("rcode"));
+		int pcode = Integer.parseInt(req.getParameter("pcode"));
+		int dcode = Integer.parseInt(req.getParameter("dcode"));
+		String rsvdate = req.getParameter("rsvdate");
 		
+		rdao.updateReservation(rcode, pcode, dcode, rsvdate);
+		req.setAttribute("rcode", rcode);
+	}
+	
 	// 페이지 처리
 	String dispatcherUrl = null;
 	 
@@ -251,6 +260,9 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	}
 	else if(action.equals("reservation-delete")) {
 		res.sendRedirect("reservation-list?reqPage=1");
+	}
+	else if(action.equals("reservation-update")) {
+		dispatcherUrl = "reservation-detail";
 	}
 	
 	
