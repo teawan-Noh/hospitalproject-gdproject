@@ -597,7 +597,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </c:if>
                 
             </div>
-        </div> 
+        </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>
 </html>

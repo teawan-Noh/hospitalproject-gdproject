@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import dao.board.NoticeDao;
 import dao.board.NoticeDaoImpl;
 import dao.user.PatientDao;
 import dao.user.PatientDaoImpl;
+import model.board.Notice;
 import model.user.Patient;
 
 public class PatientTest {
@@ -19,10 +21,10 @@ public class PatientTest {
 		Connection connection = JDBCUtil.getConnection();
 		JDBCUtil.close(null, null, connection);
 		
-		PatientDao dao = new PatientDaoImpl();
-		Patient patient = new Patient();
+		//PatientDao dao = new PatientDaoImpl();
+		//Patient patient = new Patient();
 		
-		patient.setId("asdf");
+		/*patient.setId("asdf");
 		patient.setPw("12341234a!");
 		patient.setNickname("환자1");
 		patient.setName("이름1");
@@ -34,7 +36,7 @@ public class PatientTest {
 		patient.setAddress("서울");
 		patient.setAddress2("강동구");
 		
-		//dao.insert(patient);
+		dao.insert(patient);
 		
 		//System.out.println(dao.login("asdf", "12345"));
 		
@@ -55,8 +57,60 @@ public class PatientTest {
 		
 		//dao.delete(8);
 		
-		//System.out.println(dao.selectByPcode(8));	
-	
+		//System.out.println(dao.selectByPcode(8));
+		
+		NoticeDao ndao = new NoticeDaoImpl();
+		Notice notice = new Notice();
+		
+		/*notice.setMcode(1);
+		notice.setTitle("테스트용 제목입니다");
+		notice.setContent("테스트용 내용입니다");
+		
+		ndao.insert(notice);*/
+		
+		/*notice.setTitle("테스트용 제목입니다222");
+		notice.setContent("테스트용 내용입니다222");
+		notice.setNcode(16);
+		
+		ndao.update(notice);*/
+		
+		System.out.println("================selectAll()===============");
+		
+		/*List<HashMap<String,Object>> list = ndao.selectAll();
+		
+		for (HashMap<String,Object> hashMap : list) {
+			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
+		}*/
+		
+//		System.out.println("===============selectByNcode()================");
+//		
+//		
+//		List<HashMap<String,Object>> list2 = ndao.selectByNcode(16);
+//		
+//		for (HashMap<String,Object> hashMap : list2) {
+//			System.out.println(hashMap.get("title"));
+//			System.out.println(hashMap.get("name"));
+//			System.out.println(hashMap.get("writedate"));
+//			System.out.println(hashMap.get("cnt"));
+//		}
+			
+		
+		System.out.println("===============selectByTitleContent()================");
+		
+		List<HashMap<String,Object>> list3 = ndao.selectByTitleContent("22");
+		
+		for (HashMap<String,Object> hashMap : list3) {
+			
+			System.out.println(hashMap.get("ncode"));
+			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
+		}
+		
 	}
 
 	

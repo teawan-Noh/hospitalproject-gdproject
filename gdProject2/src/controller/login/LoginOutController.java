@@ -112,13 +112,11 @@ public class LoginOutController extends HttpServlet{
 		//∆‰¿Ã¡ˆ
 		String dispatcherUrl = null;
 		if(action.equals("patient_login_input")) {
-			dispatcherUrl="jsp/user/patientLogin.jsp";
-			
+			dispatcherUrl="/jsp/user/patientLogin.jsp";
 		}else if(action.equals("doctor_login_input")) {
-			dispatcherUrl="jsp/user/doctorLogin.jsp";
-			
+			dispatcherUrl="/jsp/user/doctorLogin.jsp";		
 		}else if(action.equals("manager_login_input")) {
-			dispatcherUrl="jsp/user/managerLogin.jsp";
+			dispatcherUrl="/jsp/user/managerLogin.jsp";
 			
 		}else if(action.equals("patient_login")) {
 			
@@ -126,7 +124,8 @@ public class LoginOutController extends HttpServlet{
 			if(session.getAttribute("pcode")!=null) {
 				dispatcherUrl="index.jsp";
 			}else {
-				dispatcherUrl="jsp/user/patientLogin.jsp";
+
+				dispatcherUrl="/jsp/user/patientLogin.jsp";
 			}
 			
 			
@@ -136,7 +135,7 @@ public class LoginOutController extends HttpServlet{
 			if(session.getAttribute("dcode")!=null) {
 				dispatcherUrl="index.jsp";
 			}else {
-				dispatcherUrl="jsp/user/doctorLogin.jsp";
+				dispatcherUrl="/jsp/user/doctorLogin.jsp";
 			}
 			
 		}else if(action.equals("manager_login")) {

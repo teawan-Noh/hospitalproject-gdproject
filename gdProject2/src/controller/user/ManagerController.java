@@ -21,6 +21,7 @@ import common.page.PageDaoImpl;
 import common.page.PageGroupResult;
 import common.page.PageManager;
 
+
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})

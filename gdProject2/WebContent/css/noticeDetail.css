@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#main{
+    max-width: 1200px;
+    margin: auto 0;
+}
+
+.table {
+    width: 850px !important;
+    border-top: 3px solid rgb(70, 145, 140) !important;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid rgb(70, 145, 140) !important;
+    padding-top: 0;
+    margin-top: 50px;
+    text-align: center;
+}
+
+th {
+    background-color: rgb(148, 220, 215) !important;
+    margin: 0;
+    padding: 10px;
+    color: #555;
+    font-size: 0.9rem;
+    width: 150px;
+    border: 1px solid #555;
+
+}
+tr {
+    background-color: white;
+    height: 45px;
+    border-bottom: 1px solid rgb(224, 224, 224) !important;
+}
+td {
+    padding: 5px;
+}
+
+.contents{
+    height: 500px;
+}

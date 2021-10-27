@@ -42,6 +42,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 
 <body>
+    <div class="container">
         <header><jsp:include page="../common/header.jsp"></jsp:include></header>
         <div id="main">
             <div id="border">

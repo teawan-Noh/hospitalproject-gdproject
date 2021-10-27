@@ -22,7 +22,9 @@ import common.page.PageManager;
 import dao.ask.ReservationDao;
 import dao.ask.ReservationDaoImpl;
 import model.ask.Reservation;
-import model.user.*;
+
+import model.user.Doctor;
+import model.user.Subject;
 
 
 @WebServlet(name="ReservationController", 
