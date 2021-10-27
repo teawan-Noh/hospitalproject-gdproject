@@ -165,17 +165,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </script>
     </head>
     <body>
-<<<<<<< HEAD
-        <jsp:include page="/jsp/common/header.jsp"></jsp:include>
-=======
         <jsp:include page="../common/header.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <div class="flex container-box">
-<<<<<<< HEAD
-            <jsp:include page="/jsp/common/sidemenu.jsp">
-=======
             <jsp:include page="../common/sidemenu.jsp">
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
@@ -252,10 +244,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
             </div>
         </div>
-<<<<<<< HEAD
-        <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
-=======
         <jsp:include page="../common/footer.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
     </body>
 </html>

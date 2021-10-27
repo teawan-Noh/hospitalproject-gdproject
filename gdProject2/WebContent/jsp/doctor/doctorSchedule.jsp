@@ -16,8 +16,7 @@
         <!-- fullcalendar 언어 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
     <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
+    $(function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
         	height: '700px', // calendar 높이 설정
@@ -28,35 +27,17 @@
         		left: 'prev,next today',
         		center: 'title',
         		right: 'dayGridMonth,listWeek'
-        		},
+        	},
           initialView: 'dayGridMonth',
           navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
           editable: false, // 수정 가능?
           selectable: false, // 달력 일자 드래그 설정가능
           nowIndicator: true, // 현재 시간 마크
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-          locale: 'ko', // 한국어 설정
-          eventAdd: function (obj) {
-              // 이벤트가 추가되면 발생하는 이벤트
-              //console.log(obj);
-          },
-          eventChange: function (obj) {
-              // 이벤트가 수정되면 발생하는 이벤트
-              //console.log(obj);
-          },
-          eventRemove: function (obj) {
-              // 이벤트가 삭제되면 발생하는 이벤트
-              //console.log(obj);
-          },
-          // 달력 날짜를 클릭할 때
-        	dateClick: function(date) {
-        	
-        	
-       		}
-        
-        	);
+          locale: 'ko' // 한국어 설정
+        });
         calendar.render();
-      });
+    });
 
     </script>
     <style>
@@ -109,7 +90,7 @@
   <body>
   	<jsp:include page="../common/header.jsp"></jsp:include>
   	<div class = "main">
-  		<jsp:include page="../common/sidemenu.jsp"></jsp:include>]
+  		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
   		<div class = "content">
   		  	<h1>진료 스케줄 조회</h1>
     		<div id="calendar"></div>

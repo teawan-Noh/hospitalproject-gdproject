@@ -25,11 +25,7 @@
 </head>
 <body>
 	<div class="container mt-3" >
-<<<<<<< HEAD
-		<jsp:include page="/jsp/common/header.jsp"></jsp:include>
-=======
 		<jsp:include page="../common/header.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
 			
 		<div class="show_path">
     		<i class="fas fa-home"></i>

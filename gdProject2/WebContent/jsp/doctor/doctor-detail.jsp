@@ -66,17 +66,9 @@ pageEncoding="UTF-8"%>
         </style>
     </head>
     <body>
-<<<<<<< HEAD
-        <jsp:include page="/jsp/common/header.jsp"></jsp:include>
-=======
         <jsp:include page="../common/header.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <div class="flex container-box">
-<<<<<<< HEAD
-            <jsp:include page="/jsp/common/sidemenu.jsp"></jsp:include>
-=======
             <jsp:include page="../common/sidemenu.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
             <div class="content">
                 <ul>
                     <li>의료진</li>

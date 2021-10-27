@@ -676,3 +676,17 @@ select * from patient;
 select * from rest;
 select * from approval;
 create sequence approval_seq;
+drop sequence approval_seq;
+select * from notice;
+select * from manager;
+delete from approval;
+insert into approval values (approval_seq.nextval, 10, to_date('2021-11-01', 'yyyy-mm-dd'), '대기', '휴가', sysdate);
+insert into approval values (approval_seq.nextval, 5, to_date('2021-11-03', 'yyyy-mm-dd'), '대기', '개인사유', sysdate);
+ALTER TABLE approval ADD requestdate DATE;
+alter table approval drop column adate;
+ALTER TABLE approval DROP COLUMN requestdate;
+
+drop table rest;
+drop table approval;
+
+

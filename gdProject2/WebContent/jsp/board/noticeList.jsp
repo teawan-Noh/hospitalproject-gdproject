@@ -18,11 +18,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
 <body>
     <div class="container">
-<<<<<<< HEAD
-    <header><jsp:include page="/jsp/common/header.jsp"></jsp:include></header>
-=======
     <header><jsp:include page="../common/header.jsp"></jsp:include></header>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <div id="main">
             <form action="#" method="post" id="form">
                 <h2>공지사항</h2>

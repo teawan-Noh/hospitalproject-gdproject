@@ -426,11 +426,7 @@ $(function(){
         </form>
         </div>
     </div>
-<<<<<<< HEAD
-    <jsp:include page="/jsp/common/footer.jsp"></jsp:include>
-=======
     <jsp:include page="../common/footer.jsp"></jsp:include>
->>>>>>> branch 'develop' of https://github.com/sunne090/gdProject2.git
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
     	function sample6_execDaumPostcode() {
