@@ -161,13 +161,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </style>
         <script>
             $(function () {
+				let setting = ${rcode} != 0 ? true : false;
             	let pcode = ${pcode};
                 let subject = "${subject}";
-                let dcode = ${dcode};
+                let dcode = "${dcode}";
                 let dname = "${dname}";
                 let rsvdate = "${rsvdate}";
                 let rsvtime = "${rsvtime}";
                 
+                console.log(setting);
                 console.log(pcode);
                 console.log(subject);
                 console.log(dcode);
@@ -328,6 +330,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 calendar.render();
                 $("#calendar-container").hide();
 
+                // 진료 과목 선택시
                 $(".subject").click(function () {
                     $(".doctors")
                         .children()
@@ -352,12 +355,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             url,
                             { subject: $(this).text() },
                             function (data) {
-                                subject = $(data).find("subject").text();
-                                dcode = "";
-                                dname = "";
-                                rsvdate = "";
-                                rsvtime = "";
-                                $(data)
+                            	subject = $(data).find("subject").text();
+                            	$(data)
                                     .find("doctor")
                                     .each(function (idx, item) {
                                         $(".doctors").append(
@@ -373,6 +372,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                                 "</li>"
                                         );
                                     });
+                                
+                                if(dcode != "" && dname != "" && setting){
+                                	$(".card-box.doctor .flex").each(function(idx, item){
+                                		var name = $(this).find(".doctor-name").text();
+                                		var code = $(this).find(".doctor-code").text();
+                                		if(dname == name && dcode == code){
+                                			$(this).trigger("click");
+                                		}
+                                		
+                                	})
+                                }
+                                else if(dcode == "" && dname == "" && setting){
+                                	setting = false;
+                                }
+                                else{
+	                                dcode = "";
+	                                dname = "";
+	                                rsvdate = "";
+	                                rsvtime = "";
+                                }
+                                
                             }
                         );
                     }
@@ -426,8 +446,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             .children(".doctor-profile")
                             .children(".doctor-name")
                             .text();
-                        rsvdate = "";
-                        rsvtime = "";
+
                         // Ajax
                         $.get(url, { dcode: dcode }, function (data) {
                             var schedule = $(data).find("schedule");
@@ -456,6 +475,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 });
                             }
                         });
+                        if(rsvdate != "" && setting){
+                        	calendar.fullCalendar.dateClick(rsvdate);
+                        }
+                        else if(rsvdate == "" && setting){
+                        	setting = false;
+                        }
+                        else{
+	                        rsvdate = "";
+	                        rsvtime = "";
+                        }
                     }
                 });
 
@@ -540,16 +569,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 		}
                 	});
                 }
-                console.log(dname);
-                if(dname != ""){
-                	$(".card-box.doctor .flex").each(function(idx, item){
-                		var text = $(this);
-                		console.log(text);
-                		//if(subject == text){
-                			//$(this).trigger("click");
-                		//}
-                	});
-                }
+                
             });
         </script>
     </head>
