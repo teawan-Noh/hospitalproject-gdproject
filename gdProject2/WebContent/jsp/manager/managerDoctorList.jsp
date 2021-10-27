@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="../common/bootstrapInclude.jsp"/>
+<jsp:include page="/jsp/common/bootstrapInclude.jsp"/>
 <script type="text/javascript">
 	//select
 	var subject = "${subject_val}";

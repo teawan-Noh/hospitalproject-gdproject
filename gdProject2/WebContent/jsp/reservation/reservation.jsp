@@ -244,7 +244,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 .children()
                                 .each(function (idx, item) {
                                     $(item).remove();
-                                });
+                            });
 
                             var url = "rsv-time";
                             // 스케줄 ajax

@@ -1,7 +1,13 @@
 package common;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import dao.board.NoticeDao;
+import dao.board.NoticeDaoImpl;
 import dao.user.PatientDao;
 import dao.user.PatientDaoImpl;
 import model.user.Patient;
@@ -28,7 +34,7 @@ public class PatientTest {
 		patient.setAddress("서울");
 		patient.setAddress2("강동구");
 		
-		dao.insert(patient);
+		//dao.insert(patient);
 		
 		//System.out.println(dao.login("asdf", "12345"));
 		
@@ -49,14 +55,8 @@ public class PatientTest {
 		
 		//dao.delete(8);
 		
-		//System.out.println(dao.selectByPcode(8));
-		
-		
-		
-		
-		
-		
-		
+		//System.out.println(dao.selectByPcode(8));	
+	
 	}
 
 	

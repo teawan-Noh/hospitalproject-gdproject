@@ -146,7 +146,7 @@ public class LoginOutController extends HttpServlet{
 			if(session.getAttribute("mcode")!=null) {
 				dispatcherUrl="index.jsp";
 			}else {
-				dispatcherUrl="/manager/managerLogin.jsp";
+				dispatcherUrl="/jsp/user/managerLogin.jsp";
 			}
 			
 		}else if(action.equals("logout")) {

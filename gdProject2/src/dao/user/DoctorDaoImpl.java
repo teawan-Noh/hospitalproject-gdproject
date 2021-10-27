@@ -213,8 +213,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 
 	@Override
-	public List<HashMap> selectByscode(int scode) {
-		List<HashMap> doctorList = new ArrayList<>();
+	public List<HashMap<String, Object>> selectByscode(int scode) {
+		List<HashMap<String, Object>> doctorList = new ArrayList<>();
 
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -228,7 +228,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			//select d.dcode, d.scode, d.name, d.career, d.tel, d.email from doctor d join subject s on d.scode = s.scode where s.scode = ?
 			while(resultSet.next()) {
 				
-				HashMap<String, Comparable> doctorMap = new HashMap<>();
+				HashMap<String, Object> doctorMap = new HashMap<>();
 				
 				doctorMap.put("dcode", resultSet.getInt("dcode"));
 				doctorMap.put("scode", resultSet.getInt("scode"));
@@ -284,8 +284,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 
 	@Override
-	public List<HashMap> selectByNameAndScode(String name, int scode) {
-		List<HashMap> doctorList = new ArrayList<>();
+	public List<HashMap<String, Object>> selectByNameAndScode(String name, int scode) {
+		List<HashMap<String, Object>> doctorList = new ArrayList<>();
 
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -300,7 +300,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			//select d.dcode, d.scode, d.name, d.career, d.tel, d.email from doctor d join subject s on d.scode = s.scode where s.scode = ?
 			while(resultSet.next()) {
 				
-				HashMap<String, Comparable> doctorMap = new HashMap<>();
+				HashMap<String, Object> doctorMap = new HashMap<>();
 				
 				doctorMap.put("dcode", resultSet.getInt("dcode"));
 				doctorMap.put("scode", resultSet.getInt("scode"));
@@ -374,8 +374,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 
 	@Override
-	public List<HashMap> selectBydcode(int dcode) {
-		List<HashMap> doctorList = new ArrayList<>();
+	public List<HashMap<String, Object>> selectBydcode(int dcode) {
+		List<HashMap<String, Object>> doctorList = new ArrayList<>();
 
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -389,7 +389,7 @@ public class DoctorDaoImpl implements DoctorDao {
 			
 			while(resultSet.next()) {
 				
-				HashMap<String, Comparable> doctorMap = new HashMap<>();
+				HashMap<String, Object> doctorMap = new HashMap<>();
 				
 				doctorMap.put("dcode", resultSet.getInt("dcode"));
 				doctorMap.put("scode", resultSet.getInt("scode"));

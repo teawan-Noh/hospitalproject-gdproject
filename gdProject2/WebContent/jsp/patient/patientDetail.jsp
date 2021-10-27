@@ -21,10 +21,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
 <div class="container">
 <header><jsp:include page="../common/header.jsp"></jsp:include></header>
-
 	<div id="main">
 	<div class="flex container-box">
-            <jsp:include page="../common/sidemenu.jsp"></jsp:include>
+    	<jsp:include page="../common/sidemenu.jsp"></jsp:include>
         <div class="content">
         
             <h2>개인정보수정</h2>

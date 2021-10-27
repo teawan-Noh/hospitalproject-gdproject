@@ -1,5 +1,6 @@
 package dao.board;
 
+import java.util.HashMap;
 import java.util.List;
 
 import model.board.Notice;
@@ -15,7 +16,7 @@ public interface NoticeDao {
 	void delete(long ncode);
 	
 	//공지사항 게시글 전체목록
-	List <Notice> selectAll();
+	List <HashMap<String, Object>> selectAll();
 	
 	//공지사항 게시글 상세보기
 	Notice selectByNcode(int ncode);

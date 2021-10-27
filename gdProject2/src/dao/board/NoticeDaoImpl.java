@@ -3,7 +3,9 @@ package dao.board;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import common.JDBCUtil;
@@ -79,41 +81,42 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Notice> selectAll() {
-		List<Notice> noticeList = new ArrayList<>();
-
-		Connection connection = null;
-		PreparedStatement pStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.NOTICE_SELECT_ALL_SQL);
-			resultSet = pStatement.executeQuery();
-
-			while (resultSet.next()) {
-
-				Notice notice = new Notice();
-
-				notice.setNcode(resultSet.getInt("ncode"));
-				notice.setMcode(resultSet.getInt("mcode"));
-				notice.setTitle(resultSet.getString("title"));
-				notice.setContent(resultSet.getString("content"));
-				notice.setWritedate(resultSet.getString("to_char(writedate,'yyyy-mm-dd')"));
-				notice.setCnt(resultSet.getInt("cnt"));
-				
-
-				noticeList.add(notice);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.close(resultSet, pStatement, connection);
-		}
-
-		return noticeList;
-	}
+	   public List<HashMap<String,Object>> selectAll() {
+	      List<HashMap<String,Object>> noticeList = new ArrayList<>();
+	      Connection connection = null;
+	      PreparedStatement pStatement = null;
+	      ResultSet resultSet = null;
+	      
+	      try {
+	         connection = JDBCUtil.getConnection();
+	         pStatement = connection.prepareStatement(Sql.NOTICE_SELECT_ALL_SQL);
+	         resultSet = pStatement.executeQuery();
+	         
+	         while(resultSet.next()) {
+	            HashMap<String,Object> hash = new HashMap<>();
+	            
+	            
+	            hash.put("ncode", resultSet.getInt("ncode"));
+	            hash.put("title", resultSet.getString("title"));
+	            hash.put("name", resultSet.getString("name"));
+	            hash.put("writedate", resultSet.getString("writedate"));
+	            hash.put("cnt",  resultSet.getInt("cnt"));
+	            
+	            noticeList.add(hash);
+	         }
+	         
+	      }
+	      catch(SQLException se) {
+	         se.printStackTrace();
+	      } 
+	      catch (Exception e) {
+	         e.getStackTrace();
+	      } finally {
+	         JDBCUtil.close(resultSet, pStatement, connection);
+	      }
+	      
+	      return noticeList;
+	   }
 
 	@Override
 	public Notice selectByNcode(int ncode) {

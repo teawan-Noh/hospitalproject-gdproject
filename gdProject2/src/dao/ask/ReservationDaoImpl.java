@@ -1,9 +1,6 @@
 package dao.ask;
 
 import java.sql.Connection;
-
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,11 +10,11 @@ import java.util.Map;
 
 import common.JDBCUtil;
 import common.Sql;
+import common.page.PageManager;
+import common.page.PageRowResult;
 import model.ask.Reservation;
 import model.user.Doctor;
 import model.user.Subject;
-import common.page.PageManager;
-import common.page.PageRowResult;
 
 public class ReservationDaoImpl implements ReservationDao {
 

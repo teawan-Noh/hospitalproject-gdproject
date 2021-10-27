@@ -20,9 +20,9 @@ public interface DoctorDao {
 	
 	
 	List<Doctor> selectAll();
-	List<HashMap> selectByscode(int scode);
-	List<HashMap> selectByNameAndScode(String name, int scode);
-	List<HashMap> selectBydcode(int dcode);
+	List<HashMap<String, Object>> selectByscode(int scode);
+	List<HashMap<String, Object>> selectByNameAndScode(String name, int scode);
+	List<HashMap<String, Object>> selectBydcode(int dcode);
 	
 	Doctor selectByDcode(int dcode);
 }

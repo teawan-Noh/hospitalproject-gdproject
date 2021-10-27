@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Subject;
+
 import common.page.PageDao;
 import common.page.PageDaoImpl;
 import common.page.PageGroupResult;
 import common.page.PageManager;
+
 //, "/mg_search_patient", "/mg_approval_list", "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_search_doctor", "/mg_doctor_list", "/mg_doctor_delete"})
@@ -103,11 +105,9 @@ public class ManagerController extends HttpServlet{
 			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_search_doctor")) {
-			
 			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 		else if(action.equals("mg_doctor_delete")) {
-			
 			dispatcherUrl = "jsp/manager/managerDoctorList.jsp";
 		}
 //		else if(action.equals("mg_approval_detail")) {
