@@ -80,17 +80,17 @@
 				<tr>
 			   		<td>제목 </td>
 			   		<td class="input_box">
-						<input type="text" name="subject"/>${qnaDetail.title}  <br/>
+						<input type="text" name="subject" value="${qnadetail.title}"/>  <br/>
 					</td>
 				</tr>
 				<tr>
 			   		<td>내용 </td>
-			   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnaDetail.content}</textarea> </td>
+			   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
 				</tr>
 				<tr>
 			   		<td>첨부파일 </td>
 			   		<td class="input_box">
-					<input type="file" name="filename"/>${qnaDetail.img}<br />
+					<input type="file" name="filename"/>${qnadetail.img}<br />
 			   		</td>
 				</tr>
 			</tbody>	
