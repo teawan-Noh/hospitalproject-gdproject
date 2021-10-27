@@ -196,22 +196,22 @@ public class Sql {
 	public static final String MG_PATIENT_SELECT_BY_NAME_SQL 
 		= "select pcode, name, birth from patient where name like ? order by name asc";
 	//승인관리
-	public static final String MG_APPROVAL_SELECT_ALL_SQL 
-		= "select r.rcode, d.name as dname, r.approvedate, r.approved" 
+	public static final String MG_REST_SELECT_ALL_SQL 
+		= "select r.rcode, d.name as dname, r.requestdate, r.approved" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " order by r.rcode desc";
 	
-	public static final String MG_APPROVAL_SELECT_BY_NAME_SQL 
-		= "select r.rcode, d.name as dname, r.approvedate, r.approved" 
+	public static final String MG_REST_SELECT_BY_NAME_SQL 
+		= "select r.rcode, d.name as dname, r.requestdate, r.approved" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " where d.name like ?"
 			+ " order by r.rcode desc";
 	//수정중
-	public static final String MG_APPROVAL_SELECT_BY_ACODE_SQL
-		= "select d.name, r.approvedate, r.approved, r.reason" 
+	public static final String MG_REST_SELECT_BY_RCODE_SQL
+		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason" 
 			+ " from doctor d inner join rest r" 
-			+ " on d.dcode = a.dcode" 
-			+ " where acode = ?";
+			+ " on d.dcode = r.dcode" 
+			+ " where rcode = ?";
 }
