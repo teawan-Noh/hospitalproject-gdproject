@@ -79,12 +79,12 @@
 					<tbody>
 						<tr>
 		   					<td>작성자 </td>
-	 						<td>${qnadetail.nickname}</td>
+	 						<td>${approvaldetail.dname}</td>
 						</tr>
 						<tr>
 		   					<td>작성일</td>
 		   					<td>
-		   						<fmt:parseDate value="${qnadetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+		   						<fmt:parseDate value="${approvaldetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			    				<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
 		   					</td>
 						</tr>

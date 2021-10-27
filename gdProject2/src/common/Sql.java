@@ -113,14 +113,14 @@ public class Sql {
 	public static final String NOTICE_DELETE_FILE_SQL =
 			"delete from files where ncode = ?";
 	//게시글 작성 파일 업로드
-		public static final String NOTICE_INSERT_FILE_SQL =
+	public static final String NOTICE_INSERT_FILE_SQL =
 				"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
 	//게시글 상세보기 파일
-		public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
+	public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";
 	//ntw
 	//qna 테이블
-		public static final String QNA_SELECT_ALL_SQL 
+	public static final String QNA_SELECT_ALL_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
 			+ " from qna q inner join patient p"
 			+ " on q.pcode = p.pcode"
@@ -130,7 +130,14 @@ public class Sql {
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
 			+ " from qna q inner join patient p"
 			+ " on q.pcode = p.pcode"
-			+ " where p.nickname = ?"
+			+ " where p.nickname like ?"
+			+ " order by q.qno desc";
+	
+	public static final String QNA_SELECT_BY_TITLE_OR_CONTENT_SQL 
+	= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
+			+ " from qna q inner join patient p"
+			+ " on q.pcode = p.pcode"
+			+ " where q.title like ? or q.content like ?"
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_SUBJECT_SQL 
@@ -148,20 +155,20 @@ public class Sql {
 		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update qna set subject = ?, content = ? where no = ?";
+		= "update qna set subject = ?, content = ? whereq no = ?";
 
 	public static final String QNA_DELETE_SQL 
-		= "delete from qna where no = ?";
+		= "delete from qna where qno = ?";
 
 	public static final String QNA_CNT_UPDATE_SQL 
-		= "update qna set cnt = ? where no = ?";
+		= "update qna set cnt = ? where qno = ?";
 	//매니저
 	//의사조회
 	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 
 		= "select d.dcode, d.name as dname, s.name as sname, d.licenseno, d.scode" 
-				+ " from doctor d" 
-				+ " inner join subject s on d.scode = s.scode" 
-				+ " where d.scode = ?";
+			+ " from doctor d" 
+			+ " inner join subject s on d.scode = s.scode" 
+			+ " where d.scode = ?";
 	
 	public static final String MG_SUBJECT_SELECT_ALL_SQL
 		= "select scode, name from subject";
@@ -176,21 +183,21 @@ public class Sql {
 		= "select pcode, name, birth from patient where name like ? order by name asc";
 	//승인관리
 	public static final String MG_APPROVAL_SELECT_ALL_SQL 
-		= "select a.acode, d.name as dname, a.approvedate, a.approved" 
-				+ " from doctor d inner join approval a" 
-				+ " on d.dcode = a.dcode" 
-				+ " order by a.acode desc";
+		= "select r.rcode, d.name as dname, r.approvedate, r.approved" 
+			+ " from doctor d inner join rest r" 
+			+ " on d.dcode = r.dcode" 
+			+ " order by r.rcode desc";
 	
 	public static final String MG_APPROVAL_SELECT_BY_NAME_SQL 
-		= "select a.acode, d.name as dname, a.approvedate, a.approved" 
-			+ " from doctor d inner join approval a" 
-			+ " on d.dcode = a.dcode" 
+		= "select r.rcode, d.name as dname, r.approvedate, r.approved" 
+			+ " from doctor d inner join rest r" 
+			+ " on d.dcode = r.dcode" 
 			+ " where d.name like ?"
-			+ " order by a.acode desc";
-	
+			+ " order by r.rcode desc";
+	//수정중
 	public static final String MG_APPROVAL_SELECT_BY_ACODE_SQL
-		= "select d.name, a.approvedate, a.approved, a.reason" 
-				+ " from doctor d inner join approval a" 
-				+ " on d.dcode = a.dcode" 
-				+ " where acode = ?";
+		= "select d.name, r.approvedate, r.approved, r.reason" 
+			+ " from doctor d inner join rest r" 
+			+ " on d.dcode = a.dcode" 
+			+ " where acode = ?";
 }

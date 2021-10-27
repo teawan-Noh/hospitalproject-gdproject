@@ -30,13 +30,7 @@
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
-       	#submitbtn {
+       	.submitbtn {
        		width: 75px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
@@ -50,6 +44,21 @@
        	}
        	table tr .subject{
        		padding-left: 30px;
+       	}
+       	.modify_delete_button{
+       		text-align: right;
+       	}
+       	.comment_box{
+       		display: flex;
+       		justify-content: space-between;
+       	}
+       	.comment_box .comment_box_left{
+       		width: 70%;
+       	}
+       	.comment_box .comment_box_right{
+       		display: flex;
+       		justify-content: space-between;
+       		width: 25%;
        	}
 </style>
 </head>
@@ -99,26 +108,32 @@
 	   			</table>
     		</div>
     		<div class="modify_delete_button">
-    			<button type = "submit" id="submitbtn">수정</button>
+    			<a href="qna_modify?qno=${qnadetail.qno}">
+    				<button type = "submit" class="submitbtn">수정</button>
+		   		</a>
     			<a href="qna_delete?qno=${qnadetail.qno}">
-    				<button type = "submit" id="submitbtn">삭제</button>
+    				<button type = "submit" class="submitbtn">삭제</button>
 		   		</a>
 	    	</div>
 	    	<form method="post" action="board_modify">
 	    	<div class="coment_box">
 	    		<input class="coment_input" type="text" name="coment" placeholder="내용을 입력해주세요"/>
-	    		<button type = "submit" id="submitbtn">등록</button>
+	    		<button type = "submit" class="submitbtn">등록</button>
 	    	</div>
 	    	</form>
 	    	<div>
 	    		<h4>답변<h4>
 	    	</div>
 	    	<div class="comment_box">
-	    		<div>${qnadetail.ccontent}</div>
-	    		<div>${qnadetail.id}</div>
-	    		<div>
-	    			<fmt:parseDate value="${qnadetail.cwritedate}" var="dateFmt2" pattern="yyyy-MM-dd HH:mm:ss"/>
-			    	<fmt:formatDate value="${dateFmt2}"  pattern="yyyy-MM-dd"/>
+	    		<div class="comment_box_left">
+	    			<div>${qnadetail.ccontent}</div>
+	    		</div>
+	    		<div class="comment_box_right">
+	    			<div>${qnadetail.id}</div>
+	    			<div>
+	    				<fmt:parseDate value="${qnadetail.cwritedate}" var="dateFmt2" pattern="yyyy-MM-dd HH:mm:ss"/>
+			    		<fmt:formatDate value="${dateFmt2}"  pattern="yyyy-MM-dd"/>
+	    			</div>
 	    		</div>
 	    	</div>
         </div>

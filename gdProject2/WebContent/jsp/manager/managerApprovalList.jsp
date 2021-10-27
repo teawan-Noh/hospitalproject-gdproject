@@ -30,13 +30,7 @@
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
-       	#submitbtn {
+       	.submitbtn {
        		width: 75px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
@@ -73,7 +67,7 @@
     		<div class = "content_header">
     			<form method="post" action="mg_approval_search">
     				<input type="text" name="search" placeholder="이름으로 검색" />
-    				<button type = "submit" id="submitbtn">검색</button>
+    				<button type = "submit" class="submitbtn">검색</button>
     			</form>
     		</div>
     		<div class = "content_body">
@@ -89,11 +83,11 @@
     				<tbody>
     					<c:forEach var="approval" items="${approvalList}">
     						<tr>
-    							<td>${approval.acode}</td>
+    							<td>${approval.rcode}</td>
     							<td>${approval.dname}</td>
     							<fmt:parseDate value="${approval.approvedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
-    							<td>${approval.approved}</a></td>
+    							<td><a href="mg_approval_detail?acode=${approval.rcode}">${approval.approved}</a></td>
     						</tr>
     					</c:forEach>
     				</tbody>

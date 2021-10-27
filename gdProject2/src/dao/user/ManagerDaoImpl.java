@@ -326,7 +326,7 @@ public class ManagerDaoImpl implements ManagerDao {
 	}
 
 	@Override
-	public HashMap selectApprovalByAcode(int acode) {
+	public HashMap selectApprovalByRcode(int rcode) {
 		HashMap<String, String> approvalDetail = null;
 		
 		Connection connection = null;
@@ -335,10 +335,11 @@ public class ManagerDaoImpl implements ManagerDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_QNO_SQL);
+			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_ACODE_SQL);
+			//select d.name, r.approvedate, r.approved, r.reason from doctor d inner join approval r
+			//on d.dcode = r.dcode where rcode = ?
 			
-			//select memoid, name, age from memo where memoid=?
-			pStatement.setInt(1, acode);
+			pStatement.setInt(1, rcode);
 			resultSet = pStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -349,8 +350,6 @@ public class ManagerDaoImpl implements ManagerDao {
 				approvalDetail.put("title", resultSet.getString("title"));
 				approvalDetail.put("nickname", resultSet.getString("nickname"));
 				approvalDetail.put("writedate", resultSet.getString("writedate"));
-				
-				
 			}
 			
 		}

@@ -20,5 +20,5 @@ public interface ManagerDao {
 	
 	List<HashMap> selectApprovalAll();
 	List<HashMap> selectApprovalByName(String name);
-	HashMap selectApprovalByAcode(int acode);
+	HashMap selectApprovalByRcode(int rcode);
 }

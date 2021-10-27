@@ -23,7 +23,7 @@ import common.page.PageManager;
 //, "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
-					"/mg_patient_list", "/mg_patient_search", "/mg_approval_list", "/mg_approval_search"})
+					"/mg_patient_list", "/mg_patient_search", "/mg_approval_list", "/mg_approval_search", "/mg_approval_detail"})
 public class ManagerController extends HttpServlet{
 
 	@Override
@@ -57,6 +57,7 @@ public class ManagerController extends HttpServlet{
 			List<Subject> subjectList = dao.selectSubjectAll();
 				
 			req.setAttribute("subjectList", subjectList);
+			
 			String subjectcode = req.getParameter("subject");
 			if(subjectcode.equals("list")) {
 				int scode = 0;
@@ -79,11 +80,9 @@ public class ManagerController extends HttpServlet{
 			ManagerDao dao = new ManagerDaoImpl();
 			dao.deleteDoctor(dcode);
 			
-			
 			List<Subject> subjectList = dao.selectSubjectAll();
 			
 			req.setAttribute("subjectList", subjectList);
-			
 		}
 		
 		else if(action.equals("mg_patient_list")) {
@@ -133,7 +132,12 @@ public class ManagerController extends HttpServlet{
 		}
 		else if(action.equals("mg_approval_detail")) {
 			
-//			req.setAttribute("qnaForm", qnaForm);
+			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			
+			ManagerDao dao = new ManagerDaoImpl(); 
+			
+			HashMap approvalDetail = dao.selectApprovalByRcode(rcode);
+			req.setAttribute("approvaldetail", approvalDetail);
 		}
 		
 		String dispatcherUrl = null;
