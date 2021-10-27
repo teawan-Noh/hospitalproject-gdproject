@@ -110,6 +110,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <li class="side-list"><a href="mg_approval_list">승인관리</a></li>
 	            </ul>
             </c:if>
+            <c:if test="${side == 'communication'}">
+            	<div class="flex side-title">
+	                <h1>소통정보</h1>
+	                <div id="side-img"></div>
+	            </div>
+	            <ul id="side-ul">
+	                <li class="side-list"><a href="#">Q&A 게시판</a></li>
+	                
+	            </ul>
+            </c:if>
         </div>
     </body>
 </html>
