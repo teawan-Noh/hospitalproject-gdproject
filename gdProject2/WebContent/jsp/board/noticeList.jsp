@@ -36,81 +36,41 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>저희 병원을 이용해주셔서 감사합니다.</td>
-                        <td>관리자</td>
-                        <td>2021-10-26</td>
-                        <td>0</td>
-                    </tr>
+    	            <c:forEach var="list" items="${noticeList}">
+        	        	<tr>
+            	            <td>${list.ncode}</td>
+                	        <td><a href="notice_detail?ncode=${list.ncode}">${list.title}</a></td>
+                    	    <td>${list.name}</td>
+                        	<td>${list.writedate}</td>
+                        	<td>${list.cnt}</td>
+                    	</tr>
+                	</c:forEach>
                 </tbody>
             </table>
             <p id="info">※내역을 클릭하면 상세조회가 가능합니다.</p>
-            <button type="button" id="write">글쓰기</button>
-        </div>
+            <c:if test="${mcode!=null}">
+            	<button type="button" id="write">글쓰기</button>
+            </c:if>
+            <ul class="pagination pagination-sm">
+				<c:if test="${pageGroupResult.beforePage}">
+					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupStartNumber-1}">이전</a></li>
+				</c:if>
+
+				<c:forEach var="index" begin="${pageGroupResult.groupStartNumber}" end="${pageGroupResult.groupEndNumber}">
+					<c:choose>
+						<c:when test="${pageGroupResult.selectPageNumber==index}">
+							<li class="page-item active"><a class="page-link" href="notice_list?reqPage=${index}">${index}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item"><a class="page-link" href="notice_list?reqPage=${index}">${index}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${pageGroupResult.afterPage}">
+					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupEndNumber+1}">다음</a></li>
+				</c:if>
+			</ul>
+		</div>
 	</div>
 </body>
 

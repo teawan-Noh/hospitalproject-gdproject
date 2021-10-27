@@ -16,13 +16,13 @@ public interface NoticeDao {
 	void delete(long ncode);
 	
 	//공지사항 게시글 전체목록
-	List <HashMap<String,Object>> selectAll();
+	List <HashMap<String,Object>> selectAll(int requestpage);
 	
 	//공지사항 게시글 상세보기
-	HashMap selectByNcode(int ncode);
+	List <HashMap<String,Object>> selectByNcode(int ncode);
 	
 	//공지사항 제목,내용으로 검색
-	List <HashMap> selectByTitleContent(String name);
+	List <HashMap<String,Object>> selectByTitleContent(String name);
 	
 	//조회수
 	void count(int ncode);

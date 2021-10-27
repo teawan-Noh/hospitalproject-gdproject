@@ -105,7 +105,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </li>
                     <li>의료진</li>
                     <li>소통정보</li>
-                    <li><a href="notice_list">공지사항</a></li>
+                    <li><a href="notice_list?reqPage=1">공지사항</a></li>
                     <li>
                         <a href="#"><div id="search"></div></a>
                     </li>

@@ -38,5 +38,31 @@ public class PageDaoImpl implements PageDao {
 		return cnt;
 	}
 
+	@Override
+	public int getCountNotice(String sql) {
+		 int cnt = 0;
+	      Connection connection = null;
+	      PreparedStatement pStatement = null;
+	      ResultSet resultSet = null;
+	      
+	      try {
+	         connection = JDBCUtil.getConnection();
+	         pStatement = connection.prepareStatement(sql);
+	         resultSet = pStatement.executeQuery();
+	         
+	         if(resultSet.next()) {
+	            cnt = resultSet.getInt("cnt");
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         
+	      } finally {
+	         JDBCUtil.close(resultSet, pStatement, connection);
+	      }
+	      return cnt;
+	   }
+
+	
+
 
 }

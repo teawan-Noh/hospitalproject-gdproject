@@ -81,12 +81,21 @@ public class Sql {
 
 	//공지사항 전체목록
 	public static final String NOTICE_SELECT_ALL_SQL =
-			"select n.ncode, n.title, m.name, n.writedate, n.cnt "
+			"select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
 			+ "from notice n inner join manager m "
 			+ "on n.mcode = m.mcode order by n.ncode desc";
+	
+	//공지사항 페이징처리
+	public static final String NOTICE_COUNT_SQL = 
+			"select count(*) as cnt from notice";
+	
+	public static final String BOOK_SELECT_NOTICE_PAGE_SQL =
+			"select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
+			+ "from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between ? and ?";
+	
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =
-			"select n.ncode, n.title, m.name, n.writedate, n.cnt "
+			"select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
 			+ "from notice n inner join manager m on n.mcode = m.mcode "
 			+ "where n.title like ? or n.content like ? order by n.ncode desc";
 	//공지사항 조회수
@@ -98,7 +107,7 @@ public class Sql {
 	
 	//게시글 상세보기
 	public static final String NOTICE_SELECT_BY_NCODE_SQL =
-			"select n.title, m.name, n.writedate, n.cnt, n.content "
+			"select n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt, n.content "
 			+ "from notice n inner join manager m on n.mcode = m.mcode where ncode = ?";
 	//공지사항 게시글 수정
 	public static final String NOTICE_UPDATE_SQL =

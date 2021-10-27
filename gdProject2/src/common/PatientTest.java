@@ -71,19 +71,42 @@ public class PatientTest {
 		
 		ndao.update(notice);*/
 		
-		List<HashMap<String,Object>> list = ndao.selectAll();
+		System.out.println("================selectAll()===============");
+		
+		/*List<HashMap<String,Object>> list = ndao.selectAll();
 		
 		for (HashMap<String,Object> hashMap : list) {
 			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
+		}*/
+		
+		System.out.println("===============selectByNcode()================");
+		
+		
+		List<HashMap<String,Object>> list2 = ndao.selectByNcode(16);
+		
+		for (HashMap<String,Object> hashMap : list2) {
+			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
 		}
-		
-			
 			
 		
-		//System.out.println(ndao.selectByNcode(16));
+		System.out.println("===============selectByTitleContent()================");
 		
+		List<HashMap<String,Object>> list3 = ndao.selectByTitleContent("22");
 		
-		
+		for (HashMap<String,Object> hashMap : list3) {
+			
+			System.out.println(hashMap.get("ncode"));
+			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
+		}
 		
 		
 		
