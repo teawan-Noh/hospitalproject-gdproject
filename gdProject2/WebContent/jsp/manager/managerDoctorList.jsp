@@ -80,7 +80,7 @@ $(document).ready(function(){
         		진료과별의사조회
         	</div>
     		<div class="content_class">
-        		<h1>진료과별의사조회</h1>
+        		<h2>진료과별의사조회</h2>
         	</div>
     		<div class="content_header">
     			<form method="post" action="mg_doctor_search">

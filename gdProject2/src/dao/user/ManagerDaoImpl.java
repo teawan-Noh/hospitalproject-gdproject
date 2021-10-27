@@ -296,8 +296,8 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_NAME_SQL);
-//			select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
-//			where d.name like ? on d.dcode = a.dcode order by a.acode desc;
+			//select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
+			//where d.name like ? on d.dcode = a.dcode order by a.acode desc;
 			pStatement.setString(1, '%'+name+'%');
 			resultSet = pStatement.executeQuery();
 			
@@ -324,5 +324,49 @@ public class ManagerDaoImpl implements ManagerDao {
 		
 		return approvalList;
 	}
+
+	@Override
+	public HashMap selectApprovalByAcode(int acode) {
+		HashMap<String, String> approvalDetail = null;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_QNO_SQL);
+			
+			//select memoid, name, age from memo where memoid=?
+			pStatement.setInt(1, acode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				approvalDetail = new HashMap<>();
+				
+				approvalDetail.put("title", resultSet.getString("title"));
+				approvalDetail.put("title", resultSet.getString("title"));
+				approvalDetail.put("nickname", resultSet.getString("nickname"));
+				approvalDetail.put("writedate", resultSet.getString("writedate"));
+				
+				
+			}
+			
+		}
+		catch(NumberFormatException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		}
+		finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return approvalDetail;
+	}
+
+
 
 }

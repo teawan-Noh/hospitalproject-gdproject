@@ -187,4 +187,10 @@ public class Sql {
 			+ " on d.dcode = a.dcode" 
 			+ " where d.name like ?"
 			+ " order by a.acode desc";
+	
+	public static final String MG_APPROVAL_SELECT_BY_ACODE_SQL
+		= "select d.name, a.approvedate, a.approved, a.reason" 
+				+ " from doctor d inner join approval a" 
+				+ " on d.dcode = a.dcode" 
+				+ " where acode = ?";
 }

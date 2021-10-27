@@ -68,7 +68,7 @@
         		환자조회
         	</div>
     		<div class="content_class">
-        		<h1>환자조회</h1>
+        		<h2>환자조회</h2>
         	</div>
     		<div class = "content_header">
     			<form method="post" action="mg_patient_search">

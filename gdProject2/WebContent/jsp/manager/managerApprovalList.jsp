@@ -68,7 +68,7 @@
         		승인관리
         	</div>
     		<div class="content_class">
-        		<h1>승인관리</h1>
+        		<h2>승인관리</h2>
         	</div>
     		<div class = "content_header">
     			<form method="post" action="mg_approval_search">
