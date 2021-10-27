@@ -555,7 +555,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     if (data != 0) {
                                         location.href = "index.jsp";
                                     }
-                                }
+                                } 
                             );
                         }
                     }
