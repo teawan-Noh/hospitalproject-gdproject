@@ -139,7 +139,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </style>
         <script>
             $(function () {
-                let pcode = 2;
+                $(document).on("click", "#rsv-delete", function(){
+                	if(confirm("정말 예약을 취소하시겠습니까?") == true){
+                		alert("예약이 취소되었습니다.");
+                   		location.href = "reservation-delete?rcode=" + "${rsvInfo.rcode}";
+                	}
+                });
+                $(document).on("click", "#rsv-update", function(){
+                	$("#update-form").submit();
+                });
             });
         </script>
     </head>
@@ -197,8 +205,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                	<c:if test="${rsvInfo.state == '예약' && side == 'reservation'}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
-                	<button type="button" id="rsv-delete" class="btn btn-danger">삭제</button>
+                	<button type="button" id="rsv-delete" class="btn btn-danger">예약 취소</button>
                 </div>
+                <form id="update-form" action="reservation" method="post">
+                	<input type="hidden" id="form-rcode" name="rcode" value="${rsvInfo.rcode}"/>
+                    <input type="hidden" id="form-pcode" name="pcode" value="${rsvInfo.pcode}"/>
+                	<input type="hidden" id="form-subject" name="subject" value="${rsvInfo.sname}"/>
+                	<input type="hidden" id="form-dcode" name="dcode" value="${rsvInfo.dcode}"/>
+                	<input type="hidden" id="form-dname" name="dname" value="${rsvInfo.dname}" />
+                	<input type="hidden" id="form-rsvdate" name="rsvdate" value="${rsvInfo.rsvdate}"/>
+                	<input type="hidden" id="form-rsvtime" name="rsvtime" value="${rsvInfo.rsvtime}"/>
+                </form>
                 </c:if>
             </div>
         </div>

@@ -158,8 +158,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         var rcode = $(this).find(".table-rcode").text();
                         $("#form-rcode").val(rcode);
                         $("#form-user").val("doctor");
-                        $("#form").submit();
+                        $("#form2").submit();
                     });
+                
+                $('#form-rsvdate').change(function(){
+                    var rsvdate = this.value;//Date in full format alert(new Date(this.value));
+                    $("form-rsvdate").val(rsvdate);
+                    $("#form1").submit();
+                    
+                });
+                $("#select-all").click(function(e){
+                   	location.href = "reservation-doctor-list?reqPage=1";
+                })
 
             });
         </script>
@@ -177,7 +187,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
                 <h1>예약정보 조회</h1>
                 <br />
-
+				<form style="display: inline-block;" action="reservation-doctor-list" id="form1">
+					<input type="hidden" name="reqPage" value="1" />
+					<label>예약 날짜 : <input type="date" id="form-rsvdate" name="rsvdate" value="" /></label>	
+				</form>
+				<button id="select-all" class="btn btn-success">전체 조회</button>
                 <table id="rsv-mylist" class="table">
                     <thead class="table-head">
                         <tr>
@@ -189,16 +203,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </thead>
                     <tbody></tbody>
                 </table>
-                <form style="display: none" action="reservation-detail" method="POST" id="form">
+                
+                <form style="display: none" action="reservation-detail" method="POST" id="form2">
   					<input type="hidden" id="form-rcode" name="rcode" value=""/>
   					<input type="hidden" id="form-user" name="user" value=""/>
 				</form>
+				
                 <ul class="pagination justify-content-center">
                     <c:if test="${pageGroupResult.beforePage}">
                         <li class="page-item">
                             <a
                                 class="page-link"
-                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber - 1}"
+                                href="reservation-doctor-list?reqPage=${pageGroupResult.selectPageNumber - 1}"
                                 >before</a
                             >
                         </li>
@@ -215,7 +231,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 <li class="page-item active">
                                     <a
                                         class="page-link"
-                                        href="reservation-list?reqPage=${index}"
+                                        href="reservation-doctor-list?reqPage=${index}"
                                         >${index}</a
                                     >
                                 </li>
@@ -225,7 +241,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 <li class="page-item">
                                     <a
                                         class="page-link"
-                                        href="reservation-list?reqPage=${index}"
+                                        href="reservation-doctor-list?reqPage=${index}"
                                         >${index}</a
                                     >
                                 </li>
@@ -236,7 +252,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         <li class="page-item">
                             <a
                                 class="page-link"
-                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber + 1}"
+                                href="reservation-doctor-list?reqPage=${pageGroupResult.selectPageNumber + 1}"
                                 >after</a
                             >
                         </li>

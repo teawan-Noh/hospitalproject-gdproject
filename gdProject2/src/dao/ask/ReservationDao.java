@@ -16,11 +16,14 @@ public interface ReservationDao {
 	List<Reservation> selectReservationByDcodeAndRsvDate(int dcode, String rsvdate);
 	
 	int insertReservation(int pcode, int dcode, String rsvdate);
-	List<Map<String, String>> selectReservationPage(int pcode, int requestPage);
 	
+	List<Map<String, String>> selectReservationPage(int pcode, int requestPage);
 	List<Map<String, String>> selectReservationByDcodePage(int dcode, int requestPage);
+	List<Map<String, String>> selectReservationByDcodeRsvdatePage(int dcode, int requestPage, String rsvdate);
 
 	Map<String, String> selectReservationByRcode(int rcode);
+	
+	void deleteReservation(int rcode);
 	
 	
 }

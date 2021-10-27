@@ -30,7 +30,8 @@ import common.page.PageManager;
 @WebServlet(name="ReservationController", 
 urlPatterns= {"/reservation", "/subject-doctor", "/schedule", 
 		"/doctor-detail", "/rsv-time", "/book", "/reservation-list",
-		"/reservation-detail", "/reservation-doctor-list"})
+		"/reservation-detail", "/reservation-doctor-list",
+		"/reservation-delete"})
 public class ReservationController extends HttpServlet{
 
 private static final long serialVersionUID = -3121213149759544408L;
@@ -61,8 +62,25 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 		List<Subject> subjectList = rdao.selectSubjectAll();
 		
 		int pcode = 2; // req.getParameter("pcode");
+		int rcode = req.getParameter("rcode") == null ? 0 : Integer.parseInt(req.getParameter("rcode"));
+		
+		System.out.println(rcode);
+		
+		String subject = req.getParameter("subject");
+		int dcode = req.getParameter("dcode") == null ? 0 : Integer.parseInt(req.getParameter("dcode"));
+		String dname = req.getParameter("dname");
+		String rsvdate = req.getParameter("rsvdate");
+		String rsvtime = req.getParameter("rsvtime");
+	
 		
 		req.setAttribute("pcode", pcode);
+		req.setAttribute("rcode", rcode);
+		req.setAttribute("subject", subject);
+		req.setAttribute("dcode", dcode);
+		req.setAttribute("dname", dname);
+		req.setAttribute("rsvdate", rsvdate);
+		req.setAttribute("rsvtime", rsvtime);
+		
 		req.setAttribute("side", "reservation");
 		req.setAttribute("subjectList", subjectList);
 	}
@@ -168,22 +186,37 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	}
 	else if(action.equals("reservation-doctor-list")) {
 		int requestPage = Integer.parseInt(req.getParameter("reqPage"));
+		String rsvdate = req.getParameter("rsvdate");
 
 		ReservationDao rdao = new ReservationDaoImpl();
 		PageDao pdao = new PageDaoImpl();
 
 		int dcode = 1; // req.getParameter("pcode");
-		
-		List<Map<String, String>> rsvList = rdao.selectReservationByDcodePage(dcode, requestPage);
-		int cnt = pdao.getCountPatient(dcode); // ¼öÁ¤
-		
+		List<Map<String, String>> rsvList = null;
 		PageManager pm = new PageManager(requestPage);
-		PageGroupResult pgr = pm.getPageGroupResult(cnt);
-		
+		PageGroupResult pgr = null;
+		if(rsvdate == null) {
+			rsvList = rdao.selectReservationByDcodePage(dcode, requestPage);
+			int cnt = pdao.getCountDoctor(dcode);
+			
+			pgr = pm.getPageGroupResult(cnt);
+		}
+		else {
+			rsvList = rdao.selectReservationByDcodeRsvdatePage(dcode, requestPage, rsvdate);
+			int cnt = pdao.getCountDoctorRsvdate(dcode, rsvdate);
+			
+			pgr = pm.getPageGroupResult(cnt);
+		}
 		req.setAttribute("pageGroupResult", pgr);
 		
 		req.setAttribute("rsvList", rsvList);
 		req.setAttribute("side", "task");
+	}
+	else if(action.equals("reservation-delete")) {
+		ReservationDao rdao = new ReservationDaoImpl();
+		int rcode = Integer.parseInt(req.getParameter("rcode"));
+		
+		rdao.deleteReservation(rcode);
 	}
 	
 		
@@ -215,6 +248,9 @@ private void process(HttpServletRequest req, HttpServletResponse res)
 	}
 	else if(action.equals("reservation-doctor-list")) {
 		dispatcherUrl = "jsp/reservation/reservation-doctor-list.jsp";
+	}
+	else if(action.equals("reservation-delete")) {
+		res.sendRedirect("reservation-list?reqPage=1");
 	}
 	
 	
