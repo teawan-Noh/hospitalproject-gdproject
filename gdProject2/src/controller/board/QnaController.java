@@ -18,7 +18,7 @@ import validator.QnaError;
 import validator.QnaValidator;
 
 @WebServlet(name="QnaController", 
-	urlPatterns= {"/qna_list", "/qna_save", "/qna_search", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"})
+	urlPatterns= {"/qna_list", "/qna_input", "/qna_save", "/qna_search", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"})
 public class QnaController extends HttpServlet{
 
 	@Override
@@ -42,10 +42,12 @@ public class QnaController extends HttpServlet{
 			
 			QnaDao dao = new QnaDaoImpl();
 			List<HashMap> qnaList = dao.selectAll();
-			
+			System.out.println(qnaList);
 			req.setAttribute("qnaList", qnaList);
 		}
-		
+		else if(action.equals("qna_input")) {
+			
+		}
 		else if(action.equals("qna_save")) {
 			
 			String title = req.getParameter("title");
@@ -71,14 +73,28 @@ public class QnaController extends HttpServlet{
 				req.setAttribute("qnaErrors", qnaErrors);//v2
 				req.setAttribute("qnaForm", qnaForm);
 			}
+			QnaDao dao = new QnaDaoImpl();
+			List<HashMap> qnaList = dao.selectAll();
+			req.setAttribute("qnaList", qnaList);
 		}
 		else if(action.equals("qna_search")) {
 			
 			QnaDao dao = new QnaDaoImpl();
-			List<HashMap> qnaList = dao.selectAll();
+			String searchType = req.getParameter("searchType");
+			String searchValue = req.getParameter("searchValue");
 			
-			req.setAttribute("qnaList", qnaList);
-			
+			if(searchType.equals("nickname")) {
+				List<HashMap> qnaList = dao.selectByNickname(searchValue);
+				req.setAttribute("qnaList", qnaList);
+			}
+			else if((searchType.equals("titleContent"))) {
+				List<HashMap> qnaList = dao.selectByTitleOrContent(searchValue);
+				req.setAttribute("qnaList", qnaList);
+			}
+			else {
+				List<HashMap> qnaList = dao.selectAll();
+				req.setAttribute("qnaList", qnaList);
+			}
 		}
 		else if(action.equals("qna_detail")) {
 			
@@ -86,10 +102,17 @@ public class QnaController extends HttpServlet{
 			
 			QnaDao dao = new QnaDaoImpl();
 			
-			HashMap qna = dao.selectByQno(qno);
-			System.out.println("실행되나2");
-			req.setAttribute("qnadetail", qna);
+			HashMap qnaDetail = dao.selectByQno(qno);
+			req.setAttribute("qnadetail", qnaDetail);
 			
+		}
+		else if(action.equals("qna_modify")) {
+			
+			int qno = Integer.parseInt(req.getParameter("qno"));
+			QnaDao dao = new QnaDaoImpl();
+			
+			HashMap qnaDetail = dao.selectByQno(qno);
+			req.setAttribute("qnadetail", qnaDetail);
 		}
 		else if(action.equals("qna_update")) {
 			
@@ -108,7 +131,6 @@ public class QnaController extends HttpServlet{
 		else if(action.equals("qna_delete")) {
 			
 			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
-			
 			QnaDao dao = new QnaDaoImpl();
 			dao.delete(qno);
 			
@@ -123,28 +145,25 @@ public class QnaController extends HttpServlet{
 		if(action.equals("qna_list")) {
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
+		else if(action.equals("qna_input")) {
+			dispatcherUrl = "jsp/board/qnaInput.jsp";
+		}
 		else if(action.equals("qna_save")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_search")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_detail")) {
-			
 			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		else if(action.equals("qna_modify")) {
-			
 			dispatcherUrl = "jsp/board/qnaModify.jsp";
 		}
 		else if(action.equals("qna_update")) {
-			
-			dispatcherUrl = "jsp/board/qnaModify.jsp";
+			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		else if(action.equals("qna_delete")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp"; 
 		}
 		

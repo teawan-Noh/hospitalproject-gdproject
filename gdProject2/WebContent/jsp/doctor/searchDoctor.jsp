@@ -29,11 +29,20 @@
             border: 3px solid rgb(70, 145, 140);
             margin: 20px;
             display: flex;
+            padding: 0;
+        }
+        .doctor:hover {
+        	background-color: rgb(70, 145, 140);
+        	color: white;
+        }
+        .doctor:hover .doctor_detail {
+        	background-color: white;
+        	color: black;
         }
 
         .doctor_detail {
             background-color: rgb(70, 145, 140);
-            width: 377px;
+            width: 375px;
             height: 51px;
             position: absolute;
             bottom: 0;
@@ -42,6 +51,7 @@
             text-align: center;
             line-height: 50px;
             font-size: 1.3rem;
+            margin: 0;
         }
         hr {
             background-color: rgb(70, 145, 140);

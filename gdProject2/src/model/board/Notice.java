@@ -55,6 +55,12 @@ public class Notice {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+
+	@Override
+	public String toString() {
+		return "Notice [ncode=" + ncode + ", mcode=" + mcode + ", title=" + title + ", content=" + content
+				+ ", writedate=" + writedate + ", cnt=" + cnt + "]";
+	}
 	
 	
 	

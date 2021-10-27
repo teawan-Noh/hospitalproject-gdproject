@@ -1,7 +1,6 @@
 package common.page;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -93,6 +92,28 @@ public class PageDaoImpl implements PageDao {
 		}
 		return cnt;
 	}
-
+	
+	public int getCountNotice(String sql) {
+		 int cnt = 0;
+	      Connection connection = null;
+	      PreparedStatement pStatement = null;
+	      ResultSet resultSet = null;
+	      
+	      try {
+	         connection = JDBCUtil.getConnection();
+	         pStatement = connection.prepareStatement(sql);
+	         resultSet = pStatement.executeQuery();
+	         
+	         if(resultSet.next()) {
+	            cnt = resultSet.getInt("cnt");
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         
+	      } finally {
+	         JDBCUtil.close(resultSet, pStatement, connection);
+	      }
+	      return cnt;
+	   }
 
 }

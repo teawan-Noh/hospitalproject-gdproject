@@ -11,6 +11,7 @@ import java.util.List;
 import common.JDBCUtil;
 import common.Sql;
 import model.user.Manager;
+import model.user.Patient;
 import model.user.Subject;
 
 public class ManagerDaoImpl implements ManagerDao {
@@ -86,7 +87,7 @@ public class ManagerDaoImpl implements ManagerDao {
 	}
 
 	@Override
-	public List<Subject> selectAll() {
+	public List<Subject> selectSubjectAll() {
 		List<Subject> subjectList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -178,5 +179,193 @@ public class ManagerDaoImpl implements ManagerDao {
 		}
 		
 	}
+
+	@Override
+	public List<Patient> selectPatientAll() {
+		List<Patient> patientList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_PATIENT_SELECT_ALL_SQL);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				Patient patient = new Patient();
+				
+				patient.setPcode(resultSet.getInt("pcode"));
+				patient.setName(resultSet.getString("name"));
+				patient.setBirth(resultSet.getString("birth"));
+				
+				patientList.add(patient);
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return patientList;
+	}
+
+
+	@Override
+	public List<Patient> selectPatientByName(String name) {
+		List<Patient> patientList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_PATIENT_SELECT_BY_NAME_SQL);
+
+			pStatement.setString(1, '%'+name+'%');
+
+			resultSet = pStatement.executeQuery();
+
+			while(resultSet.next()) {
+				Patient patient = new Patient();
+				
+				patient.setPcode(resultSet.getInt("pcode"));
+				patient.setName(resultSet.getString("name"));
+				patient.setBirth(resultSet.getString("birth"));
+				
+				patientList.add(patient);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		return patientList;
+	}
+
+
+	@Override
+	public List<HashMap> selectApprovalAll() {
+		List<HashMap> approvalList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_ALL_SQL);
+//			select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
+//			on d.dcode = a.dcode order by a.acode desc;
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				HashMap<String, String> hm = new HashMap<>();
+				
+				hm.put("acode", Integer.toString(resultSet.getInt("acode")));
+				hm.put("dname", resultSet.getString("dname"));
+				hm.put("approvedate", resultSet.getString("approvedate"));
+				hm.put("approved", resultSet.getString("approved"));
+				
+				approvalList.add(hm);
+			}
+			
+		}
+		catch(SQLException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return approvalList;
+	}
+
+
+	@Override
+	public List<HashMap> selectApprovalByName(String name) {
+		List<HashMap> approvalList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_NAME_SQL);
+			//select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
+			//where d.name like ? on d.dcode = a.dcode order by a.acode desc;
+			pStatement.setString(1, '%'+name+'%');
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				HashMap<String, String> hm = new HashMap<>();
+				
+				hm.put("acode", Integer.toString(resultSet.getInt("acode")));
+				hm.put("dname", resultSet.getString("dname"));
+				hm.put("approvedate", resultSet.getString("approvedate"));
+				hm.put("approved", resultSet.getString("approved"));
+				
+				approvalList.add(hm);
+			}
+			
+		}
+		catch(SQLException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return approvalList;
+	}
+
+	@Override
+	public HashMap selectApprovalByRcode(int rcode) {
+		HashMap<String, String> approvalDetail = null;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_ACODE_SQL);
+			//select d.name, r.approvedate, r.approved, r.reason from doctor d inner join approval r
+			//on d.dcode = r.dcode where rcode = ?
+			
+			pStatement.setInt(1, rcode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				approvalDetail = new HashMap<>();
+				
+				approvalDetail.put("title", resultSet.getString("title"));
+				approvalDetail.put("title", resultSet.getString("title"));
+				approvalDetail.put("nickname", resultSet.getString("nickname"));
+				approvalDetail.put("writedate", resultSet.getString("writedate"));
+			}
+			
+		}
+		catch(NumberFormatException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		}
+		finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return approvalDetail;
+	}
+
+
 
 }

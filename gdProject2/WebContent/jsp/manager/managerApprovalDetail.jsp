@@ -36,7 +36,7 @@
         	border: 1px solid rgb(243, 243, 243);
         	border-radius: 5px;
        	}
-       	.submitbtn {
+       	#submitbtn {
        		width: 75px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
@@ -66,41 +66,48 @@
 			<div class="content_path">
         		<i class="fas fa-home"></i>
         		<i class="fas fa-chevron-right"></i>
-        		소통정보
+        		업무관리
         		<i class="fas fa-chevron-right"></i>
-        		Q&A
+        		승인관리
         	</div>
     		<div class="content_class">
-        		<h2>게시글 수정</h2>
+        		<h2>승인관리</h2>
         	</div>
     		
-    		<form method="post" action="board_modify" enctype="multipart/form-data">
-			<table border="1" class="table">
-			<tbody>
-				<tr>
-			   		<td>제목 </td>
-			   		<td class="input_box">
-						<input type="text" name="subject" value="${qnadetail.title}"/>  <br/>
-					</td>
-				</tr>
-				<tr>
-			   		<td>내용 </td>
-			   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
-				</tr>
-				<tr>
-			   		<td>첨부파일 </td>
-			   		<td class="input_box">
-					<input type="file" name="filename"/>${qnadetail.img}<br />
-			   		</td>
-				</tr>
-			</tbody>	
-		    </table>
-		    <br/>
-		  	<div class="approve_reject_button">
-	            <button class="submitbtn" type = "submit" >수정</button>
-	            <button class="submitbtn" type = "button" onclick="location.href = 'jsp/qnaList.jsp'">취소</button>
-	        </div>
- 			</form>
+    		<div class = "content_body">
+    			<table border="1" class="table">
+					<tbody>
+						<tr>
+		   					<td>작성자 </td>
+	 						<td>${approvaldetail.dname}</td>
+						</tr>
+						<tr>
+		   					<td>작성일</td>
+		   					<td>
+		   						<fmt:parseDate value="${approvaldetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+			    				<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
+		   					</td>
+						</tr>
+						<tr>
+		 					<td>휴진기간</td>
+		   					<td>
+		   						<fmt:parseDate value="${qnadetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+			    				<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
+		   					</td>
+						</tr>
+						<tr>
+		   					<td>사유 </td>
+	 						<td>${qnadetail.nickname}</td>
+						</tr>
+					</tbody>	
+	   			</table>
+    		</div>
+    		<div class="approve_reject_button">
+    			<button type = "submit" id="submitbtn">승인</button>
+    			<a href="qna_delete?qno=${qnadetail.qno}">
+    				<button type = "submit" id="submitbtn">거절</button>
+		   		</a>
+	    	</div>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

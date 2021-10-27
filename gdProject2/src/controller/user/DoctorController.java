@@ -87,7 +87,7 @@ public class DoctorController extends HttpServlet {
 			int scode = Integer.parseInt(req.getParameter("selectSubject"));
 			String dname = req.getParameter("dname").trim();
 			DoctorDao dao = new DoctorDaoImpl();
-			List<HashMap> doctorList = null;
+			List<HashMap<String, Object>> doctorList = null;
 			if(dname == null) {
 				doctorList = dao.selectByscode(scode);
 			} else {
@@ -100,7 +100,7 @@ public class DoctorController extends HttpServlet {
 		} else if(action.equals("mypage")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
-			List<HashMap> doctorList = dao.selectBydcode(dcode);
+			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
 			ReservationDao rdao = new ReservationDaoImpl();
 			List<Subject> subjectList = rdao.selectSubjectAll();
@@ -121,7 +121,7 @@ public class DoctorController extends HttpServlet {
 		} else if(action.equals("doctor_detail")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
-			List<HashMap> doctorList = dao.selectBydcode(dcode);
+			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
 		}
 		

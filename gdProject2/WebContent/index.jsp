@@ -92,7 +92,7 @@ $(function(){
            type: 'POST',
            url: 'patient_detail?pcode=${pcode}',
            data: {'prompt':inputString},
-           success: console.log("prompt값 전송 성공")
+           success: console.log("prompt 값 전송 성공")
          });
 
    });

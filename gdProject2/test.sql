@@ -674,5 +674,29 @@ drop sequence pcode;
 delete from patient;
 select * from patient;
 select * from rest;
-select * from approval;
 create sequence approval_seq;
+drop sequence approval_seq;
+select * from notice;
+select * from manager;
+delete from approval;
+insert into approval values (approval_seq.nextval, 10, to_date('2021-11-01', 'yyyy-mm-dd'), '¥Î±‚', '»ﬁ∞°', sysdate);
+insert into approval values (approval_seq.nextval, 5, to_date('2021-11-03', 'yyyy-mm-dd'), '¥Î±‚', '∞≥¿ŒªÁ¿Ø', sysdate);
+ALTER TABLE approval ADD requestdate DATE;
+alter table approval drop column adate;
+ALTER TABLE approval DROP COLUMN requestdate;
+
+drop table rest;
+drop table approval;
+
+alter table approval add restdate date;
+alter table approval add day varchar(10);
+
+
+insert into approval values (1, 5, sysdate, 'Ω¬¿Œ', '∫¥∞°', null, 'FRI');
+insert into approval values (2, 4, sysdate, '¥Î±‚', '»ﬁ∞°', to_date('2021-03-12','yyyy-mm-dd'), null);
+insert into approval values (3, 3, sysdate, '¥Î±‚', '»ﬁ∞°', null, 'WED');
+insert into approval values (4, 2, sysdate, '¥Î±‚', '»ﬁ∞°', to_date('2021-03-15','yyyy-mm-dd'), null);
+insert into approval values (5, 1, sysdate, '∞≈¿˝', '≤“∫¥', null, 'MON');
+
+alter table approval rename to rest;
+alter table rest rename column acode to rcode;
