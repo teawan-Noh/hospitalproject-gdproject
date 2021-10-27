@@ -1,9 +1,6 @@
 package dao.ask;
 
 import java.sql.Connection;
-
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,11 +10,11 @@ import java.util.Map;
 
 import common.JDBCUtil;
 import common.Sql;
+import common.page.PageManager;
+import common.page.PageRowResult;
 import model.ask.Reservation;
 import model.user.Doctor;
 import model.user.Subject;
-import common.page.PageManager;
-import common.page.PageRowResult;
 
 public class ReservationDaoImpl implements ReservationDao {
 
@@ -298,7 +295,7 @@ public class ReservationDaoImpl implements ReservationDao {
 	
 	@Override
 	public List<Map<String, String>> selectReservationByDcodePage(int dcode, int requestPage) {
-List<Map<String, String>> rsvList = new ArrayList<>();
+		List<Map<String, String>> rsvList = new ArrayList<>();
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -324,9 +321,52 @@ List<Map<String, String>> rsvList = new ArrayList<>();
 				result.put("pcode", resultSet.getString("pcode"));
 				result.put("rsvdate", rsvDate[0]);
 				result.put("rsvtime", rsvDate[1]);
-				result.put("scode", resultSet.getString("scode"));
 				result.put("name", resultSet.getString("name"));
-				result.put("state", resultSet.getString("state"));
+				rsvList.add(result);
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+		return rsvList;
+	}
+	
+	@Override
+	public List<Map<String, String>> selectReservationByDcodeRsvdatePage(int dcode, int requestPage, String rsvdate) {
+		List<Map<String, String>> rsvList = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_SELECT_PAGE_DOCTOR_RSVDATE_SQL);
+			
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			pStatement.setInt(1, dcode);
+			pStatement.setString(2, rsvdate);
+			pStatement.setInt(3, prr.getRowStartNumber());
+			pStatement.setInt(4, prr.getRowEndNumber());
+			
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				Map<String, String> result = new HashMap<>();
+				String[] rsvDate = resultSet.getString("rsvdate").split(" ");
+				result.put("rn", resultSet.getString("rn"));
+				result.put("rcode", resultSet.getString("rcode"));
+				result.put("pcode", resultSet.getString("pcode"));
+				result.put("rsvdate", rsvDate[0]);
+				result.put("rsvtime", rsvDate[1]);
+				result.put("name", resultSet.getString("name"));
 				rsvList.add(result);
 			}
 
@@ -374,8 +414,11 @@ List<Map<String, String>> rsvList = new ArrayList<>();
 			
 			if(resultSet.next()) {
 				String[] rsvDate = resultSet.getString("rsvdate").split(" ");
+				result.put("pcode", resultSet.getString("pcode"));
 				result.put("pname", resultSet.getString("pname"));
+				result.put("dcode", resultSet.getString("dcode"));
 				result.put("tel", resultSet.getString("tel"));
+				result.put("rcode", resultSet.getString("rcode"));
 				result.put("rsvdate", rsvDate[0]);
 				result.put("rsvtime", rsvDate[1]);
 				result.put("sname", resultSet.getString("sname"));
@@ -394,6 +437,31 @@ List<Map<String, String>> rsvList = new ArrayList<>();
 		
 		return result;
 	}
+
+	@Override
+	public void deleteReservation(int rcode) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_DELETE_SQL);
+			
+			pStatement.setInt(1, rcode);
+			pStatement.executeUpdate();
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+	}
+	
 
 
 

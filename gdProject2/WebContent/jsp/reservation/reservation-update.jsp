@@ -155,26 +155,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .doctor-code {
                 display: none;
             }
-            #book {
+            .book {
                 margin-left: 0;
             }
         </style>
         <script>
             $(function () {
-            	let pcode = ${pcode};
-                let subject = "${subject}";
-                let dcode = ${dcode};
-                let dname = "${dname}";
-                let rsvdate = "${rsvdate}";
-                let rsvtime = "${rsvtime}";
-                
+            	let rcode = ${rcode};
+                let subject = "";
+                let dcode = "";
+                let rsvdate = "";
+                let rsvtime = "";
+                let dname = "";
+                // 환자 코드 임의 지정
+                let pcode = ${pcode};
                 console.log(pcode);
-                console.log(subject);
-                console.log(dcode);
-                console.log(dname);
-                console.log(rsvdate);
-                console.log(rsvtime);
-                
 
                 function XMLToString(oXML) {
                     //code for IE
@@ -244,7 +239,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 .children()
                                 .each(function (idx, item) {
                                     $(item).remove();
-                            });
+                                });
 
                             var url = "rsv-time";
                             // 스케줄 ajax
@@ -490,7 +485,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 });
 
                 // 예약하기 버튼 클릭
-                $(document).on("click", "#book", function () {
+                $(document).on("click", ".card-box.book", function () {
                     if (subject == "") {
                         alert("진료과를 선택해주세요.");
                     } else if (dcode == "") {
@@ -531,25 +526,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         }
                     }
                 });
-                
-                if(subject != ""){
-                	$(".subject").each(function(idx, item){
-                		var text = $(this).text();
-                		if(subject == text){
-                			$(this).trigger("click");
-                		}
-                	});
-                }
-                console.log(dname);
-                if(dname != ""){
-                	$(".card-box.doctor .flex").each(function(idx, item){
-                		var text = $(this);
-                		console.log(text);
-                		//if(subject == text){
-                			//$(this).trigger("click");
-                		//}
-                	});
-                }
             });
         </script>
     </head>
@@ -588,16 +564,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         </div>
                     </div>
                 </div>
-                <c:if test="${rcode == 0}">
-                	<button id="book" class="card-box book">예약하기</button>
-                </c:if>
-                <c:if test="${rcode != 0}">
-                	<button class="card-box book">수정하기</button>
-                	<button class="card-box book">취소하기</button>
-                </c:if>
-                
+                <button class="card-box book">예약하기</button>
             </div>
-        </div>
+        </div> 
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>
 </html>

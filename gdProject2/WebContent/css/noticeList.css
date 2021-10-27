@@ -1,11 +1,10 @@
 @charset "UTF-8";
 #main {
-    position: relative;
 	margin: 0 auto;
 	max-width: 1200px;
 }
 
-h2{
+#h2{
     display: inline-block;
 }
 
@@ -13,7 +12,7 @@ h2{
     margin-top: 50px;
 }
 
-table{
+.table{
     width: 1015px;
     height: auto;
     text-align: center;
@@ -22,7 +21,7 @@ table{
     margin-top: 10px;
 }
 
-th{
+.th{
     background-color: rgb(224, 224, 224) !important;
     border-bottom: 1px solid rgb(192, 192, 192) !important;
 }
@@ -52,6 +51,16 @@ th,td{
 }
 
 #info{
-    margin-left: 970px;
+    position: absolute;
+    left: 1280px;
     font-size: 0.9rem;
+}
+
+#write{
+    width: 100px;
+    height: 30px;
+    color: white;
+    background-color:rgb(41, 128, 185);
+    border: none;
+    border-radius: 3px;
 }

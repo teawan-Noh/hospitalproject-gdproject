@@ -543,7 +543,7 @@ select * from approval;
 select * from rest;
 update rest set restdate = sysdate + 3 where rcode=2;
 select to_char(restdate, 'yyyy-mm-dd') restdate, day from rest r join approval a on r.acode = a.acode where a.dcode = 4  and approved='½ÂÀÎ';
-update approval set approved='½ÂÀÎ'
+update rest set approved='½ÂÀÎ'
 select * from reservation where dcode = 1 and to_char(rsvdate, 'yyyy-mm-dd') = '2021-10-20' and state = '¿¹¾à';
 select * from reservation where rcode = 11;
 select * from reservation;
@@ -555,11 +555,35 @@ insert into reservation values(rsv_seq.nextval, 2, 2, to_date('2021-10-26 17:45'
 delete from reservation where rcode <= 25 and 12 <= rcode;
 
 -- ÆäÀÌÁö Ã³¸®
-select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.rsvdate between add_months(sysdate, -9999) and sysdate and r.pcode = 2 order by rcode desc) rsvs) result;
+select * from (select rownum as rn , rsvs.* from (select r.rcode, r.pcode, r.rsvdate, d.scode, s.name from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode where r.pcode = 2 order by rcode desc) rsvs) result;
 
 
 select memoid, name, age from (select rownum as rn, memos.* from (select * from memo order by memoid desc) memos) where rn between 14 and 16
 
 
 SELECT p.name pname, p.tel, r.rsvdate, d.name dname, s.name sname FROM patient p INNER JOIN reservation r ON p.pcode = r.pcode INNER JOIN doctor d ON r.dcode = d.dcode INNER JOIN subject s ON d.scode = s.scode WHERE r.rcode = 2;
+
+select count(*) as cnt from reservation where dcode = 1;
+
+select * from (select rownum as rn, rsvs.* from (select r.rcode, to_char(r.rsvdate, 'yyyy-mm-dd HH24:MI') rsvdate, r.pcode, p.name from reservation r inner join patient p on r.pcode = p.pcode where r.dcode = 1 and to_char(rsvdate, 'yyyy-mm-dd') = '2021-10-28' order by rsvdate desc) rsvs) result where rn between 1 and 10
+select * from approval;
+select * from rest
+select * from reservation
+merge into reservation using dual on (rcode = 10) when matched then update set r.state = 'Ãë¼Ò' when not matched then update reservation set r.state = '¿¹¾à';
+
+select * from approval
+
+alter table approval add restdate date;
+alter table approval add day varchar(10);
+
+drop table rest;
+
+insert into approval values (1, 5, sysdate, '½ÂÀÎ', 'º´°¡', null, 'FRI');
+insert into approval values (2, 4, sysdate, '´ë±â', 'ÈŞ°¡', to_date('2021-03-12','yyyy-mm-dd'), null);
+insert into approval values (3, 3, sysdate, '´ë±â', 'ÈŞ°¡', null, 'WED');
+insert into approval values (4, 2, sysdate, '´ë±â', 'ÈŞ°¡', to_date('2021-03-15','yyyy-mm-dd'), null);
+insert into approval values (5, 1, sysdate, '°ÅÀı', '²Òº´', null, 'MON');
+
+alter table approval rename to rest;
+alter table rest rename column acode to rcode;
 

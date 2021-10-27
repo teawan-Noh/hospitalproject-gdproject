@@ -49,12 +49,53 @@ select id, pw from manager where id =? and pw =?
 select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode where n.title like ? or n.content like ? order by n.ncode desc
 
 insert into notice values (ncode.nextval, ?, ?, ?, sysdate, 0);
-insert into notice values (ncode.nextval, 1,'공지사항 제목입니다.','공지사항 내용입니다.',sysdate,0);
+
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다1','공지사항 내용입니다1',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다2','공지사항 내용입니다2',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다3','공지사항 내용입니다3',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다4','공지사항 내용입니다4',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다5','공지사항 내용입니다5',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다6','공지사항 내용입니다6',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다7','공지사항 내용입니다7',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다8','공지사항 내용입니다8',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다9','공지사항 내용입니다9',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다10','공지사항 내용입니다10',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다11','공지사항 내용입니다11',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다12','공지사항 내용입니다12',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다13','공지사항 내용입니다13',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다14','공지사항 내용입니다14',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다15','공지사항 내용입니다15',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다16','공지사항 내용입니다16',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다17','공지사항 내용입니다17',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다18','공지사항 내용입니다18',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다19','공지사항 내용입니다19',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다20','공지사항 내용입니다20',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다21','공지사항 내용입니다21',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다22','공지사항 내용입니다22',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다23','공지사항 내용입니다23',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다24','공지사항 내용입니다24',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다25','공지사항 내용입니다25',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다26','공지사항 내용입니다26',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다27','공지사항 내용입니다27',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다28','공지사항 내용입니다28',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다29','공지사항 내용입니다29',sysdate,0);
+insert into notice values(ncode.nextval,1,'공지사항 제목입니다30','공지사항 내용입니다30',sysdate,0);
+
 
 delete from notice;
 select * from notice;
+select count(*) as cnt from notice
 
+select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
+select * from manager;
 drop sequence ncode;
+
+select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc;
+
+select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
+
+select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode where n.title like '%2%' or n.content like '%2%' order by n.ncode desc
+
 
 CREATE SEQUENCE ncode;
 
@@ -65,7 +106,7 @@ insert into files values(fcode.nextval,?, to_date(?, 'YYYY-mm-dd'), ?,?,?)
 
 create sequence fcode;
 
-select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = ?
+select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
 
 delete from notice where ncode = ?
 
@@ -89,3 +130,26 @@ delete from notice;
 update patient set pw = '12345',nickname = '깐따삐야',gender='여', postcode = 60000, address = '서울', address2 = '강남', tel = '010-2222-2222', email = 'sample@email.com' where pcode = 8;
 
 select count(*) from patient where id = 'id';
+
+ALTER TABLE approval ADD requestdate DATE;
+ALTER TABLE approval DROP COLUMN requestdate;
+
+alter table approval add restdate date;
+alter table approval add day varchar(10);
+
+drop table rest;
+
+insert into approval values (1, 5, sysdate, '승인', '병가', null, 'FRI');
+insert into approval values (2, 4, sysdate, '대기', '휴가', to_date('2021-03-12','yyyy-mm-dd'), null);
+insert into approval values (3, 3, sysdate, '대기', '휴가', null, 'WED');
+insert into approval values (4, 2, sysdate, '대기', '휴가', to_date('2021-03-15','yyyy-mm-dd'), null);
+insert into approval values (5, 1, sysdate, '거절', '꾀병', null, 'MON');
+
+alter table approval rename to rest;
+alter table rest rename column acode to rcode;
+
+
+select * from 
+(select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt 
+from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc)
+where rn between ? and ?;

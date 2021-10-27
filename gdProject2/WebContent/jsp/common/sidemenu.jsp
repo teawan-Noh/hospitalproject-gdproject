@@ -86,7 +86,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	            <ul id="side-ul">
 	                <li class="side-list">진료 스케줄 조회</li>
 	                <li class="side-list">휴진 신청</li>
-	                <li class="side-list">예약정보 조회</li>
+	                <li class="side-list"><a href="reservation-doctor-list?reqPage=1">예약정보 조회</a></li>
 	            </ul>
             </c:if>
             <c:if test="${side == 'patient'}">

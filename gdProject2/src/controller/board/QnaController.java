@@ -150,27 +150,21 @@ public class QnaController extends HttpServlet{
 			dispatcherUrl = "jsp/board/qnaInput.jsp";
 		}
 		else if(action.equals("qna_save")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_search")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
 		else if(action.equals("qna_detail")) {
-			
 			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		else if(action.equals("qna_modify")) {
-			
 			dispatcherUrl = "jsp/board/qnaModify.jsp";
 		}
 		else if(action.equals("qna_update")) {
-			
 			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		else if(action.equals("qna_delete")) {
-			
 			dispatcherUrl = "jsp/board/qnaList.jsp"; 
 		}
 		
