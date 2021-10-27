@@ -153,3 +153,6 @@ select * from
 (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt 
 from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc)
 where rn between ? and ?;
+
+alter table rest rename column approvedate to requestdate;
+
