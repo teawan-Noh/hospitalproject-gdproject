@@ -26,7 +26,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             a {
                 text-decoration: none !important;
             }
-
+			.home-img{
+            	background-image: url("img/home.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+            }
+            .fmenu{
+            	padding-left: 0px;
+            }
+            .fmenu li:not(.fmenu li:first-child)::before{
+            	content: ">";
+            }
             .container-box {
                 margin: 0 auto;
                 width: 100%;
@@ -158,7 +171,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
-                <ul>
+                <ul class="fmenu">
+                	<li><div class="home-img"></div></li>
                     <li>예약</li>
                     <li>예약조회</li>
                 </ul>

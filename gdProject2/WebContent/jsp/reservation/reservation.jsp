@@ -33,11 +33,22 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
         <style>
 
-        	.fmenu li:before{
-        		
-        	}
             a {
                 text-decoration: none !important;
+            }
+            .home-img{
+            	background-image: url("img/home.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+            }
+            .fmenu{
+            	padding-left: 0px;
+            }
+            .fmenu li:not(.fmenu li:first-child)::before{
+            	content: ">";
             }
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
@@ -625,6 +636,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </jsp:include>
             <div class="content">
                 <ul class="fmenu">
+                	<li><div class="home-img"></div></li>
                     <li>예약</li>
                     <li>예약하기</li>
                 </ul>
