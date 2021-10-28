@@ -234,17 +234,23 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                     locale: "ko", // 한국어 설정
                     eventAdd: function (obj) {
-                        // 이벤트가 추가되면 발생하는 이벤트
                         //console.log(obj);
                     },
                     eventChange: function (obj) {
                         // 이벤트가 수정되면 발생하는 이벤트
                         //console.log(obj);
+                        
                     },
                     eventRemove: function (obj) {
                         // 이벤트가 삭제되면 발생하는 이벤트
                         //console.log(obj);
                     },
+                    eventDidMount: function(arg){
+                    	var el = $(arg.el).closest("td.fc-day");
+                    	$(el).addClass("rest");
+                    	console.log(el);
+                    },
+                    
                     // 달력 날짜를 클릭할 때
                     dateClick: function (date) {
                     	console.log(date);
@@ -427,6 +433,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     calendar.addEvent({
                         title: "주말",
                         daysOfWeek: ["0", "6"],
+                        classNames: ["rest-children"],
                     });
 
                     var doctor = $(this).parent(".card-box.doctor");
@@ -441,6 +448,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $(".card-box.doctor").each(function (idx, item) {
                             $(item).removeClass("active");
                         });
+                        
                         $(".rest").each(function () {
                             $(this)
                                 .children(".rest-children")
@@ -490,10 +498,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             classNames: ["rest-children"],
                                         });
                                     }
-                                    $(".rest-children")
-                                        .closest("td.fc-day")
-                                        .addClass("rest");
+
+                                    
                                 });
+
+	                                
                             }
                         });
                         if(setting){
