@@ -94,7 +94,7 @@
     							<fmt:parseDate value="${patient.birth}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
     							<td>
-    								<a href="#?pcode=${patient.pcode}"><button class="button">예약조회</button></a>
+    								<a href="reservation-detail?rcode=${patient.rcode}"><button class="button">예약조회</button></a>
     							</td>
     						</tr>
     					</c:forEach>

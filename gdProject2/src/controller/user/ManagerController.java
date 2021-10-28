@@ -90,7 +90,7 @@ public class ManagerController extends HttpServlet{
 		else if(action.equals("mg_patient_list")) {
 			
 			ManagerDao dao = new ManagerDaoImpl();
-			List<Patient> patientList = dao.selectPatientAll();
+			List<HashMap<String, String>> patientList = dao.selectPatientAll();
 			req.setAttribute("patientList", patientList);
 		}
 		else if(action.equals("mg_patient_search")) {
@@ -104,7 +104,7 @@ public class ManagerController extends HttpServlet{
 				req.setAttribute("patientList", patientList);
 			}
 			else if(name == null) {
-				List<Patient> patientList = dao.selectPatientAll();
+				List<HashMap<String, String>> patientList = dao.selectPatientAll();
 				req.setAttribute("patientList", patientList);
 			}
 			
