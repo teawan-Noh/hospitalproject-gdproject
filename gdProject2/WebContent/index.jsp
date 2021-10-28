@@ -14,22 +14,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     </head>
 	<body>
-	<c:if test="${pcode == null && dcode == null && mcode == null}">
-		<a href="patient_input">회원가입</a>
-		<a href="patient_login_input">환자 로그인</a>
-		<a href="doctor_login_input">의사 로그인</a>
-		<a href="manager_login_input">관리자 로그인</a>
-	</c:if>
-
-	<c:if test="${pcode != null || dcode != null || mcode != null}">
-		<a href="logout">로그아웃</a>
-	</c:if>
-	<c:if test="${pcode != null}">
-		<a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a>
-	</c:if>
-	<c:if test = "${dcode != null}">
-		<a href = "mypage?dcode=${dcode}">마이페이지</a>
-	</c:if>
         <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">

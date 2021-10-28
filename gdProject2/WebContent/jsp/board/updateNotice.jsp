@@ -59,8 +59,8 @@ $(function(){
             </section>
             <section id="form" class="form-group">
             <c:forEach var="detail" items="${detail}">
-            	<form action="notice_update" method="post" id="form">
-            		
+            	<form action="notice_update" method="post" id="form" enctype="multipart/form-data">
+            		<label>파일첨부 : <input type="file" name="filename"/></label>
             			<div id="titleDiv">
                         <label for="title" class="form-label smallTitle">제목</label>
                         <input type="text" name="title" id="title" class="form-control" value="${detail.title}">
@@ -75,12 +75,7 @@ $(function(){
                 </form>
                 </c:forEach>
             </section>
-            <section id="fileSection">
-            	<form action="singleUpload" method="post" enctype="multipart/form-data">
-               		 첨부파일 : <input type="file" name="filename"/>
-                	<input type="submit" value="업로드" id="upload"/>
-           		</form>
-            </section>
+            
         </div>
     </div>
 </body>

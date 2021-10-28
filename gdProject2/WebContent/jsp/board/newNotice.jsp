@@ -41,14 +41,14 @@ $(function(){
 <title>공지사항 등록</title>
 </head>
 <body>
-
 	<div id="main">
         <div class="container">
             <section id="bigTitle">
                 <h2>공지사항 등록</h2>
             </section>
             <section id="form" class="form-group">
-            	<form action="notice_save" method="post" id="form">
+            	<form action="notice_save" method="post" id="form" enctype="multipart/form-data">
+            		<label>파일첨부 : <input type="file" name="filename" /></label>
             			<div id="titleDiv">
                         <label for="title" class="form-label smallTitle">제목</label>
                         <input type="text" name="title" id="title" class="form-control" placeholder="제목을 입력하세요.">
@@ -61,13 +61,9 @@ $(function(){
                     <button type="button" id="cancle" onclick="location.href='notice_list?reqPage=1'">취소</button>
                 </form>
             </section>
-            <section id="fileSection">
-            	<form action="singleUpload" method="post" enctype="multipart/form-data">
-               		 첨부파일 : <input type="file" name="filename"/>
-                	<input type="submit" value="업로드" id="upload"/>
-           		</form>
-            </section>
+            
         </div>
+        
     </div>
 </body>
 </html>

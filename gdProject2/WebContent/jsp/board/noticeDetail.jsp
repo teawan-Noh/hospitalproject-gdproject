@@ -35,16 +35,7 @@ $(function(){
 <body>
     <h2>게시글 보기</h2>
     <div id="main">
-    
-    	<c:if test="${mcode==null}">
-    		<p>첨부파일</p>
-    	</c:if>
-		<c:if test="${mcode!=null}">
-        <form action="singleUpload" method="post" enctype="multipart/form-data">
-			파일 : <input type="file" name="filename"/><br/>
-			<input type="submit" value="업로드"/>
-		</form>
-		</c:if>
+    <p>첨부파일 들어갈 자리</p>
         <table class="table">
             <tbody>
             <c:forEach var="detail" items="${detail}">

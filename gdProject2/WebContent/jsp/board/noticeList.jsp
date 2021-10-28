@@ -17,13 +17,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 
 <body>
+
 	<div class="container">
+	<header><jsp:include page="../common/header.jsp"></jsp:include></header>
         <div id="main">
         	 <section id="searchSection">
             	<form action="notice_search" method="post" id="form">
                 	<h2 id="h2">공지사항</h2>
-                	<input type="search" id="search" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." />
-                	<button type="submit" id="searchBtn" name="searchBtn">검색</button>
+                	<input type="search" id="nsearch" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." />
+                	<button type="submit" id="nsearchBtn" name="searchBtn">검색</button>
            		</form>
 			 </section>
 
@@ -76,6 +78,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			</ul>
 			</section>
 		</div>
+		<footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
 	</div>
 </body>
 
