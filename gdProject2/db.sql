@@ -587,3 +587,10 @@ insert into approval values (5, 1, sysdate, '°ÅÀý', '²Òº´', null, 'MON');
 alter table approval rename to rest;
 alter table rest rename column acode to rcode;
 
+alter table rest rename column approvedate to requestdate;
+
+select * from manager;
+
+
+
+

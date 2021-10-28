@@ -17,9 +17,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 
 <body>
-    <div class="container">
-    <header><jsp:include page="../common/header.jsp"></jsp:include></header>
-	<div class="container">
+    <jsp:include page="../common/header.jsp"></jsp:include>
+	<div class="flex container-box">
         <div id="main">
             <form action="#" method="post" id="form">
                 <h2 id="h2">공지사항</h2>
@@ -76,8 +75,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupEndNumber+1}">다음</a></li>
 				</c:if>
 			</ul>
-		</div>
-	</div>
 </body>
 
 </html>

@@ -32,8 +32,23 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
         <style>
+
             a {
                 text-decoration: none !important;
+            }
+            .home-img{
+            	background-image: url("img/home.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+            }
+            .fmenu{
+            	padding-left: 0px;
+            }
+            .fmenu li:not(.fmenu li:first-child)::before{
+            	content: ">";
             }
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
@@ -95,6 +110,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 padding: 10px 40px;
                 margin: 10px;
                 color: #468c91;
+            }
+            .card-box.subject{
+            	width: 45%;
             }
 
             .card-box.doctor {
@@ -158,22 +176,26 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             #book {
                 margin-left: 0;
             }
+            button.card-box{
+            	display: inline-block;
+            	margin-left: 0;
+            }
         </style>
         <script>
             $(function () {
+				let setting = ${rcode} != 0 ? true : false;
             	let pcode = ${pcode};
                 let subject = "${subject}";
-                let dcode = ${dcode};
+                let dcode = "${dcode}";
                 let dname = "${dname}";
-                let rsvdate = "${rsvdate}";
-                let rsvtime = "${rsvtime}";
+
                 
+                console.log(setting);
                 console.log(pcode);
                 console.log(subject);
                 console.log(dcode);
                 console.log(dname);
-                console.log(rsvdate);
-                console.log(rsvtime);
+
                 
 
                 function XMLToString(oXML) {
@@ -225,6 +247,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     },
                     // 달력 날짜를 클릭할 때
                     dateClick: function (date) {
+                    	console.log(date);
                         var view = date.dayEl;
                         if (
                             !$(view).hasClass("fc-day-future") ||
@@ -328,6 +351,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 calendar.render();
                 $("#calendar-container").hide();
 
+                // 진료 과목 선택시
                 $(".subject").click(function () {
                     $(".doctors")
                         .children()
@@ -352,12 +376,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             url,
                             { subject: $(this).text() },
                             function (data) {
-                                subject = $(data).find("subject").text();
-                                dcode = "";
-                                dname = "";
-                                rsvdate = "";
-                                rsvtime = "";
-                                $(data)
+                            	subject = $(data).find("subject").text();
+                            	$(data)
                                     .find("doctor")
                                     .each(function (idx, item) {
                                         $(".doctors").append(
@@ -373,6 +393,27 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                                 "</li>"
                                         );
                                     });
+                                
+                                if(dcode != "" && dname != "" && setting){
+                                	$(".card-box.doctor .flex").each(function(idx, item){
+                                		var name = $(this).find(".doctor-name").text();
+                                		var code = $(this).find(".doctor-code").text();
+                                		if(dname == name && dcode == code){
+                                			$(this).trigger("click");
+                                		}
+                                		
+                                	})
+                                }
+                                else if(dcode == "" && dname == "" && setting){
+                                	setting = false;
+                                }
+                                else{
+	                                dcode = "";
+	                                dname = "";
+	                                rsvdate = "";
+	                                rsvtime = "";
+                                }
+                                
                             }
                         );
                     }
@@ -426,8 +467,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             .children(".doctor-profile")
                             .children(".doctor-name")
                             .text();
-                        rsvdate = "";
-                        rsvtime = "";
+
                         // Ajax
                         $.get(url, { dcode: dcode }, function (data) {
                             var schedule = $(data).find("schedule");
@@ -456,6 +496,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                 });
                             }
                         });
+                        if(setting){
+                        	setting = false;
+                        }
+                        else{
+	                        rsvdate = "";
+	                        rsvtime = "";
+                        }
                     }
                 });
 
@@ -526,7 +573,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     if (data != 0) {
                                         location.href = "index.jsp";
                                     }
-                                }
+                                } 
                             );
                         }
                     }
@@ -540,16 +587,44 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 		}
                 	});
                 }
-                console.log(dname);
-                if(dname != ""){
-                	$(".card-box.doctor .flex").each(function(idx, item){
-                		var text = $(this);
-                		console.log(text);
-                		//if(subject == text){
-                			//$(this).trigger("click");
-                		//}
-                	});
-                }
+                
+                $(document).on("click", ".card-box.cancel", function(){
+                	$("#form-cancel").submit();
+                })
+                $(document).on("click", ".card-box.update", function(){
+                	if (subject == "") {
+                        alert("진료과를 선택해주세요.");
+                    } else if (dcode == "") {
+                        alert("담당 의사를 선택해주세요.");
+                    } else if (rsvdate == "") {
+                        alert("예약 날짜를 선택해주세요.");
+                    } else if (rsvtime == "") {
+                        alert("예약 시간을 선택해주세요.");
+                    } else {
+                        if (
+                            confirm(
+                                "진료과 : " +
+                                    subject +
+                                    "\n담당 의사 : " +
+                                    dname +
+                                    "\n예약 시간 : " +
+                                    rsvdate +
+                                    " " +
+                                    rsvtime +
+                                    "\n정말 예약하시겠습니까?"
+                            ) == true
+                        ) {
+                            alert("예약이 완료되었습니다.");
+                            var url = "reservation-update";
+                           	$("input[name=pcode]").val(pcode);
+                           	$("input[name=rcode]").val(${rcode});
+                           	$("input[name=dcode]").val(dcode);
+                           	$("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
+                           	$("#form-update").submit();
+                        }
+                    }
+                })
+                
             });
         </script>
     </head>
@@ -560,7 +635,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
-                <ul>
+                <ul class="fmenu">
+                	<li><div class="home-img"></div></li>
                     <li>예약</li>
                     <li>예약하기</li>
                 </ul>
@@ -592,10 +668,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<button id="book" class="card-box book">예약하기</button>
                 </c:if>
                 <c:if test="${rcode != 0}">
-                	<button class="card-box book">수정하기</button>
-                	<button class="card-box book">취소하기</button>
+                	<button class="card-box update">수정하기</button>
+                	<button class="card-box cancel">취소하기</button>
                 </c:if>
-                
+                <form style="display: none;" id="form-cancel" action="reservation-detail" method="post">
+                	<input type="hidden" name="rcode" value="${rcode}"/>
+                </form>
+                <form style="display: none;" id="form-update" action="reservation-update" method="post">
+                	<input type="hidden" name="pcode" value=""/>
+                	<input type="hidden" name="rcode" value=""/>
+                	<input type="hidden" name="dcode" value=""/>
+                	<input type="hidden" name="rsvdate" value=""/>
+                </form>
             </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>

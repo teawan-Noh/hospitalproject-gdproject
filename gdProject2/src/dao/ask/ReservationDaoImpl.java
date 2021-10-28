@@ -461,6 +461,33 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		
 	}
+
+	@Override
+	public void updateReservation(int rcode, int pcode, int dcode, String rsvdate) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_UPDATE_SQL);
+			
+			pStatement.setInt(1, pcode);
+			pStatement.setInt(2, dcode);
+			pStatement.setString(3, rsvdate);
+			pStatement.setInt(4, rcode);
+			pStatement.executeUpdate();
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+	}
 	
 
 

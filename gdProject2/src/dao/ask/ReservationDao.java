@@ -25,5 +25,7 @@ public interface ReservationDao {
 	
 	void deleteReservation(int rcode);
 	
+	void updateReservation(int rcode, int pcode, int dcode, String rsvdate);
+	
 	
 }
