@@ -61,6 +61,7 @@ $(function(){
 					$("#idChk").css({"color":"blue"});
 				}else{
 					$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
+					$("#idChk").css({"color":"tomato"});
 					return false;
 				}
 			});
@@ -78,16 +79,6 @@ $(function(){
 		var regulPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
 		var regResult = regulPw.test(pw_value);
 		
-		if(!regResult){
-			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
-			$("#pwChkSpan").html("");
-			$("input[name='pw']").val('');
-			$("input[name='pwChk']").val('');
-			$("input[name='pw']").focus();
-			
-			
-		}
-		
 		//일치여부
 		if(pw_value != pwChk_value){
 			$("#pwChkSpan").html("일치하지 않습니다.");
@@ -100,6 +91,19 @@ $(function(){
 			$("#pwChkSpan").html("일치합니다.");
 			$("#pwChkSpan").css({"color":"blue"});
 		}
+		
+		if(!regResult){
+			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
+			$("#pwChkSpan").html("다시 입력해주세요.");
+			$("#pwChkSpan").css({"color":"tomato"});
+			$("input[name='pw']").val('');
+			$("input[name='pwChk']").val('');
+			$("input[name='pw']").focus();
+			
+			
+		}
+		
+		
 		
 		if(!pw_value){
 			alert("비밀번호를 입력해주세요.")
@@ -327,9 +331,12 @@ $(function(){
                         <input type="text" class="form-control" id="tel" name="tel" placeholder="예시) 010-0000-0000" >
 
                         <span id="radios">
-                            <input type="radio" name="gender" class="radio" id="male" value="남">남자
-                            <input type="radio" name="gender" class="radio" id="female" value="여">여자
-                            <input type="radio" name="gender" class="radio" id="other" value="기타">기타
+                            <input type="radio" name="gender" class="radio" id="male" value="남">
+                            <label for="male" class="form-label">남자</label>
+                            <input type="radio" name="gender" class="radio" id="female" value="여">
+                            <label for="female" class="form-label">여자</label>
+                            <input type="radio" name="gender" class="radio" id="other" value="기타">
+							<label for="other" class="form-label">기타</label>
                         </span>
                         
                     </div>
