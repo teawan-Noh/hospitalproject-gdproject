@@ -30,14 +30,8 @@
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
-       	#submitbtn {
-       		width: 75px;
+       	.submitbtn {
+       		width: 90px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
        		color: white;
@@ -94,7 +88,14 @@
     							<fmt:parseDate value="${patient.birth}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
     							<td>
-    								<a href="#?pcode=${patient.pcode}"><button class="button">예약조회</button></a>
+    							<c:set var="val" value="${patient.rcode}" />
+
+    								<c:if test="${val == 0}">
+    									<a href="reservation?pcode=${patient.pcode}"><button class="submitbtn">예약하기</button></a>
+    								</c:if>
+    								<c:if test="${val != 0}">
+	    								<a href="reservation-list?pcode=${patient.pcode}"><button class="submitbtn" style="background-color:rgb(41, 128, 185);">예약수정</button></a>
+    								</c:if>
     							</td>
     						</tr>
     					</c:forEach>

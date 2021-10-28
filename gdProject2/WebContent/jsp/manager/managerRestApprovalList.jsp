@@ -65,7 +65,7 @@
         		<h2>승인관리</h2>
         	</div>
     		<div class = "content_header">
-    			<form method="post" action="mg_approval_search">
+    			<form method="post" action="mg_rest_search">
     				<input type="text" name="search" placeholder="이름으로 검색" />
     				<button type = "submit" class="submitbtn">검색</button>
     			</form>
@@ -81,13 +81,13 @@
     					</tr>
     				</thead>
     				<tbody>
-    					<c:forEach var="approval" items="${approvalList}">
+    					<c:forEach var="rest" items="${restList}">
     						<tr>
-    							<td>${approval.rcode}</td>
-    							<td>${approval.dname}</td>
-    							<fmt:parseDate value="${approval.approvedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+    							<td>${rest.rcode}</td>
+    							<td>${rest.dname}</td>
+    							<fmt:parseDate value="${rest.requestdate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
-    							<td><a href="mg_approval_detail?acode=${approval.rcode}">${approval.approved}</a></td>
+    							<td><a href="mg_rest_detail?rcode=${rest.rcode}">${rest.approved}</a></td>
     						</tr>
     					</c:forEach>
     				</tbody>

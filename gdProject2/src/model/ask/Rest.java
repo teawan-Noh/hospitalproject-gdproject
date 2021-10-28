@@ -12,11 +12,12 @@ public class Rest {
 	public Rest() {}
 
 	public Rest(int dcode, String reason, String restdate, String day) {
+
 		super();
-		this.dcode = dcode;
-		this.reason = reason;
 		this.restdate = restdate;
 		this.day = day;
+		this.dcode = dcode;
+		this.reason = reason;
 	}
 
 	public int getRcode() {
@@ -80,6 +81,7 @@ public class Rest {
 		return "Rest [rcode=" + rcode + ", dcode=" + dcode + ", requestdate=" + requestdate + ", approved=" + approved
 				+ ", reason=" + reason + ", restdate=" + restdate + ", day=" + day + "]";
 	}
+	
 	
 	
 }

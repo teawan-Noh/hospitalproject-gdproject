@@ -36,7 +36,8 @@ public class QnaController extends HttpServlet{
 		String uri = req.getRequestURI();
 		int lastIndex = uri.lastIndexOf("/");
 		String action = uri.substring(lastIndex+1);
-		System.out.println(action);
+		
+		req.setAttribute("side", "communication");
 		
 		if(action.equals("qna_list")) {
 			

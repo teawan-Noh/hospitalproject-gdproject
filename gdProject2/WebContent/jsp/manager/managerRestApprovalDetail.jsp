@@ -79,32 +79,34 @@
 					<tbody>
 						<tr>
 		   					<td>작성자 </td>
-	 						<td>${approvaldetail.dname}</td>
+	 						<td>${restdetail.dname}</td>
 						</tr>
 						<tr>
-		   					<td>작성일</td>
+		   					<td>요청일</td>
 		   					<td>
-		   						<fmt:parseDate value="${approvaldetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+		   						<fmt:parseDate value="${restdetail.requestdate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			    				<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
 		   					</td>
 						</tr>
 						<tr>
-		 					<td>휴진기간</td>
+		 					<td>휴진일</td>
 		   					<td>
-		   						<fmt:parseDate value="${qnadetail.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
-			    				<fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/>
+		   						<fmt:parseDate value="${restdetail.restdate}" var="dateFmt2" pattern="yyyy-MM-dd HH:mm:ss"/>
+			    				<fmt:formatDate value="${dateFmt2}"  pattern="yyyy-MM-dd"/>
 		   					</td>
 						</tr>
 						<tr>
 		   					<td>사유 </td>
-	 						<td>${qnadetail.nickname}</td>
+	 						<td>${restdetail.reason}</td>
 						</tr>
 					</tbody>	
 	   			</table>
     		</div>
     		<div class="approve_reject_button">
-    			<button type = "submit" id="submitbtn">승인</button>
-    			<a href="qna_delete?qno=${qnadetail.qno}">
+    			<a href="mg_rest_approve?rcode=${restdetail.rcode}">
+    				<button type = "submit" id="submitbtn">승인</button>
+		   		</a>
+    			<a href="mg_rest_reject?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">거절</button>
 		   		</a>
 	    	</div>

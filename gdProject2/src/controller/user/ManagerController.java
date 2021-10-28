@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.ask.ReservationDao;
+import dao.ask.ReservationDaoImpl;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Patient;
@@ -22,10 +26,10 @@ import common.page.PageDaoImpl;
 import common.page.PageGroupResult;
 import common.page.PageManager;
 
-//, "mg_approval_detail"
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
-					"/mg_patient_list", "/mg_patient_search", "/mg_approval_list", "/mg_approval_search", "/mg_approval_detail"})
+					"/mg_patient_list", "/mg_patient_search", "/mg_rest_list", "/mg_rest_search", "/mg_rest_detail",
+					"/mg_rest_approve", "/mg_rest_reject", "/ms_reservation_list"})
 public class ManagerController extends HttpServlet{
 
 	@Override
@@ -64,14 +68,14 @@ public class ManagerController extends HttpServlet{
 			if(subjectcode.equals("list")) {
 				int scode = 0;
 				
-				List<HashMap> doctorList = dao.selectDoctorBySubject(scode);
+				List<HashMap<String, String>> doctorList = dao.selectDoctorBySubject(scode);
 				req.setAttribute("doctorList", doctorList);
 			}
 			else {
 				req.setAttribute("subject_val", subjectcode);
 				int scode = Integer.parseInt(subjectcode);
 				
-				List<HashMap> doctorList = dao.selectDoctorBySubject(scode);
+				List<HashMap<String, String>> doctorList = dao.selectDoctorBySubject(scode);
 				req.setAttribute("doctorList", doctorList);
 			}
 		}
@@ -90,7 +94,8 @@ public class ManagerController extends HttpServlet{
 		else if(action.equals("mg_patient_list")) {
 			
 			ManagerDao dao = new ManagerDaoImpl();
-			List<Patient> patientList = dao.selectPatientAll();
+			List<HashMap<String, String>> patientList = dao.selectPatientAll();
+			System.out.println(patientList);
 			req.setAttribute("patientList", patientList);
 		}
 		else if(action.equals("mg_patient_search")) {
@@ -104,42 +109,61 @@ public class ManagerController extends HttpServlet{
 				req.setAttribute("patientList", patientList);
 			}
 			else if(name == null) {
-				List<Patient> patientList = dao.selectPatientAll();
+				List<HashMap<String, String>> patientList = dao.selectPatientAll();
 				req.setAttribute("patientList", patientList);
 			}
 			
 		}
-		else if(action.equals("mg_approval_list")) {
+		else if(action.equals("mg_rest_list")) {
 			
 			ManagerDao dao = new ManagerDaoImpl();
 			
-			List<HashMap> approvalList = dao.selectApprovalAll();
+			List<HashMap<String, String>> restList = dao.selectRestAll();
 			
-			req.setAttribute("approvalList", approvalList);
+			req.setAttribute("restList", restList);
 		}
-		else if(action.equals("mg_approval_search")) {
+		else if(action.equals("mg_rest_search")) {
 			
 			String name = req.getParameter("search");
 			
 			ManagerDao dao = new ManagerDaoImpl(); 
 			
 			if(name !=null) {
-				List<HashMap> approvalList = dao.selectApprovalByName(name);
-				req.setAttribute("approvalList", approvalList);
+				List<HashMap<String, String>> restList = dao.selectRestByName(name);
+				req.setAttribute("restList", restList);
 			}
 			else if(name == null) {
-				List<HashMap> approvalList = dao.selectApprovalAll();
-				req.setAttribute("approvalList", approvalList);
+				List<HashMap<String, String>> restList = dao.selectRestAll();
+				req.setAttribute("restList", restList);
 			}
 		}
-		else if(action.equals("mg_approval_detail")) {
+		else if(action.equals("mg_rest_detail")) {
 			
 			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
-			
 			ManagerDao dao = new ManagerDaoImpl(); 
 			
-			HashMap approvalDetail = dao.selectApprovalByRcode(rcode);
-			req.setAttribute("approvaldetail", approvalDetail);
+			HashMap<String, String> restDetail = dao.selectRestByRcode(rcode);
+			req.setAttribute("restdetail", restDetail);
+		}
+		else if(action.equals("mg_rest_approve")) {
+			
+			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			ManagerDao dao = new ManagerDaoImpl(); 
+			dao.updateRestApprove(rcode);
+			
+			List<HashMap<String, String>> restList = dao.selectRestAll();
+			
+			req.setAttribute("restList", restList);
+		}
+		else if(action.equals("mg_rest_reject")) {
+			
+			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			ManagerDao dao = new ManagerDaoImpl(); 
+			dao.updateRestReject(rcode);
+			
+			List<HashMap<String, String>> restList = dao.selectRestAll();
+			
+			req.setAttribute("restList", restList);
 		}
 		
 		String dispatcherUrl = null;
@@ -161,18 +185,30 @@ public class ManagerController extends HttpServlet{
 			
 			dispatcherUrl = "jsp/manager/managerPatientList.jsp";
 		}
-		else if(action.equals("mg_approval_list")) {
+		else if(action.equals("mg_rest_list")) {
 			
-			dispatcherUrl = "jsp/manager/managerApprovalList.jsp";
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
 		}
-		else if(action.equals("mg_approval_search")) {
+		else if(action.equals("mg_rest_search")) {
 			
-			dispatcherUrl = "jsp/manager/managerApprovalList.jsp";
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
 		}
-//		else if(action.equals("mg_approval_detail")) {
-//			
-//			dispatcherUrl = "pages/qnaDetail.jsp";
-//		}
+		else if(action.equals("ms_reservation_list")) {
+			
+			dispatcherUrl = "reservation-list?reqPage=1";
+		}
+		else if(action.equals("mg_rest_detail")) {
+			
+			dispatcherUrl = "jsp/manager/managerRestApprovalDetail.jsp";
+		}
+		else if(action.equals("mg_rest_approve")) {
+			
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
+		}
+		else if(action.equals("mg_rest_reject")) {
+			
+			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
+		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
 		dispatcher.forward(req, resp);

@@ -10,6 +10,7 @@ import java.util.List;
 
 import common.JDBCUtil;
 import common.Sql;
+import model.ask.Rest;
 import model.user.Manager;
 import model.user.Patient;
 import model.user.Subject;
@@ -118,8 +119,8 @@ public class ManagerDaoImpl implements ManagerDao {
 	}
 
 	@Override
-	public List<HashMap> selectDoctorBySubject(int scode) {
-		List<HashMap> doctorList = new ArrayList<>();
+	public List<HashMap<String, String>> selectDoctorBySubject(int scode) {
+		List<HashMap<String, String>> doctorList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -181,8 +182,8 @@ public class ManagerDaoImpl implements ManagerDao {
 	}
 
 	@Override
-	public List<Patient> selectPatientAll() {
-		List<Patient> patientList = new ArrayList<>();
+	public List<HashMap<String, String>> selectPatientAll() {
+		List<HashMap<String, String>> patientList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -194,13 +195,14 @@ public class ManagerDaoImpl implements ManagerDao {
 			
 			while(resultSet.next()) {
 				
-				Patient patient = new Patient();
+				HashMap<String, String> hm = new HashMap<>();
 				
-				patient.setPcode(resultSet.getInt("pcode"));
-				patient.setName(resultSet.getString("name"));
-				patient.setBirth(resultSet.getString("birth"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
+				hm.put("name", resultSet.getString("name"));
+				hm.put("birth", resultSet.getString("birth"));
+				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
 				
-				patientList.add(patient);
+				patientList.add(hm);
 			}
 			
 		} catch (Exception e) {
@@ -248,28 +250,29 @@ public class ManagerDaoImpl implements ManagerDao {
 
 
 	@Override
-	public List<HashMap> selectApprovalAll() {
-		List<HashMap> approvalList = new ArrayList<>();
+	public List<HashMap<String, String>> selectRestAll() {
+		List<HashMap<String, String>> restList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_ALL_SQL);
-//			select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
-//			on d.dcode = a.dcode order by a.acode desc;
+			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_ALL_SQL);
+			//select r.rcode, d.name as dname, r.requestdate, r.approved from doctor d inner join rest r
+			//on d.dcode = r.dcode order by r.rcode desc;
+
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				HashMap<String, String> hm = new HashMap<>();
 				
-				hm.put("acode", Integer.toString(resultSet.getInt("acode")));
+				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
 				hm.put("dname", resultSet.getString("dname"));
-				hm.put("approvedate", resultSet.getString("approvedate"));
+				hm.put("requestdate", resultSet.getString("requestdate"));
 				hm.put("approved", resultSet.getString("approved"));
 				
-				approvalList.add(hm);
+				restList.add(hm);
 			}
 			
 		}
@@ -282,34 +285,34 @@ public class ManagerDaoImpl implements ManagerDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		
-		return approvalList;
+		return restList;
 	}
 
 
 	@Override
-	public List<HashMap> selectApprovalByName(String name) {
-		List<HashMap> approvalList = new ArrayList<>();
+	public List<HashMap<String, String>> selectRestByName(String name) {
+		List<HashMap<String, String>> restList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_NAME_SQL);
-			//select a.acode, d.name as dname, a.approvedate, a.approved from doctor d inner join approval a
-			//where d.name like ? on d.dcode = a.dcode order by a.acode desc;
+			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_NAME_SQL);
+			//select r.rcode, d.name as dname, r.requestdate, r.approved from doctor d inner join rest r
+			//on d.dcode = r.dcode where d.name like ? order by r.rcode desc;
 			pStatement.setString(1, '%'+name+'%');
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				HashMap<String, String> hm = new HashMap<>();
 				
-				hm.put("acode", Integer.toString(resultSet.getInt("acode")));
+				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
 				hm.put("dname", resultSet.getString("dname"));
-				hm.put("approvedate", resultSet.getString("approvedate"));
+				hm.put("requestdate", resultSet.getString("requestdate"));
 				hm.put("approved", resultSet.getString("approved"));
 				
-				approvalList.add(hm);
+				restList.add(hm);
 			}
 			
 		}
@@ -322,12 +325,12 @@ public class ManagerDaoImpl implements ManagerDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		
-		return approvalList;
+		return restList;
 	}
 
 	@Override
-	public HashMap selectApprovalByRcode(int rcode) {
-		HashMap<String, String> approvalDetail = null;
+	public HashMap<String, String> selectRestByRcode(int rcode) {
+		HashMap<String, String> restDetail = null;
 		
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -335,21 +338,21 @@ public class ManagerDaoImpl implements ManagerDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.MG_APPROVAL_SELECT_BY_ACODE_SQL);
-			//select d.name, r.approvedate, r.approved, r.reason from doctor d inner join approval r
-			//on d.dcode = r.dcode where rcode = ?
-			
+			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_RCODE_SQL);
+			//select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason from doctor d inner join rest r 
+			//on d.dcode = r.dcode where rcode = ?;
 			pStatement.setInt(1, rcode);
 			resultSet = pStatement.executeQuery();
 			
 			if(resultSet.next()) {
 				
-				approvalDetail = new HashMap<>();
+				restDetail = new HashMap<>();
 				
-				approvalDetail.put("title", resultSet.getString("title"));
-				approvalDetail.put("title", resultSet.getString("title"));
-				approvalDetail.put("nickname", resultSet.getString("nickname"));
-				approvalDetail.put("writedate", resultSet.getString("writedate"));
+				restDetail.put("rcode", resultSet.getString("rcode"));
+				restDetail.put("dname", resultSet.getString("dname"));
+				restDetail.put("requestdate", resultSet.getString("requestdate"));
+				restDetail.put("restdate", resultSet.getString("restdate"));
+				restDetail.put("reason", resultSet.getString("reason"));
 			}
 			
 		}
@@ -363,7 +366,54 @@ public class ManagerDaoImpl implements ManagerDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		
-		return approvalDetail;
+		return restDetail;
+	}
+
+	@Override
+	public void updateRestApprove(int rcode) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_REST_UPDATE_APPROVE_SQL);
+			//update rest set approved = '½ÂÀÎ' where rcode = ?
+			pStatement.setInt(1, rcode); // ?°ª ¼ÂÆÃ 
+			
+			pStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			
+		} finally {
+			
+			JDBCUtil.close(null, pStatement, connection);
+		}
+		
+	}
+
+
+	@Override
+	public void updateRestReject(int rcode) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.MG_REST_UPDATE_REJECT_SQL);
+			//update rest set approved = '½ÂÀÎ' where rcode = ?
+			pStatement.setInt(1, rcode); // ?°ª ¼ÂÆÃ 
+			
+			pStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+			
+		} finally {
+			
+			JDBCUtil.close(null, pStatement, connection);
+		}
+		
 	}
 
 
