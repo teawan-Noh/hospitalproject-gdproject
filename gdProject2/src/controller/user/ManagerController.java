@@ -91,6 +91,7 @@ public class ManagerController extends HttpServlet{
 			
 			ManagerDao dao = new ManagerDaoImpl();
 			List<HashMap<String, String>> patientList = dao.selectPatientAll();
+			System.out.println(patientList);
 			req.setAttribute("patientList", patientList);
 		}
 		else if(action.equals("mg_patient_search")) {
