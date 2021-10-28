@@ -11,6 +11,7 @@ import java.util.List;
 
 import common.JDBCUtil;
 import common.Sql;
+import model.board.Comments;
 import model.board.Qna;
 
 public class QnaDaoImpl implements QnaDao{
@@ -23,10 +24,12 @@ public class QnaDaoImpl implements QnaDao{
 	      try {
 	         connection = JDBCUtil.getConnection();
 	         pStatement = connection.prepareStatement(Sql.QNA_INSERT_SQL);
-	         //insert into memo values (seqMemo.nextval, ?, ?)
+	         //insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)
 	         //***셋팅 수정
-	         pStatement.setString(1, qna.getTitle());
-	         pStatement.setInt(2, qna.getQno());
+	         pStatement.setInt(1, qna.getPcode());
+	         pStatement.setString(2, qna.getTitle());
+	         pStatement.setString(3, qna.getContent());
+	         pStatement.setString(4, qna.getImg());
 	         
 	         pStatement.executeUpdate(); 
 	         
@@ -215,7 +218,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_CNT_UPDATE_SQL);
-			//update bbs set cnt = ? where no = ?
+			//update qna set cnt = ? where no = ?
 			pStatement.setInt(1, qna.getCnt()); // ?값 셋팅  
 			pStatement.setInt(2, qna.getQno()); // ?값 셋팅  
 			
@@ -272,5 +275,59 @@ public class QnaDaoImpl implements QnaDao{
 		return qnaList;
 	}
 
-	
+	@Override
+	public void insertComment(Comments comment) {
+		Connection connection = null;
+	    PreparedStatement pStatement = null;
+	      
+	    try {
+	    	connection = JDBCUtil.getConnection();
+	        pStatement = connection.prepareStatement(Sql.COMMNETS_INSERT_SQL);
+	        //insert into comments values (?, ?, sysdate, ?)
+	         
+	        pStatement.setInt(1, comment.getQno());
+	        pStatement.setInt(2, comment.getMcode());
+	        pStatement.setString(3, comment.getContent());
+	         
+	        pStatement.executeUpdate(); 
+	         
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	JDBCUtil.close(null, pStatement, connection); 
+	    }
+	}
+
+	@Override
+	public Qna selectCntByQno(int qno) {
+		Qna qna = null;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_CNT_SELECT_BY_QNO_SQL);
+			
+			pStatement.setInt(1, qno);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				qna = new Qna();
+				
+				qna.setCnt(resultSet.getInt("cnt"));
+				
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return qna;
+	}
+
 }

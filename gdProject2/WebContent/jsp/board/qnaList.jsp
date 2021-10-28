@@ -61,6 +61,9 @@
        	.writeButton{
        		text-align: right;
        	}
+       	.link{
+			color: black;
+		}
 </style>
 </head>
 <body>
@@ -105,7 +108,7 @@
 				   		<c:forEach var="qna" items="${qnaList}">
 					    <tr>
 					      <td>${qna.qno}</td>
-					      <td><a href="qna_detail?qno=${qna.qno}">${qna.title}</a></td>
+					      <td><a class="link" href="qna_detail?qno=${qna.qno}">${qna.title}</a></td>
 					      <td>${qna.nickname}</td>
 					      <fmt:parseDate value="${qna.writedate}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 					      <td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
@@ -117,8 +120,8 @@
     		</div>
     		<div class="writeButton">
 				<c:if test="${pcode == null}">
-					<a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
-					<!-- <a href="qna_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a> -->
+					<!-- <a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a> -->
+					<a href="qna_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
 				</c:if>
 				<c:if test="${pcode != null}">
 					<a href="qna_input"><button type="submit" class="submitbtn">글 작성</button></a>

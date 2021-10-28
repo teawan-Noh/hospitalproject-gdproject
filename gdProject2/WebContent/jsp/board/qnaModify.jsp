@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,14 +29,8 @@
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
        	.submitbtn {
-       		width: 75px;
+       		width: 90px;
        		height: 28px;
        		background-color: rgb(70, 145, 140);
        		color: white;
@@ -48,8 +41,11 @@
        	.table{
        		text-align: center;
        	}
-       	table tr .subject{
-       		padding-left: 30px;
+       	table tr .input_box{
+       		text-align: left;
+       	}
+       	table tr .input_title{
+       		width: 395px;
        	}
        	.approve_reject_button{
        		text-align: center;
@@ -74,33 +70,35 @@
         		<h2>게시글 수정</h2>
         	</div>
     		
-    		<form method="post" action="board_modify" enctype="multipart/form-data">
-			<table border="1" class="table">
-			<tbody>
-				<tr>
-			   		<td>제목 </td>
-			   		<td class="input_box">
-						<input type="text" name="subject" value="${qnadetail.title}"/>  <br/>
-					</td>
-				</tr>
-				<tr>
-			   		<td>내용 </td>
-			   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
-				</tr>
-				<tr>
-			   		<td>첨부파일 </td>
-			   		<td class="input_box">
-					<input type="file" name="filename"/>${qnadetail.img}<br />
-			   		</td>
-				</tr>
-			</tbody>	
-		    </table>
-		    <br/>
-		  	<div class="approve_reject_button">
-	            <button class="submitbtn" type = "submit" >수정</button>
-	            <button class="submitbtn" type = "button" onclick="location.href = 'jsp/qnaList.jsp'">취소</button>
-	        </div>
+    		<div class = "content_body">
+    			<form method="post" action="qna_save" enctype="multipart/form-data">
+				<table border="1" class="table">
+				<tbody>
+					<tr>
+				   		<td>제목 </td>
+				   		<td class="input_box">
+							<input class="input_title" type="text" name="title" value="${qnadetail.title}"/> <br/>
+						</td>
+					</tr>
+					<tr>
+				   		<td>내용 </td>
+				   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
+					</tr>
+					<tr>
+				   		<td>첨부파일 </td>
+				   		<td class="input_box">
+						<input type="file" name="filename"/>${qnadetail.img}<br />
+				   		</td>
+					</tr>
+				</tbody>	
+			    </table>
+			    <br/>
+			  	<div class="approve_reject_button">
+		            <button class="submitbtn" type = "submit">수정</button>
+		            <!-- <button class="submitbtn" type = "button" onclick="location.href = 'jsp/qnaList.jsp'">취소</button> -->
+		        </div>
  			</form>
+    		</div>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
