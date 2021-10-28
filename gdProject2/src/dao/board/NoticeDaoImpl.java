@@ -218,6 +218,8 @@ public class NoticeDaoImpl implements NoticeDao {
 				noticeList.add(hash);
 			}
 			
+		
+			
 		}
 		catch(SQLException se) {
 			se.printStackTrace();

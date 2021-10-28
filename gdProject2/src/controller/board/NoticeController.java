@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.Sql;
 import common.page.PageDao;
@@ -18,8 +20,10 @@ import common.page.PageGroupResult;
 import common.page.PageManager;
 import dao.board.NoticeDao;
 import dao.board.NoticeDaoImpl;
+import model.board.Notice;
 
-@WebServlet(name="NoticeController", urlPatterns= {"/notice_list","/manager/notice_input","/manager/notice_save","/notice_detail","/notice_update","/notice_delete","/notice_search"})
+@MultipartConfig
+@WebServlet(name="NoticeController", urlPatterns= {"/notice_list","/notice_input","/notice_save","/notice_detail","/notice_update_input","/notice_update","/notice_delete","/notice_search"})
 public class NoticeController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -61,8 +65,6 @@ public class NoticeController extends HttpServlet{
 			req.setAttribute("noticeList", list);
 			req.setAttribute("pageGroupResult", pgr);
 			
-			
-			
 		}else if(action.equals("notice_input")) {
 			
 			
@@ -72,17 +74,56 @@ public class NoticeController extends HttpServlet{
 			NoticeDao dao = new NoticeDaoImpl();
 			List<HashMap<String,Object>> detail = dao.selectByNcode(ncode);
 			req.setAttribute("detail", detail);
+			req.setAttribute("ncode", ncode);
+			
+			dao.count(ncode);
 			
 			
 		}else if(action.equals("notice_save")) {
+			HttpSession session = req.getSession(false);
+			
+			String title = req.getParameter("title");
+			String content = req.getParameter("content");
+			int mcode = (int) session.getAttribute("mcode");
+			
+			Notice notice = new Notice(mcode,title,content);
+			
+			NoticeDao dao = new NoticeDaoImpl();
+			dao.insert(notice);
+			
 			
 
+		}else if(action.equals("notice_update_input")) {
+			int ncode = Integer.parseInt(req.getParameter("ncode"));
+			NoticeDao dao = new NoticeDaoImpl();
+			List<HashMap<String,Object>> detail = dao.selectByNcode(ncode);
+			req.setAttribute("detail", detail);
+			req.setAttribute("ncode", ncode);
+			
 		}else if(action.equals("notice_update")) {
 			
-
+			int ncode = Integer.parseInt(req.getParameter("ncode"));
+			String title = req.getParameter("title");
+			String content = req.getParameter("content");
+			
+			Notice notice = new Notice(title,ncode,content);
+			NoticeDao dao = new NoticeDaoImpl();
+			dao.update(notice);
+			
 		}else if(action.equals("notice_delete")) {
+			int ncode = Integer.parseInt(req.getParameter("ncode"));
+			NoticeDao dao = new NoticeDaoImpl();
+			dao.delete(ncode);
 			
 		}else if(action.equals("notice_search")) {
+			
+			//°Ë»ö
+			NoticeDao dao = new NoticeDaoImpl();
+			String name=req.getParameter("search");
+			List<HashMap<String,Object>> searchList = dao.selectByTitleContent(name);
+			
+			req.setAttribute("searchList", searchList);
+			
 			
 			
 		}
@@ -91,18 +132,24 @@ public class NoticeController extends HttpServlet{
 		String dispatcherUrl = null;
 		if(action.equals("notice_list")) {
 			dispatcherUrl="/jsp/board/noticeList.jsp";
+			
 		}else if(action.equals("notice_input")) {
-			dispatcherUrl="";
+			dispatcherUrl="/jsp/board/newNotice.jsp";
+			
 		}else if(action.equals("notice_detail")) {
 			dispatcherUrl="/jsp/board/noticeDetail.jsp";
+			
 		}else if(action.equals("notice_save")) {
 			dispatcherUrl="";
+		}else if(action.equals("notice_update_input")) {
+			dispatcherUrl="/jsp/board/updateNotice.jsp";
+			
 		}else if(action.equals("notice_update")) {
-			dispatcherUrl="";
+			dispatcherUrl="notice_list?reqPage=1";
 		}else if(action.equals("notice_delete")) {
-			dispatcherUrl="";
+			dispatcherUrl="notice_list?reqPage=1";
 		}else if(action.equals("notice_search")) {
-			dispatcherUrl="";
+			dispatcherUrl="/jsp/board/noticeSearch.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

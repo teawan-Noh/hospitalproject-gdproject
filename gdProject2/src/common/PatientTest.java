@@ -76,27 +76,35 @@ public class PatientTest {
 		
 		System.out.println("================selectAll()===============");
 		
-		/*List<HashMap<String,Object>> list = ndao.selectAll();
+		List<HashMap<String,Object>> list = ndao.selectAll(1);
 		
 		for (HashMap<String,Object> hashMap : list) {
 			System.out.println(hashMap.get("title"));
 			System.out.println(hashMap.get("name"));
 			System.out.println(hashMap.get("writedate"));
 			System.out.println(hashMap.get("cnt"));
-		}*/
+		}
 		
-//		System.out.println("===============selectByNcode()================");
-//		
-//		
-//		List<HashMap<String,Object>> list2 = ndao.selectByNcode(16);
-//		
-//		for (HashMap<String,Object> hashMap : list2) {
-//			System.out.println(hashMap.get("title"));
-//			System.out.println(hashMap.get("name"));
-//			System.out.println(hashMap.get("writedate"));
-//			System.out.println(hashMap.get("cnt"));
-//		}
+		System.out.println("===============selectByNcode()================");
+		
+		
+		List<HashMap<String,Object>> list2 = ndao.selectByNcode(16);
+		
+		for (HashMap<String,Object> hashMap : list2) {
+			System.out.println(hashMap.get("title"));
+			System.out.println(hashMap.get("name"));
+			System.out.println(hashMap.get("writedate"));
+			System.out.println(hashMap.get("cnt"));
+		}
 			
+		/*ndao.delete(37);
+		
+		notice.setTitle("제목");
+		notice.setContent("내용");
+		notice.setMcode(1);
+		
+		ndao.insert(notice);*/
+		
 		
 		System.out.println("===============selectByTitleContent()================");
 		
@@ -110,6 +118,11 @@ public class PatientTest {
 			System.out.println(hashMap.get("writedate"));
 			System.out.println(hashMap.get("cnt"));
 		}
+		
+		notice.setTitle("수정함제목");
+		notice.setContent("수정함내용");
+		notice.setNcode(38);
+		ndao.update(notice);
 		
 	}
 

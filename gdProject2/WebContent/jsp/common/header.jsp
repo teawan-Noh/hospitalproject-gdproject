@@ -86,7 +86,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </div>
             <div class="flex-vertical right">
                 <ul id="member-menu">
-                    <li>로그인</li>
+                <c:if test="${pcode == null && dcode == null && mcode == null}">
+                	<li>로그인</li>
                     <li>
                         <select onchange="if(this.value) location.href=(this.value)">
                         	<option value="">선택</option>
@@ -97,6 +98,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </li>
                     <li>|</li>
                     <li><a href="patient_input">회원가입</a></li>
+                </c:if>
+                <c:if test="${pcode != null || dcode != null || mcode != null}">
+                	<li><a href="logout">로그아웃</a></li>
+                </c:if>
+                <c:if test="${pcode != null}">
+                	<li>|</li>
+					<li><a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a></li>
+				</c:if>
+				<c:if test = "${dcode != null}">
+					<li>|</li>
+					<a href = "mypage?dcode=${dcode}">마이페이지</a>
+				</c:if>
                 </ul>
                 <ul id="nav-menu">
                     <li>

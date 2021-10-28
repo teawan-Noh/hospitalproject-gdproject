@@ -19,6 +19,22 @@ public class Notice {
 		this.writedate = writedate;
 		this.cnt = cnt;
 	}
+	
+	public Notice(int mcode, String title, String content) {
+		super();
+		this.mcode = mcode;
+		this.title = title;
+		this.content = content;
+	}
+	
+
+	public Notice(String title, int ncode, String content) {
+		super();
+		this.title = title;
+		this.ncode = ncode;
+		this.content = content;
+	}
+
 	public int getNcode() {
 		return ncode;
 	}
