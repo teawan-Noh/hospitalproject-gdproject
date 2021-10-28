@@ -40,7 +40,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </tr>
                 </thead>
                 <tbody>
-                		<c:forEach var="list" items="${noticeList}">
+                	<c:forEach var="list" items="${noticeList}">
         	        	<tr>
             	            <td>${list.ncode}</td>
                 	        <td><a href="notice_detail?ncode=${list.ncode}">${list.title}</a></td>

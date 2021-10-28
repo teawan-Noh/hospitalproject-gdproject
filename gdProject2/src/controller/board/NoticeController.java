@@ -116,15 +116,12 @@ public class NoticeController extends HttpServlet{
 			dao.delete(ncode);
 			
 		}else if(action.equals("notice_search")) {
-			
 			//°Ë»ö
 			NoticeDao dao = new NoticeDaoImpl();
 			String name=req.getParameter("search");
 			List<HashMap<String,Object>> searchList = dao.selectByTitleContent(name);
 			
 			req.setAttribute("searchList", searchList);
-			
-			
 			
 		}
 		
@@ -140,7 +137,7 @@ public class NoticeController extends HttpServlet{
 			dispatcherUrl="/jsp/board/noticeDetail.jsp";
 			
 		}else if(action.equals("notice_save")) {
-			dispatcherUrl="";
+			dispatcherUrl="notice_list?reqPage=1";
 		}else if(action.equals("notice_update_input")) {
 			dispatcherUrl="/jsp/board/updateNotice.jsp";
 			

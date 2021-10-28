@@ -65,24 +65,26 @@ insert into notice values(ncode.nextval,1,'공지사항 제목입니다12','공지사항 내용
 insert into notice values(ncode.nextval,1,'공지사항 제목입니다13','공지사항 내용입니다13',sysdate,0);
 insert into notice values(ncode.nextval,1,'공지사항 제목입니다14','공지사항 내용입니다14',sysdate,0);
 insert into notice values(ncode.nextval,1,'공지사항 제목입니다15','공지사항 내용입니다15',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다16','공지사항 내용입니다16',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다17','공지사항 내용입니다17',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다18','공지사항 내용입니다18',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다19','공지사항 내용입니다19',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다20','공지사항 내용입니다20',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다21','공지사항 내용입니다21',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다22','공지사항 내용입니다22',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다23','공지사항 내용입니다23',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다24','공지사항 내용입니다24',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다25','공지사항 내용입니다25',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다26','공지사항 내용입니다26',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다27','공지사항 내용입니다27',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다28','공지사항 내용입니다28',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다29','공지사항 내용입니다29',sysdate,0);
-insert into notice values(ncode.nextval,1,'공지사항 제목입니다30','공지사항 내용입니다30',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다16','공지사항 내용입니다16',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다17','공지사항 내용입니다17',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다18','공지사항 내용입니다18',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다19','공지사항 내용입니다19',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다20','공지사항 내용입니다20',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다21','공지사항 내용입니다21',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다22','공지사항 내용입니다22',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다23','공지사항 내용입니다23',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다24','공지사항 내용입니다24',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다25','공지사항 내용입니다25',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다26','공지사항 내용입니다26',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다27','공지사항 내용입니다27',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다28','공지사항 내용입니다28',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다29','공지사항 내용입니다29',sysdate,0);
+insert into notice values(ncode.nextval,2,'공지사항 제목입니다30','공지사항 내용입니다30',sysdate,0);
 
 
 delete from notice;
+drop sequence ncode;
+create sequence ncode;
 select * from notice;
 select count(*) as cnt from notice
 
@@ -99,8 +101,14 @@ select n.ncode, n.title, m.name, n.writedate, n.cnt from notice n inner join man
 
 CREATE SEQUENCE ncode;
 
-insert into manager values (ncode.nextval,'홍길동','mhong','1234');
+insert into manager values (mcode.nextval,'관리자','manager1','1234');
+insert into manager values (mcode.nextval,'관리자','manager2','1234');
 select * from manager;
+delete from manager;
+delete from notice;
+
+create sequence mcode;
+delete sequence mcode;
 
 insert into files values(fcode.nextval,?, to_date(?, 'YYYY-mm-dd'), ?,?,?)
 
@@ -156,3 +164,19 @@ where rn between ? and ?;
 
 alter table rest rename column approvedate to requestdate;
 
+select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
+from notice n inner join manager m
+on n.mcode = m.mcode order by n.ncode desc
+
+
+select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
+from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between ? and ?
+
+select * from (select rownum as rn , rsvs.* from 
+(select r.rcode, r.pcode, r.rsvdate, d.scode, s.name 
+from reservation r inner join doctor d on r.dcode = d.dcode inner join subject s on d.scode = s.scode 
+where r.pcode = 2 order by rcode desc) rsvs) result;
+
+select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
+from notice n inner join manager m on n.mcode = m.mcode
+where n.title like '%%' or n.content like '%%' order by n.ncode desc

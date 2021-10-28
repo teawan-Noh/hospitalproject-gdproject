@@ -96,8 +96,9 @@ public class Sql {
 			"select count(*) as cnt from notice";
 	
 	public static final String BOOK_SELECT_NOTICE_PAGE_SQL =
-			"select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
-			+ "from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between ? and ?";
+			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
+			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
+			+ "from notice n inner join manager m on n.mcode = m.mcode) where rn between ? and ?";
 	
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =
