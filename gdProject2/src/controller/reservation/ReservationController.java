@@ -60,9 +60,11 @@ public class ReservationController extends HttpServlet{
 		HttpSession session = req.getSession();
 		Object pcodeObj = session.getAttribute("pcode");
 		Object dcodeObj = session.getAttribute("dcode");
+		Object mcodeObj = session.getAttribute("mcode");
 
 		int sessionPcode = pcodeObj == null ? 0 : Integer.parseInt(pcodeObj.toString());
 		int sessionDcode = dcodeObj == null ? 0 : Integer.parseInt(dcodeObj.toString());
+		int sessionMcode = mcodeObj == null ? 0 : Integer.parseInt(mcodeObj.toString());
 		
 		// 로직 처리
 		// 환자로 로그인
@@ -82,12 +84,13 @@ public class ReservationController extends HttpServlet{
 			}
 			req.setAttribute("rsvInfo", rsvInfo);
 		}
-		else if(sessionPcode != 0) {
+
+		else if(sessionPcode != 0 || sessionMcode != 0) {
 			if(action.equals("reservation")) {
 				ReservationDao rdao = new ReservationDaoImpl();
 				List<Subject> subjectList = rdao.selectSubjectAll();
 				
-				int pcode = sessionPcode; // req.getParameter("pcode");
+				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
 				int rcode = req.getParameter("rcode") == null ? 0 : Integer.parseInt(req.getParameter("rcode"));
 
 
@@ -99,7 +102,7 @@ public class ReservationController extends HttpServlet{
 				String subject = req.getParameter("subject");
 				int dcode = req.getParameter("dcode") == null ? 0 : Integer.parseInt(req.getParameter("dcode"));
 				String dname = req.getParameter("dname");
-		
+		 
 				req.setAttribute("pcode", pcode);
 				req.setAttribute("rcode", rcode);
 				req.setAttribute("subject", subject);
@@ -130,7 +133,7 @@ public class ReservationController extends HttpServlet{
 				ReservationDao rdao = new ReservationDaoImpl();
 				PageDao pdao = new PageDaoImpl();
 		
-				int pcode = sessionPcode; // req.getParameter("pcode");
+				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
 				
 				List<Map<String, String>> rsvList = rdao.selectReservationPage(pcode, requestPage);
 				int cnt = pdao.getCountPatient(pcode);
@@ -216,7 +219,7 @@ public class ReservationController extends HttpServlet{
 				ReservationDao rdao = new ReservationDaoImpl();
 				PageDao pdao = new PageDaoImpl();
 		
-				int dcode = 1; // req.getParameter("pcode");
+				int dcode = sessionDcode; // req.getParameter("pcode");
 				List<Map<String, String>> rsvList = null;
 				PageManager pm = new PageManager(requestPage);
 				PageGroupResult pgr = null;
@@ -280,7 +283,7 @@ public class ReservationController extends HttpServlet{
 		}
 		
 		if(action.equals("reservation-doctor-list")) {
-			if(sessionDcode != 0 && sessionPcode == 0) {
+			if(sessionDcode != 0) {
 				dispatcherUrl = "jsp/reservation/reservation-doctor-list.jsp";
 			}
 			else {
