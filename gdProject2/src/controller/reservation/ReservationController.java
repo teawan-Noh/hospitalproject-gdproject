@@ -90,7 +90,8 @@ public class ReservationController extends HttpServlet{
 				ReservationDao rdao = new ReservationDaoImpl();
 				List<Subject> subjectList = rdao.selectSubjectAll();
 				
-				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
+				
+				int pcode = req.getParameter("pcode") == null ? sessionPcode : Integer.parseInt(req.getParameter("pcode")); // req.getParameter("pcode");
 				int rcode = req.getParameter("rcode") == null ? 0 : Integer.parseInt(req.getParameter("rcode"));
 
 
@@ -133,7 +134,7 @@ public class ReservationController extends HttpServlet{
 				ReservationDao rdao = new ReservationDaoImpl();
 				PageDao pdao = new PageDaoImpl();
 		
-				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
+				int pcode = req.getParameter("pcode") == null ? sessionPcode : Integer.parseInt(req.getParameter("pcode")); // req.getParameter("pcode");
 				
 				List<Map<String, String>> rsvList = rdao.selectReservationPage(pcode, requestPage);
 				int cnt = pdao.getCountPatient(pcode);
