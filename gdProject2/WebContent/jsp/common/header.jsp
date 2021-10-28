@@ -113,7 +113,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
                 <ul id="nav-menu">
                     <li>
-                    <a href="patient_login_input">예약
+                    <a href="reservation">예약
                     </a>
                     </li>
                     <li><a href="doctor_search">의료진</a></li>

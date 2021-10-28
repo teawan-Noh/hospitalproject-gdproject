@@ -156,6 +156,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </style>
         <script>
             $(function () {
+            	console.log(${pcode});
                 <c:forEach items="${rsvList}" var="rsv">
                     $("#rsv-mylist tbody").append(
                     "<tr><td class='table-rcode'>" + "${rsv.rcode}" + "</td>"

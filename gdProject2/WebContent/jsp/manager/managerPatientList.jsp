@@ -94,7 +94,7 @@
     									<a href="reservation?pcode=${patient.pcode}"><button class="submitbtn">예약하기</button></a>
     								</c:if>
     								<c:if test="${val != 0}">
-	    								<a href="reservation-list?pcode=${patient.pcode}"><button class="submitbtn" style="background-color:rgb(41, 128, 185);">예약수정</button></a>
+	    								<a href="reservation-list?reqPage=1&pcode=${patient.pcode}"><button class="submitbtn" style="background-color:rgb(41, 128, 185);">예약수정</button></a>
     								</c:if>
     							</td>
     						</tr>
