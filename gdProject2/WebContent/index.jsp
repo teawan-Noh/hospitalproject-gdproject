@@ -68,7 +68,7 @@ function carousel() {
   setTimeout(carousel, 3000);
 }
 
-$(function(){
+$(function(){ 
     
    $("#patientUpdate").click(function(){
       var inputString = prompt('현재 비밀번호를 입력해주세요.');
