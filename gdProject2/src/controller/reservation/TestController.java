@@ -41,8 +41,7 @@ import model.user.Doctor;
 import model.user.Subject;
 
 
-@WebServlet(name="TestController", 
-urlPatterns= {"/test", "/upload", "/download"})
+@WebServlet(name="TestController", urlPatterns= {"/test", "/upload", "/download"})
 @MultipartConfig
 public class TestController extends HttpServlet{
 	
