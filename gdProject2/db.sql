@@ -589,4 +589,8 @@ alter table rest rename column acode to rcode;
 
 alter table rest rename column approvedate to requestdate;
 
+select * from manager;
+
+
+
 

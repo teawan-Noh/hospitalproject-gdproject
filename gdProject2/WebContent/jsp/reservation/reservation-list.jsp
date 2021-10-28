@@ -157,6 +157,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     .find("tr")
                     .click(function (idx, item) {
                         var rcode = $(this).find(".table-rcode").text();
+                        //console.log(rcode);
                         $("#form-rcode").val(rcode);
                         $("#form").submit();
                     });

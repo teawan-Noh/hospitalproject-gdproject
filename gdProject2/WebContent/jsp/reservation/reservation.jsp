@@ -32,6 +32,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
         <style>
+
+        	.fmenu li:before{
+        		
+        	}
             a {
                 text-decoration: none !important;
             }
@@ -95,6 +99,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 padding: 10px 40px;
                 margin: 10px;
                 color: #468c91;
+            }
+            .card-box.subject{
+            	width: 45%;
             }
 
             .card-box.doctor {
@@ -170,16 +177,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 let subject = "${subject}";
                 let dcode = "${dcode}";
                 let dname = "${dname}";
-                let rsvdate = "${rsvdate}";
-                let rsvtime = "${rsvtime}";
+
                 
                 console.log(setting);
                 console.log(pcode);
                 console.log(subject);
                 console.log(dcode);
                 console.log(dname);
-                console.log(rsvdate);
-                console.log(rsvtime);
+
                 
 
                 function XMLToString(oXML) {
@@ -619,7 +624,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <jsp:param name="side" value="${side}" />
             </jsp:include>
             <div class="content">
-                <ul>
+                <ul class="fmenu">
                     <li>예약</li>
                     <li>예약하기</li>
                 </ul>
