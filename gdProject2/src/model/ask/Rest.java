@@ -3,20 +3,20 @@ package model.ask;
 public class Rest {
 	private int rcode;
 	private int dcode;
-	private String approvedate;
+	private String requestdate;
 	private String approved;
 	private String reason;
 	private String restdate;
 	private String day;
 	
 	public Rest() {}
-	
-	public Rest(int rcode, int dcode, String approvedate, String approved, String reason) {
+
+	public Rest(int dcode, String reason, String restdate, String day) {
+
 		super();
-		this.rcode = rcode;
+		this.restdate = restdate;
+		this.day = day;
 		this.dcode = dcode;
-		this.approvedate = approvedate;
-		this.approved = approved;
 		this.reason = reason;
 	}
 
@@ -36,12 +36,12 @@ public class Rest {
 		this.dcode = dcode;
 	}
 
-	public String getApprovedate() {
-		return approvedate;
+	public String getRequestdate() {
+		return requestdate;
 	}
 
-	public void setApprovedate(String approvedate) {
-		this.approvedate = approvedate;
+	public void setRequestdate(String requestdate) {
+		this.requestdate = requestdate;
 	}
 
 	public String getApproved() {
@@ -74,6 +74,12 @@ public class Rest {
 
 	public void setDay(String day) {
 		this.day = day;
+	}
+
+	@Override
+	public String toString() {
+		return "Rest [rcode=" + rcode + ", dcode=" + dcode + ", requestdate=" + requestdate + ", approved=" + approved
+				+ ", reason=" + reason + ", restdate=" + restdate + ", day=" + day + "]";
 	}
 	
 	

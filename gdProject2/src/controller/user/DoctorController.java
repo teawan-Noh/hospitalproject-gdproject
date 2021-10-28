@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ask.ReservationDao;
 import dao.ask.ReservationDaoImpl;
@@ -98,7 +99,8 @@ public class DoctorController extends HttpServlet {
 			req.setAttribute("selectSubject", selectSubject);
 			req.setAttribute("side", "doctor");
 		} else if(action.equals("mypage")) {
-			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			HttpSession session = req.getSession();
+			int dcode = (int)session.getAttribute("dcode");
 			DoctorDao dao = new DoctorDaoImpl();
 			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
@@ -106,7 +108,8 @@ public class DoctorController extends HttpServlet {
 			List<Subject> subjectList = rdao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
 		} else if(action.equals("doctor_update")) {
-			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			HttpSession session = req.getSession();
+			int dcode = (int)session.getAttribute("dcode");
 			String pw = req.getParameter("pwd");
 			int postcode = Integer.parseInt(req.getParameter("postcode"));
 			String address = req.getParameter("address");
@@ -119,7 +122,8 @@ public class DoctorController extends HttpServlet {
 			DoctorDao dao = new DoctorDaoImpl();
 			dao.update(doctor);
 		} else if(action.equals("doctor_detail")) {
-			int dcode = Integer.parseInt(req.getParameter("dcode"));
+			HttpSession session = req.getSession();
+			int dcode = (int)session.getAttribute("dcode");
 			DoctorDao dao = new DoctorDaoImpl();
 			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
