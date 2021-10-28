@@ -49,7 +49,7 @@ $("input[name='pwdchk']").focusout(function(){
 	}
 });
 
-//회원가입 버튼을 눌렀을때 나머지 유효성 검사
+//수정 버튼을 눌렀을때 나머지 유효성 검사
 $("#updatebtn").click(function(){
 	
 	//비밀번호

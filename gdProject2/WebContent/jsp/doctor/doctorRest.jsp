@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,8 +78,56 @@
                 padding-left: 1em;
                 padding-right: 1em;
             }
+            .fc-h-event {
+           		border: none;
+            }
     </style>
     <script>
+    var dataset = [
+        <c:forEach var="wait" items="${waitList}">
+                {
+                	title: '승인 대기',
+                	start:'<c:out value="${wait.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    var restdataset = [
+        <c:forEach var="rest" items="${restList}">
+                {
+                	title: '휴진',
+                	start:'<c:out value="${rest.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    //요일 클릭시 이벤트 발생(선택한 요일이 디비에 들어가게 해야 함)
+    $(function(){
+    	 $('#calendar').on('click', '.fc-col-header-cell-cushion', function(e) {
+    		 alert("hi");
+    	     let day = $(this).text().toLowerCase();
+    	     alert(day);
+    	     switch(day){
+    	     case "월": day = 1;
+    	      	break;
+    	     case "화": day = 2;
+   	      		break;
+    	     case "수": day = 3;
+   	      		break;
+    	     case "목": day = 4;
+   	      		break;
+    	     case "금": day = 5;
+   	     		break;
+    	     case "토": day = 6;
+   	      		break;
+    	     case "일": day = 7;
+   	      		break;
+    	      
+    	     }
+    	     alert(day);
+    	     $('.fc-col-header-cell-cushion').removeClass('selected')
+    	                 .filter('.fc-col-header-cell-cushion-' + day)
+    	                 .addClass('selected')
+    	 });
+    });
     $(function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -94,13 +143,14 @@
           initialView: 'dayGridMonth',
           navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
           editable: false, // 수정 가능?
+       	  selectMirror: true,
           selectable: false, // 달력 일자 드래그 설정가능
           nowIndicator: true, // 현재 시간 마크
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
           locale: 'ko', // 한국어 설정
-          eventSources : [
+          eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
               {
-                  // 진료일
+                  // 진료일(진료일만 불러오기 미구현)
                   events : [
                       {
                     	 title: "진료",
@@ -111,17 +161,6 @@
                   , textColor : "white"
               }
               , {
-            	  //대기일
-            	  events : [
-                      {
-                    	 title: "승인 대기중",
-                         start: "2021-11-03",  
-                      }
-                  ]
-                  , color : "#FFD700"
-                  , textColor : "black"
-              }
-              , {
             	  //휴진일
             	  events : [
                       {
@@ -130,7 +169,23 @@
                       }
                   ]
                   , color : "rgb(243, 243, 243)"
-                  , textColor : "#808080"
+                  , textColor : "black"
+              }
+              , 
+              
+              {
+            	  //승인 대기
+            	  events : dataset,
+            	  title: "승인 대기중"
+                  , color : "#FFD700"
+                  , textColor : "black"
+              }
+              , {
+            	  //휴진일
+            	  events : restdataset,
+            	  title: "휴진"
+                  , color : "rgb(243, 243, 243)"
+                  , textColor : "black"
               }
           ],
           dateClick: function (date) {
@@ -143,13 +198,29 @@
               ) {
                   alert("해당 날짜는 휴진 신청이 불가합니다.");
               } else {
-            	  var date = jQuery("#calendar").fullCalendar("getDate");
-                  convertDate(date);
+            	  var reason = prompt("사유를 입력해주세요");
+            	  var date = {"date": date.dateStr, "reason": reason};
+            	  if(reason){
+            		  $.ajax({
+              	        url:"rest_input",
+              	        type:'POST',
+              	        data: date,
+              	        success:function(data){
+              	            alert("완료!");
+              	        },
+              	        error:function(jqXHR, textStatus, errorThrown){
+              	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+              	        }
+              	    });
+            	  } else {
+            		  return false;
+            	  }
+            	  
               }
           }
+          
         });
         calendar.render();
-        
     });
     
     </script>
@@ -166,7 +237,6 @@
     			<div class = "icon" id = "icon2"></div> 승인 대기중 
     			<div class = "icon" id = "icon3"></div> 휴진 
     		</div>
-    		
   		</div>
   	</div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

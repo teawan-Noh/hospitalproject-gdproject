@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,31 +16,7 @@
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
         <!-- fullcalendar 언어 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
-    <script>
-    $(function () {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-        	height: '700px', // calendar 높이 설정
-        	expandRows: true, // 화면에 맞게 높이 재설정
-            slotMinTime: "00:00", // Day 캘린더에서 시작 시간
-            slotMaxTime: "23:59", // Day 캘린더에서 종료 시간
-        	headerToolbar: {
-        		left: 'prev,next today',
-        		center: 'title',
-        		right: 'dayGridMonth,listWeek'
-        	},
-          initialView: 'dayGridMonth',
-          navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-          editable: false, // 수정 가능?
-          selectable: false, // 달력 일자 드래그 설정가능
-          nowIndicator: true, // 현재 시간 마크
-          dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-          locale: 'ko' // 한국어 설정
-        });
-        calendar.render();
-    });
 
-    </script>
     <style>
     	.main {
     		margin: 0 auto;
@@ -86,6 +63,88 @@
             }
 
     </style>
+        <script>
+    var dataset = [
+        <c:forEach var="wait" items="${waitList}">
+                {
+                	title: '승인 대기',
+                	start:'<c:out value="${wait.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    var restdataset = [
+        <c:forEach var="rest" items="${restList}">
+                {
+                	title: '휴진',
+                	start:'<c:out value="${rest.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    $(function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        	height: '700px', // calendar 높이 설정
+        	expandRows: true, // 화면에 맞게 높이 재설정
+            slotMinTime: "00:00", // Day 캘린더에서 시작 시간
+            slotMaxTime: "23:59", // Day 캘린더에서 종료 시간
+        	headerToolbar: {
+        		left: 'prev,next today',
+        		center: 'title',
+        		right: 'dayGridMonth,listWeek'
+        	},
+          initialView: 'dayGridMonth',
+          navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+          editable: false, // 수정 가능?
+       	  selectMirror: true,
+          selectable: false, // 달력 일자 드래그 설정가능
+          nowIndicator: true, // 현재 시간 마크
+          dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+          locale: 'ko', // 한국어 설정
+          eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
+              {
+                  // 진료일(진료일만 불러오기 미구현)
+                  events : [
+                      {
+                    	 title: "진료",
+                         daysOfWeek: ["1","2","3","4","5"],  
+                      }
+                  ]
+                  , color : "rgb(70, 145, 140)"
+                  , textColor : "white"
+              }
+              , {
+            	  //휴진일
+            	  events : [
+                      {
+                    	 title: "주말",
+                         daysOfWeek: ["0", "6"],  
+                      }
+                  ]
+                  , color : "rgb(243, 243, 243)"
+                  , textColor : "black"
+              }
+              , 
+              
+              {
+            	  //승인 대기
+            	  events : dataset,
+            	  title: "승인 대기중"
+                  , color : "#FFD700"
+                  , textColor : "black"
+              }
+              , {
+            	  //휴진일
+            	  events : restdataset,
+            	  title: "휴진"
+                  , color : "rgb(243, 243, 243)"
+                  , textColor : "black"
+              }
+          ]
+          });
+        calendar.render();
+    });
+    
+    </script>
   </head>
   <body>
   	<jsp:include page="../common/header.jsp"></jsp:include>

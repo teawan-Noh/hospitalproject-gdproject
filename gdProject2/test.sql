@@ -700,3 +700,13 @@ insert into approval values (5, 1, sysdate, '°ÅÀı', '²Òº´', null, 'MON');
 
 alter table approval rename to rest;
 alter table rest rename column acode to rcode;
+alter table rest rename column approvedate to requestdate;
+select * from rest;
+create sequence rest_seq;
+delete from rest;
+insert into rest values (rest_seq.nextval, 3, sysdate, '´ë±â', 'º´°¡', to_date('2021-11-03', 'yyyy-mm-dd'), null);
+insert into rest values (rest_seq.nextval, 3, sysdate, '´ë±â', 'ÈŞÁø', null, 'FRI');
+select * from rest where dcode = 3;
+select * from rest where approved = '´ë±â' and dcode = 3;
+select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = '½ÂÀÎ' and dcode = 3;
+update rest set approved = '½ÂÀÎ' where dcode = 12;
