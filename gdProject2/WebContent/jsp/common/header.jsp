@@ -113,11 +113,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
                 <ul id="nav-menu">
                     <li>
-                    <a href="patient_login_input">예약
+                    <a href="reservation">예약
                     </a>
+                    <c:if test = "${dcode != null && pcode == null && mcode == null}">
+                    	<a href="schedule_check">업무관리</a>
+                    </c:if>
+                    <c:if test = "${dcode == null && pcode == null && mcode != null}">
+                    	<a href="mg_doctor_list">업무관리</a>
+                    </c:if>
                     </li>
                     <li><a href="doctor_search">의료진</a></li>
-                    <li>소통정보</li>
+                    <li><a href="qna_list">소통정보</a></li>
                     <li><a href="notice_list?reqPage=1">공지사항</a></li>
                     <li>
                         <a href="#"><div id="search"></div></a>

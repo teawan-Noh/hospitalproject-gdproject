@@ -84,8 +84,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <div id="side-img"></div>
 	            </div>
 	            <ul id="side-ul">
-	                <li class="side-list">진료 스케줄 조회</li>
-	                <li class="side-list">휴진 신청</li>
+	                <li class="side-list"><a href="schedule_check">진료 스케줄 조회</a></li>
+	                <li class="side-list"><a href="rest">휴진 신청</a></li>
 	                <li class="side-list"><a href="reservation-doctor-list?reqPage=1">예약정보 조회</a></li>
 	            </ul>
             </c:if>
@@ -104,7 +104,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <div id="side-img"></div>
 	            </div>
 	            <ul id="side-ul">
-	                <li class="side-list"><a href="#">의사등록</a></li>
+	                <li class="side-list"><a href="doctor_input">의사등록</a></li>
 	                <li class="side-list"><a href="mg_doctor_list">진료과별 의사조회</a></li>
 	                <li class="side-list"><a href="mg_patient_list">환자조회</a></li>
 	                <li class="side-list"><a href="mg_rest_list">승인관리</a></li>
