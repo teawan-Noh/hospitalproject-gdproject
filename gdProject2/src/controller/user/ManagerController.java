@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dao.ask.ReservationDao;
+import dao.ask.ReservationDaoImpl;
 import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Patient;
@@ -25,7 +29,7 @@ import common.page.PageManager;
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
 					"/mg_patient_list", "/mg_patient_search", "/mg_rest_list", "/mg_rest_search", "/mg_rest_detail",
-					"/mg_rest_approve", "/mg_rest_reject"})
+					"/mg_rest_approve", "/mg_rest_reject", "/ms_reservation_list"})
 public class ManagerController extends HttpServlet{
 
 	@Override
@@ -188,6 +192,10 @@ public class ManagerController extends HttpServlet{
 		else if(action.equals("mg_rest_search")) {
 			
 			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
+		}
+		else if(action.equals("ms_reservation_list")) {
+			
+			dispatcherUrl = "reservation-list?reqPage=1";
 		}
 		else if(action.equals("mg_rest_detail")) {
 			
