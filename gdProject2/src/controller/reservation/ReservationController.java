@@ -67,7 +67,22 @@ public class ReservationController extends HttpServlet{
 		// 로직 처리
 		// 환자로 로그인
 		// reservation, book, reservation-list, reservation-delete, reservation-update
-		if(sessionPcode != 0) {
+		if(action.equals("reservation-detail")) {
+			String user = req.getParameter("user");
+			ReservationDao rdao = new ReservationDaoImpl();
+			int rcode = Integer.parseInt(req.getParameter("rcode"));
+			Map<String, String> rsvInfo = rdao.selectReservationByRcode(rcode);
+	
+			System.out.println(rsvInfo.get("pname"));
+			if(user != null) {
+				req.setAttribute("side", "task");
+			}
+			else {
+				req.setAttribute("side", "reservation");
+			}
+			req.setAttribute("rsvInfo", rsvInfo);
+		}
+		else if(sessionPcode != 0) {
 			if(action.equals("reservation")) {
 				ReservationDao rdao = new ReservationDaoImpl();
 				List<Subject> subjectList = rdao.selectSubjectAll();
@@ -189,21 +204,7 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("rsvList", availableList);
 				
 			}
-			else if(action.equals("reservation-detail")) {
-				String user = req.getParameter("user");
-				ReservationDao rdao = new ReservationDaoImpl();
-				int rcode = Integer.parseInt(req.getParameter("rcode"));
-				Map<String, String> rsvInfo = rdao.selectReservationByRcode(rcode);
-		
-				System.out.println(rsvInfo.get("pname"));
-				if(user != null) {
-					req.setAttribute("side", "task");
-				}
-				else {
-					req.setAttribute("side", "reservation");
-				}
-				req.setAttribute("rsvInfo", rsvInfo);
-			}
+			
 		}
 		// 의사 로그인 필요
 		else if(sessionDcode != 0) {
@@ -236,24 +237,8 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("rsvList", rsvList);
 				req.setAttribute("side", "task");
 			}
-			else if(action.equals("reservation-detail")) {
-				String user = req.getParameter("user");
-				ReservationDao rdao = new ReservationDaoImpl();
-				int rcode = Integer.parseInt(req.getParameter("rcode"));
-				Map<String, String> rsvInfo = rdao.selectReservationByRcode(rcode);
-		
-				System.out.println(rsvInfo.get("pname"));
-				if(user != null) {
-					req.setAttribute("side", "task");
-				}
-				else {
-					req.setAttribute("side", "reservation");
-				}
-				req.setAttribute("rsvInfo", rsvInfo);
-			}
+			
 		}
-		
-		
 		
 		// 페이지 처리
 		String dispatcherUrl = null;
