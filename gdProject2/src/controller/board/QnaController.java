@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.board.QnaDao;
 import dao.board.QnaDaoImpl;
@@ -47,7 +48,6 @@ public class QnaController extends HttpServlet{
 			req.setAttribute("qnaList", qnaList);
 		}
 		else if(action.equals("qna_input")) {
-			
 		}
 		else if(action.equals("qna_save")) {
 			
