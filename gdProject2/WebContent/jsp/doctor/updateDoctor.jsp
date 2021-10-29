@@ -225,6 +225,20 @@ $("#updatebtn").click(function(){
         #sample6_postcode{
         	width: 300px;
         }
+        .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
         
 </style>
 </head>
@@ -233,6 +247,11 @@ $("#updatebtn").click(function(){
 	<div class = "main">
 		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
 		<div class ="content">
+		<ul class="fmenu">
+    		<li><div class="home-img"></div></li>
+    		<li>마이페이지</li>
+    		<li>개인정보수정</li>
+    	</ul>
     	<h1>개인정보수정</h1>
     	<c:forEach var="doctor" items="${doctor}">
         	<form method="post" action="doctor_update?dcode=${doctor.dcode}">
@@ -260,7 +279,7 @@ $("#updatebtn").click(function(){
                 <tr>
                     <th>비밀번호 확인</th>
                     <td>
-                    	<input type="password" name="pwdchk" placeholder="비밀번호를 다시 입력해주세요.">
+                    	<input type="password" name="pwdchk" value = "${doctor.pw}">
                     	<span class="chkResult" id="pwChkSpan"></span>
                     </td>
                 </tr>

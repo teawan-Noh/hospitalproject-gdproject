@@ -61,6 +61,20 @@
                 padding-left: 1em;
                 padding-right: 1em;
             }
+            .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
 
     </style>
         <script>
@@ -77,6 +91,14 @@
                 {
                 	title: '휴진',
                 	start:'<c:out value="${rest.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    var dendataset = [
+        <c:forEach var="den" items="${denList}">
+                {
+                	title: '거절',
+                	start:'<c:out value="${den.restdate}" />',
                 },
         </c:forEach>
     ];
@@ -128,7 +150,12 @@
             	  title: "휴진"
                   , color : "rgb(243, 243, 243)"
                   , textColor : "black"
-              }
+              },{
+            	  events : dendataset,
+            	  color: "white",
+              	  title: "거절"
+                    , textColor : "rgb(70, 145, 140)"
+                }
           ]
           });
         calendar.render();
@@ -141,6 +168,11 @@
   	<div class = "main">
   		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
   		<div class = "content">
+  			<ul class="fmenu">
+            	<li><div class="home-img"></div></li>
+            	<li>업무관리</li>
+            	<li>진료 스케줄 조회</li>
+            </ul>
   		  	<h1>진료 스케줄 조회</h1>
     		<div id="calendar"></div>
   		</div>

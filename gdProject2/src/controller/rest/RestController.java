@@ -63,9 +63,6 @@ public class RestController  extends HttpServlet{
 			System.out.println(reason);
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
-			//int day = Integer.parseInt(req.getParameter("day"));
-			//System.out.println(day);
-			//Rest rest = new Rest(dcode, reason, date, day);
 			Rest rest = new Rest(dcode, reason, date);
 			RestDao dao = new RestDaoImpl();
 			dao.insert(rest);
@@ -78,6 +75,8 @@ public class RestController  extends HttpServlet{
 			req.setAttribute("waitList", waitList);
 			List<Rest> restList = dao.selectRestBydcode("½ÂÀÎ", dcode);
 			req.setAttribute("restList", restList);
+			List<Rest> denList = dao.selectRestBydcode("°ÅÀý", dcode);
+			req.setAttribute("denList", denList);
 			req.setAttribute("side", "task");
 		}
 		

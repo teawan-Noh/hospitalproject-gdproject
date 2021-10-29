@@ -41,9 +41,6 @@
     		border-radius: 45px;
     		margin-left: 20px;
     	}
-    	#icon1 {
-    		background-color: rgb(70, 145, 140);
-    	}
     	#icon2 {
     		background-color: #FFD700;
     	}
@@ -81,6 +78,20 @@
             .fc-h-event {
            		border: none;
             }
+            .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
     </style>
     <script>
     var restdataset = [
@@ -96,6 +107,14 @@
                 {
                 	title: '휴진 승인 대기',
                 	start:'<c:out value="${wait.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    var dendataset = [
+        <c:forEach var="den" items="${denList}">
+                {
+                	title: '거절',
+                	start:'<c:out value="${den.restdate}" />',
                 },
         </c:forEach>
     ];
@@ -125,31 +144,8 @@
               $(el).addClass("rest");
               console.log(el);
            },
-          datesSet: function(dateInfo){
-               let url = "schedule";
-				let dcode = "${dcode}";
-               $.get(url, { dcode: dcode }, function (data) {
-                  console.log(XMLToString(data));
-                   var schedule = $(data).find("schedule");
-                   if (schedule.length > 0) {
-                       $(schedule).each(function (idx, item) {
-                           var restdate = $(item)
-                               .find("restdate")
-                               .text();
-                           if (restdate != "") {
-                               calendar.addEvent({
-                                   title: "휴진",
-                                   start: restdate,
-                                   classNames: ["rest-children"],
-                               });
-                           } 
-                       });   
-                   }
-               });
-           },
-           eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
+           eventSources : [
         	   {
-             	  //휴진일
              	  events : [
                        {
                      	 title: "주말",
@@ -162,24 +158,25 @@
                }
                , 
         	   {
-              	  //휴진일
               	  events : restdataset,
               	  title: "휴진"
                     , color : "rgb(243, 243, 243)"
                     , textColor : "black",
                     	classNames: ["rest-children"]
                 } ,{
-              	  //승인 대기
               	  events : dataset,
               	  title: "승인 대기중"
                     , color : "#FFD700"
                     , textColor : "black"
                     ,classNames: ["rest-children"]
-                }
+                } ,{
+                	  events : dendataset,
+                	  color: "white",
+                  	  title: "거절"
+                        , textColor : "rgb(70, 145, 140)"
+                    }
 
            ],
-          
-        // 달력 날짜를 클릭할 때
            dateClick: function (date) {
               console.log(date);
                var view = date.dayEl;
@@ -191,7 +188,7 @@
                ) {
                    alert("해당 날짜는 신청할 수 없습니다.");
                } else {
-            	  var reason = prompt("사유를 입력해주세요");
+            	  var reason = prompt("휴진 사유를 입력해주세요");
             	  var date = {"date": date.dateStr, "reason": reason};
             	  if(reason){
             		  $.ajax({
@@ -207,9 +204,6 @@
               	                classNames: ["rest-children"],
               	        	});
               	        },
-              	        error:function(jqXHR, textStatus, errorThrown){
-              	            console.log("에러 발생");
-              	        }
               	    });
             	  } else {
             		  return false;
@@ -228,10 +222,14 @@
   	<div class = "main">
   		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
   		<div class = "content">
+  			<ul class="fmenu">
+            	<li><div class="home-img"></div></li>
+            	<li>업무관리</li>
+            	<li>휴진신청</li>
+            </ul>
   		  	<h1>휴진 신청</h1>
     		<div id="calendar"></div>
     		<div class = "icons">
-    			<div class = "icon" id = "icon1"></div> 진료일 
     			<div class = "icon" id = "icon2"></div> 승인 대기중 
     			<div class = "icon" id = "icon3"></div> 휴진 
     		</div>

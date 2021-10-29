@@ -350,6 +350,11 @@ $(function(){
 	<div class = "main">
 		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
 		<div class ="content">
+		<ul class="fmenu">
+        	<li><div class="home-img"></div></li>
+        	<li>업무관리</li>
+        	<li>의사등록</li>
+        </ul>
     	<h1>의사 등록</h1>
         	<form method="post" action="doctor_save">
             	<table>
