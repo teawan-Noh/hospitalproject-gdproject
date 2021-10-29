@@ -1,5 +1,6 @@
 package controller.board;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import common.Sql;
 import common.page.PageDao;
@@ -91,6 +93,33 @@ public class NoticeController extends HttpServlet{
 			NoticeDao dao = new NoticeDaoImpl();
 			dao.insert(notice);
 			
+			//파일
+			String UPLOAD_DIR = "upload";
+			
+			// 서버의 실제 경로
+			String applicationPath = req.getServletContext().getRealPath("");
+			String uploadFilePath = applicationPath + UPLOAD_DIR;
+			
+			System.out.println(" LOG :: [서버 루트 경로] :: " + applicationPath);
+			System.out.println(" LOG :: [파일 저장 경로] :: " + uploadFilePath);
+			
+			File fileSaveDir = new File(uploadFilePath);
+			
+			//파일 경로가 없으면 새로 생성한다
+			if (!fileSaveDir.exists()) {
+				fileSaveDir.mkdirs();
+			}
+			
+			String fileName=null;
+			
+			
+			Part part = req.getPart("filename");
+		    fileName = getFileName(part);
+		    System.out.println( "LOG :: [업로드 파일 경로] :: " + uploadFilePath + File.separator + fileName);
+		    part.write(uploadFilePath + File.separator + fileName);
+		    
+		    
+		    req.setAttribute("fileName", fileName);
 			
 
 		}else if(action.equals("notice_update_input")) {
@@ -152,5 +181,27 @@ public class NoticeController extends HttpServlet{
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
 		dispatcher.forward(req, resp);
 	}
+	
+	private void getPartConfig(Part part) {
+		System.out.println("------------------------------------------------------------");
+		System.out.println(" LOG :: [HTML태그의 폼태그 이름] :: " + part.getName());
+		System.out.println(" LOG :: [ 파일 사이즈 ] :: " + part.getSize());
+		for(String name : part.getHeaderNames()) {
+			System.out.println(" LOG :: HeaderName :: " + name + ", HeaderValue :: " + part.getHeader(name) + "\n");
+		}
+		System.out.println("------------------------------------------------------------");
+	}
+	private String getFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        System.out.println(" LOG :: content-disposition 헤더 :: = "+contentDisp);
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+            	System.out.println(" LOG :: 파일 이름 :: " + token);
+                return token.substring(token.indexOf("=") + 2, token.length()-1);
+            }
+        }
+        return "";
+    }
 
 }

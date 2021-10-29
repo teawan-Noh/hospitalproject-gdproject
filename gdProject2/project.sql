@@ -113,6 +113,7 @@ delete sequence mcode;
 insert into files values(fcode.nextval,?, to_date(?, 'YYYY-mm-dd'), ?,?,?)
 
 create sequence fcode;
+select * from files;
 
 select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
 

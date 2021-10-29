@@ -10,5 +10,5 @@ public interface FileDao {
 	void update(Files files);
 	
 	//게시글 파일 삭제
-	void delete(long ncode);
+	void delete(int ncode);
 }

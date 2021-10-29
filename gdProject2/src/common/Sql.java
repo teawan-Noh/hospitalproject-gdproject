@@ -130,7 +130,7 @@ public class Sql {
 			"delete from files where ncode = ?";
 	//게시글 작성 파일 업로드
 	public static final String NOTICE_INSERT_FILE_SQL =
-				"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
+				"insert into files values(fcode.nextval,?,sysdate,?,?,?)";
 	//게시글 상세보기 파일
 	public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";
