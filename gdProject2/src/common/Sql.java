@@ -170,7 +170,7 @@ public class Sql {
 		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update qna set subject = ?, content = ? whereq no = ?";
+		= "update qna set title = ?, content = ? whereq no = ?";
 
 	public static final String QNA_DELETE_SQL 
 		= "delete from qna where qno = ?";

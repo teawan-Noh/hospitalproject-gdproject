@@ -120,8 +120,8 @@
     		</div>
     		<div class="writeButton">
 				<c:if test="${pcode == null}">
-					<!-- <a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a> -->
-					<a href="qna_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
+					<a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
+					<!-- <a href="qna_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a> -->
 				</c:if>
 				<c:if test="${pcode != null}">
 					<a href="qna_input"><button type="submit" class="submitbtn">글 작성</button></a>
