@@ -390,7 +390,7 @@ insert into manager (mcode, name, id, pw)
 insert into manager (mcode, name, id, pw)
    values (5, '매니저5', 'manager5', '1234m');
 
-select * from subject;
+select * from subject; 
 insert into subject values(1, '가가가과', '국가안전보장에 관련되는 대외정책·군사정책과 국내정책의 수립에 관하여 국무회의의 심의에 앞서 대통령의 자문에 응하기 위하여 국가안전보장회의를 둔다.', '031-123-4567');
 insert into subject values(2, '나나나과', '행정각부의 장은 국무위원 중에서 국무총리의 제청으로 대통령이 임명한다. 대통령이 제1항의 기간내에 공포나 재의의 요구를 하지 아니한 때에도 그 법률안은 법률로서 확정된다.', '031-456-7890');
 insert into subject values(3, '다다다과', '국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과 그 지원등 필요한 계획을 수립·시행하여야 한다. 대법관의 임기는 6년으로 하며, 법률이 정하는 바에 의하여 연임할 수 있다.', '031-321-7654');
