@@ -609,9 +609,13 @@ select * from rest
 
 create sequence qna_seq
 
+select p.pcode, count(*) from patient p right outer join reservation r on p.pcode = r.pcode group by p.pcode;
 
-
-
+SELECT p.pcode pcode, p.name name, p.birth birth, count(r.pcode) cnt
+FROM patient p 
+LEFT OUTER JOIN reservation r 
+ON p.pcode = r.pcode 
+GROUP BY p.pcode, p.name, p.birth;
 
 
 

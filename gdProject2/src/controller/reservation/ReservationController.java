@@ -82,6 +82,9 @@ public class ReservationController extends HttpServlet{
 			if(user != null) {
 				req.setAttribute("side", "task");
 			}
+			else if(sessionMcode != 0){
+				req.setAttribute("side", "manager");
+			}
 			else {
 				req.setAttribute("side", "reservation");
 			}
@@ -113,8 +116,12 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("dcode", dcode);
 				req.setAttribute("dname", dname);
 		
-				
-				req.setAttribute("side", "reservation");
+				if(sessionMcode == 0) {
+					req.setAttribute("side", "reservation");
+				}
+				else {
+					req.setAttribute("side", "manager");
+				}
 				req.setAttribute("subjectList", subjectList);
 			}
 			else if(action.equals("book")) {
@@ -149,7 +156,12 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("pageGroupResult", pgr);
 				
 				req.setAttribute("rsvList", rsvList);
-				req.setAttribute("side", "reservation");
+				if(sessionMcode == 0) {
+					req.setAttribute("side", "reservation");
+				}
+				else {
+					req.setAttribute("side", "manager");
+				}
 			}
 			else if(action.equals("reservation-delete")) {
 				ReservationDao rdao = new ReservationDaoImpl();
