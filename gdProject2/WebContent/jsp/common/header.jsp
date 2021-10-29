@@ -106,7 +106,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<li>|</li>
 					<li><a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a></li>
 				</c:if>
-				<c:if test = "${dcode != null}">
+				<c:if test = "${sessionScope.dcode != null}">
 					<li>|</li>
 					<a href = "mypage?dcode=${dcode}">마이페이지</a>
 				</c:if>
