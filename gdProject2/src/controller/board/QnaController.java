@@ -54,7 +54,7 @@ public class QnaController extends HttpServlet{
 				int pcode = (int)value;
 				
 				req.setAttribute("pcode", pcode);
-				System.out.println(pcode + "확인222");
+				System.out.println(pcode + "list에서 확인");
 			}
 		}
 		else if(action.equals("qna_input")) {
@@ -125,15 +125,18 @@ public class QnaController extends HttpServlet{
 		else if(action.equals("qna_detail")) {
 			HttpSession session = req.getSession();
 			//여기가 안돌아가
+			
 			if(session.getAttribute("pcode") != null) {
 				Object value = session.getAttribute("pcode");
 				int pcodeValue= (int)value;
 				int pcode = pcodeValue;
 				
-				System.out.println(  "2dc확인");
+				System.out.println( pcode + "유저로그인 되있을때 피코드확인");
 				req.setAttribute("pcode", pcode);
-			}else{
-				req.setAttribute("pcode", 0);
+			}else if(session.getAttribute("pcode") == null){
+				int pcode = 0;
+				System.out.println( pcode + "유저로그인 안되있을때 피코드확인");
+				req.setAttribute("pcode", pcode);
 			}
 			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
 			

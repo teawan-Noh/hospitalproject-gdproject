@@ -49,8 +49,10 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_UPDATE_SQL);
-			//update memo set name = ?, age = ? where memoid = ?
+			//update qna set title = ?, content = ? whereq no = ?
+			pStatement.setString(1, qna.getTitle()); // ?값 셋팅 
 			pStatement.setString(1, qna.getContent()); // ?값 셋팅 
+			pStatement.setString(1, qna.getImg()); // ?값 셋팅 
 			//insert, delete, update에 사용
 			pStatement.executeUpdate();
 			
