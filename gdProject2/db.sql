@@ -606,3 +606,13 @@ from notice n inner join manager m on n.mcode = m.mcode) where rn between 1 and 
 delete from rest
 alter table rest modify day number
 select * from rest
+
+create sequence qna_seq
+
+
+
+
+
+
+
+

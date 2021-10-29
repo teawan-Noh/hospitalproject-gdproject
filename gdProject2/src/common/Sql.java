@@ -137,20 +137,20 @@ public class Sql {
 	//ntw
 	//qna Å×ÀÌºí
 	public static final String QNA_SELECT_ALL_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
+		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
 			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_NICKNAME_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
+		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
 			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " where p.nickname like ?"
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_TITLE_OR_CONTENT_SQL 
-	= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
+	= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
 			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " where q.title like ? or q.content like ?"
@@ -160,7 +160,7 @@ public class Sql {
 		= "select * from qna where subject like ? order by no desc";
 
 	public static final String QNA_SELECT_BY_QNO_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
+		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
 			+ " from qna q" 
 			+ " left outer join patient p on q.pcode = p.pcode" 
 			+ " left outer join comments c on q.qno = c.qno" 

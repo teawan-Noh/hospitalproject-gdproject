@@ -109,6 +109,7 @@ public class QnaDaoImpl implements QnaDao{
 				
 				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
 				hm.put("title", resultSet.getString("title"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				hm.put("nickname", resultSet.getString("nickname"));
 				hm.put("writedate", resultSet.getString("writedate"));
 				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
@@ -149,6 +150,7 @@ public class QnaDaoImpl implements QnaDao{
 				
 				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
 				hm.put("title", resultSet.getString("title"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				hm.put("nickname", resultSet.getString("nickname"));
 				hm.put("writedate", resultSet.getString("writedate"));
 				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
@@ -188,6 +190,7 @@ public class QnaDaoImpl implements QnaDao{
 				
 				qnaDetail.put("qno", Integer.toString(resultSet.getInt("qno")));
 				qnaDetail.put("title", resultSet.getString("title"));
+				qnaDetail.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				qnaDetail.put("nickname", resultSet.getString("nickname"));
 				qnaDetail.put("writedate", resultSet.getString("writedate"));
 				qnaDetail.put("cnt", Integer.toString(resultSet.getInt("cnt")));

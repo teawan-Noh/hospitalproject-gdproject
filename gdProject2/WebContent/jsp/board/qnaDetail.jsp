@@ -120,8 +120,8 @@
 	   			</table>
     		</div>
     		<c:set var="writer" value="${qnadetail.pcode}" />
-    		<c:set var="user" value="${pcode}" />
-			<%-- <c:if test="${writer eq user}"> --%>
+    		<c:set var="user" value="${userpcode}" />
+			<c:if test="${writer == user}">
     		<div class="modify_delete_button">
     			<a href="qna_modify?qno=${qnadetail.qno}">
     				<button type = "submit" class="submitbtn">수정</button>
@@ -130,9 +130,10 @@
     				<button type = "submit" class="submitbtn">삭제</button>
 		   		</a>
 	    	</div>
-	    	<%-- </c:if> --%>
+	    	</c:if>
 	    	<c:set var="ccontent" value="${qnadetail.ccontent}" />
-			<c:if test="${ccontent == null}">
+	    	<c:set var="mcode" value="${managerpcode}" />
+			<c:if test="${ccontent == null && mcode != null}">
 			
 			<form method="post" action="comment_save">
 			<input type="text" name="qno" value="${qnadetail.qno}" hidden="hidden"/>
