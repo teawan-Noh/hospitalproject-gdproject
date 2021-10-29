@@ -132,7 +132,8 @@
 	    	</div>
 	    	</c:if>
 	    	<c:set var="ccontent" value="${qnadetail.ccontent}" />
-			<c:if test="${ccontent == null}">
+	    	<c:set var="mcode" value="${managerpcode}" />
+			<c:if test="${ccontent == null && mcode != null}">
 			
 			<form method="post" action="comment_save">
 			<input type="text" name="qno" value="${qnadetail.qno}" hidden="hidden"/>

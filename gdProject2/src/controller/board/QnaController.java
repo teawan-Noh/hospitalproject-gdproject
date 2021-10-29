@@ -142,6 +142,11 @@ public class QnaController extends HttpServlet{
 				System.out.println( pcode + "유저로그인 안되있을때 피코드확인");
 				req.setAttribute("pcode", pcode);
 			}
+			if(session.getAttribute("mcode") != null) {
+				Object value = session.getAttribute("mcode");
+				int mcode = (int)value;
+				req.setAttribute("managerpcode", mcode);
+			}
 			
 			Qna qna = dao.selectCntByQno(qno);
 			
@@ -149,9 +154,6 @@ public class QnaController extends HttpServlet{
 			
 			Qna qna2 = new Qna(qno ,cnt);
 			dao.cntUpdate(qna2);
-			
-			
-			
 		}
 		else if(action.equals("qna_modify")) {
 			
