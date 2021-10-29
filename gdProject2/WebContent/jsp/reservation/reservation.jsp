@@ -45,7 +45,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			padding: 0;
 		}
 		.home-img{
-			background-image: url("../img/home.png");
+			background-image: url("img/home.png");
 		    background-size: cover;
 		    background-position: center;
 		    background-repeat: no-repeat;
