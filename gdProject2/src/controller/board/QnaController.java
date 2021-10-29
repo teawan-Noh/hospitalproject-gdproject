@@ -125,6 +125,10 @@ public class QnaController extends HttpServlet{
 		else if(action.equals("qna_detail")) {
 			HttpSession session = req.getSession();
 			//여기가 안돌아가
+			QnaDao dao = new QnaDaoImpl();
+			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
+			HashMap qnaDetail = dao.selectByQno(qno);
+			req.setAttribute("qnadetail", qnaDetail);
 			
 			if(session.getAttribute("pcode") != null) {
 				Object value = session.getAttribute("pcode");
@@ -132,15 +136,13 @@ public class QnaController extends HttpServlet{
 				int pcode = pcodeValue;
 				
 				System.out.println( pcode + "유저로그인 되있을때 피코드확인");
-				req.setAttribute("pcode", pcode);
+				req.setAttribute("userpcode", pcode);
 			}else if(session.getAttribute("pcode") == null){
 				int pcode = 0;
 				System.out.println( pcode + "유저로그인 안되있을때 피코드확인");
 				req.setAttribute("pcode", pcode);
 			}
-			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
 			
-			QnaDao dao = new QnaDaoImpl();
 			Qna qna = dao.selectCntByQno(qno);
 			
 			int cnt = qna.getCnt()+1;
@@ -148,8 +150,8 @@ public class QnaController extends HttpServlet{
 			Qna qna2 = new Qna(qno ,cnt);
 			dao.cntUpdate(qna2);
 			
-			HashMap qnaDetail = dao.selectByQno(qno);
-			req.setAttribute("qnadetail", qnaDetail);
+			
+			
 		}
 		else if(action.equals("qna_modify")) {
 			
