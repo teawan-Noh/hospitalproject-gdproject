@@ -200,8 +200,7 @@ public class ManagerDaoImpl implements ManagerDao {
 				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				hm.put("name", resultSet.getString("name"));
 				hm.put("birth", resultSet.getString("birth"));
-				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
-				
+				hm.put("rcnt", Integer.toString(resultSet.getInt("rcnt")));
 				patientList.add(hm);
 			}
 			
@@ -234,9 +233,9 @@ public class ManagerDaoImpl implements ManagerDao {
 				HashMap<String, String> hm = new HashMap<>();
 				
 				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
-				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
 				hm.put("name", resultSet.getString("name"));
 				hm.put("birth", resultSet.getString("birth"));
+				hm.put("rcnt", Integer.toString(resultSet.getInt("rcnt")));
 				
 				patientList.add(hm);
 			}

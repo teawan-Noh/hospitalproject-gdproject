@@ -53,13 +53,15 @@ ALTER TABLE patient
       PRIMARY KEY (
          pcode
       );
-
+select * from reservation
+drop table reservation
 /* 예약 */
 CREATE TABLE reservation (
    rcode NUMBER NOT NULL, /* 예약 번호 */
    pcode NUMBER NOT NULL, /* 회원 코드 */
    dcode NUMBER NOT NULL, /* 의사 코드 */
-   rsvdate DATE /* 예약 일자 */
+   rsvdate DATE, /* 예약 일자 */
+   state varchar(10) /* 예약 상태 */
 );
 
 CREATE UNIQUE INDEX PK_reservation

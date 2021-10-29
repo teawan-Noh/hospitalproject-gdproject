@@ -201,17 +201,21 @@ public class Sql {
 		= "delete from doctor where dcode = ?";
 	//환자조회
 	public static final String MG_PATIENT_SELECT_ALL_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
-			+ " on p.pcode = r.pcode" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " FROM patient p" 
+			+ " LEFT OUTER JOIN reservation r" 
+			+ " ON p.pcode = r.pcode" 
+			+ " GROUP BY p.pcode, p.name, p.birth"
 			+ " order by p.name asc";
 	
 	public static final String MG_PATIENT_SELECT_BY_NAME_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " from patient p"
+			+ " left outer join reservation r" 
 			+ " on p.pcode = r.pcode" 
 			+ " where name like ?" 
-			+ " order by name asc";
+			+ " GROUP BY p.pcode, p.name, p.birth"
+			+ " order by p.name asc";
 	
 	//승인관리
 	public static final String MG_REST_SELECT_ALL_SQL 
