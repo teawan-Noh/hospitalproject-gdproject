@@ -11,7 +11,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             name="viewport"
             content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
         />
-
+ 
         <title>여기에 제목을 입력하십시오</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -284,9 +284,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             classNames: ["rest-children"],
                                         });
                                     } else if (day != "") {
+                                    	console.log(String(Number(day) - 1));
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(Number(day) + 1)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }
@@ -543,7 +544,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     } else if (day != "") {
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(day)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }

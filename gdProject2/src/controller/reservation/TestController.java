@@ -72,7 +72,7 @@ public class TestController extends HttpServlet{
 
 		
 		if(action.equals("test")) {
-			System.out.println(req.getContextPath());
+			System.out.println(req.getServletContext().getRealPath(""));
 		}
 		else if(action.equals("upload")) {
 			// 서버의 실제 경로
@@ -92,12 +92,10 @@ public class TestController extends HttpServlet{
 
 	        String fileName = null;
 	        //Get all the parts from request and write it to the file on server
-	        for (Part part : req.getParts()) {
-	        	getPartConfig(part);
-	            fileName = getFileName(part);
-	            System.out.println(" LOG :: [ 업로드 파일 경로 ] :: " + uploadFilePath + File.separator + fileName);
-	            part.write(uploadFilePath + File.separator + fileName);
-	        }
+	        Part part = req.getPart("filename");
+            fileName = getFileName(part);
+            System.out.println(" LOG :: [ 업로드 파일 경로 ] :: " + uploadFilePath + File.separator + fileName);
+            part.write(uploadFilePath + File.separator + fileName);
 	        req.setAttribute("fileName", fileName);
 			//1. 유일한 파일이름을 만든다.
 			//2. db에 정보를 저장한다.
@@ -112,7 +110,7 @@ public class TestController extends HttpServlet{
 			String uploadFilePath = context.getRealPath(UPLOAD_DIR);
 			String filePath = uploadFilePath + File.separator + fileName;
 			
-			res.setContentType("image/jpeg");
+			res.setContentType("application/octet-stream");
 			byte[] image = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
 			res.getOutputStream().write(image);
 		}

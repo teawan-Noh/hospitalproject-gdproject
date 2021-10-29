@@ -160,7 +160,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             }
         </style>
         <script>
-            $(function () {
+            $(function () { 
                 $(document).on("click", "#rsv-delete", function(){
                 	if(confirm("정말 예약을 취소하시겠습니까?") == true){
                 		alert("예약이 취소되었습니다.");
