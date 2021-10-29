@@ -111,10 +111,10 @@
         <c:forEach var="wait" items="${waitList}">
         {
         	title: '승인 대기',
-        	start:'<c:out value="${wait.day}" />',
+        	daysOfWeek:['<c:out value="${wait.day}" />'],
         },
-</c:forEach>
-];
+		</c:forEach>
+	];
     //요일 클릭시 이벤트 발생(선택한 요일이 디비에 들어가게 해야 함)
     $(function(){
     	 $('#calendar').on('click', '.fc-col-header-cell-cushion', function(e) {
@@ -213,13 +213,9 @@
               
               {
             	  //승인 대기 요일(아직 미구현)
-            	  events : [
-                      {
-                    	 title: "승인 대기중",
-                         daysOfWeek: [restdayset],  
-                      }
-                  ]
-                  , color : "#FFD700"
+            	  events : restdayset
+                   ,title: "승인 대기중",
+                  color : "#FFD700"
                   , textColor : "black"
               }
           ],
