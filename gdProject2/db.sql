@@ -595,6 +595,8 @@ select * from rest;
 
 update rest set approved = '½ÂÀÎ'
 insert into rest values (6, 4, sysdate, '½ÂÀÎ', 'ÈŞ°¡', to_date('2021-11-30','yyyy-mm-dd'), null);
+insert into rest values (7, 4, sysdate, '½ÂÀÎ', 'ÈŞ°¡', null, 6);
+
 
 select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between 1 and 4
 
