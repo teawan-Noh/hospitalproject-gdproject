@@ -124,7 +124,7 @@ public class QnaController extends HttpServlet{
 		}
 		else if(action.equals("qna_detail")) {
 			HttpSession session = req.getSession();
-			//여기가 안돌아가
+			
 			QnaDao dao = new QnaDaoImpl();
 			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
 			HashMap qnaDetail = dao.selectByQno(qno);
@@ -165,16 +165,38 @@ public class QnaController extends HttpServlet{
 		}
 		else if(action.equals("qna_update")) {
 			
+			int qno = Integer.parseInt(req.getParameter("qno"));
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			String image = req.getParameter("image");
 			
-			Qna qna = new Qna(title, content, image);
+			Qna qna = new Qna(title, content, image, qno);
 			
 			QnaDao dao = new QnaDaoImpl();
 			dao.update(qna);
 			
+			HttpSession session = req.getSession();
 			
+			HashMap qnaDetail = dao.selectByQno(qno);
+			req.setAttribute("qnadetail", qnaDetail);
+			
+			if(session.getAttribute("pcode") != null) {
+				Object value = session.getAttribute("pcode");
+				int pcodeValue= (int)value;
+				int pcode = pcodeValue;
+				
+				System.out.println( pcode + "유저로그인 되있을때 피코드확인");
+				req.setAttribute("userpcode", pcode);
+			}else if(session.getAttribute("pcode") == null){
+				int pcode = 0;
+				System.out.println( pcode + "유저로그인 안되있을때 피코드확인");
+				req.setAttribute("pcode", pcode);
+			}
+			if(session.getAttribute("mcode") != null) {
+				Object value = session.getAttribute("mcode");
+				int mcode = (int)value;
+				req.setAttribute("managerpcode", mcode);
+			}
 		}
 		else if(action.equals("qna_delete")) {
 			

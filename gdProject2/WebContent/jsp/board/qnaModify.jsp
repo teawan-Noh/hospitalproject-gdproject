@@ -71,7 +71,7 @@
         	</div>
     		
     		<div class = "content_body">
-    			<form method="post" action="qna_save">
+    			<form method="post" action="qna_update">
 				<table border="1" class="table">
 				<tbody>
 					<tr>
