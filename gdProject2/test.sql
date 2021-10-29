@@ -397,7 +397,7 @@ insert into subject values(3, '다다다과', '국가는 농업 및 어업을 보호·육성하기 
 insert into subject values(4, '라라라과', '공무원의 신분과 정치적 중립성은 법률이 정하는 바에 의하여 보장된다. 국회는 법률에 저촉되지 아니하는 범위안에서 의사와 내부규율에 관한 규칙을 제정할 수 있다.', '031-987-6543');
 insert into subject values(5, '마마마과', '누구든지 병역의무의 이행으로 인하여 불이익한 처우를 받지 아니한다. 혼인과 가족생활은 개인의 존엄과 양성의 평등을 기초로 성립되고 유지되어야 하며, 국가는 이를 보장한다.', '031-876-5432');
 
-select * from patient;
+select * from patient; 
 insert into PATIENT values (1, 'aaa1234', '1234', '환자1', '홍길동', '010-1111-1111', to_date('1997-10-18','yyyy-mm-dd'), '남', 'pa123@sample.com', 12345, '경기도', '광명시');
 insert into PATIENT values (2, 'bbb1234', '1234', '환자2', '스폰지밥', '010-2345-1111', to_date('1992-2-3','yyyy-mm-dd'), '여', 'sdf@sample.com', 2222, '서울특별시', '구로구');
 insert into PATIENT values (3, 'ccc1234', '1234', '환자3', '징징이', '010-1111-1235', to_date('1991-11-21','yyyy-mm-dd'), '여', 'asdf@sample.com', 33333, '충청남도', '공주시');

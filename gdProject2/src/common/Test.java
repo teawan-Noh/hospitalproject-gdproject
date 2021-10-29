@@ -52,7 +52,7 @@ public class Test {
 		String reason = "ÈÞ°¡";
 		String restdate = "2021-11-03";
 		String day = null;
-		Rest rest = new Rest(dcode, reason, restdate, day);
+		//Rest rest = new Rest(dcode, reason, restdate, day);
 		//rsdao.insert(rest);
 		
 		List<Rest> restList = rsdao.selectRestBydcode("´ë±â", 3);

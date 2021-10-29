@@ -66,6 +66,9 @@ public class ReservationController extends HttpServlet{
 		int sessionDcode = dcodeObj == null ? 0 : Integer.parseInt(dcodeObj.toString());
 		int sessionMcode = mcodeObj == null ? 0 : Integer.parseInt(mcodeObj.toString());
 		
+		System.out.println("mcode is : " + sessionMcode);
+		System.out.println("dcode is : " + sessionDcode);
+		System.out.println("pcode is : " + sessionPcode);
 		// 로직 처리
 		// 환자로 로그인
 		// reservation, book, reservation-list, reservation-delete, reservation-update
@@ -90,7 +93,8 @@ public class ReservationController extends HttpServlet{
 				ReservationDao rdao = new ReservationDaoImpl();
 				List<Subject> subjectList = rdao.selectSubjectAll();
 				
-				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
+				
+				int pcode = req.getParameter("pcode") == null ? sessionPcode : Integer.parseInt(req.getParameter("pcode")); // req.getParameter("pcode");
 				int rcode = req.getParameter("rcode") == null ? 0 : Integer.parseInt(req.getParameter("rcode"));
 
 
@@ -132,8 +136,8 @@ public class ReservationController extends HttpServlet{
 		
 				ReservationDao rdao = new ReservationDaoImpl();
 				PageDao pdao = new PageDaoImpl();
-		
-				int pcode = sessionPcode == 0 ? Integer.parseInt(req.getParameter("pcode")) : sessionPcode; // req.getParameter("pcode");
+				System.out.println(req.getParameter("pcode"));
+				int pcode = req.getParameter("pcode") == null ? sessionPcode : Integer.parseInt(req.getParameter("pcode")); // req.getParameter("pcode");
 				
 				List<Map<String, String>> rsvList = rdao.selectReservationPage(pcode, requestPage);
 				int cnt = pdao.getCountPatient(pcode);
@@ -141,6 +145,7 @@ public class ReservationController extends HttpServlet{
 				PageManager pm = new PageManager(requestPage);
 				PageGroupResult pgr = pm.getPageGroupResult(cnt);
 				
+				req.setAttribute("pcode", pcode);
 				req.setAttribute("pageGroupResult", pgr);
 				
 				req.setAttribute("rsvList", rsvList);
@@ -247,7 +252,7 @@ public class ReservationController extends HttpServlet{
 		String dispatcherUrl = null;
 		// reservation, book, reservation-list, reservation-delete, reservation-update
 
-		if(sessionPcode != 0 && sessionDcode == 0) {
+		if(sessionPcode != 0 || sessionMcode != 0) {
 			if(action.equals("reservation")) {
 				dispatcherUrl = "jsp/reservation/reservation.jsp";
 			}

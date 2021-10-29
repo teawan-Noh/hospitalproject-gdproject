@@ -127,6 +127,7 @@ public class NoticeDaoImpl implements NoticeDao {
 			while(resultSet.next()) {
 				HashMap<String,Object> hash = new HashMap<>();
 				
+				hash.put("rn", resultSet.getInt("rn"));
 				hash.put("ncode", resultSet.getInt("ncode"));
 				hash.put("title", resultSet.getString("title"));
 				hash.put("name", resultSet.getString("name"));

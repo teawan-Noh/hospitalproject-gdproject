@@ -7,11 +7,11 @@ public class Rest {
 	private String approved;
 	private String reason;
 	private String restdate;
-	private String day;
+	private int day;
 	
 	public Rest() {}
 
-	public Rest(int dcode, String reason, String restdate, String day) {
+	public Rest(int dcode, String reason, String restdate, int day) {
 
 		super();
 		this.restdate = restdate;
@@ -68,11 +68,11 @@ public class Rest {
 		this.restdate = restdate;
 	}
 
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
 
-	public void setDay(String day) {
+	public void setDay(int day) {
 		this.day = day;
 	}
 

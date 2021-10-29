@@ -18,8 +18,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	//비밀번호 일치여부 판단
-	$("input[name='pwChk']").focusout(function(){
+	
+	
+	$("#save").click(function(){
 		var pw_value = $("input[name='pw']").val().replace(/\s/gi, "");
 		var pwChk_value = $("input[name='pwChk']").val().replace(/\s/gi, "");
 	
@@ -29,17 +30,22 @@ $(function(){
 	
 		if(!regResult){
 			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
+			$("#pwChkSpan").html("다시 입력해주세요.");
+			$("#pwChkSpan").css({"color":"tomato"});
 			$("input[name='pw']").val('');
+			$("input[name='pwChk']").val('');
 			$("input[name='pw']").focus();
 			return false;
 		}
 		
 		//일치여부
 		if(pw_value != pwChk_value){
-			$("#pwChkSpan").html("일치하지 않습니다.");
+			alert('비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
+			$("#pwChkSpan").html("다시 입력해주세요.");
 			$("#pwChkSpan").css({"color":"tomato"});
 			$('#pw').val('');
 			$('#pwChk').val('');
+			$("input[name='pw']").focus();
 			return false;
 		}else if(pw_value == pwChk_value){
 			$("#pwChkSpan").html("일치합니다.");
@@ -55,29 +61,6 @@ $(function(){
 		if(!pwChk_value){
 			alert("비밀번호 확인을 입력해주세요.")
 			$("#pwChkSpan").html("");
-			return false;
-		}
-	
-	});
-	
-	$("#save").click(function(){
-		//비밀번호
-		var pw_value = $("input[name='pw']").val().replace(/\s/gi, "");
-		
-		if(!pw_value){
-			alert("비밀번호를 입력해주세요.")
-			$("input[name='pw']").focus();
-			$("input[name='pw']").val('');
-			return false;
-		}
-		
-		//비밀번호 확인
-		var pwChk_value = $("input[name='pwChk']").val().replace(/\s/gi, "");
-		
-		if(!pwChk_value){
-			alert("비밀번호 확인을 입력해주세요.")
-			$("input[name='pwChk']").focus();
-			$("input[name='pwChk']").val('');
 			return false;
 		}
 		

@@ -17,7 +17,7 @@
         <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='patient_login_input'">
+            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
                 <h3 class="menu-title">예약</h3>
                 <p class="menu-content">진료 예약을 하실 수 있습니다.</p>
             </div>
@@ -67,21 +67,6 @@ function carousel() {
   x[myIndex-1].style.display = "block";  
   setTimeout(carousel, 3000);
 }
-
-$(function(){
-    
-   $("#patientUpdate").click(function(){
-      var inputString = prompt('현재 비밀번호를 입력해주세요.');
-      $.ajax({
-           type: 'POST',
-           url: 'patient_detail?pcode=${pcode}',
-           data: {'prompt':inputString},
-           success: console.log("prompt 값 전송 성공")
-         });
-
-   });
-    
-});
 </script>
 <jsp:include page="jsp/common/footer.jsp"></jsp:include>
 
