@@ -619,5 +619,19 @@ GROUP BY p.pcode, p.name, p.birth;
 
 select * from reservation;
 
+select * from doctor;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

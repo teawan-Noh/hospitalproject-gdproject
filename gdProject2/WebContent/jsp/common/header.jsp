@@ -113,12 +113,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </ul>
                 <ul id="nav-menu">
                     <li>
-                    <a href="reservation">예약
-                    </a>
-                    <c:if test = "${dcode != null && pcode == null && mcode == null}">
+                    <c:if test="${sessionScope.dcode == null && sessionScope.mcode == null }">
+                    	<a href="reservation">예약</a>
+                    </c:if>
+                    <c:if test = "${sessionScope.dcode != null && sessionScope.pcode == null && sessionScope.mcode == null}">
                     	<a href="schedule_check">업무관리</a>
                     </c:if>
-                    <c:if test = "${dcode == null && pcode == null && mcode != null}">
+                    <c:if test = "${sessionScope.dcode == null && sessionScope.pcode == null && sessionScope.mcode != null}">
                     	<a href="mg_doctor_list">업무관리</a>
                     </c:if>
                     </li>
