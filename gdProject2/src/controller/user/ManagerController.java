@@ -193,10 +193,6 @@ public class ManagerController extends HttpServlet{
 			
 			dispatcherUrl = "jsp/manager/managerRestApprovalList.jsp";
 		}
-		else if(action.equals("ms_reservation_list")) {
-			
-			dispatcherUrl = "reservation-list?reqPage=1";
-		}
 		else if(action.equals("mg_rest_detail")) {
 			
 			dispatcherUrl = "jsp/manager/managerRestApprovalDetail.jsp";
