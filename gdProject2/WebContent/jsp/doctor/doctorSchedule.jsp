@@ -67,7 +67,7 @@
     var dataset = [
         <c:forEach var="wait" items="${waitList}">
                 {
-                	title: '승인 대기',
+                	title: '휴진 승인 대기',
                 	start:'<c:out value="${wait.restdate}" />',
                 },
         </c:forEach>

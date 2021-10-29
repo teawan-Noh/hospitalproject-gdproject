@@ -55,6 +55,7 @@ public class RestController  extends HttpServlet{
 			List<Rest> denList = dao.selectRestBydcode("°ÅÀý", dcode);
 			req.setAttribute("denList", denList);
 			req.setAttribute("side", "task");
+			req.setAttribute("dcode", dcode);
 		} else if(action.equals("rest_input")) {
 			String date = req.getParameter("date");
 			System.out.println(date);

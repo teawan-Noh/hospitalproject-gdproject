@@ -83,14 +83,6 @@
             }
     </style>
     <script>
-    var dataset = [
-        <c:forEach var="wait" items="${waitList}">
-                {
-                	title: '승인 대기',
-                	start:'<c:out value="${wait.restdate}" />',
-                },
-        </c:forEach>
-    ];
     var restdataset = [
         <c:forEach var="rest" items="${restList}">
                 {
@@ -99,66 +91,18 @@
                 },
         </c:forEach>
     ];
-    var dendataset = [
-        <c:forEach var="den" items="${denList}">
+    var dataset = [
+        <c:forEach var="wait" items="${waitList}">
                 {
-                	title: '진료',
-                	start:'<c:out value="${rest.restdate}" />',
+                	title: '휴진 승인 대기',
+                	start:'<c:out value="${wait.restdate}" />',
                 },
         </c:forEach>
     ];
-    var restdayset = [
-        <c:forEach var="wait" items="${waitList}">
-        {
-        	title: '승인 대기',
-        	daysOfWeek:['<c:out value="${wait.day}" />'],
-        },
-		</c:forEach>
-	];
-    //요일 클릭시 이벤트 발생(선택한 요일이 디비에 들어가게 해야 함)
-    $(function(){
-    	 $('#calendar').on('click', '.fc-col-header-cell-cushion', function(e) {
-    		 var reason = "정기휴진";
-    	     let days = $(this).text().toLowerCase();
-    	     alert(days);
-    	     switch(days){
-    	     case "월": days = 1;
-    	      	break;
-    	     case "화": days = 2;
-   	      		break;
-    	     case "수": days = 3;
-   	      		break;
-    	     case "목": days = 4;
-   	      		break;
-    	     case "금": days = 5;
-   	     		break;
-    	     case "토": days = 6;
-   	      		break;
-    	     case "일": days = 7;
-   	      		break;
-    	     }
-    	     alert(days);
-    	     var day = {"day": days, "reason": reason}
-    	     $.ajax({
-       	        url:"rest_input",
-       	        type:'POST',
-       	        data: day,
-       	        success:function(data){
-       	            alert("완료!");
-       	        },
-       	        error:function(jqXHR, textStatus, errorThrown){
-       	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-       	        }
-       	    });
-    	     $('.fc-col-header-cell-cushion').removeClass('selected')
-    	                 .filter('.fc-col-header-cell-cushion-' + day)
-    	                 .addClass('selected')
-    	 });
-    });
     $(function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-        	height: '700px', // calendar 높이 설정
+        	height: '800px', // calendar 높이 설정
         	expandRows: true, // 화면에 맞게 높이 재설정
             slotMinTime: "00:00", // Day 캘린더에서 시작 시간
             slotMaxTime: "23:59", // Day 캘린더에서 종료 시간
@@ -174,61 +118,79 @@
           selectable: false, // 달력 일자 드래그 설정가능
           nowIndicator: true, // 현재 시간 마크
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+          showNonCurrentDates:false,
           locale: 'ko', // 한국어 설정
-          eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
-               {
-            	  //휴진일
-            	  events : [
-                      {
-                    	 title: "주말",
-                         daysOfWeek: ["0", "6"],  
-                      }
-                  ]
-                  , color : "rgb(243, 243, 243)"
-                  , textColor : "black"
-              }
-              , 
-              
-              {
-            	  //승인 대기
-            	  events : dataset,
-            	  title: "승인 대기중"
-                  , color : "#FFD700"
-                  , textColor : "black"
-              }
-              , {
-            	  //휴진일
-            	  events : restdataset,
-            	  title: "휴진"
-                  , color : "rgb(243, 243, 243)"
-                  , textColor : "black"
-              }
-              , {
-            	  //근무일
-            	  events : dendataset,
-            	  title: "진료"
-            	  , color : "rgb(70, 145, 140)"
-                  , textColor : "white"
-              }
-              //,
-            //  {
-            	  //승인 대기 요일(아직 미구현)
-            //	  events : restdayset
-            //       ,title: "승인 대기중",
-            //      color : "#FFD700"
-            //      , textColor : "black"
-             // }
-          ],
-          dateClick: function (date) {
-              var view = date.dayEl;
-              if (
-                  !$(view).hasClass("fc-day-future") ||
-                  $(view).hasClass("rest") ||
-                  $(view).hasClass("fc-day-sun") ||
-                  $(view).hasClass("fc-day-sat")
-              ) {
-                  alert("해당 날짜는 휴진 신청이 불가합니다.");
-              } else {
+          eventDidMount: function(arg){
+              var el = $(arg.el).closest("td.fc-day");
+              $(el).addClass("rest");
+              console.log(el);
+           },
+          datesSet: function(dateInfo){
+               let url = "schedule";
+				let dcode = "${dcode}";
+               $.get(url, { dcode: dcode }, function (data) {
+                  console.log(XMLToString(data));
+                   var schedule = $(data).find("schedule");
+                   if (schedule.length > 0) {
+                       $(schedule).each(function (idx, item) {
+                           var restdate = $(item)
+                               .find("restdate")
+                               .text();
+                           if (restdate != "") {
+                               calendar.addEvent({
+                                   title: "휴진",
+                                   start: restdate,
+                                   classNames: ["rest-children"],
+                               });
+                           } 
+                       });   
+                   }
+               });
+           },
+           eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
+        	   {
+             	  //휴진일
+             	  events : [
+                       {
+                     	 title: "주말",
+                          daysOfWeek: ["0", "6"],  
+                       }
+                   ]
+                   , color : "rgb(243, 243, 243)"
+                   , textColor : "black"
+                   ,classNames: ["rest-children"]
+               }
+               , 
+        	   {
+              	  //휴진일
+              	  events : restdataset,
+              	  title: "휴진"
+                    , color : "rgb(243, 243, 243)"
+                    , textColor : "black",
+                    	classNames: ["rest-children"]
+                } ,{
+              	  //승인 대기
+              	  events : dataset,
+              	  title: "승인 대기중"
+                    , color : "#FFD700"
+                    , textColor : "black"
+                    ,classNames: ["rest-children"]
+                }
+
+           ],
+          
+        // 달력 날짜를 클릭할 때
+           dateClick: function (date) {
+              console.log(date);
+               var view = date.dayEl;
+               if (
+                   !$(view).hasClass("fc-day-future") ||
+                   $(view).hasClass("rest") ||
+                   $(view).hasClass("fc-day-sun") ||
+                   $(view).hasClass("fc-day-sat")
+               ) {
+                   alert("해당 날짜는 신청할 수 없습니다.");
+               } else {
             	  var reason = prompt("사유를 입력해주세요");
             	  var date = {"date": date.dateStr, "reason": reason};
             	  if(reason){
@@ -237,21 +199,26 @@
               	        type:'POST',
               	        data: date,
               	        success:function(data){
-              	            alert("완료!");
+              	        	calendar.addEvent( {
+              	        		title:'휴진 승인 대기', 
+              	        		start:date.date,
+              	        		color: "#FFD700",
+              	                textColor: "black",
+              	                classNames: ["rest-children"],
+              	        	});
               	        },
               	        error:function(jqXHR, textStatus, errorThrown){
-              	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+              	            console.log("에러 발생");
               	        }
               	    });
             	  } else {
             		  return false;
             	  }
-            	  
-              }
-          }
-          
+               }
+           }
         });
         calendar.render();
+   
     });
     
     </script>
