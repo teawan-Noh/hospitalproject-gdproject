@@ -99,30 +99,57 @@
                 },
         </c:forEach>
     ];
+    var dendataset = [
+        <c:forEach var="den" items="${denList}">
+                {
+                	title: '진료',
+                	start:'<c:out value="${rest.restdate}" />',
+                },
+        </c:forEach>
+    ];
+    var restdayset = [
+        <c:forEach var="wait" items="${waitList}">
+        {
+        	title: '승인 대기',
+        	daysOfWeek:['<c:out value="${wait.day}" />'],
+        },
+		</c:forEach>
+	];
     //요일 클릭시 이벤트 발생(선택한 요일이 디비에 들어가게 해야 함)
     $(function(){
     	 $('#calendar').on('click', '.fc-col-header-cell-cushion', function(e) {
-    		 alert("hi");
-    	     let day = $(this).text().toLowerCase();
-    	     alert(day);
-    	     switch(day){
-    	     case "월": day = 1;
+    		 var reason = "정기휴진";
+    	     let days = $(this).text().toLowerCase();
+    	     alert(days);
+    	     switch(days){
+    	     case "월": days = 1;
     	      	break;
-    	     case "화": day = 2;
+    	     case "화": days = 2;
    	      		break;
-    	     case "수": day = 3;
+    	     case "수": days = 3;
    	      		break;
-    	     case "목": day = 4;
+    	     case "목": days = 4;
    	      		break;
-    	     case "금": day = 5;
+    	     case "금": days = 5;
    	     		break;
-    	     case "토": day = 6;
+    	     case "토": days = 6;
    	      		break;
-    	     case "일": day = 7;
+    	     case "일": days = 7;
    	      		break;
-    	      
     	     }
-    	     alert(day);
+    	     alert(days);
+    	     var day = {"day": days, "reason": reason}
+    	     $.ajax({
+       	        url:"rest_input",
+       	        type:'POST',
+       	        data: day,
+       	        success:function(data){
+       	            alert("완료!");
+       	        },
+       	        error:function(jqXHR, textStatus, errorThrown){
+       	            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
+       	        }
+       	    });
     	     $('.fc-col-header-cell-cushion').removeClass('selected')
     	                 .filter('.fc-col-header-cell-cushion-' + day)
     	                 .addClass('selected')
@@ -149,18 +176,7 @@
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
           locale: 'ko', // 한국어 설정
           eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
-              {
-                  // 진료일(진료일만 불러오기 미구현)
-                  events : [
-                      {
-                    	 title: "진료",
-                         daysOfWeek: ["1","2","3","4","5"],  
-                      }
-                  ]
-                  , color : "rgb(70, 145, 140)"
-                  , textColor : "white"
-              }
-              , {
+               {
             	  //휴진일
             	  events : [
                       {
@@ -185,6 +201,21 @@
             	  events : restdataset,
             	  title: "휴진"
                   , color : "rgb(243, 243, 243)"
+                  , textColor : "black"
+              }
+              , {
+            	  //근무일
+            	  events : dendataset,
+            	  title: "진료"
+            	  , color : "rgb(70, 145, 140)"
+                  , textColor : "white"
+              }, 
+              
+              {
+            	  //승인 대기 요일(아직 미구현)
+            	  events : restdayset
+                   ,title: "승인 대기중",
+                  color : "#FFD700"
                   , textColor : "black"
               }
           ],
@@ -240,5 +271,3 @@
   		</div>
   	</div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
-  </body>
-</html>

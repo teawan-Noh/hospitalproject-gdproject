@@ -43,6 +43,7 @@ $(function(){
 				$("#idChk").css({"color":"blue"});
 			}else{
 				$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
+				$("#idChk").css({"color":"red"});
 			}
 		});
 		$("#idChkBtncheck").prop("checked", true);
@@ -61,6 +62,8 @@ $(function(){
 		if(!regResult){
 			alert("영어 대소문자,숫자,특수문자 포함해서 8자리에서 20자리 사이로 입력해주세요.");
 			$("input[name='pwd']").focus();
+			$("input[name='pwd']").val("");
+			$("input[name='pwdchk']").val("");
 		}
 		
 		//일치여부

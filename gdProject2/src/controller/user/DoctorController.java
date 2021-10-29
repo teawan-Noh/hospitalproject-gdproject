@@ -50,6 +50,7 @@ public class DoctorController extends HttpServlet {
 			ReservationDao dao = new ReservationDaoImpl();
 			List<Subject> subjectList = dao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
+			req.setAttribute("side", "manager");
 		} else if(action.equals("didcheck")) {
 			String id = req.getParameter("id_value");
 			DoctorDao dao = new DoctorDaoImpl();
@@ -107,6 +108,7 @@ public class DoctorController extends HttpServlet {
 			ReservationDao rdao = new ReservationDaoImpl();
 			List<Subject> subjectList = rdao.selectSubjectAll();
 			req.setAttribute("subjectList", subjectList);
+			req.setAttribute("side", "patient");
 		} else if(action.equals("doctor_update")) {
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
@@ -122,8 +124,7 @@ public class DoctorController extends HttpServlet {
 			DoctorDao dao = new DoctorDaoImpl();
 			dao.update(doctor);
 		} else if(action.equals("doctor_detail")) {
-			HttpSession session = req.getSession();
-			int dcode = (int)session.getAttribute("dcode");
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
 			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
