@@ -102,7 +102,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <c:if test="${pcode != null || dcode != null || mcode != null}">
                 	<li><a href="logout">로그아웃</a></li>
                 </c:if>
-                <c:if test="${pcode != null}">
+                <c:if test="${sessionScope.pcode != null}">
                 	<li>|</li>
 					<li><a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a></li>
 				</c:if>
