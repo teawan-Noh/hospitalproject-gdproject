@@ -216,8 +216,8 @@ public class ManagerDaoImpl implements ManagerDao {
 
 
 	@Override
-	public List<Patient> selectPatientByName(String name) {
-		List<Patient> patientList = new ArrayList<>();
+	public List<HashMap<String, String>> selectPatientByName(String name) {
+		List<HashMap<String, String>> patientList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -231,13 +231,14 @@ public class ManagerDaoImpl implements ManagerDao {
 			resultSet = pStatement.executeQuery();
 
 			while(resultSet.next()) {
-				Patient patient = new Patient();
+				HashMap<String, String> hm = new HashMap<>();
 				
-				patient.setPcode(resultSet.getInt("pcode"));
-				patient.setName(resultSet.getString("name"));
-				patient.setBirth(resultSet.getString("birth"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
+				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
+				hm.put("name", resultSet.getString("name"));
+				hm.put("birth", resultSet.getString("birth"));
 				
-				patientList.add(patient);
+				patientList.add(hm);
 			}
 
 		} catch (Exception e) {

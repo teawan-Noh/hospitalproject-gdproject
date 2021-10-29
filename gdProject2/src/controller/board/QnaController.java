@@ -174,7 +174,6 @@ public class QnaController extends HttpServlet{
 			QnaDao dao = new QnaDaoImpl();
 			dao.update(qna);
 			
-			req.setAttribute("message", "잘 수정되었습니다.");
 			
 		}
 		else if(action.equals("qna_delete")) {
