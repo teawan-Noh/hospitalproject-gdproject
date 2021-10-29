@@ -284,9 +284,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             classNames: ["rest-children"],
                                         });
                                     } else if (day != "") {
+                                    	console.log(String(Number(day) - 1));
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(Number(day) + 1)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }
@@ -543,7 +544,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     } else if (day != "") {
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(day)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }
