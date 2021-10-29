@@ -31,7 +31,65 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- fullcalendar 언어 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
-        <style>            
+        <style>      
+        a {
+		    display: inline-block;
+		    text-decoration: none !important;
+		}
+		button {
+		    border: 0;
+		    background: transparent;
+		    cursor: pointer;
+		}
+		ul{
+			padding: 0;
+		}
+		.home-img{
+			background-image: url("../img/home.png");
+		    background-size: cover;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    width: 20px;
+		    height: 20px;
+		}
+		.fmenu{
+			padding-left: 0px;
+		}
+		.fmenu li:not(.fmenu li:first-child)::before{
+			content: ">";
+		}
+		
+		.container-box {
+		    margin: 0 auto;
+		    width: 100%;
+		    max-width: 1200px;
+		}
+		.content {
+		    flex: 3;
+		    max-width: 800px;
+		    margin: 50px;
+		}
+		.select {
+		    border: 1px solid #468c91;
+		    padding: 25px;
+		    margin: 25px 0;
+		}
+		.card-list {
+		    max-width: 800px;
+		    margin: 10px 50px;
+		    display: flex;
+		    flex-wrap: wrap;
+		    justify-content: space-around;
+		}
+		.card-box {
+		    display: block;
+		    font-size: 24px;
+		    border: 1px solid #468c91;
+		    border-radius: 5px;
+		    padding: 10px 40px;
+		    margin: 10px;
+		    color: #468c91;
+		}      
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
             }
