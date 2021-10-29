@@ -1,4 +1,4 @@
-select * from subject order by name asc;
+select * from subject order by name asc; 
 delete from subject;
 drop sequence subject_seq;
 create sequence subject_seq;
