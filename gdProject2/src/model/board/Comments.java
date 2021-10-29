@@ -8,6 +8,13 @@ public class Comments {
 	
 	public Comments() {}
 	
+	public Comments(int qno, int mcode, String content) {
+		super();
+		this.qno = qno;
+		this.mcode = mcode;
+		this.content = content;
+	}
+
 	public Comments(int qno, int mcode, String writedate, String content) {
 		super();
 		this.qno = qno;

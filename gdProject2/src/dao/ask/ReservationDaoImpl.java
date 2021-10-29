@@ -155,16 +155,16 @@ public class ReservationDaoImpl implements ReservationDao {
 			pStatement = connection.prepareStatement(Sql.SELECT_SCHEDULE_BY_DCODE_SQL);
 			pStatement.setInt(1, dcode);
 			resultSet = pStatement.executeQuery();
-			
+			 
 			while(resultSet.next()) {
 				Map<String, String> map = new HashMap<String, String>();
 				String restdate = resultSet.getString("restdate");
-				String day = resultSet.getString("day");
+				int day = resultSet.getInt("day");
 				if(restdate != null) {
 					map.put("restdate", resultSet.getString("restdate"));
 				}
-				if(day != null) {
-					map.put("day", convertDay(resultSet.getString("day")));
+				if(day != 0) {
+					map.put("day", String.valueOf(day));
 				}
 				result.add(map);
 				

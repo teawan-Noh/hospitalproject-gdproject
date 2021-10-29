@@ -31,25 +31,65 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <!-- fullcalendar 언어 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
-        <style>
-
-            a {
-                text-decoration: none !important;
-            }
-            .home-img{
-            	background-image: url("img/home.png");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                width: 20px;
-                height: 20px;
-            }
-            .fmenu{
-            	padding-left: 0px;
-            }
-            .fmenu li:not(.fmenu li:first-child)::before{
-            	content: ">";
-            }
+        <style>      
+        a {
+          display: inline-block;
+          text-decoration: none !important;
+      }
+      button {
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+      }
+      ul{
+         padding: 0;
+      }
+      .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
+      
+      .container-box {
+          margin: 0 auto;
+          width: 100%;
+          max-width: 1200px;
+      }
+      .content {
+          flex: 3;
+          max-width: 800px;
+          margin: 50px;
+      }
+      .select {
+          border: 1px solid #468c91;
+          padding: 25px;
+          margin: 25px 0;
+      }
+      .card-list {
+          max-width: 800px;
+          margin: 10px 50px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+      }
+      .card-box {
+          display: block;
+          font-size: 24px;
+          border: 1px solid #468c91;
+          border-radius: 5px;
+          padding: 10px 40px;
+          margin: 10px;
+          color: #468c91;
+      }      
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
             }
@@ -80,39 +120,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 padding-right: 1em;
             }
 
-            .container-box {
-                margin: 0 auto;
-                width: 100%;
-                max-width: 1200px;
-            }
-            .content {
-                flex: 3;
-                max-width: 800px;
-                margin: 50px;
-            }
-            .select {
-                border: 1px solid #468c91;
-                padding: 25px;
-                margin: 25px 0;
-            }
-            .card-list {
-                max-width: 800px;
-                margin: 10px 50px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-around;
-            }
-            .card-box {
-                display: block;
-                font-size: 24px;
-                border: 1px solid #468c91;
-                border-radius: 5px;
-                padding: 10px 40px;
-                margin: 10px;
-                color: #468c91;
-            }
             .card-box.subject{
-            	width: 45%;
+               width: 45%;
             }
 
             .card-box.doctor {
@@ -177,14 +186,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 margin-left: 0;
             }
             button.card-box{
-            	display: inline-block;
-            	margin-left: 0;
+               display: inline-block;
+               margin-left: 0;
             }
         </style>
         <script>
             $(function () {
-				let setting = ${rcode} != 0 ? true : false;
-            	let pcode = ${pcode};
+            let setting = ${rcode} != 0 ? true : false;
+               let pcode = ${pcode};
                 let subject = "${subject}";
                 let dcode = "${dcode}";
                 let dname = "${dname}";
@@ -234,20 +243,66 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                     locale: "ko", // 한국어 설정
                     eventAdd: function (obj) {
-                        // 이벤트가 추가되면 발생하는 이벤트
-                        //console.log(obj);
+                        console.log(obj);
                     },
                     eventChange: function (obj) {
                         // 이벤트가 수정되면 발생하는 이벤트
                         //console.log(obj);
+                        
                     },
                     eventRemove: function (obj) {
                         // 이벤트가 삭제되면 발생하는 이벤트
                         //console.log(obj);
                     },
+                    eventDidMount: function(arg){
+                       var el = $(arg.el).closest("td.fc-day");
+                       $(el).addClass("rest");
+                       console.log(el);
+                    },
+                    datesSet: function(dateInfo){
+                       calendar.removeAllEvents();
+                        calendar.addEvent({
+                            title: "주말",
+                            daysOfWeek: ["0", "6"],
+                            classNames: ["rest-children"],
+                        });
+                        let url = "schedule";
+
+                        $.get(url, { dcode: dcode }, function (data) {
+                           console.log(XMLToString(data));
+                            var schedule = $(data).find("schedule");
+                            if (schedule.length > 0) {
+                                $(schedule).each(function (idx, item) {
+                                    var restdate = $(item)
+                                        .find("restdate")
+                                        .text();
+                                    var day = $(item).find("day").text();
+                                    if (restdate != "") {
+                                        calendar.addEvent({
+                                            title: "휴진",
+                                            start: restdate,
+                                            classNames: ["rest-children"],
+                                        });
+                                    } else if (day != "") {
+                                        calendar.addEvent({
+                                            title: "휴진",
+                                            daysOfWeek: [String(Number(day) + 1)],
+                                            classNames: ["rest-children"],
+                                        });
+                                    }
+
+                                    
+                                });
+
+                                   
+                            }
+                        });
+                    },
+                    
+                    
                     // 달력 날짜를 클릭할 때
                     dateClick: function (date) {
-                    	console.log(date);
+                       console.log(date);
                         var view = date.dayEl;
                         if (
                             !$(view).hasClass("fc-day-future") ||
@@ -376,8 +431,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             url,
                             { subject: $(this).text() },
                             function (data) {
-                            	subject = $(data).find("subject").text();
-                            	$(data)
+                               subject = $(data).find("subject").text();
+                               $(data)
                                     .find("doctor")
                                     .each(function (idx, item) {
                                         $(".doctors").append(
@@ -395,23 +450,23 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     });
                                 
                                 if(dcode != "" && dname != "" && setting){
-                                	$(".card-box.doctor .flex").each(function(idx, item){
-                                		var name = $(this).find(".doctor-name").text();
-                                		var code = $(this).find(".doctor-code").text();
-                                		if(dname == name && dcode == code){
-                                			$(this).trigger("click");
-                                		}
-                                		
-                                	})
+                                   $(".card-box.doctor .flex").each(function(idx, item){
+                                      var name = $(this).find(".doctor-name").text();
+                                      var code = $(this).find(".doctor-code").text();
+                                      if(dname == name && dcode == code){
+                                         $(this).trigger("click");
+                                      }
+                                      
+                                   })
                                 }
                                 else if(dcode == "" && dname == "" && setting){
-                                	setting = false;
+                                   setting = false;
                                 }
                                 else{
-	                                dcode = "";
-	                                dname = "";
-	                                rsvdate = "";
-	                                rsvtime = "";
+                                   dcode = "";
+                                   dname = "";
+                                   rsvdate = "";
+                                   rsvtime = "";
                                 }
                                 
                             }
@@ -427,6 +482,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     calendar.addEvent({
                         title: "주말",
                         daysOfWeek: ["0", "6"],
+                        classNames: ["rest-children"],
                     });
 
                     var doctor = $(this).parent(".card-box.doctor");
@@ -441,6 +497,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $(".card-box.doctor").each(function (idx, item) {
                             $(item).removeClass("active");
                         });
+                        
                         $(".rest").each(function () {
                             $(this)
                                 .children(".rest-children")
@@ -490,18 +547,19 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             classNames: ["rest-children"],
                                         });
                                     }
-                                    $(".rest-children")
-                                        .closest("td.fc-day")
-                                        .addClass("rest");
+
+                                    
                                 });
+
+                                   
                             }
                         });
                         if(setting){
-                        	setting = false;
+                           setting = false;
                         }
                         else{
-	                        rsvdate = "";
-	                        rsvtime = "";
+                           rsvdate = "";
+                           rsvtime = "";
                         }
                     }
                 });
@@ -580,19 +638,19 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 });
                 
                 if(subject != ""){
-                	$(".subject").each(function(idx, item){
-                		var text = $(this).text();
-                		if(subject == text){
-                			$(this).trigger("click");
-                		}
-                	});
+                   $(".subject").each(function(idx, item){
+                      var text = $(this).text();
+                      if(subject == text){
+                         $(this).trigger("click");
+                      }
+                   });
                 }
                 
                 $(document).on("click", ".card-box.cancel", function(){
-                	$("#form-cancel").submit();
+                   $("#form-cancel").submit();
                 })
                 $(document).on("click", ".card-box.update", function(){
-                	if (subject == "") {
+                   if (subject == "") {
                         alert("진료과를 선택해주세요.");
                     } else if (dcode == "") {
                         alert("담당 의사를 선택해주세요.");
@@ -616,11 +674,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         ) {
                             alert("예약이 완료되었습니다.");
                             var url = "reservation-update";
-                           	$("input[name=pcode]").val(pcode);
-                           	$("input[name=rcode]").val(${rcode});
-                           	$("input[name=dcode]").val(dcode);
-                           	$("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
-                           	$("#form-update").submit();
+                              $("input[name=pcode]").val(pcode);
+                              $("input[name=rcode]").val(${rcode});
+                              $("input[name=dcode]").val(dcode);
+                              $("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
+                              $("#form-update").submit();
                         }
                     }
                 })
@@ -636,7 +694,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </jsp:include>
             <div class="content">
                 <ul class="fmenu">
-                	<li><div class="home-img"></div></li>
+                   <li><div class="home-img"></div></li>
                     <li>예약</li>
                     <li>예약하기</li>
                 </ul>
@@ -665,20 +723,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </div>
                 </div>
                 <c:if test="${rcode == 0}">
-                	<button id="book" class="card-box book">예약하기</button>
+                   <button id="book" class="card-box book">예약하기</button>
                 </c:if>
                 <c:if test="${rcode != 0}">
-                	<button class="card-box update">수정하기</button>
-                	<button class="card-box cancel">취소하기</button>
+                   <button class="card-box update">수정하기</button>
+                   <button class="card-box cancel">취소하기</button>
                 </c:if>
                 <form style="display: none;" id="form-cancel" action="reservation-detail" method="post">
-                	<input type="hidden" name="rcode" value="${rcode}"/>
+                   <input type="hidden" name="rcode" value="${rcode}"/>
                 </form>
                 <form style="display: none;" id="form-update" action="reservation-update" method="post">
-                	<input type="hidden" name="pcode" value=""/>
-                	<input type="hidden" name="rcode" value=""/>
-                	<input type="hidden" name="dcode" value=""/>
-                	<input type="hidden" name="rsvdate" value=""/>
+                   <input type="hidden" name="pcode" value=""/>
+                   <input type="hidden" name="rcode" value=""/>
+                   <input type="hidden" name="dcode" value=""/>
+                   <input type="hidden" name="rsvdate" value=""/>
                 </form>
             </div>
         </div>

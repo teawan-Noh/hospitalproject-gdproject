@@ -2,6 +2,7 @@ package controller.rest;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.ask.ReservationDao;
+import dao.ask.ReservationDaoImpl;
 import dao.rest.RestDao;
 import dao.rest.RestDaoImpl;
 import model.ask.Rest;
@@ -49,6 +52,9 @@ public class RestController  extends HttpServlet{
 			req.setAttribute("waitList", waitList);
 			List<Rest> restList = dao.selectRestBydcode("½ÂÀÎ", dcode);
 			req.setAttribute("restList", restList);
+			List<Rest> denList = dao.selectRestBydcode("°ÅÀý", dcode);
+			req.setAttribute("denList", denList);
+			req.setAttribute("side", "task");
 		} else if(action.equals("rest_input")) {
 			String date = req.getParameter("date");
 			System.out.println(date);
@@ -56,10 +62,12 @@ public class RestController  extends HttpServlet{
 			System.out.println(reason);
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
-			String day = req.getParameter("day");
+			int day = Integer.parseInt(req.getParameter("day"));
+			System.out.println(day);
 			Rest rest = new Rest(dcode, reason, date, day);
 			RestDao dao = new RestDaoImpl();
 			dao.insert(rest);
+			req.setAttribute("side", "task");
 		} else if(action.equals("schedule_check")) {
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
@@ -68,6 +76,7 @@ public class RestController  extends HttpServlet{
 			req.setAttribute("waitList", waitList);
 			List<Rest> restList = dao.selectRestBydcode("½ÂÀÎ", dcode);
 			req.setAttribute("restList", restList);
+			req.setAttribute("side", "task");
 		}
 		
 		String dispatcherUrl = null;

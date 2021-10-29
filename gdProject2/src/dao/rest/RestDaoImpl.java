@@ -26,7 +26,7 @@ public class RestDaoImpl implements RestDao {
 			pStatement.setInt(1, rest.getDcode()); 
 			pStatement.setString(2, rest.getReason());
 			pStatement.setString(3, rest.getRestdate());
-			pStatement.setString(4, rest.getDay());
+			pStatement.setInt(4, rest.getDay());
 			
 			
 			pStatement.executeUpdate();
@@ -64,7 +64,7 @@ public class RestDaoImpl implements RestDao {
 				rest.setApproved(resultSet.getString("approved"));
 				rest.setReason(resultSet.getString("reason"));
 				rest.setRestdate(resultSet.getString("restdate"));
-				rest.setDay(resultSet.getString("day"));
+				rest.setDay(resultSet.getInt("day"));
 				
 				restList.add(rest);
 			

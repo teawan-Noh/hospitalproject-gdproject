@@ -101,18 +101,8 @@
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
           locale: 'ko', // 한국어 설정
           eventSources : [ //이벤트 여러개 추가되는거 수정 미구현
-              {
-                  // 진료일(진료일만 불러오기 미구현)
-                  events : [
-                      {
-                    	 title: "진료",
-                         daysOfWeek: ["1","2","3","4","5"],  
-                      }
-                  ]
-                  , color : "rgb(70, 145, 140)"
-                  , textColor : "white"
-              }
-              , {
+              
+               {
             	  //휴진일
             	  events : [
                       {
