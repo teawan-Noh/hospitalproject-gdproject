@@ -47,6 +47,7 @@
        	}
        	.modify_delete_button{
        		text-align: right;
+       		padding: 10px 0 30px 0;
        	}
        	.comment_box{
        		display: flex;
@@ -60,6 +61,14 @@
        		justify-content: space-between;
        		width: 25%;
        	}
+       	.add_comment_box{
+       		display: flex;
+       		justify-content: space-between;
+       	}
+       	.add_comment_box .add_comment_button{
+       		padding-top: 11px;
+       	}
+       
 </style>
 </head>
 <body>
@@ -87,7 +96,10 @@
 		   					<td>작성자 </td>
 	 						<td>${qnadetail.nickname}</td>
 	 						<td>조회수 </td>
-	 						<td>${qnadetail.cnt}</td>
+	 						<td>
+	 							<input type="text" name="cnt2" hidden="hidden" value="${qnadetail.cnt}"/>
+	 							${qnadetail.cnt}
+	 						</td>
 						</tr>
 						<tr>
 		 					<td>제목 </td>
@@ -107,6 +119,9 @@
 					</tbody>	
 	   			</table>
     		</div>
+    		<c:set var="writer" value="${qnadetail.pcode}" />
+    		<c:set var="user" value="${pcode}" />
+			<c:if test="${writer eq user}">
     		<div class="modify_delete_button">
     			<a href="qna_modify?qno=${qnadetail.qno}">
     				<button type = "submit" class="submitbtn">수정</button>
@@ -115,15 +130,27 @@
     				<button type = "submit" class="submitbtn">삭제</button>
 		   		</a>
 	    	</div>
-	    	<form method="post" action="board_modify">
-	    	<div class="coment_box">
-	    		<input class="coment_input" type="text" name="coment" placeholder="내용을 입력해주세요"/>
-	    		<button type = "submit" class="submitbtn">등록</button>
+	    	</c:if>
+	    	<c:set var="ccontent" value="${qnadetail.ccontent}" />
+			<c:if test="${ccontent == null}">
+			
+			<form method="post" action="comment_save">
+			<input type="text" name="qno" value="${qnadetail.qno}" hidden="hidden"/>
+	    	<div class="add_comment_box">
+	    		<div>
+	    			<textarea cols="92" rows="2.5" name="content" placeholder="답변을 등록해주세요"></textarea>
+	    		</div>
+	    		<div class="add_comment_button">
+	    			<button type = "submit" class="submitbtn">등록</button>
+	    		</div>
 	    	</div>
 	    	</form>
+	    	</c:if>
+	    	<c:if test="${ccontent != null}">
 	    	<div>
-	    		<h4>답변<h4>
+	    		<h4>답변</h4>
 	    	</div>
+	    	</c:if>
 	    	<div class="comment_box">
 	    		<div class="comment_box_left">
 	    			<div>${qnadetail.ccontent}</div>

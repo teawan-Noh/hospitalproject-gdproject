@@ -10,15 +10,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.board.QnaDao;
 import dao.board.QnaDaoImpl;
+import model.board.Comments;
 import model.board.Qna;
 import validator.QnaError;
 import validator.QnaValidator;
 
 @WebServlet(name="QnaController", 
-	urlPatterns= {"/qna_list", "/qna_input", "/qna_save", "/qna_search", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"})
+	urlPatterns= {"/qna_list", "/qna_input", "/qna_save", "/qna_search", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"
+					,"/comment_save"})
 public class QnaController extends HttpServlet{
 
 	@Override
@@ -43,38 +46,60 @@ public class QnaController extends HttpServlet{
 			
 			QnaDao dao = new QnaDaoImpl();
 			List<HashMap> qnaList = dao.selectAll();
-			System.out.println(qnaList);
 			req.setAttribute("qnaList", qnaList);
+			
+			HttpSession session = req.getSession();
+			if(session.getAttribute("pcode") != null) {
+				Object value = session.getAttribute("pcode");
+				int pcode = (int)value;
+				
+				req.setAttribute("pcode", pcode);
+				System.out.println(pcode + "확인222");
+			}
 		}
 		else if(action.equals("qna_input")) {
 			
+//			HttpSession session = req.getSession();
+//			Object value = session.getAttribute("pcode");
+//			int pcodeValue = (int)value;
+//			int pcode = pcodeValue;
+//			
+//			req.setAttribute("pcode", pcode);
 		}
 		else if(action.equals("qna_save")) {
 			
+			HttpSession session = req.getSession();
+			Object value = session.getAttribute("pcode");
+			
+			int pcode = (int)value;
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
+			String img = null; //파일업로드 구현필요
 			
-			Qna qnaForm = new Qna(title, content); //화면에서 받아온 값으로 세팅
+			Qna qna = new Qna(pcode, title, content, img); 
+			QnaDao dao = new QnaDaoImpl();
+			dao.insert(qna);
+//			Qna qnaForm = new Qna(pcode, title, content, img); 
 			
 			//체크
-			QnaValidator validator = new QnaValidator();
-			QnaError qnaErrors = validator.validate(qnaForm);//v2
-
-			if(!qnaErrors.isResult()) {//v2
-				Qna qna = new Qna();
-				qna.setTitle(qnaForm.getTitle());
-				qna.setContent(qnaForm.getContent());
-				
-				QnaDao dao = new QnaDaoImpl();
-				dao.insert(qna);
-				
-				req.setAttribute("message", "잘 저장되었습니다.");
-			}
-			else {
-				req.setAttribute("qnaErrors", qnaErrors);//v2
-				req.setAttribute("qnaForm", qnaForm);
-			}
-			QnaDao dao = new QnaDaoImpl();
+//			QnaValidator validator = new QnaValidator();
+//			QnaError qnaErrors = validator.validate(qnaForm);//v2
+//
+//			if(!qnaErrors.isResult()) {//v2
+//				Qna qna = new Qna();
+//				qna.setTitle(qnaForm.getTitle());
+//				qna.setContent(qnaForm.getContent());
+//				
+//				QnaDao dao = new QnaDaoImpl();
+//				dao.insert(qna);
+//				
+//				req.setAttribute("message", "잘 저장되었습니다.");
+//			}
+//			else {
+//				req.setAttribute("qnaErrors", qnaErrors);//v2
+//				req.setAttribute("qnaForm", qnaForm);
+//			}
+			
 			List<HashMap> qnaList = dao.selectAll();
 			req.setAttribute("qnaList", qnaList);
 		}
@@ -98,14 +123,30 @@ public class QnaController extends HttpServlet{
 			}
 		}
 		else if(action.equals("qna_detail")) {
-			
+			HttpSession session = req.getSession();
+			//여기가 안돌아가
+			if(session.getAttribute("pcode") != null) {
+				Object value = session.getAttribute("pcode");
+				int pcodeValue= (int)value;
+				int pcode = pcodeValue;
+				
+				System.out.println(  "2dc확인");
+				req.setAttribute("pcode", pcode);
+			}else{
+				req.setAttribute("pcode", 0);
+			}
 			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
 			
 			QnaDao dao = new QnaDaoImpl();
+			Qna qna = dao.selectCntByQno(qno);
+			
+			int cnt = qna.getCnt()+1;
+			
+			Qna qna2 = new Qna(qno ,cnt);
+			dao.cntUpdate(qna2);
 			
 			HashMap qnaDetail = dao.selectByQno(qno);
 			req.setAttribute("qnadetail", qnaDetail);
-			
 		}
 		else if(action.equals("qna_modify")) {
 			
@@ -140,6 +181,26 @@ public class QnaController extends HttpServlet{
 			req.setAttribute("qnaList", qnaList);
 			
 		}
+		else if(action.equals("comment_save")) {
+			
+			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
+			HttpSession session = req.getSession();
+			if(session.getAttribute("mcode") != null) {
+				
+				Object value = session.getAttribute("mcode");
+				int mcode = (int)value;
+				String content = req.getParameter("content");
+				
+				Comments comment = new Comments(qno, mcode, content);
+				
+				QnaDao dao = new QnaDaoImpl();
+				dao.insertComment(comment);
+				
+				HashMap qnaDetail = dao.selectByQno(qno);
+				req.setAttribute("qnadetail", qnaDetail);
+			}
+			
+		}
 		
 		String dispatcherUrl = null;
 		
@@ -166,6 +227,9 @@ public class QnaController extends HttpServlet{
 		}
 		else if(action.equals("qna_delete")) {
 			dispatcherUrl = "jsp/board/qnaList.jsp"; 
+		}
+		else if(action.equals("comment_save")) {
+			dispatcherUrl = "jsp/board/qnaDetail.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);

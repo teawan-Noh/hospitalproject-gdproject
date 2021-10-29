@@ -33,9 +33,12 @@ $(function(){
 <title>게시글 보기</title>
 </head>
 <body>
-    <h2>게시글 보기</h2>
+    <header><jsp:include page="../common/header.jsp"></jsp:include></header>
     <div id="main">
-    <p>첨부파일 들어갈 자리</p>
+    
+    <div class="container">
+    <h2>게시글 보기</h2>
+    	<p>첨부파일 들어갈 자리</p>
         <table class="table">
             <tbody>
             <c:forEach var="detail" items="${detail}">
@@ -64,5 +67,8 @@ $(function(){
         </c:if>
         <button type="button" id="toList" name="listBtn" onclick="location.href='notice_list?reqPage=1'">목록으로</button>
     </div>
+    
+    </div>
+    <header><jsp:include page="../common/footer.jsp"></jsp:include></header>
 </body>
 </html>

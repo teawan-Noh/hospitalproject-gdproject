@@ -96,8 +96,9 @@ public class Sql {
 			"select count(*) as cnt from notice";
 	
 	public static final String BOOK_SELECT_NOTICE_PAGE_SQL =
-			"select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
-			+ "from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between ? and ?";
+			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
+			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
+			+ "from notice n inner join manager m on n.mcode = m.mcode) where rn between ? and ?";
 	
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =
@@ -137,20 +138,20 @@ public class Sql {
 	//qna 테이블
 	public static final String QNA_SELECT_ALL_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q inner join patient p"
+			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_NICKNAME_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q inner join patient p"
+			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " where p.nickname like ?"
 			+ " order by q.qno desc";
 	
 	public static final String QNA_SELECT_BY_TITLE_OR_CONTENT_SQL 
 	= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q inner join patient p"
+			+ " from qna q left outer join patient p"
 			+ " on q.pcode = p.pcode"
 			+ " where q.title like ? or q.content like ?"
 			+ " order by q.qno desc";
@@ -161,9 +162,9 @@ public class Sql {
 	public static final String QNA_SELECT_BY_QNO_SQL 
 		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
 			+ " from qna q" 
-			+ " inner join patient p on q.pcode = p.pcode" 
-			+ " inner join comments c on q.qno = c.qno" 
-			+ " inner join manager m on c.mcode = m.mcode" 
+			+ " left outer join patient p on q.pcode = p.pcode" 
+			+ " left outer join comments c on q.qno = c.qno" 
+			+ " left outer join manager m on c.mcode = m.mcode" 
 			+ " where q.qno = ?";
 
 	public static final String QNA_INSERT_SQL 
@@ -177,6 +178,14 @@ public class Sql {
 
 	public static final String QNA_CNT_UPDATE_SQL 
 		= "update qna set cnt = ? where qno = ?";
+	
+	public static final String QNA_CNT_SELECT_BY_QNO_SQL
+		= "select cnt from qna where qno = ?";
+	
+	//코멘트 테이블
+	public static final String COMMNETS_INSERT_SQL 
+		= "insert into comments values (?, ?, sysdate, ?)";
+	
 	//매니저
 	//의사조회
 	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 

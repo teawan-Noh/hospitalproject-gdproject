@@ -67,21 +67,6 @@ function carousel() {
   x[myIndex-1].style.display = "block";  
   setTimeout(carousel, 3000);
 }
-
-$(function(){
-    
-   $("#patientUpdate").click(function(){
-      var inputString = prompt('현재 비밀번호를 입력해주세요.');
-      $.ajax({
-           type: 'POST',
-           url: 'patient_detail?pcode=${pcode}',
-           data: {'prompt':inputString},
-           success: console.log("prompt 값 전송 성공")
-         });
-
-   });
-    
-});
 </script>
 <jsp:include page="jsp/common/footer.jsp"></jsp:include>
 

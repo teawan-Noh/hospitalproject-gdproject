@@ -11,6 +11,17 @@ public class Qna {
 	
 	public Qna() {}
 	
+	public Qna(int cnt) {
+		super();
+		this.cnt = cnt;
+	}
+
+	public Qna(int qno, int cnt) {
+		super();
+		this.qno = qno;
+		this.cnt = cnt;
+	}
+
 	public Qna(String title, String content) {
 		super();
 		this.title = title;
@@ -19,6 +30,14 @@ public class Qna {
 	
 	public Qna(String title, String content, String img) {
 		super();
+		this.title = title;
+		this.content = content;
+		this.img = img;
+	}
+	
+	public Qna(int pcode, String title, String content, String img) {
+		super();
+		this.pcode = pcode;
 		this.title = title;
 		this.content = content;
 		this.img = img;
