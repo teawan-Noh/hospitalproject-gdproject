@@ -210,8 +210,8 @@ public class Sql {
 		= "select p.pcode, p.name, p.birth, r.rcode" 
 			+ " from patient p left outer join reservation r" 
 			+ " on p.pcode = r.pcode" 
-			+ "where name like ? "
-			+ "order by name asc";
+			+ " where name like ?"
+			+ " order by name asc";
 	//½ÂÀÎ°ü¸®
 	public static final String MG_REST_SELECT_ALL_SQL 
 		= "select r.rcode, d.name as dname, r.requestdate, r.approved" 

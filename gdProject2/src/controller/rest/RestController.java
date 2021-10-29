@@ -62,9 +62,10 @@ public class RestController  extends HttpServlet{
 			System.out.println(reason);
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
-			int day = Integer.parseInt(req.getParameter("day"));
-			System.out.println(day);
-			Rest rest = new Rest(dcode, reason, date, day);
+			//int day = Integer.parseInt(req.getParameter("day"));
+			//System.out.println(day);
+			//Rest rest = new Rest(dcode, reason, date, day);
+			Rest rest = new Rest(dcode, reason, date);
 			RestDao dao = new RestDaoImpl();
 			dao.insert(rest);
 			req.setAttribute("side", "task");

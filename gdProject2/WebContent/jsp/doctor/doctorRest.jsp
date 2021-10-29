@@ -209,15 +209,15 @@
             	  title: "진료"
             	  , color : "rgb(70, 145, 140)"
                   , textColor : "white"
-              }, 
-              
-              {
-            	  //승인 대기 요일(아직 미구현)
-            	  events : restdayset
-                   ,title: "승인 대기중",
-                  color : "#FFD700"
-                  , textColor : "black"
               }
+              //,
+            //  {
+            	  //승인 대기 요일(아직 미구현)
+            //	  events : restdayset
+            //       ,title: "승인 대기중",
+            //      color : "#FFD700"
+            //      , textColor : "black"
+             // }
           ],
           dateClick: function (date) {
               var view = date.dayEl;

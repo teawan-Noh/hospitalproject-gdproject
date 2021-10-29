@@ -128,6 +128,7 @@ public class DoctorController extends HttpServlet {
 			DoctorDao dao = new DoctorDaoImpl();
 			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
+			req.setAttribute("side", "doctor");
 		}
 		
 		String dispatcherUrl = null;
