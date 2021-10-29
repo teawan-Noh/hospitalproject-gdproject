@@ -1,11 +1,13 @@
 package controller.board;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -15,13 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.apache.commons.io.IOUtils;
+
 import common.Sql;
 import common.page.PageDao;
 import common.page.PageDaoImpl;
 import common.page.PageGroupResult;
 import common.page.PageManager;
+import dao.board.FileDao;
+import dao.board.FileDaoImpl;
 import dao.board.NoticeDao;
 import dao.board.NoticeDaoImpl;
+import model.board.Files;
 import model.board.Notice;
 
 @MultipartConfig
@@ -47,6 +54,8 @@ public class NoticeController extends HttpServlet{
 		String uri = req.getRequestURI();
 		int lastIndex = uri.lastIndexOf("/");
 		String action = uri.substring(lastIndex+1);
+		
+		String UPLOAD_DIR = "upload";
 		
 		//로직
 		if(action.equals("notice_list")) {
@@ -78,23 +87,24 @@ public class NoticeController extends HttpServlet{
 			req.setAttribute("detail", detail);
 			req.setAttribute("ncode", ncode);
 			
-			dao.count(ncode);
 			
+			/*
+			//파일 다운로드
+			String fileName = req.getParameter("fileName");
+			
+			// 서버에 올라간 경로를 가져옴
+			ServletContext context = getServletContext();
+			String uploadFilePath = context.getRealPath(UPLOAD_DIR);
+			String filePath = uploadFilePath + File.separator + fileName;
+			
+			resp.setContentType("image/jpeg/txt");
+			byte[] image = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
+			resp.getOutputStream().write(image);
+			*/
 			
 		}else if(action.equals("notice_save")) {
-			HttpSession session = req.getSession(false);
-			
-			String title = req.getParameter("title");
-			String content = req.getParameter("content");
-			int mcode = (int) session.getAttribute("mcode");
-			
-			Notice notice = new Notice(mcode,title,content);
-			
-			NoticeDao dao = new NoticeDaoImpl();
-			dao.insert(notice);
-			
 			//파일
-			String UPLOAD_DIR = "upload";
+			
 			
 			// 서버의 실제 경로
 			String applicationPath = req.getServletContext().getRealPath("");
@@ -116,10 +126,36 @@ public class NoticeController extends HttpServlet{
 			Part part = req.getPart("filename");
 		    fileName = getFileName(part);
 		    System.out.println( "LOG :: [업로드 파일 경로] :: " + uploadFilePath + File.separator + fileName);
-		    part.write(uploadFilePath + File.separator + fileName);
+		    
+		    int uriLastIndex = fileName.lastIndexOf(".");
+		    String uriAction = fileName.substring(uriLastIndex+1);
+		    FileDao fdao = new FileDaoImpl();
+		    String newFileName = fdao.returnSeq()+"."+uriAction;
+		    
+		    System.out.println("fcode로만든이름: "+newFileName);
+		    System.out.println(uploadFilePath + File.separator + newFileName);
+		    part.write(uploadFilePath + File.separator + newFileName);
+		    
+		    long fileSize = part.getSize();
+		    
+		    Files files = new Files(newFileName,fileName,fileSize);
+		    fdao.insert(files);
 		    
 		    
-		    req.setAttribute("fileName", fileName);
+			
+		    //게시글
+			HttpSession session = req.getSession(false);
+			
+			String title = req.getParameter("title");
+			String content = req.getParameter("content");
+			int mcode = (int) session.getAttribute("mcode");
+			
+			Notice notice = new Notice(mcode,title,content);
+			
+			NoticeDao dao = new NoticeDaoImpl();
+			dao.insert(notice);
+			
+			
 			
 
 		}else if(action.equals("notice_update_input")) {

@@ -6,11 +6,11 @@ public class Files {
 	private String uploaddate;
 	private String name;
 	private String beforename;
-	private int filesize;
+	private long filesize;
 	
 	public Files() {}
 	
-	public Files(int fcode, int ncode, String uploaddate, String name, String beforename, int filesize) {
+	public Files(int fcode, int ncode, String uploaddate, String name, String beforename, long filesize) {
 		super();
 		this.fcode = fcode;
 		this.ncode = ncode;
@@ -19,6 +19,15 @@ public class Files {
 		this.beforename = beforename;
 		this.filesize = filesize;
 	}
+	
+	
+	public Files(String name, String beforename, long filesize) {
+		super();
+		this.name = name;
+		this.beforename = beforename;
+		this.filesize = filesize;
+	}
+
 	public int getFcode() {
 		return fcode;
 	}
@@ -49,7 +58,7 @@ public class Files {
 	public void setBeforename(String beforename) {
 		this.beforename = beforename;
 	}
-	public int getFilesize() {
+	public long getFilesize() {
 		return filesize;
 	}
 	public void setFilesize(int filesize) {

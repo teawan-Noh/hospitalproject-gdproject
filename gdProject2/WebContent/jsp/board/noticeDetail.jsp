@@ -25,6 +25,7 @@ $(function(){
 		}else{
 			alert('취소되었습니다.');
 			location.replace('notice_list?reqPage=1');
+			return false;
 		}
 		
 	});

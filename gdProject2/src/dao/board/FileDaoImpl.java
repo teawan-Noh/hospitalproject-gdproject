@@ -2,6 +2,9 @@ package dao.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import common.JDBCUtil;
 import common.Sql;
@@ -18,10 +21,9 @@ public class FileDaoImpl implements FileDao {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.NOTICE_INSERT_FILE_SQL);
 			
-			pStatement.setInt(1, files.getNcode());
-			pStatement.setString(2, files.getName());
-			pStatement.setString(3, files.getBeforename());
-			pStatement.setInt(4, files.getFilesize());
+			pStatement.setString(1, files.getName());
+			pStatement.setString(2, files.getBeforename());
+			pStatement.setLong(3, files.getFilesize());
 			
 			pStatement.executeUpdate();
 
@@ -45,7 +47,7 @@ public class FileDaoImpl implements FileDao {
 			pStatement.setInt(1, files.getNcode());
 			pStatement.setString(2, files.getName());
 			pStatement.setString(3, files.getBeforename());
-			pStatement.setInt(4, files.getFilesize());
+			pStatement.setLong(4, files.getFilesize());
 
 			pStatement.executeUpdate();
 
@@ -76,6 +78,69 @@ public class FileDaoImpl implements FileDao {
 			JDBCUtil.close(null, pStatement, connection);
 		}
 
+	}
+
+	@Override
+	public int returnSeq() {
+		int fileSeq = 0;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.FILE_NAME_SEQ_SQL);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				fileSeq = resultSet.getInt("nextval");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		
+		return fileSeq;
+	}
+
+	@Override
+	public List<Files> selectAll() {
+		List<Files> bbsList = new ArrayList<>();
+
+		/*Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.BBS_SELECT_ALL_SQL);
+			resultSet = pStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				Bbs bbs = new Bbs();
+
+				bbs.setNo(resultSet.getLong("no"));
+				bbs.setSubject(resultSet.getString("subject"));
+				bbs.setContent(resultSet.getString("content"));
+				bbs.setWdata(resultSet.getString("to_char(wdata,'yyyy-mm-dd')"));
+				bbs.setCnt(resultSet.getInt("cnt"));
+				bbs.setId(resultSet.getString("id"));
+
+				bbsList.add(bbs);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}*/
+
+		return bbsList;
 	}
 
 }

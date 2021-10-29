@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import dao.board.FileDao;
+import dao.board.FileDaoImpl;
 import dao.board.NoticeDao;
 import dao.board.NoticeDaoImpl;
 import dao.user.PatientDao;
@@ -74,7 +75,7 @@ public class PatientTest {
 		
 		ndao.update(notice);*/
 		
-		System.out.println("================selectAll()===============");
+		/*System.out.println("================selectAll()===============");
 		
 		List<HashMap<String,Object>> list = ndao.selectAll(1);
 		
@@ -104,7 +105,7 @@ public class PatientTest {
 			System.out.println(hashMap.get("name"));
 			System.out.println(hashMap.get("writedate"));
 			System.out.println(hashMap.get("cnt"));
-		}
+		}*/
 			
 		/*ndao.delete(37);
 		
@@ -115,7 +116,7 @@ public class PatientTest {
 		ndao.insert(notice);*/
 		
 		
-		System.out.println("===============selectByTitleContent()================");
+		/*System.out.println("===============selectByTitleContent()================");
 		
 		List<HashMap<String,Object>> list4 = ndao.selectByTitleContent("22");
 		
@@ -131,7 +132,10 @@ public class PatientTest {
 		notice.setTitle("수정함제목");
 		notice.setContent("수정함내용");
 		notice.setNcode(38);
-		ndao.update(notice);
+		ndao.update(notice);*/
+		
+		FileDao fdao = new FileDaoImpl();
+		System.out.println(fdao.returnSeq());
 		
 	}
 

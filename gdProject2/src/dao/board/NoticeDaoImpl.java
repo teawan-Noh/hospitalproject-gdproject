@@ -23,6 +23,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
+			
+			
 			pStatement = connection.prepareStatement(Sql.NOTICE_INSERT_SQL);
 			
 			pStatement.setInt(1, notice.getMcode());
