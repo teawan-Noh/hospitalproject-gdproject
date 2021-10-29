@@ -218,7 +218,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         return new XMLSerializer().serializeToString(oXML);
                     }
                 }
-
+ 
                 //////////달력////////////////
                 // calendar element 취득
                 var calendarEl = $("#calendar")[0];
