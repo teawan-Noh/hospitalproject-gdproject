@@ -578,11 +578,11 @@ alter table approval add day varchar(10);
 
 drop table rest;
 
-insert into rest values (1, 5, sysdate, '½ÂÀÎ', 'º´°¡', null, 'FRI');
+insert into rest values (1, 5, sysdate, '½ÂÀÎ', 'º´°¡', null, 6);
 insert into rest values (2, 4, sysdate, '´ë±â', 'ÈÞ°¡', to_date('2021-12-01','yyyy-mm-dd'), null);
-insert into rest values (3, 3, sysdate, '´ë±â', 'ÈÞ°¡', null, 'WED');
+insert into rest values (3, 3, sysdate, '´ë±â', 'ÈÞ°¡', null, 4);
 insert into rest values (4, 2, sysdate, '´ë±â', 'ÈÞ°¡', to_date('2021-03-15','yyyy-mm-dd'), null);
-insert into rest values (5, 1, sysdate, '°ÅÀý', '²Òº´', null, 'MON');
+insert into rest values (5, 1, sysdate, '°ÅÀý', '²Òº´', null, 2);
 
 alter table approval rename to rest;
 alter table rest rename column acode to rcode;
@@ -601,4 +601,6 @@ select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedat
 select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
 from notice n inner join manager m on n.mcode = m.mcode) where rn between 1 and 4
 
-
+delete from rest
+alter table rest modify day number
+select * from rest

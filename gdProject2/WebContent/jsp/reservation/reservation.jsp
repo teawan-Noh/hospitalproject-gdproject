@@ -211,6 +211,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         let url = "schedule";
 
                         $.get(url, { dcode: dcode }, function (data) {
+                        	console.log(XMLToString(data));
                             var schedule = $(data).find("schedule");
                             if (schedule.length > 0) {
                                 $(schedule).each(function (idx, item) {
@@ -227,7 +228,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     } else if (day != "") {
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(day)],
+                                            daysOfWeek: [String(Number(day) + 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }
