@@ -17,7 +17,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 $(function(){
 	$("#update").click(function(){
 		//제목
-		var title_value = $("#title").val();
+		var title_value = $("#title").val().replace(/\s/gi, "");
 		
 		if(!title_value){
 			alert("제목을 입력해주세요.")
@@ -26,7 +26,7 @@ $(function(){
 		}
 		
 		//내용
-		var content_value = $("#content").val();
+		var content_value = $("#content").val().replace(/\s/gi, "");
 		
 		if(!content_value){
 			alert("내용을 입력해주세요.")
@@ -41,6 +41,7 @@ $(function(){
 <title>공지사항 등록</title>
 </head>
 <body>
+<header><jsp:include page="../common/header.jsp"></jsp:include></header>
 	<div id="main">
         <div class="container">
             <section id="bigTitle">
@@ -63,7 +64,7 @@ $(function(){
             </section>
             
         </div>
-        
+        <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 </html>

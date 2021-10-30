@@ -13,6 +13,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/noticeList.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/8a3e72a4c8.js" crossorigin="anonymous"></script>
     <title>공지사항</title>
 </head>
 
@@ -21,7 +22,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	<header><jsp:include page="../common/header.jsp"></jsp:include></header>
         <div id="main">
         	 <section id="searchSection">
+            	
             	<form action="notice_search" method="post" id="form">
+            	<div class="content_path">
+              <i class="fas fa-home"></i>
+              
+              <i class="fas fa-chevron-right"></i>
+             공지사항
+           </div>
                 	<h2 id="h2">공지사항</h2>
                 	<input type="search" id="nsearch" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." />
                 	<button type="submit" id="nsearchBtn" name="searchBtn">검색</button>
@@ -43,7 +51,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<c:forEach var="list" items="${noticeList}">
         	        	<tr>
             	            <td>${list.ncode}</td>
-                	        <td><a href="notice_detail?ncode=${list.ncode}">${list.title}</a></td>
+                	        <td><a href="notice_detail?ncode=${list.ncode}&pageNum=${pageGroupResult.selectPageNumber}" id="a">${list.title}</a></td>
                     	    <td>${list.name}</td>
                         	<td>${list.writedate}</td>
                         	<td>${list.cnt}</td>
@@ -52,7 +60,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 </tbody>
             </table>
         
-            <p id="info">※내역을 클릭하면 상세조회가 가능합니다.</p>
+            <p id="info">※제목을 클릭하면 상세조회가 가능합니다.</p>
             <c:if test="${mcode!=null}">
             	<button type="button" id="write" onclick="location.href='notice_input'">글쓰기</button>
             </c:if>

@@ -130,7 +130,18 @@ public class Sql {
 			"delete from files where ncode = ?";
 	//게시글 작성 파일 업로드
 	public static final String NOTICE_INSERT_FILE_SQL =
-				"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
+			"insert into files values(fileSeq.nextval,?,sysdate,?,?,?)";
+	
+	//파일 insert시 ncode불러오기
+	public static final String NOTICE_INSERT_FILE_NCODE_SQL =
+			"select * from (select ncode from notice order by rownum desc) where rownum = 1";
+	
+	//해당 게시글에 해당하는 파일 객체 리턴
+	public static final String RETURN_FILE_BY_NCODE_SQL =
+			"select * from files where ncode in (select ncode from notice where ncode=?)";
+	
+	public static final String FILE_NAME_SEQ_SQL = 
+			"select fileSeq.nextval from dual";
 	//게시글 상세보기 파일
 	public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";

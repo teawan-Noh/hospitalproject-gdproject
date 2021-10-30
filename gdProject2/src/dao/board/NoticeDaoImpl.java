@@ -23,6 +23,8 @@ public class NoticeDaoImpl implements NoticeDao {
 		
 		try {
 			connection = JDBCUtil.getConnection();
+			
+			
 			pStatement = connection.prepareStatement(Sql.NOTICE_INSERT_SQL);
 			
 			pStatement.setInt(1, notice.getMcode());
@@ -33,6 +35,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("게시글 업로드 예외발생!");
 		} finally {
 			JDBCUtil.close(null, pStatement, connection);
 		}
@@ -232,6 +235,37 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		
 		return noticeList;
+	}
+
+	@Override
+	public int returnNcode() {
+		int ncode = 0;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.NOTICE_INSERT_FILE_NCODE_SQL);
+			
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				ncode = resultSet.getInt("ncode");
+				
+			}
+			
+			
+			pStatement.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return ncode;
 	}
 	
 

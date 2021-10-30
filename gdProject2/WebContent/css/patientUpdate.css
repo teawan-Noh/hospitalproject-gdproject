@@ -5,7 +5,7 @@
     display: flex;
 }
 .content {
-    margin:125px 50px 50px 50px;
+    margin:50px;
 }
 
 #id,#pw,#pwChk,#name,#nickName,#tel{
