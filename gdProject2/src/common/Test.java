@@ -39,10 +39,10 @@ public class Test {
 //		
 //		List<Qna> selectAll();
 //		List<HashMap> list = dao.selectAll();
-		List<HashMap> list = dao.selectByNickname("発切3");
-		for (HashMap hashMap : list) {
-			//System.out.println(hashMap.get("qno"));
-		}
+//		List<HashMap> list = dao.selectByNickname("発切3");
+//		for (HashMap hashMap : list) {
+//			//System.out.println(hashMap.get("qno"));
+//		}
 		
 //		Qna selectByQno(int qno);
 //		Qna qna3 = dao.Qna selectByQno(int qno);

@@ -3,6 +3,7 @@ package common.page;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import common.JDBCUtil;
 import common.Sql;
@@ -115,5 +116,64 @@ public class PageDaoImpl implements PageDao {
 	      }
 	      return cnt;
 	   }
+
+	@Override
+	public int getCountQnaAll(String sql) {
+		int cnt = 0;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(sql);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				cnt = resultSet.getInt("cnt");
+				System.out.println(cnt);
+				
+			}
+		}
+		catch(SQLException se) {
+			se.printStackTrace();
+			 	
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public int getCountQnaSearchNickname(String searchValue) {
+		int cnt = 0;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_COUNT_SEARCH_NICKNAME_SQL);
+			pStatement.setString(1, '%'+searchValue+'%');
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				
+				cnt = resultSet.getInt("cnt");
+				
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return cnt;
+	}
 
 }

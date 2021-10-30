@@ -8,6 +8,40 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../common/bootstrapInclude.jsp"/>
+<script>
+	$(function(){
+		var url = 'comment_test';
+		
+		function XMLToString(oXML) {
+            //code for IE
+            if (window.ActiveXObject) {
+                var oString = oXML.xml;
+                return oString;
+            }
+            // code for Chrome, Safari, Firefox, Opera, etc.
+            else {
+                return new XMLSerializer().serializeToString(oXML);
+            }
+        }
+		
+		$("#comment").submit(function(e){
+			e.preventDefault()
+			$.post(url,{content:$('textarea[name="content"]').val(),
+				mcode:${sessionScope.mcode}, qno:${qnadetail.qno}}, function(data){
+					console.log(XMLToString(data))
+					var result = Number($(data).find('result'));
+					var content = $(data).find('content').text();
+					if(result != 0){
+						/* 데이터가 오면 다시 보이게 */
+						$('#comment_container').css('display', 'block')
+						$('#show_content').text(content)
+						$('#comment').css('display', 'none')
+					}
+				})
+		})
+		
+	});
+</script>
 </head>
 <style>
         .main{
@@ -49,6 +83,9 @@
        		text-align: right;
        		padding: 10px 0 30px 0;
        	}
+       	#comment_container{
+       		display: none;
+       	}
        	.comment_box{
        		display: flex;
        		justify-content: space-between;
@@ -68,7 +105,10 @@
        	.add_comment_box .add_comment_button{
        		padding-top: 11px;
        	}
-       
+       	.contents_box .a{
+       		text-align:left;
+       		padding: 30px 0 70px 70px;
+       	}
 </style>
 </head>
 <body>
@@ -111,9 +151,10 @@
 		   					</td>
 						</tr>
 						<tr class="contents_box">
-							<td >
+							<td class="a" rowspan="4" colspan="4">
 								${qnadetail.img}
 								${qnadetail.content}
+								
 		 	  				</td>
 						</tr>
 					</tbody>	
@@ -135,7 +176,7 @@
 	    	<c:set var="mcode" value="${managerpcode}" />
 			<c:if test="${ccontent == null && mcode != null}">
 			
-			<form method="post" action="comment_save">
+			<form method="post" action="comment_save" id="comment">
 			<input type="text" name="qno" value="${qnadetail.qno}" hidden="hidden"/>
 	    	<div class="add_comment_box">
 	    		<div>
@@ -147,11 +188,9 @@
 	    	</div>
 	    	</form>
 	    	</c:if>
+	    	
 	    	<c:if test="${ccontent != null}">
-	    	<div>
 	    		<h4>답변</h4>
-	    	</div>
-	    	</c:if>
 	    	<div class="comment_box">
 	    		<div class="comment_box_left">
 	    			<div>${qnadetail.ccontent}</div>
@@ -164,6 +203,23 @@
 	    			</div>
 	    		</div>
 	    	</div>
+	    	</c:if>
+	    	
+	    	<c:if test="${ccontent == null}">
+	    	<div id="comment_container">
+		    	<h4>답변</h4>
+		    	
+		    	<div class="comment_box">
+		    		<div class="comment_box_left">
+		    			<div id="show_content"></div>
+		    		</div>
+		    		<div class="comment_box_right">
+		    			<div id="show_writer"></div>
+		    			<div id="show_writedate"></div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	</c:if>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

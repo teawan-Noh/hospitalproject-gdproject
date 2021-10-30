@@ -120,7 +120,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <div id="side-img"></div>
 	            </div>
 	            <ul id="side-ul">
-	                <li class="side-list"><a class="sub_menu" href="qna_list"><span class="sub_menu">Q&A 게시판</span></a></li>
+	                <li class="side-list"><a class="sub_menu" href="qna_list?reqPage=1"><span class="sub_menu">Q&A 게시판</span></a></li>
 	                
 	            </ul>
             </c:if>
