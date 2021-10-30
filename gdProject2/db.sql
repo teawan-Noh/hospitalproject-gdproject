@@ -10,7 +10,7 @@ drop table approval cascade constraints;
 drop table notice cascade constraints;
 drop table rest cascade constraints;
 drop table files cascade constraints;
-*/
+*/ 
 /* 환자 회원 */
 CREATE TABLE patient (
 	pcode NUMBER NOT NULL, /* 회원 코드 */

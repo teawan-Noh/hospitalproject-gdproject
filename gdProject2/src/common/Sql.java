@@ -52,6 +52,7 @@ public class Sql {
 	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, to_char(d.birth,'yyyy-mm-dd') as birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	public static final String REST_SELECT_BY_APPROVED = "select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = ? and dcode = ?";
 	public static final String REST_INSERT_SQL = "insert into rest values(rest_seq.nextval, ?, sysdate, '대기', ?, to_date(?, 'yyyy-mm-dd'), ?)";
+	public static final String REST_SELECT_RESERVATION_SQL = "select count(*) as cnt from reservation where to_char(rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') and dcode = ?";
 	//odw
 	//회원가입
 	public static final String PATIENT_INSERT_SQL = 

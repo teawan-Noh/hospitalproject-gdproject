@@ -63,6 +63,20 @@ pageEncoding="UTF-8"%>
             	border: none;
             	border-radius: 5px;
             }
+            .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
         </style>
     </head>
     <body>
@@ -70,9 +84,10 @@ pageEncoding="UTF-8"%>
         <div class="flex container-box">
             <jsp:include page="../common/sidemenu.jsp"></jsp:include>
             <div class="content">
-                <ul>
+                <ul class="fmenu">
+                   <li><div class="home-img"></div></li>
                     <li>의료진</li>
-                    <li>의료진 목록조회</li>
+                    <li>의료진목록조회</li>
                 </ul>
                 <div class="flex">
                 	<div class="doctor-img"></div>
