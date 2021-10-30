@@ -124,7 +124,7 @@
 					<c:choose>
 						<c:when test="${pageGroupResult.selectPageNumber == index}">
 						<li class="page-item active">
-							<a class="page-link" href="qna_list?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
+							1<a class="page-link" href="qna_list?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
 						</li>
 						</c:when>
 					<c:otherwise>

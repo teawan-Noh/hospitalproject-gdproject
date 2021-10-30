@@ -245,9 +245,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_ALL_SQL);
-			//select p.pcode, p.name, p.birth, count(r.pcode) rcnt FROM patient p
-			//LEFT OUTER JOIN reservation r ON p.pcode = r.pcode 
-			//GROUP BY p.pcode, p.name, p.birth order by p.name asc;
+			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -282,9 +280,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_NAME_SQL);
-			//select p.pcode, p.name, p.birth, count(r.pcode) rcnt from patient p
-			//left outer join reservation r on p.pcode = r.pcode where name like ?
-			//GROUP BY p.pcode, p.name, p.birth order by p.name asc;
+
 			pStatement.setString(1, '%'+name+'%');
 			resultSet = pStatement.executeQuery();
 			
@@ -321,8 +317,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_RCODE_SQL);
-			//select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason from doctor d inner join rest r 
-			//on d.dcode = r.dcode where rcode = ?;
+			
 			pStatement.setInt(1, rcode);
 			resultSet = pStatement.executeQuery();
 			
@@ -335,6 +330,7 @@ public class ManagerDaoImpl implements ManagerDao {
 				restDetail.put("requestdate", resultSet.getString("requestdate"));
 				restDetail.put("restdate", resultSet.getString("restdate"));
 				restDetail.put("reason", resultSet.getString("reason"));
+				restDetail.put("approved", resultSet.getString("approved"));
 			}
 		}
 		catch(NumberFormatException se) {

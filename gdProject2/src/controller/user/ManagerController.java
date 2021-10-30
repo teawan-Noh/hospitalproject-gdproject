@@ -146,6 +146,7 @@ public class ManagerController extends HttpServlet{
 			
 			HashMap<String, String> restDetail = dao.selectRestByRcode(rcode);
 			req.setAttribute("restdetail", restDetail);
+			System.out.println(restDetail);
 		}
 		else if(action.equals("mg_rest_approve")) {
 			

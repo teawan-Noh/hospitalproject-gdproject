@@ -132,7 +132,7 @@ public class PageDaoImpl implements PageDao {
 			if(resultSet.next()) {
 				
 				cnt = resultSet.getInt("cnt");
-				System.out.println(cnt);
+				System.out.println("전체써치"+cnt);
 				
 			}
 		}
@@ -162,7 +162,7 @@ public class PageDaoImpl implements PageDao {
 			resultSet = pStatement.executeQuery();
 			
 			if(resultSet.next()) {
-				
+				System.out.println("닉네임써치");
 				cnt = resultSet.getInt("cnt");
 				
 			}

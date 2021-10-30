@@ -232,7 +232,7 @@ public class Sql {
 			+ " order by r.rcode desc";
 	
 	public static final String MG_REST_SELECT_BY_RCODE_SQL
-		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason" 
+		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason, r.approved" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " where rcode = ?";

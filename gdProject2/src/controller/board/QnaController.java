@@ -50,13 +50,13 @@ public class QnaController extends HttpServlet{
 		if(action.equals("qna_list")) {
 			
 			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
+			String searchValue = req.getParameter("searchType");
+			String searchType = req.getParameter("searchValue");
 			
 			if(req.getParameter("searchValue") == null) {
 				QnaDao dao = new QnaDaoImpl();
 				List<HashMap> qnaList = dao.selectAll(requestPage);
-//				req.setAttribute(searchValue, 페이지);
-//				String searchType = null;
-//				String searchValue = req.getParameter("searchValue");
+				
 				//총 줄수 가져오기
 				PageDao pageDao = new PageDaoImpl();
 				int cnt = pageDao.getCountQnaAll(Sql.QNA_COUNT_ALL_SQL);
@@ -65,16 +65,14 @@ public class QnaController extends HttpServlet{
 				PageManager pm = new PageManager(requestPage);
 				PageGroupResult pgr = pm.getPageGroupResult(cnt);
 
-				req.setAttribute("searchValue", "");
-				req.setAttribute("searchType", "");
 				req.setAttribute("qnaList", qnaList);
 				req.setAttribute("pageGroupResult", pgr); //링크 시작넘버, 끝넘버 객체
 			}
 			else{
 				
 				QnaDao dao = new QnaDaoImpl();
-				String searchType = req.getParameter("searchType");
-				String searchValue = req.getParameter("searchValue");
+				searchType = req.getParameter("searchType");
+				searchValue = req.getParameter("searchValue");
 				
 				if(searchType.equals("nickname")) {
 					
@@ -90,6 +88,9 @@ public class QnaController extends HttpServlet{
 					List<HashMap> qnaList = dao.selectByNickname(searchValue, requestPage);
 					req.setAttribute("qnaList", qnaList);
 					req.setAttribute("pageGroupResult", pgr); //링크 시작넘버, 끝넘버 객체
+					
+					req.setAttribute("searchValue", searchValue);
+					req.setAttribute("searchType", searchType);
 				}
 				else if((searchType.equals("titleContent"))) {
 					List<HashMap> qnaList = dao.selectByTitleOrContent(searchValue, requestPage);
@@ -99,8 +100,6 @@ public class QnaController extends HttpServlet{
 					List<HashMap> qnaList = dao.selectAll(requestPage);
 					req.setAttribute("qnaList", qnaList);
 				}
-				req.setAttribute("searchValue", searchValue);
-				req.setAttribute("searchType", searchType);
 			}
 			
 			HttpSession session = req.getSession();
