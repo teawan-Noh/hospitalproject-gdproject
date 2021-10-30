@@ -88,13 +88,13 @@
     							<fmt:parseDate value="${patient.birth}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 			      				<td><fmt:formatDate value="${dateFmt}"  pattern="yyyy-MM-dd"/></td>
     							<td>
-    							<c:set var="val" value="${patient.rcode}" />
+    							<c:set var="val" value="${patient.rcnt}" />
 
     								<c:if test="${val == 0}">
     									<a href="reservation?pcode=${patient.pcode}"><button class="submitbtn">예약하기</button></a>
     								</c:if>
     								<c:if test="${val != 0}">
-	    								<a href="reservation-list?reqPage=1&pcode=${patient.pcode}"><button class="submitbtn" style="background-color:rgb(41, 128, 185);">예약수정</button></a>
+	    								<a href="reservation-list?reqPage=1&pcode=${patient.pcode}"><button class="submitbtn" style="background-color:rgb(41, 128, 185);">예약조회</button></a>
     								</c:if>
     							</td>
     						</tr>

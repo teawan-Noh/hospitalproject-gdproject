@@ -10,13 +10,13 @@ public interface QnaDao {
 	void insert(Qna qna);
 	void update(Qna qna);
 	void delete(int qno);
-	void insertComment(Comments comment);
+	int insertComment(Comments comment);
 	
 	void cntUpdate(Qna qna);
 	Qna selectCntByQno(int qno);
 	
-	List<HashMap> selectAll();
-	List<HashMap> selectByNickname(String nickname);
-	List<HashMap> selectByTitleOrContent(String searchValue);
+	List<HashMap> selectAll(int requestPage);
+	List<HashMap> selectByNickname(String nickname, int requestPage);
+	List<HashMap> selectByTitleOrContent(String searchValue, int requestPage);
 	HashMap selectByQno(int qno);
 }

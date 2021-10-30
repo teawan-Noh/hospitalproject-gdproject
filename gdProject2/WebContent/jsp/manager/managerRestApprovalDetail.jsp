@@ -103,12 +103,16 @@
 	   			</table>
     		</div>
     		<div class="approve_reject_button">
-    			<a href="mg_rest_approve?rcode=${restdetail.rcode}">
+    		<c:set var="approved" value="${restdetail.approved}" />
+			<c:if test="${approved == '대기'}">
+				<a href="mg_rest_approve?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">승인</button>
 		   		</a>
     			<a href="mg_rest_reject?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">거절</button>
 		   		</a>
+
+			</c:if>
 	    	</div>
         </div>
     </div>

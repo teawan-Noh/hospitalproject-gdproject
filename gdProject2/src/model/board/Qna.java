@@ -43,6 +43,14 @@ public class Qna {
 		this.img = img;
 	}
 
+	public Qna(String title, String content, String img, int qno) {
+		super();
+		this.qno = qno;
+		this.title = title;
+		this.content = content;
+		this.img = img;
+	}
+
 	public Qna(int qno, int pcode, String title, String content, String writedate, String img, int cnt) {
 		super();
 		this.qno = qno;

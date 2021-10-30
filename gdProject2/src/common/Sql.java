@@ -148,24 +148,18 @@ public class Sql {
 	//ntw
 	//qna 테이블
 	public static final String QNA_SELECT_ALL_SQL 
-		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " order by q.qno desc";
+		= "select * from (select row_number() over(order by q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" 
+			+ " from qna q left outer join patient p on q.pcode = p.pcode order by q.qno desc) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_NICKNAME_SQL 
-		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " where p.nickname like ?"
-			+ " order by q.qno desc";
+		= "select qno, title, pcode, nickname, writedate, cnt from (select ROW_NUMBER() OVER(ORDER BY q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" + 
+				" from qna q left outer join patient p on q.pcode = p.pcode" + 
+				" where p.nickname like ?) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_TITLE_OR_CONTENT_SQL 
-	= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " where q.title like ? or q.content like ?"
-			+ " order by q.qno desc";
+		= "select * from (select row_number() over(order by q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" 
+			+ " from qna q left outer join patient p on q.pcode = p.pcode" 
+			+ " where q.title like ? or q.content like ?) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_SUBJECT_SQL 
 		= "select * from qna where subject like ? order by no desc";
@@ -182,7 +176,7 @@ public class Sql {
 		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update qna set title = ?, content = ? whereq no = ?";
+		= "update qna set title = ?, content = ?, img = ? where qno = ?";
 
 	public static final String QNA_DELETE_SQL 
 		= "delete from qna where qno = ?";
@@ -192,6 +186,12 @@ public class Sql {
 	
 	public static final String QNA_CNT_SELECT_BY_QNO_SQL
 		= "select cnt from qna where qno = ?";
+	
+	public static final String QNA_COUNT_ALL_SQL 
+		= "select count(*) as cnt from qna";
+	
+	public static final String QNA_COUNT_SEARCH_NICKNAME_SQL 
+		= "select count(*) as cnt from qna q inner join patient p on q.pcode = p.pcode where nickname like ?";
 	
 	//코멘트 테이블
 	public static final String COMMNETS_INSERT_SQL 
@@ -212,17 +212,22 @@ public class Sql {
 		= "delete from doctor where dcode = ?";
 	//환자조회
 	public static final String MG_PATIENT_SELECT_ALL_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
-			+ " on p.pcode = r.pcode" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " FROM patient p" 
+			+ " LEFT OUTER JOIN reservation r" 
+			+ " ON p.pcode = r.pcode" 
+			+ " GROUP BY p.pcode, p.name, p.birth"
 			+ " order by p.name asc";
 	
 	public static final String MG_PATIENT_SELECT_BY_NAME_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " from patient p"
+			+ " left outer join reservation r" 
 			+ " on p.pcode = r.pcode" 
-			+ " where name like ?"
-			+ " order by name asc";
+			+ " where name like ?" 
+			+ " GROUP BY p.pcode, p.name, p.birth"
+			+ " order by p.name asc";
+	
 	//승인관리
 	public static final String MG_REST_SELECT_ALL_SQL 
 		= "select r.rcode, d.name as dname, r.requestdate, r.approved" 
@@ -238,7 +243,7 @@ public class Sql {
 			+ " order by r.rcode desc";
 	
 	public static final String MG_REST_SELECT_BY_RCODE_SQL
-		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason" 
+		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason, r.approved" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " where rcode = ?";
