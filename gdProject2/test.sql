@@ -710,4 +710,5 @@ select * from rest where dcode = 3;
 select * from rest where approved = '´ë±â' and dcode = 3;
 select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = '½ÂÀÎ' and dcode = 3;
 update rest set approved = '½ÂÀÎ' where dcode = 12;
-select count(*) from reservation where to_char(rsvdate, 'yyyy-mm-dd') = '2021-11-29' and dcode = 1; 
+select count(*) from reservation where to_char(rsvdate, 'yyyy-mm-dd') = '2021-11-29' and dcode = 1;
+delete from rest where dcode = 8;

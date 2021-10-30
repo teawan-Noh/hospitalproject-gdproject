@@ -94,30 +94,7 @@
       }
     </style>
     <script>
-    var restdataset = [
-        <c:forEach var="rest" items="${restList}">
-                {
-                	title: '휴진',
-                	start:'<c:out value="${rest.restdate}" />',
-                },
-        </c:forEach>
-    ];
-    var dataset = [
-        <c:forEach var="wait" items="${waitList}">
-                {
-                	title: '휴진 승인 대기',
-                	start:'<c:out value="${wait.restdate}" />',
-                },
-        </c:forEach>
-    ];
-    var dendataset = [
-        <c:forEach var="den" items="${denList}">
-                {
-                	title: '거절',
-                	start:'<c:out value="${den.restdate}" />',
-                },
-        </c:forEach>
-    ];
+
     $(function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -144,39 +121,71 @@
               $(el).addClass("rest");
               console.log(el);
            },
-           eventSources : [
-        	   {
-             	  events : [
-                       {
-                     	 title: "주말",
-                          daysOfWeek: ["0", "6"],  
-                       }
-                   ]
-                   , color : "rgb(243, 243, 243)"
-                   , textColor : "black"
-                   ,classNames: ["rest-children"]
-               }
-               , 
-        	   {
-              	  events : restdataset,
-              	  title: "휴진"
-                    , color : "rgb(243, 243, 243)"
-                    , textColor : "black",
-                    	classNames: ["rest-children"]
-                } ,{
-              	  events : dataset,
-              	  title: "승인 대기중"
-                    , color : "#FFD700"
-                    , textColor : "black"
-                    ,classNames: ["rest-children"]
-                } ,{
-                	  events : dendataset,
-                	  color: "white",
-                  	  title: "거절"
-                        , textColor : "rgb(70, 145, 140)"
+           datesSet: function(dateInfo){
+               calendar.removeAllEvents();
+                calendar.addEvent({
+                    title: "주말",
+                    daysOfWeek: ["0", "6"],
+                    color : "rgb(243, 243, 243)",
+                    textColor : "black",
+                    classNames: ["rest-children"],
+                });
+                let url = "dschedule";
+				let dcode = "${dcode}";
+                $.get(url, { dcode: dcode }, function (data) {
+                    var schedule = $(data).find("schedule");
+                    if (schedule.length > 0) {
+                        $(schedule).each(function (idx, item) {
+                            var restdate = $(item)
+                                .find("restdate")
+                                .text();
+                            if (restdate != "") {
+                                calendar.addEvent({
+                                    title: "휴진",
+                                    start: restdate,
+                                    color : "rgb(243, 243, 243)",
+                                    textColor : "black",
+                                    classNames: ["rest-children"],
+                                });
+                            }
+                        });      
                     }
-
-           ],
+                    var waitSchedule = $(data).find("waitSchedule");
+                    if(waitSchedule.length > 0){
+                    	$(waitSchedule).each(function (idx, item) {
+                            var restdate = $(item)
+                                .find("restdatewait")
+                                .text();
+                            if (restdate != "") {
+                                calendar.addEvent({
+                                    title: "휴진 승인 대기",
+                                    start: restdate,
+                                    classNames: ["rest-children"],
+                                    color: "#FFD700",
+                  	                textColor: "black", 
+                                });
+                            }
+                        });	
+                    }
+                    var denSchedule = $(data).find("denSchedule");
+                    if(denSchedule.length > 0){
+                    	$(denSchedule).each(function (idx, item) {
+                            var restdate = $(item)
+                                .find("restdateden")
+                                .text();
+                            if (restdate != "") {
+                                calendar.addEvent({
+                                    title: "승인 거절",
+                                    start: restdate,
+                                    classNames: ["rest-children"],
+                                    color: "white",
+                  	                textColor: "rgb(70, 145, 140)", 
+                                });
+                            }
+                        });	
+                    }
+                });
+            },
            dateClick: function (date) {
               console.log(date);
                var view = date.dayEl;
@@ -203,7 +212,9 @@
               	                textColor: "black",
               	                classNames: ["rest-children"],
               	        	});
-              	        },
+              	        },error:function(request,status,error){
+              	          alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+              	       },
               	    });
             	  } else {
             		  return false;
@@ -212,7 +223,6 @@
            }
         });
         calendar.render();
-   
     });
     
     </script>

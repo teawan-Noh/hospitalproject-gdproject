@@ -18,7 +18,7 @@ import dao.rest.RestDao;
 import dao.rest.RestDaoImpl;
 import model.ask.Rest;
 
-@WebServlet(name = "RestController", urlPatterns={"/rest","/rest_input", "/schedule_check"})
+@WebServlet(name = "RestController", urlPatterns={"/rest","/rest_input", "/schedule_check", "/dschedule"})
 public class RestController  extends HttpServlet{
 
 	/**
@@ -48,19 +48,14 @@ public class RestController  extends HttpServlet{
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
 			RestDao dao = new RestDaoImpl();
-			List<Rest> waitList = dao.selectRestBydcode("대기", dcode);
-			req.setAttribute("waitList", waitList);
-			List<Rest> restList = dao.selectRestBydcode("승인", dcode);
-			req.setAttribute("restList", restList);
-			List<Rest> denList = dao.selectRestBydcode("거절", dcode);
-			req.setAttribute("denList", denList);
+			
 			req.setAttribute("side", "task");
 			req.setAttribute("dcode", dcode);
 		} else if(action.equals("rest_input")) {
 			String date = req.getParameter("date");
 			System.out.println(date);
 			String reason = req.getParameter("reason");
-			System.out.println(reason);
+			//System.out.println(reason);
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
 			Rest rest = new Rest(dcode, reason, date);
@@ -78,6 +73,19 @@ public class RestController  extends HttpServlet{
 			List<Rest> denList = dao.selectRestBydcode("거절", dcode);
 			req.setAttribute("denList", denList);
 			req.setAttribute("side", "task");
+		} else if(action.equals("dschedule")) {
+			ReservationDao rdao = new ReservationDaoImpl();
+			RestDao dao = new RestDaoImpl();
+			HttpSession session = req.getSession();
+			int dcode = (int)session.getAttribute("dcode");
+			List<Map<String, String>> scheduleList = rdao.selectScheduleByDcode(dcode);
+			List<Rest> waitList = dao.selectRestBydcode("대기", dcode);
+			req.setAttribute("waitList", waitList);
+			List<Rest> denList = dao.selectRestBydcode("거절", dcode);
+			req.setAttribute("denList", denList);
+			
+			req.setAttribute("scheduleList", scheduleList);
+			
 		}
 		
 		String dispatcherUrl = null;
@@ -87,6 +95,8 @@ public class RestController  extends HttpServlet{
 			dispatcherUrl = "rest";
 		} else if(action.equals("schedule_check")) {
 			dispatcherUrl = "jsp/doctor/doctorSchedule.jsp";
+		} else if(action.equals("dschedule")) {
+			dispatcherUrl = "ajax/restapproval.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
