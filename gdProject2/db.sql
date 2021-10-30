@@ -636,7 +636,7 @@ insert into t values(a.nextval) and
 select n from t
 
 
-
+select * from doctor;
 
 
 
