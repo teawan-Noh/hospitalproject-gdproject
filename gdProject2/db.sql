@@ -622,13 +622,18 @@ select * from reservation;
 select * from doctor;
 
 
+create sequence a;
+
+select a.currval from dual;
+
+create table t(
+	n number primary key
+)
 
 
 
-
-
-
-
+insert into t values(a.nextval) and
+select n from t
 
 
 

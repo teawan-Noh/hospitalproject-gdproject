@@ -41,6 +41,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             	border-style: solid;
             	border-width: 0px 0px 1px 0px;
             }
+            .side-list a{
+            	text-decoration: none;
+            	color: black;
+            }
             #side-img{
             	background-image: url("img/doctor.png");
                 background-size: cover;

@@ -10,6 +10,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<label>업로드할 파일 : <input type="file" name="filename" /></label><br />
 			<input type="submit" value="업로드" />
 		</form>
-		
+		<a href="#" target="_blank">asdfdsf</a>
     </body>
 </html>
