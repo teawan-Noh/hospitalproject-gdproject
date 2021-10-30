@@ -36,7 +36,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 				padding: 0;
 			}
 			.home-img{
-				background-image: url("../img/home.png");
+				background-image: url("img/home.png");
 			    background-size: cover;
 			    background-position: center;
 			    background-repeat: no-repeat;
@@ -225,7 +225,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         					</c:if>
                         </tr>
                 </table>
-               	<c:if test="${rsvInfo.state == '예약' && side == 'reservation'}">
+               	<c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
                 	<button type="button" id="rsv-delete" class="btn btn-danger">예약 취소</button>
