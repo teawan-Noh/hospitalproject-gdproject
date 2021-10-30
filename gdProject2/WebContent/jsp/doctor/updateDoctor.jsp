@@ -255,7 +255,7 @@ $("#updatebtn").click(function(){
     	<h1>개인정보수정</h1>
     	<c:forEach var="doctor" items="${doctor}">
         	<form method="post" action="doctor_update?dcode=${doctor.dcode}">
-            	<table border="1px solid">
+            	<table>
                 <tr>
                     <th>성명</th>
                     <td>${doctor.name}</td>

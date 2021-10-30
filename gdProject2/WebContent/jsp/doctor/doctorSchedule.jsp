@@ -201,12 +201,12 @@
   			<ul class="fmenu">
             	<li><div class="home-img"></div></li>
             	<li>업무관리</li>
-            	<li>휴진신청</li>
+            	<li>진료 스케줄 조회</li>
             </ul>
-  		  	<h1>휴진 신청</h1>
+  		  	<h1>진료 스케줄 조회</h1>
     		<div id="calendar"></div>
     		<div class = "icons">
-    			<div class = "icon" id = "icon2"></div> 승인 대기중 
+    			<div class = "icon" id = "icon2"></div> 휴진 승인 대기
     			<div class = "icon" id = "icon3"></div> 휴진 
     		</div>
   		</div>

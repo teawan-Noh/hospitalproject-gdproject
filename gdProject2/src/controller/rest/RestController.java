@@ -18,7 +18,7 @@ import dao.rest.RestDao;
 import dao.rest.RestDaoImpl;
 import model.ask.Rest;
 
-@WebServlet(name = "RestController", urlPatterns={"/rest","/rest_input", "/schedule_check", "/dschedule"})
+@WebServlet(name = "RestController", urlPatterns={"/rest","/rest_input", "/schedule_check", "/dschedule", "/chkrsv"})
 public class RestController  extends HttpServlet{
 
 	/**
@@ -84,9 +84,8 @@ public class RestController  extends HttpServlet{
 			List<Rest> denList = dao.selectRestBydcode("°ÅÀý", dcode);
 			req.setAttribute("denList", denList);
 			
-			req.setAttribute("scheduleList", scheduleList);
-			
-		}
+			req.setAttribute("scheduleList", scheduleList);	
+		} 
 		
 		String dispatcherUrl = null;
 		if(action.equals("rest")) {
@@ -97,7 +96,7 @@ public class RestController  extends HttpServlet{
 			dispatcherUrl = "jsp/doctor/doctorSchedule.jsp";
 		} else if(action.equals("dschedule")) {
 			dispatcherUrl = "ajax/restapproval.jsp";
-		}
+		} 
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
 		dispatcher.forward(req, resp);

@@ -94,7 +94,6 @@
       }
     </style>
     <script>
-
     $(function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -106,7 +105,7 @@
         		left: 'prev,next today',
         		center: 'title',
         		right: 'dayGridMonth,listWeek'
-        	},
+        },
           initialView: 'dayGridMonth',
           navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
           editable: false, // 수정 가능?
@@ -205,6 +204,7 @@
               	        type:'POST',
               	        data: date,
               	        success:function(data){
+              	        	<% %>
               	        	calendar.addEvent( {
               	        		title:'휴진 승인 대기', 
               	        		start:date.date,
@@ -230,7 +230,7 @@
   <body>
   	<jsp:include page="../common/header.jsp"></jsp:include>
   	<div class = "main">
-  		<jsp:include page="../common/sidemenu.jsp"></jsp:include>
+  	<jsp:include page="../common/sidemenu.jsp"></jsp:include>
   		<div class = "content">
   			<ul class="fmenu">
             	<li><div class="home-img"></div></li>
@@ -240,9 +240,10 @@
   		  	<h1>휴진 신청</h1>
     		<div id="calendar"></div>
     		<div class = "icons">
-    			<div class = "icon" id = "icon2"></div> 승인 대기중 
-    			<div class = "icon" id = "icon3"></div> 휴진 
+    			<div class = "icon" id = "icon2"></div> 휴진 승인 대기 
+    			<div class = "icon" id = "icon3"></div> 휴진
     		</div>
   		</div>
   	</div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
+  </body>

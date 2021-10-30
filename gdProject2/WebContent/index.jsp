@@ -44,7 +44,7 @@
                 	<h3 class="menu-title">휴진 신청</h3>
                 	<p class="menu-content">휴진 일정을 신청하시면 관리자가 확인 후 승인해드립니다.</p>
             	</div>
-            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation-doctor-list'">
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation-doctor-list?reqPage=1'">
                 	<h3 class="menu-title">예약정보 조회</h3>
                 	<p class="menu-content">예약된 환자 목록을 조회해보세요.</p>
             	</div>
