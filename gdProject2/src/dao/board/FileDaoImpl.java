@@ -21,9 +21,10 @@ public class FileDaoImpl implements FileDao {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.NOTICE_INSERT_FILE_SQL);
 			
-			pStatement.setString(1, files.getName());
-			pStatement.setString(2, files.getBeforename());
-			pStatement.setLong(3, files.getFilesize());
+			pStatement.setInt(1, files.getNcode());
+			pStatement.setString(2, files.getName());
+			pStatement.setString(3, files.getBeforename());
+			pStatement.setLong(4, files.getFilesize());
 			
 			pStatement.executeUpdate();
 
@@ -141,6 +142,45 @@ public class FileDaoImpl implements FileDao {
 		}*/
 
 		return bbsList;
+	}
+
+	@Override
+	public List<Files> returnFiles(int ncode) {
+		List<Files> fileList = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RETURN_FILE_BY_NCODE_SQL);
+			
+			pStatement.setLong(1,ncode);
+			
+			resultSet = pStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				Files files = new Files();
+
+				files.setFcode(resultSet.getInt("fcode"));
+				files.setNcode(resultSet.getInt("ncode"));
+				files.setUploaddate(resultSet.getString("uploaddate"));
+				files.setName(resultSet.getString("name"));
+				files.setBeforename(resultSet.getString("beforename"));
+				files.setFilesize(resultSet.getLong("filesize"));
+
+				fileList.add(files);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+
+		return fileList;
 	}
 
 }

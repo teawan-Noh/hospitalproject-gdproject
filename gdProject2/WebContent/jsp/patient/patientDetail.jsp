@@ -12,6 +12,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/8a3e72a4c8.js" crossorigin="anonymous"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/gdProject2/js/post.js"></script>
@@ -177,7 +178,12 @@ $(function(){
 		<div class="flex container-box">
             <jsp:include page="../common/sidemenu.jsp"></jsp:include>
         <div class="content">
-        
+        <div class="content_path">
+              <i class="fas fa-home"></i>
+              
+              <i class="fas fa-chevron-right"></i>
+              개인정보수정
+           </div>
             <h2>개인정보수정</h2>
             <form method="post" action="patient_update?pcode=${patient.pcode}">
                 <table>

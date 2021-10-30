@@ -26,4 +26,10 @@ public interface NoticeDao {
 	
 	//조회수
 	void count(int ncode);
+	
+	//공지사항 파일 insert를 위한 ncode가져오기
+	int returnNcode();
+	
+	
+	
 }

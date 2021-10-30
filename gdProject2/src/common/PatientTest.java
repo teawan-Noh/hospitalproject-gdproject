@@ -12,6 +12,7 @@ import dao.board.NoticeDao;
 import dao.board.NoticeDaoImpl;
 import dao.user.PatientDao;
 import dao.user.PatientDaoImpl;
+import model.board.Files;
 import model.board.Notice;
 import model.user.Patient;
 
@@ -135,7 +136,19 @@ public class PatientTest {
 		ndao.update(notice);*/
 		
 		FileDao fdao = new FileDaoImpl();
-		System.out.println(fdao.returnSeq());
+		//System.out.println(fdao.returnSeq());
+		
+		//System.out.println(ndao.returnNcode());
+		
+		List<Files> list = fdao.returnFiles(189);
+		for (Files files : list) {
+			System.out.println(files.getFcode());
+			System.out.println(files.getNcode());
+			System.out.println(files.getUploaddate());
+			System.out.println(files.getName());
+			System.out.println(files.getBeforename());
+			System.out.println(files.getFilesize());
+		}
 		
 	}
 

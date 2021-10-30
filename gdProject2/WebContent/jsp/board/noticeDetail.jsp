@@ -12,6 +12,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/reset.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/8a3e72a4c8.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -38,8 +39,24 @@ $(function(){
     <div id="main">
     
     <div class="container">
+    <div class="content_path">
+              <i class="fas fa-home"></i>
+              <i class="fas fa-chevron-right"></i>
+              공지사항
+              <i class="fas fa-chevron-right"></i>
+              게시글 보기
+           </div>
     <h2>게시글 보기</h2>
-    	<p>첨부파일 들어갈 자리</p>
+    <c:if test="${fileList!=null}">
+    	<c:forEach var = "fileList" items="${fileList}">
+    		<p><b>파일 다운받기 :</b> <a href="file_download?ncode=${ncode}">${fileList.beforename}</a></p>
+    		<input type="text" name="filename" value="${fileList.name}" hidden="hidden"/>
+    	</c:forEach>
+    </c:if>
+    <c:if test="${fileList == null}">
+    	<p>첨부파일이 없습니다.</p>
+    </c:if>
+    	
         <table class="table">
             <tbody>
             <c:forEach var="detail" items="${detail}">
@@ -66,7 +83,7 @@ $(function(){
         	<a href="notice_update_input?ncode=${ncode}" id="update">수정</a>
 			<a href="notice_delete?ncode=${ncode}" id="delete">삭제</a>
         </c:if>
-        <button type="button" id="toList" name="listBtn" onclick="location.href='notice_list?reqPage=1'">목록으로</button>
+        <button type="button" id="toList" name="listBtn" onclick="location.href='notice_list?reqPage=${pageNum}'">목록으로</button>
     </div>
     
     </div>

@@ -64,3 +64,17 @@ th,td{
     border: none;
     border-radius: 3px;
 }
+
+#a{
+	text-decoration: none;
+	color: black;
+}
+
+#toList{
+	width: 100px;
+    height: 30px;
+    color: white;
+    background-color: rgb(70, 145, 140);
+    border: none;
+    border-radius: 3px;
+}

@@ -21,8 +21,9 @@ public class Files {
 	}
 	
 	
-	public Files(String name, String beforename, long filesize) {
+	public Files(int ncode,String name, String beforename, long filesize) {
 		super();
+		this.ncode = ncode;
 		this.name = name;
 		this.beforename = beforename;
 		this.filesize = filesize;
@@ -61,8 +62,8 @@ public class Files {
 	public long getFilesize() {
 		return filesize;
 	}
-	public void setFilesize(int filesize) {
-		this.filesize = filesize;
+	public void setFilesize(long l) {
+		this.filesize = l;
 	}
 	
 	

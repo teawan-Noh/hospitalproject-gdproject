@@ -41,6 +41,7 @@ $(function(){
 <title>공지사항 등록</title>
 </head>
 <body>
+<header><jsp:include page="../common/header.jsp"></jsp:include></header>
 	<div id="main">
         <div class="container">
             <section id="bigTitle">
@@ -63,7 +64,7 @@ $(function(){
             </section>
             
         </div>
-        
+        <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 </html>

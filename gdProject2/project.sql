@@ -186,7 +186,7 @@ alter table rest modify day number
 
 delete from rest;
 
-select * from files;
+select * from files order by ncode desc;
 insert into files values();
 insert into files values(1,94, sysdate, '바뀐이름1', '원래이름1', 3);
 
@@ -200,10 +200,17 @@ select * from files;
 select * from notice;
 select * from manager;
 
+delete from files;
+
 select * from notice, files where notice.ncode = files.ncode;
 
 select ncode, n.title, n.content, n.writedate, n.mcode, f.name, f.beforename from notice n natural join files f;
 
-insert all 
-into notice(ncode,mcode,title,content,writedate,cnt) values(ncode.nextval,1 ,'공지사항 제목','공지사항 내용',sysdate,0)
-into files(fcode,ncode,uploaddate,name,beforename,filesize) values(fileSeq.nextval,ncode.nextval,sysdate,'바뀐이름','원래이름',100) select ncode,mcode,title,content,writedate,cnt,fcode,uploaddate,name,beforename,filesize from notice natural join files f;
+insert into files values(fileSeq.nextval,ncode.nextval,sysdate,'이름111','이름',100)
+
+select * from (select ncode from notice order by rownum desc) where rownum = 1;
+
+select * from files where ncode in (select ncode from notice where ncode=189);
+
+select * from files where ncode in (select ncode from notice where ncode=?)
+

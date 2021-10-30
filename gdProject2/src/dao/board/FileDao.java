@@ -17,4 +17,7 @@ public interface FileDao {
 	int returnSeq();
 	
 	List <Files> selectAll();
+	
+	//ncode를 받아서 파일이 있으면 파일객체를 리턴해주는 메소드
+	List <Files> returnFiles(int ncode);
 }
