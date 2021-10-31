@@ -109,6 +109,13 @@
        		text-align:left;
        		padding: 30px 0 70px 70px;
        	}
+       	#backbtn {
+       		width: 170px;
+       		height: 35px;
+       		margin-top: 30px;
+       		border: none;
+       		border-radius: 5px;
+       	}
 </style>
 </head>
 <body>
@@ -220,6 +227,7 @@
 		    	</div>
 	    	</div>
 	    	</c:if>
+	    	<button type = "button" id="backbtn" onclick="location.href = 'qna_list?reqPage=1'">목록으로 돌아가기</button>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

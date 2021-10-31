@@ -225,7 +225,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         					</c:if>
                         </tr>
                 </table>
-               	<c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
+                <c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
                 	<button type="button" id="rsv-delete" class="btn btn-danger">예약 취소</button>
@@ -238,7 +238,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<input type="hidden" id="form-dname" name="dname" value="${rsvInfo.dname}" />
                 	<input type="hidden" id="form-rsvdate" name="rsvdate" value="${rsvInfo.rsvdate}"/>
                 	<input type="hidden" id="form-rsvtime" name="rsvtime" value="${rsvInfo.rsvtime}"/>
-                </form>
+                </form> 
                 </c:if>
             </div>
         </div>
