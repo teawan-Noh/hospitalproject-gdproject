@@ -23,7 +23,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <div id="main">
         	 <section id="searchSection">
             	
-            	<form action="notice_search" method="post" id="form">
+            	<form action="notice_list" method="get" id="form">
+            	<input type="hidden" name="reqPage" value="1"/>
             	<div class="content_path">
               <i class="fas fa-home"></i>
               
@@ -31,8 +32,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
              공지사항
            </div>
                 	<h2 id="h2">공지사항</h2>
-                	<input type="search" id="nsearch" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." />
-                	<button type="submit" id="nsearchBtn" name="searchBtn">검색</button>
+                	<input type="search" id="nsearch" class="form-control"  name="search" placeholder="검색할 제목이나 내용을 입력해주세요." value="${search}"/>
+                	<button type="submit" id="nsearchBtn">검색</button>
+                	<button type="button" id="toList" name="backBtn" onclick="location.href='notice_list?reqPage=1'">전체보기</button>
            		</form>
 			 </section>
 
@@ -66,21 +68,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             </c:if>
             <ul class="pagination pagination-sm">
 				<c:if test="${pageGroupResult.beforePage}">
-					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupStartNumber-1}">이전</a></li>
+					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupStartNumber-1}&search=${search}">이전</a></li>
 				</c:if>
 
 				<c:forEach var="index" begin="${pageGroupResult.groupStartNumber}" end="${pageGroupResult.groupEndNumber}">
 					<c:choose>
 						<c:when test="${pageGroupResult.selectPageNumber==index}">
-							<li class="page-item active"><a class="page-link" href="notice_list?reqPage=${index}">${index}</a></li>
+							<li class="page-item active"><a class="page-link" href="notice_list?reqPage=${index}&search=${search}">${index}</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item"><a class="page-link" href="notice_list?reqPage=${index}">${index}</a></li>
+							<li class="page-item"><a class="page-link" href="notice_list?reqPage=${index}&search=${search}">${index}</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:if test="${pageGroupResult.afterPage}">
-					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupEndNumber+1}">다음</a></li>
+					<li class="page-item"><a class="page-link" href="notice_list?reqPage=${pageGroupResult.groupEndNumber+1}&search=${search}">다음</a></li>
 				</c:if>
 			</ul>
 			</section>

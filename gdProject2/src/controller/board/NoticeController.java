@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.commons.io.IOUtils;
-
 import common.Sql;
 import common.page.PageDao;
 import common.page.PageDaoImpl;
@@ -35,7 +33,7 @@ import model.board.Files;
 import model.board.Notice;
 
 @MultipartConfig
-@WebServlet(name="NoticeController", urlPatterns= {"/notice_list","/notice_input","/notice_save","/notice_detail","/notice_update_input","/notice_update","/notice_delete","/notice_search","/file_download"})
+@WebServlet(name="NoticeController", urlPatterns= {"/notice_list","/notice_input","/notice_save","/notice_detail","/notice_update_input","/notice_update","/notice_delete","/file_download"})
 public class NoticeController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -63,21 +61,48 @@ public class NoticeController extends HttpServlet{
 		//로직
 		if(action.equals("notice_list")) {
 			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
-			System.out.println(requestPage);
+			System.out.println("현재페이지 : "+requestPage);
+			String name=req.getParameter("search");
+			System.out.println("공지사항검색어 : "+name);
 			
-			NoticeDao dao = new NoticeDaoImpl();
-			List<HashMap<String,Object>> list = dao.selectAll(requestPage);
 			
-			//총 줄수 가져오기
-			PageDao pdao = new PageDaoImpl();
-			int line = pdao.getCountNotice(Sql.NOTICE_COUNT_SQL);
+			if(name==null || name=="") {
+				
+				
+				
+				NoticeDao dao = new NoticeDaoImpl();
+				List<HashMap<String,Object>> list = dao.selectAll(requestPage);
+				
+				//총 줄수 가져오기
+				PageDao pdao = new PageDaoImpl();
+				int line = pdao.getCountNotice(Sql.NOTICE_COUNT_SQL);
+				
+				//getPageGroupResult() 불러오기
+				PageManager manager = new PageManager(requestPage);
+				PageGroupResult pgr =  manager.getPageGroupResult(line);
+				
+				req.setAttribute("noticeList", list);
+				req.setAttribute("pageGroupResult", pgr);
+			}else {
+				//검색
+				
+				req.setAttribute("search", name);
+				
+				NoticeDao dao = new NoticeDaoImpl();
+				List<HashMap<String,Object>> list = dao.selectByTitleContent(name, requestPage);
+				
+				//총 줄수 가져오기
+				PageDao pdao = new PageDaoImpl();
+				int line = pdao.getCountNoticeSearch(name);
+				
+				//getPageGroupResult() 불러오기
+				PageManager manager = new PageManager(requestPage);
+				PageGroupResult pgr =  manager.getPageGroupResult(line);
+				
+				req.setAttribute("noticeList", list);
+				req.setAttribute("pageGroupResult", pgr);
+			}
 			
-			//getPageGroupResult() 불러오기
-			PageManager manager = new PageManager(requestPage);
-			PageGroupResult pgr =  manager.getPageGroupResult(line);
-			
-			req.setAttribute("noticeList", list);
-			req.setAttribute("pageGroupResult", pgr);
 			
 			
 		}else if(action.equals("notice_input")) {
@@ -346,11 +371,6 @@ public class NoticeController extends HttpServlet{
 			}
 			
 			
-			
-			
-			
-			
-			
 		}else if(action.equals("notice_delete")) {
 			int ncode = Integer.parseInt(req.getParameter("ncode"));
 			FileDao fdao = new FileDaoImpl();
@@ -377,18 +397,8 @@ public class NoticeController extends HttpServlet{
 		    fdao.delete(ncode);
 			NoticeDao dao = new NoticeDaoImpl();
 			dao.delete(ncode);
-			
-			
-			
-		}else if(action.equals("notice_search")) {
-			//검색
-			NoticeDao dao = new NoticeDaoImpl();
-			String name=req.getParameter("search");
-			List<HashMap<String,Object>> searchList = dao.selectByTitleContent(name);
-			
-			req.setAttribute("searchList", searchList);
-			
 		}
+			
 		
 		//페이지
 		String dispatcherUrl = null;
@@ -413,23 +423,14 @@ public class NoticeController extends HttpServlet{
 			dispatcherUrl="notice_list?reqPage=1";
 		}else if(action.equals("notice_delete")) {
 			dispatcherUrl="notice_list?reqPage=1";
-		}else if(action.equals("notice_search")) {
-			dispatcherUrl="/jsp/board/noticeSearch.jsp";
 		}
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
 		dispatcher.forward(req, resp);
+		
 	}
 	
-	private void getPartConfig(Part part) {
-		System.out.println("------------------------------------------------------------");
-		System.out.println(" LOG :: [HTML태그의 폼태그 이름] :: " + part.getName());
-		System.out.println(" LOG :: [ 파일 사이즈 ] :: " + part.getSize());
-		for(String name : part.getHeaderNames()) {
-			System.out.println(" LOG :: HeaderName :: " + name + ", HeaderValue :: " + part.getHeader(name) + "\n");
-		}
-		System.out.println("------------------------------------------------------------");
-	}
+	
 	private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         System.out.println(" LOG :: content-disposition 헤더 :: = "+contentDisp);

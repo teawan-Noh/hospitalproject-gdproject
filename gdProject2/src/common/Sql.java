@@ -95,6 +95,9 @@ public class Sql {
 	public static final String NOTICE_COUNT_SQL = 
 			"select count(*) as cnt from notice";
 	
+	public static final String NOTICE_SEARCH_COUNT_SQL = 
+			"select count(*) as cnt from notice where title like ? or content like ?";
+	
 	public static final String BOOK_SELECT_NOTICE_PAGE_SQL =
 			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
 			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
@@ -102,9 +105,10 @@ public class Sql {
 	
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =
-			"select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
-			+ "from notice n inner join manager m on n.mcode = m.mcode "
-			+ "where n.title like ? or n.content like ? order by n.ncode desc";
+			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
+			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
+			+ "from notice n inner join manager m on n.mcode = m.mcode  where n.title like ? or n.content like ?) "
+			+ "where rn between ? and ?";
 	//공지사항 조회수
 	public static final String NOTICE_CNT_SQL =
 			"update notice set cnt = cnt+1 where ncode=?";

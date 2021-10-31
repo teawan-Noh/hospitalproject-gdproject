@@ -22,7 +22,7 @@ public interface NoticeDao {
 	List <HashMap<String,Object>> selectByNcode(int ncode);
 	
 	//공지사항 제목,내용으로 검색
-	List <HashMap<String,Object>> selectByTitleContent(String name);
+	List <HashMap<String,Object>> selectByTitleContent(String name,int requestpage);
 	
 	//조회수
 	void count(int ncode);

@@ -95,9 +95,9 @@ public class PageDaoImpl implements PageDao {
 	
 	public int getCountNotice(String sql) {
 		 int cnt = 0;
-	      Connection connection = null;
-	      PreparedStatement pStatement = null;
-	      ResultSet resultSet = null;
+	     Connection connection = null;
+	     PreparedStatement pStatement = null;
+	     ResultSet resultSet = null;
 	      
 	      try {
 	         connection = JDBCUtil.getConnection();
@@ -115,5 +115,36 @@ public class PageDaoImpl implements PageDao {
 	      }
 	      return cnt;
 	   }
+
+	@Override
+	public int getCountNoticeSearch(String name) {
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		int cnt = 0;
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.NOTICE_SEARCH_COUNT_SQL);
+			
+			String str = "%"+name+"%";
+			
+			pStatement.setString(1, str);
+			pStatement.setString(2, str);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				cnt = resultSet.getInt("cnt");
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		return cnt;
+	}
 
 }

@@ -194,8 +194,8 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List <HashMap<String,Object>> selectByTitleContent(String name) {
-		List<HashMap<String,Object>> noticeList = new ArrayList<>();
+	public List <HashMap<String,Object>> selectByTitleContent(String name,int requestpage) {
+		List<HashMap<String,Object>> searchList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -203,23 +203,28 @@ public class NoticeDaoImpl implements NoticeDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.NOTICE_SEARCH_SQL);
+			PageManager pm = new PageManager(requestpage);
+			PageRowResult prr = pm.getPageRowResult();
 			
 			String str = "%"+name+"%";
 			pStatement.setString(1, str);
 			pStatement.setString(2, str);
+			pStatement.setInt(3, prr.getRowStartNumber());
+			pStatement.setInt(4, prr.getRowEndNumber());
 			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				HashMap<String,Object> hash = new HashMap<>();
 				
-				hash.put("ncode", resultSet.getString("ncode"));
+				hash.put("rn", resultSet.getInt("rn"));
+				hash.put("ncode", resultSet.getInt("ncode"));
 				hash.put("title", resultSet.getString("title"));
 				hash.put("name", resultSet.getString("name"));
 				hash.put("writedate", resultSet.getString("writedate"));
 				hash.put("cnt",  resultSet.getInt("cnt"));
 				
-				noticeList.add(hash);
+				searchList.add(hash);
 			}
 			
 		
@@ -234,7 +239,7 @@ public class NoticeDaoImpl implements NoticeDao {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
 		
-		return noticeList;
+		return searchList;
 	}
 
 	@Override

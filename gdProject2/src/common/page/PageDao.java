@@ -6,4 +6,5 @@ public interface PageDao {
 	int getCountDoctorRsvdate(int dcode, String rsvdate);
 	
 	int getCountNotice(String sql);
+	int getCountNoticeSearch(String name);
 }
