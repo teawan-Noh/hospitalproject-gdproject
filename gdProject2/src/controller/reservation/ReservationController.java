@@ -180,6 +180,7 @@ public class ReservationController extends HttpServlet{
 				int rcode = Integer.parseInt(req.getParameter("rcode"));
 				
 				rdao.deleteReservation(rcode);
+				req.setAttribute("pcode", req.getParameter("pcode"));
 			}
 			else if(action.equals("reservation-update")) {
 				ReservationDao rdao = new ReservationDaoImpl();
@@ -189,6 +190,7 @@ public class ReservationController extends HttpServlet{
 				String rsvdate = req.getParameter("rsvdate");
 				
 				rdao.updateReservation(rcode, pcode, dcode, rsvdate);
+				req.setAttribute("pcode", pcode);
 				req.setAttribute("rcode", rcode);
 			}
 			else if(action.equals("subject-doctor")) {
@@ -311,17 +313,17 @@ public class ReservationController extends HttpServlet{
 				dispatcherUrl = "jsp/reservation/reservation.jsp";
 			}
 			else if(action.equals("book")) {
-				res.sendRedirect("/gdProject2/reservation-list?reqPage=1");
+				res.sendRedirect("reservation-list?reqPage=1");
 			}
 			else if(action.equals("reservation-list")) {
 				dispatcherUrl = "jsp/reservation/reservation-list.jsp";
 			}
 
 			else if(action.equals("reservation-delete")) {
-				res.sendRedirect("reservation-list?reqPage=1");
+				dispatcherUrl = "reservation-list?reqPage=1";
 			}
 			else if(action.equals("reservation-update")) {
-				dispatcherUrl = "reservation-detail";
+				dispatcherUrl = "reservation-list?reqPage=1";
 			}
 			else if(action.equals("subject-doctor")) {
 				dispatcherUrl = "ajax/subject-doctor.jsp";
