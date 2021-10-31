@@ -8,8 +8,20 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         	<c:if test="${schedule.restdate != null}">
         		<restdate>${schedule.restdate}</restdate>
         	</c:if>
+        	<c:if test="${schedule.day != null}">
+        		<day>${schedule.day}</day>
+        	</c:if>
         </schedule>
     </c:forEach>
+    
+    
+    <reservation>
+    <c:forEach var="rsv" items="${rsvdates}">
+        		<rsv>${rsv}</rsv>
+    </c:forEach>
+    </reservation>
+    
+    
     <c:forEach var="wait" items="${waitList}">
     	<waitSchedule>
     		<restdatewait>${wait.restdate}</restdatewait>

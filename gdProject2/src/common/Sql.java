@@ -25,6 +25,8 @@ public class Sql {
 	
 	public static final String RESERVATION_UPDATE_SQL = "update reservation set pcode = ?, dcode = ?, rsvdate = to_date(?, 'yyyy-mm-dd HH24:MI'), state = '¿¹¾à' where rcode = ?";
 	
+	public static final String RESERVATION_DATE_SELECT_BY_DCODE_SQL = "select to_char(rsvdate, 'yyyy-mm-dd') rsvdate from reservation where dcode = ? group by to_char(rsvdate, 'yyyy-mm-dd')";
+	
 	//CUSTOMER
 	public static final String CUSTOMER_INSERT_SQL = "insert into CUSTOMER values(customerseq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String CUSTOMER_SELECT_BY_CODE_SQL = "select * from customer where customerseq = ?";

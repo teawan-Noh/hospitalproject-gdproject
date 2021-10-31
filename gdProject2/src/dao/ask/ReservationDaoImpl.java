@@ -488,6 +488,36 @@ public class ReservationDaoImpl implements ReservationDao {
 		}
 		
 	}
+
+	@Override
+	public List<String> selectRsvdateByDcode(int dcode) {
+		List<String> result = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.RESERVATION_DATE_SELECT_BY_DCODE_SQL);
+			
+			pStatement.setInt(1, dcode);
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				result.add(resultSet.getString("rsvdate"));
+			}
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+			
+		}
+		
+		return result;
+	}
 	
 
 

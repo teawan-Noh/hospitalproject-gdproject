@@ -27,5 +27,7 @@ public interface ReservationDao {
 	
 	void updateReservation(int rcode, int pcode, int dcode, String rsvdate);
 	
+	List<String> selectRsvdateByDcode(int dcode);
+	
 	
 }

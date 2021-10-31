@@ -78,7 +78,10 @@ public class RestController  extends HttpServlet{
 			RestDao dao = new RestDaoImpl();
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
+			System.out.println(dcode);
 			List<Map<String, String>> scheduleList = rdao.selectScheduleByDcode(dcode);
+			List<String> rsvdates = rdao.selectRsvdateByDcode(dcode);
+			req.setAttribute("rsvdates", rsvdates);
 			List<Rest> waitList = dao.selectRestBydcode("대기", dcode);
 			req.setAttribute("waitList", waitList);
 			List<Rest> denList = dao.selectRestBydcode("거절", dcode);
@@ -86,6 +89,9 @@ public class RestController  extends HttpServlet{
 			
 			req.setAttribute("scheduleList", scheduleList);	
 		} 
+		else if(action.equals("chkrsv")) {
+			
+		}
 		
 		String dispatcherUrl = null;
 		if(action.equals("rest")) {
