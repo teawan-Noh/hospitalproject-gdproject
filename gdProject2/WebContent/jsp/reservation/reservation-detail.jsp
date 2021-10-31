@@ -162,13 +162,24 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <script>
             $(function () { 
                 $(document).on("click", "#rsv-delete", function(){
+                	console.log("${sessionScope.mcode}");
+                	console.log("${rsvInfo.pcode}");
                 	if(confirm("정말 예약을 취소하시겠습니까?") == true){
                 		alert("예약이 취소되었습니다.");
-                   		location.href = "reservation-delete?rcode=" + "${rsvInfo.rcode}";
+                		if("${sessionScope.mcode}" == null){
+                   			location.href = "reservation-delete?rcode=" + "${rsvInfo.rcode}";
+                		}
+                		else{
+                			location.href = "reservation-delete?rcode=${rsvInfo.rcode}&pcode=${rsvInfo.pcode}";
+                		}
                 	}
                 });
                 $(document).on("click", "#rsv-update", function(){
                 	$("#update-form").submit();
+                });
+                
+                $(document).on("click", "#rsv-doctor-list", function(){
+                	location.href = "reservation-doctor-list?reqPage=1";
                 });
             });
         </script>
@@ -225,6 +236,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         					</c:if>
                         </tr>
                 </table>
+                <c:if test="${sessionScope.dcode != null}">
+                <div class="doctor-list">
+                	<button type="button" id="rsv-doctor-list" class="btn btn-success">예약 목록으로 돌아가기</button>
+                </div>
+                </c:if>
                 <c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>

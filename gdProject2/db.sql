@@ -643,6 +643,14 @@ select * from reservation;
 
 select to_char(rsvdate, 'yyyy-mm-dd') rsvdate from reservation where dcode = 1 group by to_char(rsvdate, 'yyyy-mm-dd');
 
+create sequence ncode;
+
+select * from notice;
+delete from notice;
+select * from files;
+
+create sequence fileSeq
+
 
 
 

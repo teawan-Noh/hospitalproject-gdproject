@@ -412,7 +412,7 @@ public class NoticeController extends HttpServlet{
 			dispatcherUrl="/jsp/board/noticeDetail.jsp";
 			
 		}else if(action.equals("file_download")) {
-			dispatcherUrl="notice_list?reqPage=1";
+			//dispatcherUrl="notice_list?reqPage=1";
 		}
 		else if(action.equals("notice_save")) {
 			dispatcherUrl="notice_list?reqPage=1";

@@ -17,8 +17,7 @@
         <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-
-        	<c:if test="${dcode == null && mcode == null }">
+        	<c:if test="${sessionScope.dcode == null && sessionScope.mcode == null }">
         		<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
                 	<h3 class="menu-title">예약</h3>
                 	<p class="menu-content">진료 예약을 하실 수 있습니다.</p>
@@ -36,7 +35,7 @@
                 	<p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
             	</div>
         	</c:if>
-            <c:if test="${dcode != null }">
+            <c:if test="${sessionScope.dcode != null }">
             	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='schedule_check'">
                 	<h3 class="menu-title">스케줄 조회</h3>
                 	<p class="menu-content">월별 스케줄을 확인하세요.</p>
@@ -54,7 +53,7 @@
                 	<p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
             	</div>
             </c:if>
-            <c:if test="${mcode != null }">
+            <c:if test="${sessionScope.mcode != null }">
             	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='mg_doctor_list'">
                 	<h3 class="menu-title">의사 조회</h3>
                 	<p class="menu-content">진료과 별로 의사목록을 조회할 수 있습니다.</p>

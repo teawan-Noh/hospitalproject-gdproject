@@ -176,10 +176,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	}
                 });
                 $(document).on("click", "#rsv-insert", function(){
-                	$("#insert-form").submit();
+                	if(confirm("예약을 추가하시겠습니까?") == true){
+                		$("#insert-form").submit();
+                	}
                 });
                 $(document).on("click", "#rsv-update", function(){
-                	$("#update-form").submit();
+                	if(confirm("예약을 변경하시겠습니까?") == true){
+                		$("#update-form").submit();
+                	}
                 });
             });
         </script>
