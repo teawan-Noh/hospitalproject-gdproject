@@ -424,10 +424,11 @@ public class NoticeController extends HttpServlet{
 		}else if(action.equals("notice_delete")) {
 			dispatcherUrl="notice_list?reqPage=1";
 		}
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
-		dispatcher.forward(req, resp);
-		
+		if(dispatcherUrl != null) {
+			RequestDispatcher dispatcher = req.getRequestDispatcher(dispatcherUrl);
+			dispatcher.forward(req, resp);
+		}
+
 	}
 	
 	
