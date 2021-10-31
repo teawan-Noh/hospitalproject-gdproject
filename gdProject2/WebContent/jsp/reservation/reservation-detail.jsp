@@ -240,7 +240,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 	<input type="hidden" id="form-rsvtime" name="rsvtime" value="${rsvInfo.rsvtime}"/>
                 </form> 
                 </c:if>
-            </div>
+                </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>

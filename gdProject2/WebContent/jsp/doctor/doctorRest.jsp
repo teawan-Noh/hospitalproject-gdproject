@@ -170,10 +170,10 @@
                             var rsvdate = $(this)
                                 .text();
                             calendar.addEvent({
-                                title: "진료",
+                                title: "예약 있음",
                                 start: rsvdate,
-                                color : "rgb(70, 145, 140)",
-                                textColor : "black",
+                                color : "white",
+                                textColor : "rgb(70, 145, 140)",
                                 classNames: ["rest-children"],
                             
                         });  
@@ -208,7 +208,7 @@
                                     start: restdate,
                                     classNames: ["rest-children"],
                                     color: "white",
-                  	                textColor: "rgb(70, 145, 140)", 
+                  	                textColor: "blue", 
                                 });
                             }
                         });	

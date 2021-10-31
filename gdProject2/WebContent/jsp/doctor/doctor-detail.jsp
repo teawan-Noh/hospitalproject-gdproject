@@ -123,7 +123,9 @@ pageEncoding="UTF-8"%>
                 					<input type="hidden" id="form-dcode" name="dcode" value=""/>
                 					<input type="hidden" id="form-dname" name="dname" value=""/>
                 					<button type = "button" id = "backbtn" onclick="location.href = 'doctor_search'">목록으로 돌아가기</button>
-                					<button type = "submit" id = "reservationbtn">예약</button>
+                					<c:if test = "${dcode == null && mcode == null }">
+                						<button type = "submit" id = "reservationbtn">예약</button>
+                					</c:if>
                 				</form>
                 			</div>
                 		</div>
