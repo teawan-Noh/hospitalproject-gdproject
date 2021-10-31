@@ -100,7 +100,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_ALL_SQL);
-			System.out.println("전체");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
@@ -145,7 +145,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_NICKNAME_SQL);
-			System.out.println("닉네임");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
@@ -189,7 +189,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_TITLE_OR_CONTENT_SQL);
-			System.out.println("제목내용");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
