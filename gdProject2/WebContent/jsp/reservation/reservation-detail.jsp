@@ -36,7 +36,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 				padding: 0;
 			}
 			.home-img{
-				background-image: url("../img/home.png");
+				background-image: url("img/home.png");
 			    background-size: cover;
 			    background-position: center;
 			    background-repeat: no-repeat;
@@ -160,7 +160,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             }
         </style>
         <script>
-            $(function () {
+            $(function () { 
                 $(document).on("click", "#rsv-delete", function(){
                 	if(confirm("정말 예약을 취소하시겠습니까?") == true){
                 		alert("예약이 취소되었습니다.");
@@ -225,7 +225,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         					</c:if>
                         </tr>
                 </table>
-               	<c:if test="${rsvInfo.state == '예약' && side == 'reservation'}">
+               	<c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
                 <div class="rsv-change">
                 	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
                 	<button type="button" id="rsv-delete" class="btn btn-danger">예약 취소</button>

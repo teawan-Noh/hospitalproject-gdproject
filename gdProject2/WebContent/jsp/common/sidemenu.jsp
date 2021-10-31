@@ -41,6 +41,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             	border-style: solid;
             	border-width: 0px 0px 1px 0px;
             }
+            .side-list a{
+            	text-decoration: none;
+            	color: black;
+            }
             #side-img{
             	background-image: url("img/doctor.png");
                 background-size: cover;
@@ -99,7 +103,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             		<div id="side-img"></div>
             	</div>
             	<ul id="side-ul">
-	                <li class="side-list"><a href="patient_update" id="patientMenu">개인정보수정</a></li>
+	                <li class="side-list"><a href="patient_detail?pcode=${pcode}" id="patientMenu">개인정보수정</a></li>
 	            </ul>
             </c:if>
             <c:if test="${side == 'manager'}">
@@ -120,7 +124,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <div id="side-img"></div>
 	            </div>
 	            <ul id="side-ul">
-	                <li class="side-list"><a class="sub_menu" href="qna_list"><span class="sub_menu">Q&A 게시판</span></a></li>
+	                <li class="side-list"><a class="sub_menu" href="qna_list?reqPage=1"><span class="sub_menu">Q&A 게시판</span></a></li>
 	                
 	            </ul>
             </c:if>

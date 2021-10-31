@@ -2,7 +2,10 @@ package controller.reservation;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,7 +44,7 @@ import model.user.Doctor;
 import model.user.Subject;
 
 
-@WebServlet(name="TestController", urlPatterns= {"/test", "/upload", "/download"})
+@WebServlet(name="TestController", urlPatterns= {"/test", "/upload", "/download", "/file"})
 @MultipartConfig
 public class TestController extends HttpServlet{
 	
@@ -72,7 +75,7 @@ public class TestController extends HttpServlet{
 
 		
 		if(action.equals("test")) {
-			System.out.println(req.getContextPath());
+			System.out.println(req.getServletContext().getRealPath(""));
 		}
 		else if(action.equals("upload")) {
 			// 서버의 실제 경로
@@ -92,13 +95,14 @@ public class TestController extends HttpServlet{
 
 	        String fileName = null;
 	        //Get all the parts from request and write it to the file on server
-	        for (Part part : req.getParts()) {
-	        	getPartConfig(part);
+	        Part part = req.getPart("filename");
+	        System.out.println(part.getSize());
+	        if(part.getSize() != 0) {
 	            fileName = getFileName(part);
 	            System.out.println(" LOG :: [ 업로드 파일 경로 ] :: " + uploadFilePath + File.separator + fileName);
-	            part.write(uploadFilePath + File.separator + fileName);
+	            part.write(uploadFilePath + File.separator + "1");
+		        req.setAttribute("fileName", fileName);
 	        }
-	        req.setAttribute("fileName", fileName);
 			//1. 유일한 파일이름을 만든다.
 			//2. db에 정보를 저장한다.
 			//3. 유일한 이름으로 파일서버에 파일을 저장한다.
@@ -112,9 +116,89 @@ public class TestController extends HttpServlet{
 			String uploadFilePath = context.getRealPath(UPLOAD_DIR);
 			String filePath = uploadFilePath + File.separator + fileName;
 			
-			res.setContentType("image/jpeg");
+			res.setContentType("application/octet-stream");
 			byte[] image = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
 			res.getOutputStream().write(image);
+		}
+		else if(action.equals("file")) {
+			String fileName = req.getParameter("fileName");
+			String orgFileName = "asdf.jpg";
+			String root = req.getServletContext().getRealPath("");
+			String savePath = root + UPLOAD_DIR;
+			String filePath = savePath + File.separator + fileName;
+			
+			InputStream in = null;
+		    OutputStream os = null;
+		    File file = null;
+		    boolean skip = false;
+		    String client = "";
+		    System.out.println(savePath);
+		    System.out.println(fileName);
+		 
+		    try{
+		         
+		 
+		        // 파일을 읽어 스트림에 담기
+		        try{
+		            file = new File(filePath);
+		            in = new FileInputStream(file);
+		            file.getAbsolutePath();
+		        }catch(FileNotFoundException fe){
+		            skip = true;
+		        }
+		 
+		 
+		 
+		         
+		        client = req.getHeader("User-Agent");
+		 
+		        // 파일 다운로드 헤더 지정
+		        res.reset() ;
+		        res.setContentType("application/octet-stream");
+		        res.setHeader("Content-Description", "JSP Generated Data");
+		 
+		 
+		        if(!skip){
+		 
+		             
+		            // IE
+		            if(client.indexOf("MSIE") != -1){
+		                res.setHeader ("Content-Disposition", "attachment; filename="+new String(orgFileName.getBytes("KSC5601"),"ISO8859_1"));
+		 
+		            }else{
+		                // 한글 파일명 처리
+		                orgFileName = new String(orgFileName.getBytes("utf-8"),"iso-8859-1");
+		 
+		                res.setHeader("Content-Disposition", "attachment; filename=\"" + orgFileName + "\"");
+		                res.setHeader("Content-Type", "application/octet-stream; charset=utf-8");
+		            } 
+		             
+		            res.setHeader ("Content-Length", ""+file.length() );
+		 
+		 
+		       
+		            os = res.getOutputStream();
+		            byte b[] = new byte[(int)file.length()];
+		            int leng = 0;
+		             
+		            while( (leng = in.read(b)) > 0 ){
+		                os.write(b,0,leng);
+		            }
+		 
+		        }else{
+		            res.setContentType("text/html;charset=UTF-8");
+		            System.out.println("<script language='javascript'>alert('파일을 찾을 수 없습니다');history.back();</script>");
+		 
+		        }
+		         
+		        in.close();
+		        os.close();
+		 
+		    }catch(Exception e){
+		      e.printStackTrace();
+		    }
+
+
 		}
 		
 		

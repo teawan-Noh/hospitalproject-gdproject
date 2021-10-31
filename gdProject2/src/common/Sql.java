@@ -52,6 +52,7 @@ public class Sql {
 	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, to_char(d.birth,'yyyy-mm-dd') as birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	public static final String REST_SELECT_BY_APPROVED = "select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = ? and dcode = ?";
 	public static final String REST_INSERT_SQL = "insert into rest values(rest_seq.nextval, ?, sysdate, '대기', ?, to_date(?, 'yyyy-mm-dd'), ?)";
+	public static final String REST_SELECT_RESERVATION_SQL = "select count(*) as cnt from reservation where to_char(rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') and dcode = ?";
 	//odw
 	//회원가입
 	public static final String PATIENT_INSERT_SQL = 
@@ -152,30 +153,24 @@ public class Sql {
 	//ntw
 	//qna 테이블
 	public static final String QNA_SELECT_ALL_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " order by q.qno desc";
+		= "select * from (select row_number() over(order by q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" 
+			+ " from qna q left outer join patient p on q.pcode = p.pcode order by q.qno desc) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_NICKNAME_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " where p.nickname like ?"
-			+ " order by q.qno desc";
+		= "select qno, title, pcode, nickname, writedate, cnt from (select ROW_NUMBER() OVER(ORDER BY q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" + 
+				" from qna q left outer join patient p on q.pcode = p.pcode" + 
+				" where p.nickname like ?) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_TITLE_OR_CONTENT_SQL 
-	= "select q.qno, q.title, p.nickname, q.writedate, q.cnt"
-			+ " from qna q left outer join patient p"
-			+ " on q.pcode = p.pcode"
-			+ " where q.title like ? or q.content like ?"
-			+ " order by q.qno desc";
+		= "select * from (select row_number() over(order by q.qno desc) as rn, q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt" 
+			+ " from qna q left outer join patient p on q.pcode = p.pcode" 
+			+ " where q.title like ? or q.content like ?) where rn between ? and ?";
 	
 	public static final String QNA_SELECT_BY_SUBJECT_SQL 
 		= "select * from qna where subject like ? order by no desc";
 
 	public static final String QNA_SELECT_BY_QNO_SQL 
-		= "select q.qno, q.title, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
+		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
 			+ " from qna q" 
 			+ " left outer join patient p on q.pcode = p.pcode" 
 			+ " left outer join comments c on q.qno = c.qno" 
@@ -186,7 +181,7 @@ public class Sql {
 		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update qna set subject = ?, content = ? whereq no = ?";
+		= "update qna set title = ?, content = ?, img = ? where qno = ?";
 
 	public static final String QNA_DELETE_SQL 
 		= "delete from qna where qno = ?";
@@ -196,6 +191,12 @@ public class Sql {
 	
 	public static final String QNA_CNT_SELECT_BY_QNO_SQL
 		= "select cnt from qna where qno = ?";
+	
+	public static final String QNA_COUNT_ALL_SQL 
+		= "select count(*) as cnt from qna";
+	
+	public static final String QNA_COUNT_SEARCH_NICKNAME_SQL 
+		= "select count(*) as cnt from qna q inner join patient p on q.pcode = p.pcode where nickname like ?";
 	
 	//코멘트 테이블
 	public static final String COMMNETS_INSERT_SQL 
@@ -216,17 +217,22 @@ public class Sql {
 		= "delete from doctor where dcode = ?";
 	//환자조회
 	public static final String MG_PATIENT_SELECT_ALL_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
-			+ " on p.pcode = r.pcode" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " FROM patient p" 
+			+ " LEFT OUTER JOIN reservation r" 
+			+ " ON p.pcode = r.pcode" 
+			+ " GROUP BY p.pcode, p.name, p.birth"
 			+ " order by p.name asc";
 	
 	public static final String MG_PATIENT_SELECT_BY_NAME_SQL 
-		= "select p.pcode, p.name, p.birth, r.rcode" 
-			+ " from patient p left outer join reservation r" 
+		= "select p.pcode, p.name, p.birth, count(r.pcode) rcnt" 
+			+ " from patient p"
+			+ " left outer join reservation r" 
 			+ " on p.pcode = r.pcode" 
-			+ "where name like ? "
-			+ "order by name asc";
+			+ " where name like ?" 
+			+ " GROUP BY p.pcode, p.name, p.birth"
+			+ " order by p.name asc";
+	
 	//승인관리
 	public static final String MG_REST_SELECT_ALL_SQL 
 		= "select r.rcode, d.name as dname, r.requestdate, r.approved" 
@@ -242,7 +248,7 @@ public class Sql {
 			+ " order by r.rcode desc";
 	
 	public static final String MG_REST_SELECT_BY_RCODE_SQL
-		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason" 
+		= "select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason, r.approved" 
 			+ " from doctor d inner join rest r" 
 			+ " on d.dcode = r.dcode" 
 			+ " where rcode = ?";

@@ -8,19 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../common/bootstrapInclude.jsp"/>
-<script type="text/javascript">
-/* $(document).ready(function(){
-	//select
-	var subject = "${subject_val}";
-	
-	$('select option').each(function(){
-		if(subject == $(this).val()){
-			$(this).attr('selected','selected')
-		}
-	});
-	
-}); */
-</script>
 </head>
 <style>
         .main{
@@ -84,10 +71,10 @@
         		<h2>Q&A 게시판</h2>
         	</div>
     		<div class="content_header">
-    			<form method="post" action="qna_search">
+    			<form method="post" action="qna_list?reqPage=1">
     				<select name='searchType'>
 						<option value='nickname'>작성자</option>
-		  				<option value='titleContent'>제목+내용</option>
+		  				<option value='titleContent' >제목+내용</option>
 					</select>
 					<input type="text" name="searchValue" placeholder="검색어를 입력해주세요" />
     				<button type = "submit" class="submitbtn">검색</button>
@@ -120,8 +107,7 @@
     		</div>
     		<div class="writeButton">
 				<c:if test="${pcode == null}">
-					<!-- <a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a> -->
-					<a href="qna_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
+					<a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
 				</c:if>
 				<c:if test="${pcode != null}">
 					<a href="qna_input"><button type="submit" class="submitbtn">글 작성</button></a>
@@ -131,18 +117,34 @@
         	<div>
         		<ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
 					<c:if test="${pageGroupResult.beforePage}">
-						<li class="page-item"><a class="page-link" href="memo_search?reqPage=${pageGroupResult.groupStartNumber-1}">before</a></li>
+						<li class="page-item"><a class="page-link" href="qna_list?reqPage=${pageGroupResult.groupStartNumber-1}">before</a></li>
 					</c:if>
 					<c:forEach var="index" begin="${pageGroupResult.groupStartNumber}" end="${pageGroupResult.groupEndNumber}">
+					<c:if test="${searchValue}!=null">
 					<c:choose>
 						<c:when test="${pageGroupResult.selectPageNumber == index}">
 						<li class="page-item active">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
+							1<a class="page-link" href="qna_list?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
 						</li>
 						</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
+							<a class="page-link" href="qna_list?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
+						</li>
+				</c:otherwise>
+				</c:choose>
+					
+					</c:if>
+					
+					<c:choose>
+						<c:when test="${pageGroupResult.selectPageNumber == index}">
+						<li class="page-item active">
+							<a class="page-link" href="qna_list?reqPage=${index}">${index}</a>
+						</li>
+						</c:when>
+					<c:otherwise>
+						<li class="page-item">
+							<a class="page-link" href="qna_list?reqPage=${index}">${index}</a>
 						</li>
 				</c:otherwise>
 				</c:choose>
@@ -150,7 +152,7 @@
 		
 				<c:if test="${pageGroupResult.afterPage}">
 				<li class="page-item">
-					<a class="page-link" href="mg_doctor_search?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
+					<a class="page-link" href="qna_list?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
 				</li>
 				</c:if>
 				</ul>

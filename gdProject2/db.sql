@@ -10,7 +10,7 @@ drop table approval cascade constraints;
 drop table notice cascade constraints;
 drop table rest cascade constraints;
 drop table files cascade constraints;
-*/
+*/ 
 /* È¯ÀÚ È¸¿ø */
 CREATE TABLE patient (
 	pcode NUMBER NOT NULL, /* È¸¿ø ÄÚµå */
@@ -595,6 +595,8 @@ select * from rest;
 
 update rest set approved = '½ÂÀÎ'
 insert into rest values (6, 4, sysdate, '½ÂÀÎ', 'ÈÞ°¡', to_date('2021-11-30','yyyy-mm-dd'), null);
+insert into rest values (7, 4, sysdate, '½ÂÀÎ', 'ÈÞ°¡', null, 6);
+
 
 select * from (select rownum as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt from notice n inner join manager m on n.mcode = m.mcode order by n.ncode desc) where rn between 1 and 4
 
@@ -604,3 +606,37 @@ from notice n inner join manager m on n.mcode = m.mcode) where rn between 1 and 
 delete from rest
 alter table rest modify day number
 select * from rest
+
+create sequence qna_seq
+
+select p.pcode, count(*) from patient p right outer join reservation r on p.pcode = r.pcode group by p.pcode;
+
+SELECT p.pcode pcode, p.name name, p.birth birth, count(r.pcode) cnt
+FROM patient p 
+LEFT OUTER JOIN reservation r 
+ON p.pcode = r.pcode 
+GROUP BY p.pcode, p.name, p.birth;
+
+select * from reservation;
+
+select * from doctor;
+
+
+create sequence a;
+
+select a.currval from dual;
+
+create table t(
+	n number primary key
+)
+
+
+
+insert into t values(a.nextval) and
+select n from t
+
+
+select * from doctor;
+
+
+

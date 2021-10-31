@@ -18,7 +18,7 @@ public interface ManagerDao {
 	void deleteDoctor(int dcode);
 	//환자조회
 	List<HashMap<String, String>> selectPatientAll();
-	List<Patient> selectPatientByName(String name);
+	List<HashMap<String, String>> selectPatientByName(String name);
 	//승인관리
 	List<HashMap<String, String>> selectRestAll();
 	List<HashMap<String, String>> selectRestByName(String name);

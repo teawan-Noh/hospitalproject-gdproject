@@ -77,4 +77,30 @@ public class RestDaoImpl implements RestDao {
 		}
 		return restList;
 	}
+
+	@Override
+	public int selectByReservation(String restdate, int dcode) {
+		int cnt = 0;
+		
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.REST_SELECT_RESERVATION_SQL);
+			pStatement.setString(1, restdate); //나중에 화면에서 입력받을 값
+			pStatement.setInt(2, dcode);
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				cnt = resultSet.getInt("cnt");
+			}
+		}  catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection); //문제가 생기던 안생기던 무조건 닫힐 수 있게 함
+		}
+		return cnt;
+	}
 }

@@ -11,7 +11,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             name="viewport"
             content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
         />
-
+ 
         <title>여기에 제목을 입력하십시오</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -32,64 +32,64 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js"></script>
 
         <style>      
-        a {
-          display: inline-block;
-          text-decoration: none !important;
-      }
-      button {
-          border: 0;
-          background: transparent;
-          cursor: pointer;
-      }
-      ul{
-         padding: 0;
-      }
-      .home-img{
-         background-image: url("img/home.png");
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          width: 20px;
-          height: 20px;
-      }
-      .fmenu{
-         padding-left: 0px;
-      }
-      .fmenu li:not(.fmenu li:first-child)::before{
-         content: ">";
-      }
-      
-      .container-box {
-          margin: 0 auto;
-          width: 100%;
-          max-width: 1200px;
-      }
-      .content {
-          flex: 3;
-          max-width: 800px;
-          margin: 50px;
-      }
-      .select {
-          border: 1px solid #468c91;
-          padding: 25px;
-          margin: 25px 0;
-      }
-      .card-list {
-          max-width: 800px;
-          margin: 10px 50px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
-      }
-      .card-box {
-          display: block;
-          font-size: 24px;
-          border: 1px solid #468c91;
-          border-radius: 5px;
-          padding: 10px 40px;
-          margin: 10px;
-          color: #468c91;
-      }      
+		    a {
+			    display: inline-block;
+			    text-decoration: none !important;
+			}
+			button {
+			    border: 0;
+			    background: transparent;
+			    cursor: pointer;
+			}
+			ul{
+			   padding: 0;
+			}
+			.home-img{
+			   background-image: url("img/home.png");
+			    background-size: cover;
+			    background-position: center;
+			    background-repeat: no-repeat;
+			    width: 20px;
+			    height: 20px;
+			}
+			.fmenu{
+			   padding-left: 0px;
+			}
+			.fmenu li:not(.fmenu li:first-child)::before{
+			   content: ">";
+			}
+			
+			.container-box {
+			    margin: 0 auto;
+			    width: 100%;
+			    max-width: 1200px;
+			}
+			.content {
+			    flex: 3;
+			    max-width: 800px;
+			    margin: 50px;
+			}
+			.select {
+			    border: 1px solid #468c91;
+			    padding: 25px;
+			    margin: 25px 0;
+			}
+			.card-list {
+			    max-width: 800px;
+			    margin: 10px 50px;
+			    display: flex;
+			    flex-wrap: wrap;
+			    justify-content: space-around;
+			}
+			.card-box {
+			    display: block;
+			    font-size: 24px;
+			    border: 1px solid #468c91;
+			    border-radius: 5px;
+			    padding: 10px 40px;
+			    margin: 10px;
+			    color: #468c91;
+			}      
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
             }
@@ -218,7 +218,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         return new XMLSerializer().serializeToString(oXML);
                     }
                 }
-
+ 
                 //////////달력////////////////
                 // calendar element 취득
                 var calendarEl = $("#calendar")[0];
@@ -284,9 +284,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             classNames: ["rest-children"],
                                         });
                                     } else if (day != "") {
+                                    	console.log(String(Number(day) - 1));
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(Number(day) + 1)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }
@@ -543,7 +544,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                     } else if (day != "") {
                                         calendar.addEvent({
                                             title: "휴진",
-                                            daysOfWeek: [String(day)],
+                                            daysOfWeek: [String(Number(day) - 1)],
                                             classNames: ["rest-children"],
                                         });
                                     }

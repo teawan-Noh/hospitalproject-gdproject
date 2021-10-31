@@ -40,10 +40,7 @@ public class ManagerDaoImpl implements ManagerDao {
 				manager.setName(resultSet.getString("name"));
 				manager.setId(resultSet.getString("id"));
 				manager.setPw(resultSet.getString("pw"));
-				
-				
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -52,7 +49,6 @@ public class ManagerDaoImpl implements ManagerDao {
 		return manager;
 	}
 	
-
 	@Override
 	public Manager selectByMcode(int mcode) {
 		Manager manager = null;
@@ -65,7 +61,6 @@ public class ManagerDaoImpl implements ManagerDao {
 			pStatement = connection.prepareStatement(Sql.MANAGER_SELECT_BY_MCODE_SQL);
 
 			pStatement.setInt(1, mcode);
-
 			resultSet = pStatement.executeQuery();
 
 			if (resultSet.next()) {
@@ -75,8 +70,6 @@ public class ManagerDaoImpl implements ManagerDao {
 				manager.setName(resultSet.getString("name"));
 				manager.setId(resultSet.getString("id"));
 				manager.setPw(resultSet.getString("pw"));
-				
-				
 			}
 
 		} catch (Exception e) {
@@ -108,13 +101,11 @@ public class ManagerDaoImpl implements ManagerDao {
 				
 				subjectList.add(subject);
 			}
-			
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return subjectList;
 	}
 
@@ -144,7 +135,6 @@ public class ManagerDaoImpl implements ManagerDao {
 				
 				doctorList.add(hm);
 			}
-			
 		}
 		catch(SQLException se) {
 			se.printStackTrace();
@@ -154,10 +144,8 @@ public class ManagerDaoImpl implements ManagerDao {
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return doctorList;
 	}
-
 
 	@Override
 	public void deleteDoctor(int dcode) {
@@ -178,7 +166,6 @@ public class ManagerDaoImpl implements ManagerDao {
 			
 			JDBCUtil.close(null, pStatement, connection);
 		}
-		
 	}
 
 	@Override
@@ -200,8 +187,7 @@ public class ManagerDaoImpl implements ManagerDao {
 				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				hm.put("name", resultSet.getString("name"));
 				hm.put("birth", resultSet.getString("birth"));
-				hm.put("rcode", Integer.toString(resultSet.getInt("rcode")));
-				
+				hm.put("rcnt", Integer.toString(resultSet.getInt("rcnt")));
 				patientList.add(hm);
 			}
 			
@@ -210,14 +196,13 @@ public class ManagerDaoImpl implements ManagerDao {
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return patientList;
 	}
 
 
 	@Override
-	public List<Patient> selectPatientByName(String name) {
-		List<Patient> patientList = new ArrayList<>();
+	public List<HashMap<String, String>> selectPatientByName(String name) {
+		List<HashMap<String, String>> patientList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
 		ResultSet resultSet = null;
@@ -231,13 +216,14 @@ public class ManagerDaoImpl implements ManagerDao {
 			resultSet = pStatement.executeQuery();
 
 			while(resultSet.next()) {
-				Patient patient = new Patient();
+				HashMap<String, String> hm = new HashMap<>();
 				
-				patient.setPcode(resultSet.getInt("pcode"));
-				patient.setName(resultSet.getString("name"));
-				patient.setBirth(resultSet.getString("birth"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
+				hm.put("name", resultSet.getString("name"));
+				hm.put("birth", resultSet.getString("birth"));
+				hm.put("rcnt", Integer.toString(resultSet.getInt("rcnt")));
 				
-				patientList.add(patient);
+				patientList.add(hm);
 			}
 
 		} catch (Exception e) {
@@ -259,9 +245,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_ALL_SQL);
-			//select r.rcode, d.name as dname, r.requestdate, r.approved from doctor d inner join rest r
-			//on d.dcode = r.dcode order by r.rcode desc;
-
+			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
@@ -274,7 +258,6 @@ public class ManagerDaoImpl implements ManagerDao {
 				
 				restList.add(hm);
 			}
-			
 		}
 		catch(SQLException se) {
 			se.printStackTrace();
@@ -284,10 +267,8 @@ public class ManagerDaoImpl implements ManagerDao {
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return restList;
 	}
-
 
 	@Override
 	public List<HashMap<String, String>> selectRestByName(String name) {
@@ -299,8 +280,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_NAME_SQL);
-			//select r.rcode, d.name as dname, r.requestdate, r.approved from doctor d inner join rest r
-			//on d.dcode = r.dcode where d.name like ? order by r.rcode desc;
+
 			pStatement.setString(1, '%'+name+'%');
 			resultSet = pStatement.executeQuery();
 			
@@ -314,7 +294,6 @@ public class ManagerDaoImpl implements ManagerDao {
 				
 				restList.add(hm);
 			}
-			
 		}
 		catch(SQLException se) {
 			se.printStackTrace();
@@ -324,7 +303,6 @@ public class ManagerDaoImpl implements ManagerDao {
 		} finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return restList;
 	}
 
@@ -339,8 +317,7 @@ public class ManagerDaoImpl implements ManagerDao {
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.MG_REST_SELECT_BY_RCODE_SQL);
-			//select r.rcode, d.name as dname, r.requestdate, r.restdate, r.reason from doctor d inner join rest r 
-			//on d.dcode = r.dcode where rcode = ?;
+			
 			pStatement.setInt(1, rcode);
 			resultSet = pStatement.executeQuery();
 			
@@ -353,8 +330,8 @@ public class ManagerDaoImpl implements ManagerDao {
 				restDetail.put("requestdate", resultSet.getString("requestdate"));
 				restDetail.put("restdate", resultSet.getString("restdate"));
 				restDetail.put("reason", resultSet.getString("reason"));
+				restDetail.put("approved", resultSet.getString("approved"));
 			}
-			
 		}
 		catch(NumberFormatException se) {
 			se.printStackTrace();
@@ -365,7 +342,6 @@ public class ManagerDaoImpl implements ManagerDao {
 		finally {
 			JDBCUtil.close(resultSet, pStatement, connection);
 		}
-		
 		return restDetail;
 	}
 
@@ -381,17 +357,12 @@ public class ManagerDaoImpl implements ManagerDao {
 			pStatement.setInt(1, rcode); // ?값 셋팅 
 			
 			pStatement.executeUpdate();
-			
 		} catch (Exception e) {
 			e.getStackTrace();
-			
 		} finally {
-			
 			JDBCUtil.close(null, pStatement, connection);
 		}
-		
 	}
-
 
 	@Override
 	public void updateRestReject(int rcode) {
@@ -405,17 +376,10 @@ public class ManagerDaoImpl implements ManagerDao {
 			pStatement.setInt(1, rcode); // ?값 셋팅 
 			
 			pStatement.executeUpdate();
-			
 		} catch (Exception e) {
 			e.getStackTrace();
-			
 		} finally {
-			
 			JDBCUtil.close(null, pStatement, connection);
 		}
-		
 	}
-
-
-
 }

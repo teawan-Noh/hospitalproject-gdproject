@@ -11,6 +11,8 @@ import java.util.List;
 
 import common.JDBCUtil;
 import common.Sql;
+import common.page.PageManager;
+import common.page.PageRowResult;
 import model.board.Comments;
 import model.board.Qna;
 
@@ -49,8 +51,11 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_UPDATE_SQL);
-			//update memo set name = ?, age = ? where memoid = ?
-			pStatement.setString(1, qna.getContent()); // ?값 셋팅 
+			//update qna set title = ?, content = ? whereq qno = ?
+			pStatement.setString(1, qna.getTitle()); // ?값 셋팅 
+			pStatement.setString(2, qna.getContent()); // ?값 셋팅 
+			pStatement.setString(3, qna.getImg()); // ?값 셋팅 
+			pStatement.setInt(4, qna.getQno()); // ?값 셋팅 
 			//insert, delete, update에 사용
 			pStatement.executeUpdate();
 			
@@ -88,7 +93,7 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public List<HashMap> selectAll() {
+	public List<HashMap> selectAll(int requestPage) {
 		List<HashMap> qnaList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -97,16 +102,22 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_ALL_SQL);
-			//select q.qno, q.title, p.nickname, q.writedate, q.cnt 
-			//from qna q inner join patient p 
-			//on q.pcode = p.pcode order by q.qno desc;
+			System.out.println("전체");
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			
+			pStatement.setInt(1, prr.getRowStartNumber());
+			pStatement.setInt(2, prr.getRowEndNumber());
+			
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				HashMap<String, String> hm = new HashMap<>();
 				
+				hm.put("rn", Integer.toString(resultSet.getInt("rn")));
 				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
 				hm.put("title", resultSet.getString("title"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				hm.put("nickname", resultSet.getString("nickname"));
 				hm.put("writedate", resultSet.getString("writedate"));
 				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
@@ -127,7 +138,7 @@ public class QnaDaoImpl implements QnaDao{
 	}
 
 	@Override
-	public List<HashMap> selectByNickname(String nickname) {
+	public List<HashMap> selectByNickname(String nickname, int requestPage) {
 		List<HashMap> qnaList = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -136,15 +147,64 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_NICKNAME_SQL);
-			//select q.qno, q.title, p.nickname, q.writedate, q.cnt 
-			//from qna q inner join patient p on q.pcode = p.pcode 
-			//where p.nickname = ? order by q.qno desc;
+			System.out.println("닉네임");
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			
 			pStatement.setString(1, '%'+nickname+'%');
+			pStatement.setInt(2, prr.getRowStartNumber());
+			pStatement.setInt(3, prr.getRowEndNumber());
 			resultSet = pStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				HashMap<String, String> hm = new HashMap<>();
 				
+				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
+				hm.put("title", resultSet.getString("title"));
+				hm.put("pcode", Integer.toString(resultSet.getInt("pcode")));
+				hm.put("nickname", resultSet.getString("nickname"));
+				hm.put("writedate", resultSet.getString("writedate"));
+				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
+				qnaList.add(hm);
+			}
+			
+		}
+		catch(SQLException se) {
+			se.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return qnaList;
+	}
+	
+	@Override
+	public List<HashMap> selectByTitleOrContent(String searchValue, int requestPage) {
+		List<HashMap> qnaList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_TITLE_OR_CONTENT_SQL);
+			System.out.println("제목내용");
+			PageManager pm = new PageManager(requestPage);
+			PageRowResult prr = pm.getPageRowResult();
+			
+			pStatement.setString(1, '%'+searchValue+'%');
+			pStatement.setString(2, '%'+searchValue+'%');
+			pStatement.setInt(3, prr.getRowStartNumber());
+			pStatement.setInt(4, prr.getRowEndNumber());
+			resultSet = pStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				HashMap<String, String> hm = new HashMap<>();
+				
+				hm.put("rn", Integer.toString(resultSet.getInt("rn")));
 				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
 				hm.put("title", resultSet.getString("title"));
 				hm.put("nickname", resultSet.getString("nickname"));
@@ -165,6 +225,7 @@ public class QnaDaoImpl implements QnaDao{
 		
 		return qnaList;
 	}
+	
 	@Override
 	public HashMap selectByQno(int qno) {
 		HashMap<String, String> qnaDetail = null;
@@ -186,6 +247,7 @@ public class QnaDaoImpl implements QnaDao{
 				
 				qnaDetail.put("qno", Integer.toString(resultSet.getInt("qno")));
 				qnaDetail.put("title", resultSet.getString("title"));
+				qnaDetail.put("pcode", Integer.toString(resultSet.getInt("pcode")));
 				qnaDetail.put("nickname", resultSet.getString("nickname"));
 				qnaDetail.put("writedate", resultSet.getString("writedate"));
 				qnaDetail.put("cnt", Integer.toString(resultSet.getInt("cnt")));
@@ -234,52 +296,14 @@ public class QnaDaoImpl implements QnaDao{
 		
 	}
 
-	@Override
-	public List<HashMap> selectByTitleOrContent(String searchValue) {
-		List<HashMap> qnaList = new ArrayList<>();
-		Connection connection = null;
-		PreparedStatement pStatement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			connection = JDBCUtil.getConnection();
-			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_TITLE_OR_CONTENT_SQL);
-			//select q.qno, q.title, p.nickname, q.writedate, q.cnt 
-			//from qna q inner join patient p on q.pcode = p.pcode 
-			//where p.nickname = ? order by q.qno desc;
-			pStatement.setString(1, '%'+searchValue+'%');
-			pStatement.setString(2, '%'+searchValue+'%');
-			resultSet = pStatement.executeQuery();
-			
-			while(resultSet.next()) {
-				HashMap<String, String> hm = new HashMap<>();
-				
-				hm.put("qno", Integer.toString(resultSet.getInt("qno")));
-				hm.put("title", resultSet.getString("title"));
-				hm.put("nickname", resultSet.getString("nickname"));
-				hm.put("writedate", resultSet.getString("writedate"));
-				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
-				qnaList.add(hm);
-			}
-			
-		}
-		catch(SQLException se) {
-			se.printStackTrace();
-		} 
-		catch (Exception e) {
-			e.getStackTrace();
-		} finally {
-			JDBCUtil.close(resultSet, pStatement, connection);
-		}
-		
-		return qnaList;
-	}
+
 
 	@Override
-	public void insertComment(Comments comment) {
+	public int insertComment(Comments comment) {
 		Connection connection = null;
 	    PreparedStatement pStatement = null;
-	      
+	    int value = 0;
+	    
 	    try {
 	    	connection = JDBCUtil.getConnection();
 	        pStatement = connection.prepareStatement(Sql.COMMNETS_INSERT_SQL);
@@ -289,13 +313,14 @@ public class QnaDaoImpl implements QnaDao{
 	        pStatement.setInt(2, comment.getMcode());
 	        pStatement.setString(3, comment.getContent());
 	         
-	        pStatement.executeUpdate(); 
+	        value = pStatement.executeUpdate(); 
 	         
 	    } catch (Exception e) {
 	    	e.printStackTrace();
 	    } finally {
 	    	JDBCUtil.close(null, pStatement, connection); 
 	    }
+		return value;
 	}
 
 	@Override

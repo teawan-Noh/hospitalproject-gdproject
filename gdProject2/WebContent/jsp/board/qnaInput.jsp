@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <jsp:include page="../common/bootstrapInclude.jsp"/>
+
 </head>
 <style>
         .main{
@@ -71,7 +72,7 @@
         	</div>
     		
     		<div class = "content_body">
-    			<form method="post" action="qna_save" enctype="multipart/form-data">
+    			<form method="post" action="qna_save?reqPage=1">
 				<table border="1" class="table">
 				<tbody>
 					<tr>

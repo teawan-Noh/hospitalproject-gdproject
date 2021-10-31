@@ -19,6 +19,15 @@ public class Rest {
 		this.dcode = dcode;
 		this.reason = reason;
 	}
+	
+	
+
+	public Rest(int dcode, String reason, String restdate) {
+		super();
+		this.dcode = dcode;
+		this.reason = reason;
+		this.restdate = restdate;
+	}
 
 	public int getRcode() {
 		return rcode;
