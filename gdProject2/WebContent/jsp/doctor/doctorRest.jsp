@@ -41,6 +41,9 @@
     		border-radius: 45px;
     		margin-left: 20px;
     	}
+    	#icon1 {
+    		background-color: rgb(70, 145, 140);
+    	}
     	#icon2 {
     		background-color: #FFD700;
     	}
@@ -208,7 +211,7 @@
                                     start: restdate,
                                     classNames: ["rest-children"],
                                     color: "white",
-                  	                textColor: "blue", 
+                  	                textColor: "rgb(70, 145, 140)", 
                                 });
                             }
                         });	
@@ -272,6 +275,7 @@
   		  	<h1>휴진 신청</h1>
     		<div id="calendar"></div>
     		<div class = "icons">
+    			<div class = "icon" id = "icon1"></div> 진료일
     			<div class = "icon" id = "icon2"></div> 휴진 승인 대기 
     			<div class = "icon" id = "icon3"></div> 휴진
     		</div>

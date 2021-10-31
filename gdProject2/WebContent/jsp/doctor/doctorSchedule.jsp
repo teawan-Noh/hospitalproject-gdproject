@@ -32,24 +32,7 @@
     	a {
     		text-decoration: none !important;
     	}
-    	.icons {
-    		display: flex;
-    	}
-    	.icon {
-    		width: 20px;
-    		height: 20px;
-    		border-radius: 45px;
-    		margin-left: 20px;
-    	}
-    	#icon2 {
-    		background-color: #FFD700;
-    	}
-    	#icon3 {
-    		background-color: rgb(243, 243, 243);
-    	}
-    	a {
-                text-decoration: none !important;
-            }
+    	
             th .fc-scrollgrid-sync-inner {
                 background-color: #468c91;
             }
@@ -94,8 +77,20 @@
       }
     </style>
     <script>
-
-    $(function () {
+$(function () {
+    	
+    	function XMLToString(oXML) {
+            //code for IE
+            if (window.ActiveXObject) {
+                var oString = oXML.xml;
+                return oString;
+            }
+            // code for Chrome, Safari, Firefox, Opera, etc.
+            else {
+                return new XMLSerializer().serializeToString(oXML);
+            }
+        }
+    	
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
         	height: '800px', // calendar 높이 설정
@@ -106,7 +101,7 @@
         		left: 'prev,next today',
         		center: 'title',
         		right: 'dayGridMonth,listWeek'
-        	},
+        },
           initialView: 'dayGridMonth',
           navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
           editable: false, // 수정 가능?
@@ -114,7 +109,6 @@
           selectable: false, // 달력 일자 드래그 설정가능
           nowIndicator: true, // 현재 시간 마크
           dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-          showNonCurrentDates:false,
           locale: 'ko', // 한국어 설정
           eventDidMount: function(arg){
               var el = $(arg.el).closest("td.fc-day");
@@ -133,6 +127,7 @@
                 let url = "dschedule";
 				let dcode = "${dcode}";
                 $.get(url, { dcode: dcode }, function (data) {
+                	console.log(XMLToString(data));
                     var schedule = $(data).find("schedule");
                     if (schedule.length > 0) {
                         $(schedule).each(function (idx, item) {
@@ -149,6 +144,21 @@
                                 });
                             }
                         });      
+                    }
+                    var rsv = $(data).find("rsv");
+                    if (rsv.length > 0) {
+                        $(rsv).each(function (idx, item) {
+                            var rsvdate = $(this)
+                                .text();
+                            calendar.addEvent({
+                                title: "예약 있음",
+                                start: rsvdate,
+                                color : "white",
+                                textColor : "rgb(70, 145, 140)",
+                                classNames: ["rest-children"],
+                            
+                        });  
+                    })
                     }
                     var waitSchedule = $(data).find("waitSchedule");
                     if(waitSchedule.length > 0){
@@ -184,6 +194,8 @@
                             }
                         });	
                     }
+                    
+                    
                 });
             }
         });
@@ -205,10 +217,6 @@
             </ul>
   		  	<h1>진료 스케줄 조회</h1>
     		<div id="calendar"></div>
-    		<div class = "icons">
-    			<div class = "icon" id = "icon2"></div> 휴진 승인 대기
-    			<div class = "icon" id = "icon3"></div> 휴진 
-    		</div>
   		</div>
   	</div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
