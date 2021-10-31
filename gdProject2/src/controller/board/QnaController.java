@@ -1,8 +1,11 @@
 package controller.board;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -142,7 +145,9 @@ public class QnaController extends HttpServlet{
 			QnaDao dao = new QnaDaoImpl();
 			int qno = Integer.parseInt(req.getParameter("qno")); //화면에서 가져와
 			HashMap qnaDetail = dao.selectByQno(qno);
+			
 			req.setAttribute("qnadetail", qnaDetail);
+			
 			
 			if(session.getAttribute("pcode") != null) {
 				Object value = session.getAttribute("pcode");
@@ -159,7 +164,9 @@ public class QnaController extends HttpServlet{
 			if(session.getAttribute("mcode") != null) {
 				Object value = session.getAttribute("mcode");
 				int mcode = (int)value;
+				System.out.println("매니저로그인중 , mcode="+mcode);
 				req.setAttribute("managerpcode", mcode);
+				
 			}
 			
 			Qna qna = dao.selectCntByQno(qno);
@@ -234,6 +241,8 @@ public class QnaController extends HttpServlet{
 				int mcode = (int)value;
 				String content = req.getParameter("content");
 				
+				
+				
 				Comments comment = new Comments(qno, mcode, content);
 				
 				QnaDao dao = new QnaDaoImpl();
@@ -241,6 +250,8 @@ public class QnaController extends HttpServlet{
 				
 				HashMap qnaDetail = dao.selectByQno(qno);
 				req.setAttribute("qnadetail", qnaDetail);
+				
+				
 			}
 		}
 		else if(action.equals("comment_test")) {
@@ -256,10 +267,15 @@ public class QnaController extends HttpServlet{
 			QnaDao dao = new QnaDaoImpl();
 			int value = dao.insertComment(comment);
 			
-			System.out.println(value);
+			String managerId = dao.selectByMcode(mcode);
+			SimpleDateFormat originFormmat = new SimpleDateFormat("yyyy-MM-dd");
+			String writeDate = originFormmat.format(new Date());
 			
+			req.setAttribute("writer", managerId);
+			System.out.println(managerId);
 			req.setAttribute("result", value);
 			req.setAttribute("content", content);
+			req.setAttribute("writedate", writeDate);
 		}
 		
 		String dispatcherUrl = null;

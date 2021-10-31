@@ -352,4 +352,29 @@ public class QnaDaoImpl implements QnaDao{
 		return qna;
 	}
 
+	@Override
+	public String selectByMcode(int mcode) {
+		Connection connection = null;
+	    PreparedStatement pStatement = null;
+	    ResultSet resultSet = null;
+	    String value = null;
+	    
+	    try {
+	    	connection = JDBCUtil.getConnection();
+	        pStatement = connection.prepareStatement(Sql.MANAGER_SELECT_BY_MCODE_SQL);
+	         
+	        pStatement.setInt(1, mcode);
+	        resultSet = pStatement.executeQuery(); 
+	        
+	        if(resultSet.next()) {
+	        	value = resultSet.getString("id");
+	        }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	JDBCUtil.close(null, pStatement, connection); 
+	    }
+		return value;
+	}
+
 }

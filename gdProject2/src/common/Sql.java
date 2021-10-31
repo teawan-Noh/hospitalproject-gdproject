@@ -189,6 +189,9 @@ public class Sql {
 	public static final String COMMNETS_INSERT_SQL 
 		= "insert into comments values (?, ?, sysdate, ?)";
 	
+	public static final String MANAGER_SELECT_ID_BY_MCODE
+		= "select id from manager where mcode = ?";
+	
 	//매니저
 	//의사조회
 	public static final String MG_DOCTOR_SELECT_BY_SUBJECT_SQL 

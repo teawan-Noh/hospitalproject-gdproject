@@ -23,23 +23,26 @@
                 return new XMLSerializer().serializeToString(oXML);
             }
         }
-		
+	
 		$("#comment").submit(function(e){
 			e.preventDefault()
 			$.post(url,{content:$('textarea[name="content"]').val(),
 				mcode:${sessionScope.mcode}, qno:${qnadetail.qno}}, function(data){
-					console.log(XMLToString(data))
 					var result = Number($(data).find('result'));
 					var content = $(data).find('content').text();
+					var writedate = $(data).find('writedate').text();
+					var writer = $(data).find('writer').text();
 					if(result != 0){
+						
 						/* 데이터가 오면 다시 보이게 */
 						$('#comment_container').css('display', 'block')
 						$('#show_content').text(content)
 						$('#comment').css('display', 'none')
+						$('#show_writedate').text(writedate)
+						$('#show_writer').text(writer)
 					}
 				})
 		})
-		
 	});
 </script>
 </head>

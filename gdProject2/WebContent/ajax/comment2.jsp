@@ -4,6 +4,6 @@
 <comment>
 	<result>${result}</result>
 	<content>${content}</content>
-	<writedate></writedate>
-	<writer></writer>
+	<writedate>${writedate}</writedate>
+	<writer>${writer}</writer>
 </comment>
