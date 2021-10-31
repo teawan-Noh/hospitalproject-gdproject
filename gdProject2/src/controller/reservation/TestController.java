@@ -119,6 +119,7 @@ public class TestController extends HttpServlet{
 			res.setContentType("application/octet-stream");
 			byte[] image = IOUtils.toByteArray(new FileInputStream(new File(filePath)));
 			res.getOutputStream().write(image);
+			
 		}
 		else if(action.equals("file")) {
 			String fileName = req.getParameter("fileName");

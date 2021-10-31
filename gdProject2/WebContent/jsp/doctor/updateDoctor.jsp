@@ -253,7 +253,6 @@ $("#updatebtn").click(function(){
     		<li>개인정보수정</li>
     	</ul>
     	<h1>개인정보수정</h1>
-    	<c:forEach var="doctor" items="${doctor}">
         	<form method="post" action="doctor_update?dcode=${doctor.dcode}">
             	<table>
                 <tr>
@@ -318,7 +317,6 @@ $("#updatebtn").click(function(){
             	<button type = "button" id = "cancel" onclick="location.href = 'index.jsp'">취소</button>
             </div>
         </form>
-        </c:forEach>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

@@ -192,8 +192,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </style>
         <script>
             $(function () {
-            let setting = ${rcode} != 0 ? true : false;
-               let pcode = ${pcode};
+            	let setting = (${rcode} != 0 || ${rsv} != 0) ? true : false;
+               	let pcode = ${pcode};
                 let subject = "${subject}";
                 let dcode = "${dcode}";
                 let dname = "${dname}";
@@ -450,10 +450,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                         );
                                     });
                                 
+                               console.log(dcode + ", " + dname);
+                               console.log(setting);
                                 if(dcode != "" && dname != "" && setting){
                                    $(".card-box.doctor .flex").each(function(idx, item){
                                       var name = $(this).find(".doctor-name").text();
                                       var code = $(this).find(".doctor-code").text();
+                                      console.log(dname);
+                                      console.log(name);
+                                      console.log(dcode);
+                                      console.log(code);
                                       if(dname == name && dcode == code){
                                          $(this).trigger("click");
                                       }

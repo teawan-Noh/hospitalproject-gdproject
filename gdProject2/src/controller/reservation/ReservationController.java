@@ -104,13 +104,20 @@ public class ReservationController extends HttpServlet{
 				String url = this.getClass().getResource("").getPath(); 
 				url = url.substring(1,url.indexOf(".metadata"))+"gdProject2/WebContent";
 				System.out.println(url);
-				System.out.println(rcode);
+				System.out.println("rcode is : " + rcode);
 				
 				String subject = req.getParameter("subject");
+				System.out.println(req.getParameter("dcode"));
+				System.out.println(req.getParameter("subject"));
+				System.out.println(req.getParameter("dname"));
+				System.out.println("doctor-rsv is : " + req.getParameter("doctor-rsv"));
+				int doctor_rsv = req.getParameter("doctor-rsv") == null ? 0 : Integer.parseInt(req.getParameter("doctor-rsv"));
 				int dcode = req.getParameter("dcode") == null ? 0 : Integer.parseInt(req.getParameter("dcode"));
 				String dname = req.getParameter("dname");
 		 
 				req.setAttribute("pcode", pcode);
+				req.setAttribute("rsv", doctor_rsv);
+
 				req.setAttribute("rcode", rcode);
 				req.setAttribute("subject", subject);
 				req.setAttribute("dcode", dcode);

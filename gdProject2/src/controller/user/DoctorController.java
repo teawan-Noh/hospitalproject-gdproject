@@ -3,6 +3,7 @@ package controller.user;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -103,7 +104,7 @@ public class DoctorController extends HttpServlet {
 			HttpSession session = req.getSession();
 			int dcode = (int)session.getAttribute("dcode");
 			DoctorDao dao = new DoctorDaoImpl();
-			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
+			Map<String, String> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
 			ReservationDao rdao = new ReservationDaoImpl();
 			List<Subject> subjectList = rdao.selectSubjectAll();
@@ -126,7 +127,7 @@ public class DoctorController extends HttpServlet {
 		} else if(action.equals("doctor_detail")) {
 			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			DoctorDao dao = new DoctorDaoImpl();
-			List<HashMap<String, Object>> doctorList = dao.selectBydcode(dcode);
+			Map<String, String> doctorList = dao.selectBydcode(dcode);
 			req.setAttribute("doctor", doctorList);
 			req.setAttribute("side", "doctor");
 		}
