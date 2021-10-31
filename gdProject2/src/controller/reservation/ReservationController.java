@@ -22,9 +22,12 @@ import common.page.PageGroupResult;
 import common.page.PageManager;
 import dao.ask.ReservationDao;
 import dao.ask.ReservationDaoImpl;
+import dao.user.PatientDao;
+import dao.user.PatientDaoImpl;
 import model.ask.Reservation;
 
 import model.user.Doctor;
+import model.user.Patient;
 import model.user.Subject;
 
 
@@ -32,7 +35,7 @@ import model.user.Subject;
 urlPatterns= {"/reservation", "/subject-doctor", "/schedule", 
 		"/doctor-detail", "/rsv-time", "/book", "/reservation-list",
 		"/reservation-detail", "/reservation-doctor-list",
-		"/reservation-delete", "/reservation-update"})
+		"/reservation-delete", "/reservation-update", "/reservation-confirm"})
 public class ReservationController extends HttpServlet{
 	
 	private static final long serialVersionUID = -3121213149759544408L;
@@ -82,6 +85,9 @@ public class ReservationController extends HttpServlet{
 			if(user != null) {
 				req.setAttribute("side", "task");
 			}
+			else if(sessionMcode != 0){
+				req.setAttribute("side", "manager");
+			}
 			else {
 				req.setAttribute("side", "reservation");
 			}
@@ -101,20 +107,31 @@ public class ReservationController extends HttpServlet{
 				String url = this.getClass().getResource("").getPath(); 
 				url = url.substring(1,url.indexOf(".metadata"))+"gdProject2/WebContent";
 				System.out.println(url);
-				System.out.println(rcode);
+				System.out.println("rcode is : " + rcode);
 				
 				String subject = req.getParameter("subject");
+				System.out.println(req.getParameter("dcode"));
+				System.out.println(req.getParameter("subject"));
+				System.out.println(req.getParameter("dname"));
+				System.out.println("doctor-rsv is : " + req.getParameter("doctor-rsv"));
+				int doctor_rsv = req.getParameter("doctor-rsv") == null ? 0 : Integer.parseInt(req.getParameter("doctor-rsv"));
 				int dcode = req.getParameter("dcode") == null ? 0 : Integer.parseInt(req.getParameter("dcode"));
 				String dname = req.getParameter("dname");
 		 
 				req.setAttribute("pcode", pcode);
+				req.setAttribute("rsv", doctor_rsv);
+
 				req.setAttribute("rcode", rcode);
 				req.setAttribute("subject", subject);
 				req.setAttribute("dcode", dcode);
 				req.setAttribute("dname", dname);
 		
-				
-				req.setAttribute("side", "reservation");
+				if(sessionMcode == 0) {
+					req.setAttribute("side", "reservation");
+				}
+				else {
+					req.setAttribute("side", "manager");
+				}
 				req.setAttribute("subjectList", subjectList);
 			}
 			else if(action.equals("book")) {
@@ -130,6 +147,8 @@ public class ReservationController extends HttpServlet{
 				
 				int cnt = rdao.insertReservation(pcode, dcode, rsvdate);
 				res.getWriter().print(cnt);
+				
+				req.setAttribute("pcode", pcode);
 			}
 			else if(action.equals("reservation-list")) {
 				int requestPage = Integer.parseInt(req.getParameter("reqPage"));
@@ -149,13 +168,19 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("pageGroupResult", pgr);
 				
 				req.setAttribute("rsvList", rsvList);
-				req.setAttribute("side", "reservation");
+				if(sessionMcode == 0) {
+					req.setAttribute("side", "reservation");
+				}
+				else {
+					req.setAttribute("side", "manager");
+				}
 			}
 			else if(action.equals("reservation-delete")) {
 				ReservationDao rdao = new ReservationDaoImpl();
 				int rcode = Integer.parseInt(req.getParameter("rcode"));
 				
 				rdao.deleteReservation(rcode);
+				req.setAttribute("pcode", req.getParameter("pcode"));
 			}
 			else if(action.equals("reservation-update")) {
 				ReservationDao rdao = new ReservationDaoImpl();
@@ -165,6 +190,7 @@ public class ReservationController extends HttpServlet{
 				String rsvdate = req.getParameter("rsvdate");
 				
 				rdao.updateReservation(rcode, pcode, dcode, rsvdate);
+				req.setAttribute("pcode", pcode);
 				req.setAttribute("rcode", rcode);
 			}
 			else if(action.equals("subject-doctor")) {
@@ -212,6 +238,36 @@ public class ReservationController extends HttpServlet{
 				req.setAttribute("rsvList", availableList);
 				
 			}
+			else if(action.equals("reservation-confirm")) {
+				PatientDao pdao = new PatientDaoImpl();
+				int pcode = req.getParameter("pcode") == null ? 0 : Integer.parseInt(req.getParameter("pcode"));
+				String rsvdate = req.getParameter("rsvdate");
+				String subject = req.getParameter("subject");
+				int dcode  = req.getParameter("dcode") == null ? 0 : Integer.parseInt(req.getParameter("dcode"));
+				String dname = req.getParameter("dname");
+				int rcode = req.getParameter("rcode") == "" ? 0 : Integer.parseInt(req.getParameter("rcode"));
+
+				Patient p = pdao.selectByPcode(pcode);
+				
+				
+				if(rsvdate != null) {
+					String[] rsv = rsvdate.split(" ");
+					req.setAttribute("rsvdate", rsv[0]);
+					req.setAttribute("rsvtime", rsv[1]);
+				}
+				
+				req.setAttribute("patient", p);
+				req.setAttribute("rcode", rcode);
+				req.setAttribute("subject", subject);
+				req.setAttribute("dcode", dcode);
+				req.setAttribute("dname", dname);
+				if(sessionMcode == 0) {
+					req.setAttribute("side", "reservation");
+				}
+				else {
+					req.setAttribute("side", "manager");
+				}
+			}
 			
 		}
 		// 의사 로그인 필요
@@ -257,16 +313,17 @@ public class ReservationController extends HttpServlet{
 				dispatcherUrl = "jsp/reservation/reservation.jsp";
 			}
 			else if(action.equals("book")) {
+				res.sendRedirect("reservation-list?reqPage=1");
 			}
 			else if(action.equals("reservation-list")) {
 				dispatcherUrl = "jsp/reservation/reservation-list.jsp";
 			}
 
 			else if(action.equals("reservation-delete")) {
-				res.sendRedirect("reservation-list?reqPage=1");
+				dispatcherUrl = "reservation-list?reqPage=1";
 			}
 			else if(action.equals("reservation-update")) {
-				dispatcherUrl = "reservation-detail";
+				dispatcherUrl = "reservation-list?reqPage=1";
 			}
 			else if(action.equals("subject-doctor")) {
 				dispatcherUrl = "ajax/subject-doctor.jsp";
@@ -277,6 +334,9 @@ public class ReservationController extends HttpServlet{
 			}
 			else if(action.equals("rsv-time")) {
 				dispatcherUrl = "ajax/rsv-time.jsp";
+			}
+			else if(action.equals("reservation-confirm")) {
+				dispatcherUrl = "jsp/reservation/reservation-confirm.jsp";
 			}
 		}
 		else{

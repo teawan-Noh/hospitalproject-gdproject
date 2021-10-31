@@ -160,26 +160,30 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             }
         </style>
         <script>
-            $(function () { 
-                $(document).on("click", "#rsv-delete", function(){
-                	console.log("${sessionScope.mcode}");
-                	console.log("${rsvInfo.pcode}");
+            $(function () {             	
+            	let pcode = ${pcode};
+                let subject = "${subject}";
+                let dcode = "${dcode}";
+                let dname = "${dname}";
+                let rsvdate = "${rsvdate}";
+                let rsvtime = "${rsvtime}";
+                let rcode = ${rcode};
+                
+                $(document).on("click", ".rsv-cancel", function(){
                 	if(confirm("정말 예약을 취소하시겠습니까?") == true){
                 		alert("예약이 취소되었습니다.");
-                		if("${sessionScope.mcode}" == null){
-                   			location.href = "reservation-delete?rcode=" + "${rsvInfo.rcode}";
-                		}
-                		else{
-                			location.href = "reservation-delete?rcode=${rsvInfo.rcode}&pcode=${rsvInfo.pcode}";
-                		}
+                   		location.href = "/gdProject2";
+                	}
+                });
+                $(document).on("click", "#rsv-insert", function(){
+                	if(confirm("예약을 추가하시겠습니까?") == true){
+                		$("#insert-form").submit();
                 	}
                 });
                 $(document).on("click", "#rsv-update", function(){
-                	$("#update-form").submit();
-                });
-                
-                $(document).on("click", "#rsv-doctor-list", function(){
-                	location.href = "reservation-doctor-list?reqPage=1";
+                	if(confirm("예약을 변경하시겠습니까?") == true){
+                		$("#update-form").submit();
+                	}
                 });
             });
         </script>
@@ -194,69 +198,74 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 <ul class="fmenu">
                 	<li><div class="home-img"></div></li>
                     <li>예약</li>
-                    <li>예약조회</li>
+                    <li>예약 확인</li>
                 </ul>
-                <h1>예약조회</h1>
+                <h1>예약 확인</h1>
                 <br />
                 <table id="rsv-mylist" class="table">
                         <tr id="table-pname">
                             <th>성명</th>
-                            <c:if test="${rsvInfo.pname != null}">
-                    			<td>${rsvInfo.pname}</td>
+                            <c:if test="${patient.name != null}">
+                    			<td>${patient.name}</td>
                 			</c:if>
                         </tr>
                         <tr id="table-tel">
                             <th>연락처</th>
-                            <c:if test="${rsvInfo.tel != null}">
-                				<td>${rsvInfo.tel}</td>
+                            <c:if test="${patient.tel != null}">
+                				<td>${patient.tel}</td>
             				</c:if>
                         </tr>
                         <tr id="table-rsvdate">
                             <th>예약일자</th>
-                            <c:if test="${rsvInfo.rsvdate != null}">
-            					<td>${rsvInfo.rsvdate}</td>
+                            <c:if test="${rsvdate != null}">
+            					<td>${rsvdate}</td>
         					</c:if>
                         </tr>
                         <tr id="table-rsvtime">
                             <th>예약시간</th>
-                            <c:if test="${rsvInfo.rsvtime != null}">
-            					<td>${rsvInfo.rsvtime}</td>
+                            <c:if test="${rsvtime != null}">
+            					<td>${rsvtime}</td>
         					</c:if>
                         </tr>
                         <tr id="table-sname">
                             <th>진료과</th>
-                            <c:if test="${rsvInfo.sname != null}">
-            					<td>${rsvInfo.sname}</td>
+                            <c:if test="${subject != null}">
+            					<td>${subject}</td>
         					</c:if>
                         </tr>
                         <tr id="table-dname">
                             <th>담당교수</th>
-                            <c:if test="${rsvInfo.dname != null}">
-            					<td>${rsvInfo.dname}</td>
+                            <c:if test="${dname != null}">
+            					<td>${dname}</td>
         					</c:if>
                         </tr>
                 </table>
-                <c:if test="${sessionScope.dcode != null}">
-                <div class="doctor-list">
-                	<button type="button" id="rsv-doctor-list" class="btn btn-success">예약 목록으로 돌아가기</button>
-                </div>
-                </c:if>
-                <c:if test="${rsvInfo.state == '예약' && (side == 'reservation' || side == 'manager')}">
+               	<c:if test="${side == 'reservation' || side == 'manager'}">
+               	<c:if test="${rcode == 0}">
                 <div class="rsv-change">
-                	<button type="button" id="rsv-update" class="btn btn-success">수정</button>
-                	<button type="button" id="rsv-delete" class="btn btn-danger">예약 취소</button>
+                	<button type="button" id="rsv-insert" class="btn btn-success">예약하기</button>
+                	<button type="button" class="btn btn-danger rsv-cancel">취소</button>
                 </div>
-                <form id="update-form" action="reservation" method="post">
-                	<input type="hidden" id="form-rcode" name="rcode" value="${rsvInfo.rcode}"/>
-                    <input type="hidden" id="form-pcode" name="pcode" value="${rsvInfo.pcode}"/>
-                	<input type="hidden" id="form-subject" name="subject" value="${rsvInfo.sname}"/>
-                	<input type="hidden" id="form-dcode" name="dcode" value="${rsvInfo.dcode}"/>
-                	<input type="hidden" id="form-dname" name="dname" value="${rsvInfo.dname}" />
-                	<input type="hidden" id="form-rsvdate" name="rsvdate" value="${rsvInfo.rsvdate}"/>
-                	<input type="hidden" id="form-rsvtime" name="rsvtime" value="${rsvInfo.rsvtime}"/>
-                </form> 
                 </c:if>
+                <c:if test="${rcode != 0}">
+                <div class="rsv-change">
+                	<button type="button" id="rsv-update" class="btn btn-success">예약 변경하기</button>
+                	<button type="button" class="btn btn-danger rsv-cancel">취소</button>
                 </div>
+                </c:if>
+                <form id="insert-form" action="book" method="post">
+                    <input type="hidden" name="pcode" value="${pcode}"/>
+                	<input type="hidden" name="dcode" value="${dcode}"/>
+                	<input type="hidden" name="rsvdate" value="${rsvdate} ${rsvtime}"/>
+                </form>
+                <form id="update-form" action="reservation-update" method="post">
+                	<input type="hidden" name="rcode" value="${rcode}"/>
+                    <input type="hidden" name="pcode" value="${pcode}"/>
+                	<input type="hidden" name="dcode" value="${dcode}"/>
+                	<input type="hidden" name="rsvdate" value="${rsvdate} ${rsvtime}"/>
+                </form>
+                </c:if>
+            </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>
     </body>

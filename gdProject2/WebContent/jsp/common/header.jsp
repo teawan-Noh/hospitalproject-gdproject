@@ -14,6 +14,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
         <style>
+			.header-a{
+				text-decoration: none;
+				color: black;
+			}
             .header {
                 margin: 0 auto;
                 max-width: 1200px;
@@ -87,44 +91,47 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <div class="flex-vertical right">
                 <ul id="member-menu">
                 <c:if test="${pcode == null && dcode == null && mcode == null}">
-                	<li>로그인</li>
-                    <li>
+                    <li><label>로그인
                         <select onchange="if(this.value) location.href=(this.value)">
                         	<option value="">선택</option>
                             <option value="patient_login_input">환자</option>
                             <option value="doctor_login_input">의사</option>
                             <option value="manager_login_input">관리자</option>
                         </select>
+                        </label>
                     </li>
                     <li>|</li>
-                    <li><a href="patient_input">회원가입</a></li>
+                    <li><a class="header-a" href="patient_input">회원가입</a></li>
                 </c:if>
                 <c:if test="${pcode != null || dcode != null || mcode != null}">
-                	<li><a href="logout">로그아웃</a></li>
+                	<li><a class="header-a" href="logout">로그아웃</a></li>
                 </c:if>
-                <c:if test="${pcode != null}">
+                <c:if test="${sessionScope.pcode != null}">
                 	<li>|</li>
-					<li><a href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a></li>
+					<li><a class="header-a" href="patient_detail?pcode=${pcode}" id="patientUpdate">마이페이지</a></li>
 				</c:if>
-				<c:if test = "${dcode != null}">
+				<c:if test = "${sessionScope.dcode != null}">
 					<li>|</li>
-					<a href = "mypage?dcode=${dcode}">마이페이지</a>
+					<a class="header-a" href = "mypage?dcode=${dcode}">마이페이지</a>
 				</c:if>
                 </ul>
                 <ul id="nav-menu">
                     <li>
-                    <a href="reservation">예약
-                    </a>
-                    <c:if test = "${dcode != null && pcode == null && mcode == null}">
-                    	<a href="schedule_check">업무관리</a>
+
+                    <c:if test="${sessionScope.dcode == null && sessionScope.mcode == null }">
+                    	<a class="header-a" href="reservation">예약</a>
                     </c:if>
-                    <c:if test = "${dcode == null && pcode == null && mcode != null}">
-                    	<a href="mg_doctor_list">업무관리</a>
+                    <c:if test = "${sessionScope.dcode != null && sessionScope.pcode == null && sessionScope.mcode == null}">
+                    	<a class="header-a" href="schedule_check">업무관리</a>
+                    </c:if>
+                    <c:if test = "${sessionScope.dcode == null && sessionScope.pcode == null && sessionScope.mcode != null}">
+                    	<a class="header-a" href="mg_doctor_list">업무관리</a>
                     </c:if>
                     </li>
-                    <li><a href="doctor_search">의료진</a></li>
-                    <li><a href="qna_list?reqPage=1">소통정보</a></li>
-                    <li><a href="notice_list?reqPage=1">공지사항</a></li>
+
+                    <li><a class="header-a" href="doctor_search">의료진</a></li>
+                    <li><a class="header-a" href="qna_list?reqPage=1">소통정보</a></li>
+                    <li><a class="header-a" href="notice_list?reqPage=1">공지사항</a></li>
                     <li>
                         <a href="#"><div id="search"></div></a>
                     </li>

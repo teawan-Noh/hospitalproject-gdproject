@@ -63,20 +63,47 @@ pageEncoding="UTF-8"%>
             	border: none;
             	border-radius: 5px;
             }
+            .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
         </style>
+        <script>
+        	$(function(){
+        		console.log("${doctor.name}");
+        		$("#reservationbtn").click(function(e){
+        			e.preventDefault();
+        			$("#form-doctor").val("1");
+        			$("#form-subject").val("${doctor.sname}");
+        			$("#form-dcode").val("${doctor.dcode}");
+        			$("#form-dname").val("${doctor.name}");
+        			$("#reservation-form").submit();
+        		})
+        	})
+        </script>
     </head>
     <body>
         <jsp:include page="../common/header.jsp"></jsp:include>
         <div class="flex container-box">
             <jsp:include page="../common/sidemenu.jsp"></jsp:include>
             <div class="content">
-                <ul>
+                <ul class="fmenu">
+                   <li><div class="home-img"></div></li>
                     <li>의료진</li>
-                    <li>의료진 목록조회</li>
+                    <li>의료진목록조회</li>
                 </ul>
                 <div class="flex">
                 	<div class="doctor-img"></div>
-                	<c:forEach var = "doctor" items="${doctor}">
                 		<div>
                 			<span class = "sname">${doctor.sname}</span><br>
                 			<span class = "name">${doctor.name}교수</span>
@@ -90,13 +117,18 @@ pageEncoding="UTF-8"%>
     										<tr><td>${word}</td></tr>
 										</c:forEach>
                 				</table>
-                				<form method = "post" action = "reservation?dcode=${doctor.dcode}&scode=${doctor.scode}">
+                				<form method = "post" id="reservation-form" action = "reservation">
+                					<input type="hidden" id="form-doctor" name="doctor-rsv" value="" />
+                					<input type="hidden" id="form-subject" name="subject" value=""/>
+                					<input type="hidden" id="form-dcode" name="dcode" value=""/>
+                					<input type="hidden" id="form-dname" name="dname" value=""/>
                 					<button type = "button" id = "backbtn" onclick="location.href = 'doctor_search'">목록으로 돌아가기</button>
-                					<button type = "submit" id = "reservationbtn">예약</button>
+                					<c:if test = "${dcode == null && mcode == null }">
+                						<button type = "submit" id = "reservationbtn">예약</button>
+                					</c:if>
                 				</form>
                 			</div>
                 		</div>
-                	</c:forEach>
                 </div>
             </div>
         </div>

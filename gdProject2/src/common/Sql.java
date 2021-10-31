@@ -25,6 +25,8 @@ public class Sql {
 	
 	public static final String RESERVATION_UPDATE_SQL = "update reservation set pcode = ?, dcode = ?, rsvdate = to_date(?, 'yyyy-mm-dd HH24:MI'), state = '예약' where rcode = ?";
 	
+	public static final String RESERVATION_DATE_SELECT_BY_DCODE_SQL = "select to_char(rsvdate, 'yyyy-mm-dd') rsvdate from reservation where dcode = ? group by to_char(rsvdate, 'yyyy-mm-dd')";
+	
 	//CUSTOMER
 	public static final String CUSTOMER_INSERT_SQL = "insert into CUSTOMER values(customerseq.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String CUSTOMER_SELECT_BY_CODE_SQL = "select * from customer where customerseq = ?";
@@ -52,6 +54,7 @@ public class Sql {
 	public static final String DOCTOR_SELECT_BY_DCODE = "select d.dcode, d.scode, d.name as dname, d.career, d.tel, d.licenseno, d.id, d.pw, d.email, to_char(d.birth,'yyyy-mm-dd') as birth, d.postcode, d.address, d.address2, s.name as sname from doctor d join subject s on d.scode = s.scode where d.dcode = ?";
 	public static final String REST_SELECT_BY_APPROVED = "select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = ? and dcode = ?";
 	public static final String REST_INSERT_SQL = "insert into rest values(rest_seq.nextval, ?, sysdate, '대기', ?, to_date(?, 'yyyy-mm-dd'), ?)";
+	public static final String REST_SELECT_RESERVATION_SQL = "select count(*) as cnt from reservation where to_char(rsvdate, 'yyyy-mm-dd') = to_date(?, 'yyyy-mm-dd') and dcode = ?";
 	//odw
 	//회원가입
 	public static final String PATIENT_INSERT_SQL = 
@@ -95,6 +98,9 @@ public class Sql {
 	public static final String NOTICE_COUNT_SQL = 
 			"select count(*) as cnt from notice";
 	
+	public static final String NOTICE_SEARCH_COUNT_SQL = 
+			"select count(*) as cnt from notice where title like ? or content like ?";
+	
 	public static final String BOOK_SELECT_NOTICE_PAGE_SQL =
 			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
 			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
@@ -102,9 +108,10 @@ public class Sql {
 	
 	//공지사항 검색
 	public static final String NOTICE_SEARCH_SQL =
-			"select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
-			+ "from notice n inner join manager m on n.mcode = m.mcode "
-			+ "where n.title like ? or n.content like ? order by n.ncode desc";
+			"select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) "
+			+ "as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt "
+			+ "from notice n inner join manager m on n.mcode = m.mcode  where n.title like ? or n.content like ?) "
+			+ "where rn between ? and ?";
 	//공지사항 조회수
 	public static final String NOTICE_CNT_SQL =
 			"update notice set cnt = cnt+1 where ncode=?";
@@ -130,7 +137,18 @@ public class Sql {
 			"delete from files where ncode = ?";
 	//게시글 작성 파일 업로드
 	public static final String NOTICE_INSERT_FILE_SQL =
-				"insert into files values(fcode.nextval,?, to_date(?, 'yyyy-mm-dd'), ?,?,?)";
+			"insert into files values(fileSeq.nextval,?,sysdate,?,?,?)";
+	
+	//파일 insert시 ncode불러오기
+	public static final String NOTICE_INSERT_FILE_NCODE_SQL =
+			"select * from (select ncode from notice order by rownum desc) where rownum = 1";
+	
+	//해당 게시글에 해당하는 파일 객체 리턴
+	public static final String RETURN_FILE_BY_NCODE_SQL =
+			"select * from files where ncode in (select ncode from notice where ncode=?)";
+	
+	public static final String FILE_NAME_SEQ_SQL = 
+			"select fileSeq.nextval from dual";
 	//게시글 상세보기 파일
 	public static final String NOTICE_SELECT_FILE_BY_NCODE_SQL =
 				"select name from files where ncode = ?";

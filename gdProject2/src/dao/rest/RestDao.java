@@ -9,4 +9,5 @@ public interface RestDao {
 	void insert(Rest rest);
 	
 	List<Rest> selectRestBydcode(String state, int dcode);
+	int selectByReservation(String restdate, int dcode);
 }

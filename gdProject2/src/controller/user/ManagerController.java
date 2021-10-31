@@ -30,7 +30,7 @@ import common.page.PageManager2;
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
 					"/mg_patient_list", "/mg_patient_search", "/mg_rest_list", "/mg_rest_search", "/mg_rest_detail",
-					"/mg_rest_approve", "/mg_rest_reject", "/ms_reservation_list"})
+					"/mg_rest_approve", "/mg_rest_reject"})
 public class ManagerController extends HttpServlet{
 
 	@Override

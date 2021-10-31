@@ -17,22 +17,61 @@
         <jsp:include page="jsp/common/header.jsp"></jsp:include>  
 	<div class="main"> 
         <section class="sec1">
-            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
-                <h3 class="menu-title">예약</h3>
-                <p class="menu-content">진료 예약을 하실 수 있습니다.</p>
-            </div>
-            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation-list?reqPage=1'">
-                <h3 class="menu-title">예약조회</h3>
-                <p class="menu-content">예약내역을 확인할 수 있습니다.</p>
-            </div>
-            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='qna_list?reqPage=1'">
-                <h3 class="menu-title">소통정보</h3>
-                <p class="menu-content">우리 병원에 궁금한 점을 남겨주시면 담당자가 확인 후 직접 답변해드립니다.</p>
-            </div> 
-            <div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_search'">
-                <h3 class="menu-title">의료진정보</h3>
-                <p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
-            </div>
+        	<c:if test="${sessionScope.dcode == null && sessionScope.mcode == null }">
+        		<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation'">
+                	<h3 class="menu-title">예약</h3>
+                	<p class="menu-content">진료 예약을 하실 수 있습니다.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation-list?reqPage=1'">
+                	<h3 class="menu-title">예약조회</h3>
+                	<p class="menu-content">예약내역을 확인할 수 있습니다.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='qna_list?reqPage=1'">
+                	<h3 class="menu-title">소통정보</h3>
+                	<p class="menu-content">우리 병원에 궁금한 점을 남겨주시면 담당자가 확인 후 직접 답변해드립니다.</p>
+            	</div> 
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_search'">
+                	<h3 class="menu-title">의료진정보</h3>
+                	<p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
+            	</div>
+        	</c:if>
+            <c:if test="${sessionScope.dcode != null }">
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='schedule_check'">
+                	<h3 class="menu-title">스케줄 조회</h3>
+                	<p class="menu-content">월별 스케줄을 확인하세요.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='rest'">
+                	<h3 class="menu-title">휴진 신청</h3>
+                	<p class="menu-content">휴진 일정을 신청하시면 관리자가 확인 후 승인해드립니다.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='reservation-doctor-list?reqPage=1'">
+                	<h3 class="menu-title">예약정보 조회</h3>
+                	<p class="menu-content">예약된 환자 목록을 조회해보세요.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_search'">
+                	<h3 class="menu-title">의료진정보</h3>
+                	<p class="menu-content">우리 병원의 의료진 정보를 확인할 수 있습니다.</p>
+            	</div>
+            </c:if>
+            <c:if test="${sessionScope.mcode != null }">
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='mg_doctor_list'">
+                	<h3 class="menu-title">의사 조회</h3>
+                	<p class="menu-content">진료과 별로 의사목록을 조회할 수 있습니다.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='mg_patient_list'">
+                	<h3 class="menu-title">환자 조회</h3>
+                	<p class="menu-content">환자 목록을 조회할 수 있습니다.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='doctor_input'">
+                	<h3 class="menu-title">의사 등록</h3>
+                	<p class="menu-content">의사 선생님을 등록하세요.</p>
+            	</div>
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='mg_rest_list'">
+                	<h3 class="menu-title">스케줄 승인</h3>
+                	<p class="menu-content">신청된 스케줄을 확인하시고 승인 여부를 알려주세요.</p>
+            	</div>
+            </c:if>
+            
         </section> 
         <section class="sec2">
             <h1>진료 과목 소개</h1>

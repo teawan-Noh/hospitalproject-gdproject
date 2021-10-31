@@ -5,8 +5,7 @@
 .sec1 {
     display: flex;
     justify-content: space-between;
-    height: max-content;
-    
+    height: max-content;   
 }
 .sec2 {
     background-color: rgb(243, 243, 243);

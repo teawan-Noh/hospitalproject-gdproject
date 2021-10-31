@@ -1,7 +1,7 @@
-select * from subject order by name asc;
+select * from subject order by name asc; 
 delete from subject;
 drop sequence subject_seq;
-create sequence subject_seq;
+create sequence subject_seq; 
 insert into subject values(subject_seq.nextval, '감염내과', '감염내과는 각종 미생물에 의한 감염병은 물론 원인을 모르는 열병(불명열) 환자, 에이즈, 결핵 환자 등을 진료하고 있습니다. 미생물에 의해 발생하는 모든 감염질환을 진단하고 치료하는 진료과입니다', '031-123-4560');
 insert into subject values(subject_seq.nextval, '내분비대사내과', '내분비-대사 내과에서는 신체의 각종 내분비 기관에서 분비되어 나오는 호르몬의 이상이나 호르몬 분비 장기 또는 표적 장기의 각종 질병들을 진단 치료합니다.', '031-123-4561');
 insert into subject values(subject_seq.nextval, '알레르기내과', '알레르기내과에서는 외부 물질에 대한 면역반응이 지나쳐서 과민반응을 일으키는 질환들을 진료하고 연구하는, 내과의 한 분과입니다. 특히 알레르기센터에 협조 진료합니다.', '031-123-4562');
@@ -712,3 +712,11 @@ select * from rest where dcode = 3;
 select * from rest where approved = '대기' and dcode = 3;
 select rcode, dcode, requestdate, approved, reason, to_char(restdate, 'yyyy-mm-dd')as restdate, day from rest where approved = '승인' and dcode = 3;
 update rest set approved = '승인' where dcode = 12;
+select count(*) from reservation where to_char(rsvdate, 'yyyy-mm-dd') = '2021-11-29' and dcode = 1;
+delete from rest where dcode = 8;
+
+select * from rest where approved != '승인' || approved != '대기';
+select * from rest;
+select count(*) from reservation where dcode = 12 and to_char(rsvdate, 'yyyy-mm-dd') = to_char('2021-11-02');
+select * from doctor;
+delete from doctor where dcode = 25 and dcode = 26;

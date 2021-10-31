@@ -20,11 +20,12 @@
             height: max-content;
             padding: 20px;
             display: flex;
+             flex-wrap: wrap;
         }
         .doctor {
             position: relative;
             width: 380px;
-            height: 210px;
+            height: 205px;
             background-color: white;
             border: 3px solid rgb(70, 145, 140);
             margin: 20px;
@@ -43,7 +44,7 @@
         .doctor_detail {
             background-color: rgb(70, 145, 140);
             width: 375px;
-            height: 51px;
+            height: 50px;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -52,6 +53,7 @@
             line-height: 50px;
             font-size: 1.3rem;
             margin: 0;
+            padding: 0;
         }
         hr {
             background-color: rgb(70, 145, 140);
@@ -92,6 +94,20 @@
         .name {
         	margin-top: 40px;
         }
+        .home-img{
+         background-image: url("img/home.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 20px;
+          height: 20px;
+      }
+      .fmenu{
+         padding-left: 0px;
+      }
+      .fmenu li:not(.fmenu li:first-child)::before{
+         content: ">";
+      }
         
 </style>
 </head>
@@ -100,8 +116,11 @@
 	<div class="main">
         <jsp:include page="../common/sidemenu.jsp"></jsp:include>
 	<div class = "content">
-        <a href = "index.jsp"><img src = "" alt = "집 아이콘"></a>
-        > 의료진
+        <ul class="fmenu">
+    		<li><div class="home-img"></div></li>
+    		<li>의료진</li>
+    		<li>의료진 목록조회</li>
+    	</ul>
     <h1>의료진 검색</h1>
     <form method = "POST" action = "doctor_list">
     	<select name = "selectSubject" id = "select">

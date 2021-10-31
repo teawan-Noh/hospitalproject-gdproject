@@ -113,6 +113,7 @@ delete sequence mcode;
 insert into files values(fcode.nextval,?, to_date(?, 'YYYY-mm-dd'), ?,?,?)
 
 create sequence fcode;
+select * from files;
 
 select n.title, m.name, n.writedate, n.cnt, n.content from notice n inner join manager m on n.mcode = m.mcode where ncode = 16;
 
@@ -180,3 +181,53 @@ where r.pcode = 2 order by rcode desc) rsvs) result;
 select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
 from notice n inner join manager m on n.mcode = m.mcode
 where n.title like '%%' or n.content like '%%' order by n.ncode desc
+
+alter table rest modify day number
+
+delete from rest;
+
+select * from files order by ncode desc;
+insert into files values();
+insert into files values(1,94, sysdate, '바뀐이름1', '원래이름1', 3);
+
+create sequence fileSeq;
+
+select fileSeq.nextval from dual;
+
+create sequence rest_seq;
+
+select * from files;
+select * from notice;
+select * from manager;
+
+delete from files;
+
+select * from notice, files where notice.ncode = files.ncode;
+
+select ncode, n.title, n.content, n.writedate, n.mcode, f.name, f.beforename from notice n natural join files f;
+
+insert into files values(fileSeq.nextval,ncode.nextval,sysdate,'이름111','이름',100)
+
+select * from (select ncode from notice order by rownum desc) where rownum = 1;
+
+select * from files where ncode in (select ncode from notice where ncode=189);
+
+select * from files where ncode in (select ncode from notice where ncode=?)
+
+select n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt 
+from notice n inner join manager m on n.mcode = m.mcode
+where n.title like '%제목%' or n.content like '%제목%' order by n.ncode desc
+
+select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc)
+as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt 
+from notice n inner join manager m on n.mcode = m.mcode) where rn between 1 and 3
+
+select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc) as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') from notice n inner join manager m on n.mcode = m.mcode  where n.title like ? or n.content like ?) where rn between ? and ?; 
+
+select * from (select ROW_NUMBER() OVER(ORDER BY n.writedate desc)
+as rn, n.ncode, n.title, m.name, to_char(n.writedate,'yyyy-mm-dd') as writedate, n.cnt
+from notice n inner join manager m on n.mcode = m.mcode  where n.title like '%제목%' or n.content like '%제목%')
+where rn between 10 and 13
+
+select count(*) as cnt from notice where title like '%2%' or content like '%2%';
+

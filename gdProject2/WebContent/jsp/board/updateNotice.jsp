@@ -43,6 +43,7 @@ $(function(){
 		}else{
 			alert('취소되었습니다.');
 			location.replace('notice_list?reqPage=1');
+			return false;
 		}
 	});
 	
@@ -51,7 +52,7 @@ $(function(){
 <title>공지사항 수정</title>
 </head>
 <body>
-
+<header><jsp:include page="../common/header.jsp"></jsp:include></header>
 	<div id="main">
         <div class="container">
             <section id="bigTitle">
@@ -60,7 +61,7 @@ $(function(){
             <section id="form" class="form-group">
             <c:forEach var="detail" items="${detail}">
             	<form action="notice_update" method="post" id="form" enctype="multipart/form-data">
-            		<label>파일첨부 : <input type="file" name="filename"/></label>
+            		<label>파일첨부 : <input type="file" name="filename" id="fileInput"/></label>
             			<div id="titleDiv">
                         <label for="title" class="form-label smallTitle">제목</label>
                         <input type="text" name="title" id="title" class="form-control" value="${detail.title}">
@@ -75,8 +76,8 @@ $(function(){
                 </form>
                 </c:forEach>
             </section>
-            
         </div>
+        <footer><jsp:include page="../common/footer.jsp"></jsp:include></footer>
     </div>
 </body>
 </html>
