@@ -505,12 +505,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             $(item).removeClass("active");
                         });
                         
-                        $(".rest").each(function () {
-                            $(this)
-                                .children(".rest-children")
-                                .removeClass("rest-children");
-                            $(this).removeClass("rest");
-                        });
                         $(".rsv-time")
                             .children()
                             .each(function (idx, item) {
@@ -520,6 +514,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $("#selected").remove();
 
                         $(doctor).addClass("active");
+                        
                         $("#calendar-container").show();
 
                         let url = "schedule";
