@@ -27,7 +27,7 @@
                 	<h3 class="menu-title">예약조회</h3>
                 	<p class="menu-content">예약내역을 확인할 수 있습니다.</p>
             	</div>
-            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='qna_list'">
+            	<div class = "mainmenu" style = "cursor:pointer" onclick="location.href='qna_list?reqPage=1'">
                 	<h3 class="menu-title">소통정보</h3>
                 	<p class="menu-content">우리 병원에 궁금한 점을 남겨주시면 담당자가 확인 후 직접 답변해드립니다.</p>
             	</div> 

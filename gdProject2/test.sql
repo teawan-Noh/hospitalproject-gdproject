@@ -718,3 +718,5 @@ delete from rest where dcode = 8;
 select * from rest where approved != '½ÂÀÎ' || approved != '´ë±â';
 select * from rest;
 select count(*) from reservation where dcode = 12 and to_char(rsvdate, 'yyyy-mm-dd') = to_char('2021-11-02');
+select * from doctor;
+delete from doctor where dcode = 25 and dcode = 26;

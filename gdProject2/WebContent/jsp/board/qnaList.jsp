@@ -106,12 +106,16 @@
     			</table>
     		</div>
     		<div class="writeButton">
-				<c:if test="${pcode == null}">
-					<a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
-				</c:if>
-				<c:if test="${pcode != null}">
-					<a href="qna_input"><button type="submit" class="submitbtn">글 작성</button></a>
-				</c:if>
+    		<c:if test="${dcode == null && mcode == null}">
+    			<c:choose>
+    				<c:when test="${pcode == null}">
+    					<a href="patient_login_input" onclick="button_click()"><button type="submit" class="submitbtn">글 작성</button></a>
+    				</c:when>
+    				<c:when test="${pcode != null}">
+    					<a href="qna_input"><button type="submit" class="submitbtn">글 작성</button></a>
+    				</c:when>
+    			</c:choose>
+    		</c:if>
 			</div>
     		<!-- 페이지처리 -->
         	<div>
