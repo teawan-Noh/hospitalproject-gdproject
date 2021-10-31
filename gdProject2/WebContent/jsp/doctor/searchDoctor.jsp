@@ -20,6 +20,7 @@
             height: max-content;
             padding: 20px;
             display: flex;
+             flex-wrap: wrap;
         }
         .doctor {
             position: relative;
