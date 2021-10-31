@@ -205,7 +205,6 @@
               	        type:'POST',
               	        data: date,
               	        success:function(data){
-              	        	<% %>
               	        	calendar.addEvent( {
               	        		title:'휴진 승인 대기', 
               	        		start:date.date,

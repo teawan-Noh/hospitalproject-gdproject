@@ -54,6 +54,13 @@
        	.approve_reject_button{
        		text-align: center;
        	}
+       	#backbtn {
+       		width: 170px;
+       		height: 35px;
+       		margin-top: 30px;
+       		border: none;
+       		border-radius: 5px;	
+       	}
 </style>
 </head>
 <body>
@@ -111,9 +118,9 @@
     			<a href="mg_rest_reject?rcode=${restdetail.rcode}">
     				<button type = "submit" id="submitbtn">거절</button>
 		   		</a>
-
 			</c:if>
 	    	</div>
+	    	<button type = "button" id="backbtn" onclick="location.href = 'mg_rest_list'">목록으로 돌아가기</button>
         </div>
     </div>
     <jsp:include page="../common/footer.jsp"></jsp:include>

@@ -1,5 +1,5 @@
 select * from subject order by name asc; 
-delete from subject;
+delete from subject; 
 drop sequence subject_seq;
 create sequence subject_seq;
 insert into subject values(subject_seq.nextval, '감염내과', '감염내과는 각종 미생물에 의한 감염병은 물론 원인을 모르는 열병(불명열) 환자, 에이즈, 결핵 환자 등을 진료하고 있습니다. 미생물에 의해 발생하는 모든 감염질환을 진단하고 치료하는 진료과입니다', '031-123-4560');
@@ -718,3 +718,5 @@ delete from rest where dcode = 8;
 select * from rest where approved != '승인' || approved != '대기';
 select * from rest;
 select count(*) from reservation where dcode = 12 and to_char(rsvdate, 'yyyy-mm-dd') = to_char('2021-11-02');
+select * from doctor;
+delete from doctor where dcode = 25 and dcode = 26;
