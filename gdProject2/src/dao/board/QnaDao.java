@@ -11,6 +11,7 @@ public interface QnaDao {
 	void update(Qna qna);
 	void delete(int qno);
 	int insertComment(Comments comment);
+	String selectByMcode(int mcode);
 	
 	void cntUpdate(Qna qna);
 	Qna selectCntByQno(int qno);

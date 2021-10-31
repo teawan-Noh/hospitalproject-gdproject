@@ -84,12 +84,6 @@
 				   		<td>내용 </td>
 				   		<td class="input_box"><textarea cols="50" rows="10" name="content">${qnadetail.content}</textarea> </td>
 					</tr>
-					<tr>
-				   		<td>첨부파일 </td>
-				   		<td class="input_box">
-						<input type="file" name="filename"/>${qnadetail.img}<br />
-				   		</td>
-					</tr>
 				</tbody>	
 			    </table>
 			    <br/>

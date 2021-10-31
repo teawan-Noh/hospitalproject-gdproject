@@ -119,34 +119,6 @@ $(document).ready(function(){
     				</tbody>
     			</table>
     		</div>
-    		<!-- 페이지처리 -->
-        	<div>
-        		<ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
-					<c:if test="${pageGroupResult.beforePage}">
-						<li class="page-item"><a class="page-link" href="memo_search?reqPage=${pageGroupResult.groupStartNumber-1}">before</a></li>
-					</c:if>
-					<c:forEach var="index" begin="${pageGroupResult.groupStartNumber}" end="${pageGroupResult.groupEndNumber}">
-					<c:choose>
-						<c:when test="${pageGroupResult.selectPageNumber == index}">
-						<li class="page-item active">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
-						</li>
-						</c:when>
-					<c:otherwise>
-						<li class="page-item">
-							<a class="page-link" href="mg_doctor_search?reqPage=${index}">${index}</a>
-						</li>
-				</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		
-				<c:if test="${pageGroupResult.afterPage}">
-				<li class="page-item">
-					<a class="page-link" href="mg_doctor_search?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
-				</li>
-				</c:if>
-				</ul>
-        	</div>
     	</div>
         
     </div>

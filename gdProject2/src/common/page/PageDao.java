@@ -10,6 +10,5 @@ public interface PageDao {
 
 	int getCountQnaAll(String sql);
 	int getCountQnaSearchNickname(String searchValue);
-	
-
+	int getCountQnaSearchTitleContent(String searchValue);
 }

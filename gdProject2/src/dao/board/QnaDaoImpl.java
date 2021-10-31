@@ -31,7 +31,6 @@ public class QnaDaoImpl implements QnaDao{
 	         pStatement.setInt(1, qna.getPcode());
 	         pStatement.setString(2, qna.getTitle());
 	         pStatement.setString(3, qna.getContent());
-	         pStatement.setString(4, qna.getImg());
 	         
 	         pStatement.executeUpdate(); 
 	         
@@ -51,11 +50,10 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_UPDATE_SQL);
-			//update qna set title = ?, content = ? whereq qno = ?
+			//update qna set title = ?, content = ? where q qno = ?
 			pStatement.setString(1, qna.getTitle()); // ?값 셋팅 
 			pStatement.setString(2, qna.getContent()); // ?값 셋팅 
-			pStatement.setString(3, qna.getImg()); // ?값 셋팅 
-			pStatement.setInt(4, qna.getQno()); // ?값 셋팅 
+			pStatement.setInt(3, qna.getQno()); // ?값 셋팅 
 			//insert, delete, update에 사용
 			pStatement.executeUpdate();
 			
@@ -251,7 +249,6 @@ public class QnaDaoImpl implements QnaDao{
 				qnaDetail.put("nickname", resultSet.getString("nickname"));
 				qnaDetail.put("writedate", resultSet.getString("writedate"));
 				qnaDetail.put("cnt", Integer.toString(resultSet.getInt("cnt")));
-				qnaDetail.put("img", resultSet.getString("img"));
 				qnaDetail.put("content", resultSet.getString("content"));
 				qnaDetail.put("ccontent", resultSet.getString("ccontent"));
 				qnaDetail.put("cwritedate", resultSet.getString("cwritedate"));
@@ -353,6 +350,31 @@ public class QnaDaoImpl implements QnaDao{
 		}
 		
 		return qna;
+	}
+
+	@Override
+	public String selectByMcode(int mcode) {
+		Connection connection = null;
+	    PreparedStatement pStatement = null;
+	    ResultSet resultSet = null;
+	    String value = null;
+	    
+	    try {
+	    	connection = JDBCUtil.getConnection();
+	        pStatement = connection.prepareStatement(Sql.MANAGER_SELECT_BY_MCODE_SQL);
+	         
+	        pStatement.setInt(1, mcode);
+	        resultSet = pStatement.executeQuery(); 
+	        
+	        if(resultSet.next()) {
+	        	value = resultSet.getString("id");
+	        }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	JDBCUtil.close(null, pStatement, connection); 
+	    }
+		return value;
 	}
 
 }

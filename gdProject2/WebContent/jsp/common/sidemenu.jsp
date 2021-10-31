@@ -112,10 +112,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 	                <div id="side-img"></div>
 	            </div>
 	            <ul id="side-ul">
-	                <li class="side-list"><a href="doctor_input">의사등록</a></li>
 	                <li class="side-list"><a href="mg_doctor_list">진료과별 의사조회</a></li>
 	                <li class="side-list"><a href="mg_patient_list">환자조회</a></li>
 	                <li class="side-list"><a href="mg_rest_list">승인관리</a></li>
+	                <li class="side-list"><a href="doctor_input">의사등록</a></li>
 	            </ul>
             </c:if>
             <c:if test="${side == 'communication'}">

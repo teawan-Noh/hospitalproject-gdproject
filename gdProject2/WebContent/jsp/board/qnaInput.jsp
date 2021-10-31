@@ -85,17 +85,11 @@
 				   		<td>내용 </td>
 						<td class="input_box"><textarea cols="50" rows="10" name="content" placeholder="내용을 입력해주세요"></textarea> </td>
 					</tr>
-					<tr>
-				   		<td>첨부파일 </td>
-				   		<td class="input_box">
-							<input type="file" name="filename"/><br />
-				   		</td>
-					</tr>
 				</tbody>	
 			    </table>
 			    <br/>
 			  	<div class="button_box">
-		            <button class="submitbtn" type = "submit">작성완료</button>
+		            <a href="qna_list"><button class="submitbtn" type = "submit">작성완료</button></a>
 		        </div>
  			</form>
     		</div>

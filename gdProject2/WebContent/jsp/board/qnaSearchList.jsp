@@ -117,27 +117,28 @@
         	<div>
         		<ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
 					<c:if test="${pageGroupResult.beforePage}">
-						<li class="page-item"><a class="page-link" href="qna_list?reqPage=${pageGroupResult.groupStartNumber-1}">before</a></li>
+						<li class="page-item"><a class="page-link" href="qna_search?reqPage=${pageGroupResult.groupStartNumber-1}">before</a></li>
 					</c:if>
 					<c:forEach var="index" begin="${pageGroupResult.groupStartNumber}" end="${pageGroupResult.groupEndNumber}">
 					
 					<c:choose>
 						<c:when test="${pageGroupResult.selectPageNumber == index}">
 						<li class="page-item active">
-							<a class="page-link" href="qna_list?reqPage=${index}">${index}</a>
+							<a class="page-link" href="qna_search?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
 						</li>
 						</c:when>
 					<c:otherwise>
 						<li class="page-item">
-							<a class="page-link" href="qna_list?reqPage=${index}">${index}</a>
+							<a class="page-link" href="qna_search?reqPage=${index}&searchValue=${searchValue}&searchType=${searchType}">${index}</a>
 						</li>
 				</c:otherwise>
 				</c:choose>
+					
 			</c:forEach>
 		
 				<c:if test="${pageGroupResult.afterPage}">
 				<li class="page-item">
-					<a class="page-link" href="qna_list?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
+					<a class="page-link" href="qna_search?reqPage=${pageGroupResult.groupEndNumber+1}">after</a>
 				</li>
 				</c:if>
 				</ul>
