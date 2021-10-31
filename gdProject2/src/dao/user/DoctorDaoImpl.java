@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import common.JDBCUtil;
 import common.Sql;
@@ -374,8 +375,8 @@ public class DoctorDaoImpl implements DoctorDao {
 
 
 	@Override
-	public List<HashMap<String, Object>> selectBydcode(int dcode) {
-		List<HashMap<String, Object>> doctorList = new ArrayList<>();
+	public Map<String, String> selectBydcode(int dcode) {
+		Map<String, String> doctorList = new HashMap<>();
 
 		Connection connection = null;
 		PreparedStatement pStatement = null;
@@ -387,26 +388,24 @@ public class DoctorDaoImpl implements DoctorDao {
 			pStatement.setInt(1, dcode);
 			resultSet = pStatement.executeQuery();
 			
-			while(resultSet.next()) {
+			if(resultSet.next()) {
 				
-				HashMap<String, Object> doctorMap = new HashMap<>();
 				
-				doctorMap.put("dcode", resultSet.getInt("dcode"));
-				doctorMap.put("scode", resultSet.getInt("scode"));
-				doctorMap.put("sname", resultSet.getString("sname"));
-				doctorMap.put("id", resultSet.getString("id"));
-				doctorMap.put("pw", resultSet.getString("pw"));
-				doctorMap.put("name", resultSet.getString("dname"));
-				doctorMap.put("birth", resultSet.getString("birth"));
-				doctorMap.put("licenseno", resultSet.getInt("licenseno"));
-				doctorMap.put("postcode", resultSet.getInt("postcode"));
-				doctorMap.put("address", resultSet.getString("address"));
-				doctorMap.put("address2", resultSet.getString("address2"));
-				doctorMap.put("career", resultSet.getString("career"));
-				doctorMap.put("tel", resultSet.getString("tel"));
-				doctorMap.put("email", resultSet.getString("email"));
+				doctorList.put("dcode", resultSet.getString("dcode"));
+				doctorList.put("scode", resultSet.getString("scode"));
+				doctorList.put("sname", resultSet.getString("sname"));
+				doctorList.put("id", resultSet.getString("id"));
+				doctorList.put("pw", resultSet.getString("pw"));
+				doctorList.put("name", resultSet.getString("dname"));
+				doctorList.put("birth", resultSet.getString("birth"));
+				doctorList.put("licenseno", resultSet.getString("licenseno"));
+				doctorList.put("postcode", resultSet.getString("postcode"));
+				doctorList.put("address", resultSet.getString("address"));
+				doctorList.put("address2", resultSet.getString("address2"));
+				doctorList.put("career", resultSet.getString("career"));
+				doctorList.put("tel", resultSet.getString("tel"));
+				doctorList.put("email", resultSet.getString("email"));
 				
-				doctorList.add(doctorMap);
 			}
 		
 		} catch (Exception e) {

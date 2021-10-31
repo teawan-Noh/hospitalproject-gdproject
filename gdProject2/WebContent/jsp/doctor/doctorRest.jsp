@@ -96,6 +96,19 @@
     </style>
     <script>
     $(function () {
+    	
+    	function XMLToString(oXML) {
+            //code for IE
+            if (window.ActiveXObject) {
+                var oString = oXML.xml;
+                return oString;
+            }
+            // code for Chrome, Safari, Firefox, Opera, etc.
+            else {
+                return new XMLSerializer().serializeToString(oXML);
+            }
+        }
+    	
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
         	height: '800px', // calendar 높이 설정
@@ -133,6 +146,7 @@
                 let url = "dschedule";
 				let dcode = "${dcode}";
                 $.get(url, { dcode: dcode }, function (data) {
+                	console.log(XMLToString(data));
                     var schedule = $(data).find("schedule");
                     if (schedule.length > 0) {
                         $(schedule).each(function (idx, item) {
@@ -149,6 +163,21 @@
                                 });
                             }
                         });      
+                    }
+                    var rsv = $(data).find("rsv");
+                    if (rsv.length > 0) {
+                        $(rsv).each(function (idx, item) {
+                            var rsvdate = $(this)
+                                .text();
+                            calendar.addEvent({
+                                title: "진료",
+                                start: rsvdate,
+                                color : "rgb(70, 145, 140)",
+                                textColor : "black",
+                                classNames: ["rest-children"],
+                            
+                        });  
+                    })
                     }
                     var waitSchedule = $(data).find("waitSchedule");
                     if(waitSchedule.length > 0){
@@ -184,11 +213,14 @@
                             }
                         });	
                     }
+                    
+                    
                 });
             },
            dateClick: function (date) {
               console.log(date);
                var view = date.dayEl;
+               
                if (
                    !$(view).hasClass("fc-day-future") ||
                    $(view).hasClass("rest") ||

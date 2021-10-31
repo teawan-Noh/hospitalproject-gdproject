@@ -192,8 +192,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         </style>
         <script>
             $(function () {
-            let setting = ${rcode} != 0 ? true : false;
-               let pcode = ${pcode};
+            	let setting = (${rcode} != 0 || ${rsv} != 0) ? true : false;
+               	let pcode = ${pcode};
                 let subject = "${subject}";
                 let dcode = "${dcode}";
                 let dname = "${dname}";
@@ -271,7 +271,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $.get(url, { dcode: dcode }, function (data) {
                            console.log(XMLToString(data));
                             var schedule = $(data).find("schedule");
-                            if (schedule.length > 0) {
+                            if ($(schedule).length > 0) {
                                 $(schedule).each(function (idx, item) {
                                     var restdate = $(item)
                                         .find("restdate")
@@ -450,10 +450,16 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                         );
                                     });
                                 
+                               console.log(dcode + ", " + dname);
+                               console.log(setting);
                                 if(dcode != "" && dname != "" && setting){
                                    $(".card-box.doctor .flex").each(function(idx, item){
                                       var name = $(this).find(".doctor-name").text();
                                       var code = $(this).find(".doctor-code").text();
+                                      console.log(dname);
+                                      console.log(name);
+                                      console.log(dcode);
+                                      console.log(code);
                                       if(dname == name && dcode == code){
                                          $(this).trigger("click");
                                       }
@@ -495,25 +501,21 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         rsvtime = "";
                         $("#calendar-container").hide();
                     } else {
-                        $(".card-box.doctor").each(function (idx, item) {
+                        
+                    	$(".card-box.doctor").each(function (idx, item) {
                             $(item).removeClass("active");
                         });
                         
-                        $(".rest").each(function () {
-                            $(this)
-                                .children(".rest-children")
-                                .removeClass("rest-children");
-                            $(this).removeClass("rest");
-                        });
                         $(".rsv-time")
                             .children()
                             .each(function (idx, item) {
                                 $(item).remove();
                             });
-
+						
                         $("#selected").remove();
 
                         $(doctor).addClass("active");
+                        
                         $("#calendar-container").show();
 
                         let url = "schedule";
@@ -529,7 +531,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         // Ajax
                         $.get(url, { dcode: dcode }, function (data) {
                             var schedule = $(data).find("schedule");
-                            if (schedule.length > 0) {
+                            if ($(schedule).length > 0) {
                                 $(schedule).each(function (idx, item) {
                                     var restdate = $(item)
                                         .find("restdate")
@@ -606,35 +608,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     } else if (rsvtime == "") {
                         alert("예약 시간을 선택해주세요.");
                     } else {
-                        if (
-                            confirm(
-                                "진료과 : " +
-                                    subject +
-                                    "\n담당 의사 : " +
-                                    dname +
-                                    "\n예약 시간 : " +
-                                    rsvdate +
-                                    " " +
-                                    rsvtime +
-                                    "\n정말 예약하시겠습니까?"
-                            ) == true
-                        ) {
-                            alert("예약이 완료되었습니다.");
-                            var url = "book";
-                            $.post(
-                                url,
-                                {
-                                    pcode: pcode,
-                                    dcode: dcode,
-                                    rsvdate: rsvdate + " " + rsvtime,
-                                },
-                                function (data) {
-                                    if (data != 0) {
-                                        location.href = "index.jsp";
-                                    }
-                                } 
-                            );
-                        }
+                    	console.log("adfaf");
+                        $("input[name=pcode]").val(pcode);
+                        $("input[name=dcode]").val(dcode);
+                        $("input[name=rcode]").val("");
+                        $("input[name=dname]").val(dname);
+                        $("input[name=subject]").val(subject);
+                        $("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
+                        $("#form-confirm").submit();
                     }
                 });
                 
@@ -660,27 +641,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     } else if (rsvtime == "") {
                         alert("예약 시간을 선택해주세요.");
                     } else {
-                        if (
-                            confirm(
-                                "진료과 : " +
-                                    subject +
-                                    "\n담당 의사 : " +
-                                    dname +
-                                    "\n예약 시간 : " +
-                                    rsvdate +
-                                    " " +
-                                    rsvtime +
-                                    "\n정말 예약하시겠습니까?"
-                            ) == true
-                        ) {
-                            alert("예약이 완료되었습니다.");
-                            var url = "reservation-update";
-                              $("input[name=pcode]").val(pcode);
-                              $("input[name=rcode]").val(${rcode});
-                              $("input[name=dcode]").val(dcode);
-                              $("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
-                              $("#form-update").submit();
-                        }
+                    	console.log("Adfafadf");
+                          $("input[name=pcode]").val(pcode);
+                          $("input[name=rcode]").val(${rcode});
+                          $("input[name=dcode]").val(dcode);
+                          $("input[name=dname]").val(dname);
+                          $("input[name=subject]").val(subject);
+                          $("input[name=rsvdate]").val(rsvdate + " " + rsvtime);
+                          $("#form-confirm").submit();
+                        
                     }
                 })
                 
@@ -727,16 +696,18 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                    <button id="book" class="card-box book">예약하기</button>
                 </c:if>
                 <c:if test="${rcode != 0}">
-                   <button class="card-box update">수정하기</button>
+                   <button class="card-box update">변경하기</button>
                    <button class="card-box cancel">취소하기</button>
                 </c:if>
                 <form style="display: none;" id="form-cancel" action="reservation-detail" method="post">
                    <input type="hidden" name="rcode" value="${rcode}"/>
                 </form>
-                <form style="display: none;" id="form-update" action="reservation-update" method="post">
+                <form style="display: none;" id="form-confirm" action="reservation-confirm" method="post">
                    <input type="hidden" name="pcode" value=""/>
                    <input type="hidden" name="rcode" value=""/>
                    <input type="hidden" name="dcode" value=""/>
+                   <input type="hidden" name="subject" value=""/>
+                   <input type="hidden" name="dname" value="" />
                    <input type="hidden" name="rsvdate" value=""/>
                 </form>
             </div>
