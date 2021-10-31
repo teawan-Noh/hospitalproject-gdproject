@@ -58,6 +58,7 @@
             }
             .fc-daygrid-day-number {
                 color: #468c91;
+                font-weight: bold;
             }
             .rest,
             .fc-day-past .fc-daygrid-day-number,

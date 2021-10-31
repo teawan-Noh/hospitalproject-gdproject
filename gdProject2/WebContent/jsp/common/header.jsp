@@ -130,7 +130,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </li>
 
                     <li><a class="header-a" href="doctor_search">의료진</a></li>
-                    <li><a class="header-a" href="qna_list">소통정보</a></li>
+                    <li><a class="header-a" href="qna_list?reqPage=1">소통정보</a></li>
                     <li><a class="header-a" href="notice_list?reqPage=1">공지사항</a></li>
                     <li>
                         <a href="#"><div id="search"></div></a>
