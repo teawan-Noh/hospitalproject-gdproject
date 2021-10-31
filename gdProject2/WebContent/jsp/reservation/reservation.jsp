@@ -501,7 +501,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         rsvtime = "";
                         $("#calendar-container").hide();
                     } else {
-                        $(".card-box.doctor").each(function (idx, item) {
+                        
+                    	$(".card-box.doctor").each(function (idx, item) {
                             $(item).removeClass("active");
                         });
                         
@@ -510,7 +511,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             .each(function (idx, item) {
                                 $(item).remove();
                             });
-
+						
                         $("#selected").remove();
 
                         $(doctor).addClass("active");

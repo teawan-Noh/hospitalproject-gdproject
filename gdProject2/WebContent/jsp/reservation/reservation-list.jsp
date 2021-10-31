@@ -162,7 +162,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             .radios label{
             	margin-left: 5px;
             }
-      
+      		.manager-back{
+      			text-align: right;
+      		}
         </style>
         <script>
             $(function () {
@@ -185,7 +187,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         $("#form-rcode").val(rcode);
                         $("#form").submit();
                     });
-
+				$("#patient-list").click(function(){
+					location.href = "mg_patient_list";
+				})
             });
         </script>
     </head>
@@ -216,9 +220,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     </thead>
                     <tbody></tbody>
                 </table>
+                <c:if test="${sessionScope.mcode != null}">
+                <div class="manager-back">
+                	<button type="button" id="patient-list" class="btn btn-success">환자 목록으로 돌아가기</button>
+                </div>
+                </c:if>
                 <form style="display: none" action="reservation-detail" method="POST" id="form">
   					<input type="hidden" id="form-rcode" name="rcode" value=""/>
 				</form>
+				<c:if test="${sessionScope.mcode == null}">
                 <ul class="pagination justify-content-center">
                     <c:if test="${pageGroupResult.beforePage}">
                         <li class="page-item">
@@ -268,6 +278,58 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         </li>
                     </c:if>
                 </ul>
+                </c:if>
+                <c:if test="${sessionScope.mcode != null}">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${pageGroupResult.beforePage}">
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber - 1}&pcode=${pcode}"
+                                >before</a
+                            >
+                        </li>
+                    </c:if>
+                    <c:forEach
+                        var="index"
+                        begin="${pageGroupResult.groupStartNumber}"
+                        end="${pageGroupResult.groupEndNumber}"
+                    >
+                        <c:choose>
+                            <c:when
+                                test="${pageGroupResult.selectPageNumber == index}"
+                            >
+                                <li class="page-item active">
+                                    <a
+                                        class="page-link"
+                                        href="reservation-list?reqPage=${index}&pcode=${pcode}"
+                                        >${index}</a
+                                    >
+                                </li>
+                            </c:when>
+
+                            <c:otherwise>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="reservation-list?reqPage=${index}&pcode=${pcode}"
+                                        >${index}</a
+                                    >
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${pageGroupResult.afterPage}">
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="reservation-list?reqPage=${pageGroupResult.selectPageNumber + 1}&pcode=${pcode}"
+                                >after</a
+                            >
+                        </li>
+                    </c:if>
+                </ul>
+                </c:if>
             </div>
         </div>
         <jsp:include page="../common/footer.jsp"></jsp:include>
