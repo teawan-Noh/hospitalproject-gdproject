@@ -21,11 +21,9 @@ import dao.board.QnaDao;
 import dao.board.QnaDaoImpl;
 import model.board.Comments;
 import model.board.Qna;
-import validator.QnaError;
-import validator.QnaValidator;
 
 @WebServlet(name="QnaController", 
-	urlPatterns= {"/qna_list", "/qna_input", "/qna_save", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"
+	urlPatterns= {"/qna_list", "/qna_input", "/qna_search", "/qna_save", "/qna_detail", "/qna_modify", "/qna_update", "/qna_delete"
 					,"/comment_save", "/comment_test"})
 public class QnaController extends HttpServlet{
 
@@ -50,57 +48,20 @@ public class QnaController extends HttpServlet{
 		if(action.equals("qna_list")) {
 			
 			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
-			String searchValue = req.getParameter("searchType");
-			String searchType = req.getParameter("searchValue");
 			
-			if(req.getParameter("searchValue") == null) {
-				QnaDao dao = new QnaDaoImpl();
-				List<HashMap> qnaList = dao.selectAll(requestPage);
-				
-				//ÃÑ ÁÙ¼ö °¡Á®¿À±â
-				PageDao pageDao = new PageDaoImpl();
-				int cnt = pageDao.getCountQnaAll(Sql.QNA_COUNT_ALL_SQL);
-				System.out.println(cnt);
-				//getPageGroupResult(cnt)
-				PageManager pm = new PageManager(requestPage);
-				PageGroupResult pgr = pm.getPageGroupResult(cnt);
-
-				req.setAttribute("qnaList", qnaList);
-				req.setAttribute("pageGroupResult", pgr); //¸µÅ© ½ÃÀÛ³Ñ¹ö, ³¡³Ñ¹ö °´Ã¼
-			}
-			else{
-				
-				QnaDao dao = new QnaDaoImpl();
-				searchType = req.getParameter("searchType");
-				searchValue = req.getParameter("searchValue");
-				
-				if(searchType.equals("nickname")) {
-					
-					//ÃÑ ÁÙ¼ö °¡Á®¿À±â
-					PageDao pageDao = new PageDaoImpl();
-					int cnt = pageDao.getCountQnaSearchNickname(searchValue);
-					
-					//getPageGroupResult(cnt)
-					PageManager pm = new PageManager(requestPage);
-					PageGroupResult pgr = pm.getPageGroupResult(cnt);
-					
-					
-					List<HashMap> qnaList = dao.selectByNickname(searchValue, requestPage);
-					req.setAttribute("qnaList", qnaList);
-					req.setAttribute("pageGroupResult", pgr); //¸µÅ© ½ÃÀÛ³Ñ¹ö, ³¡³Ñ¹ö °´Ã¼
-					
-					req.setAttribute("searchValue", searchValue);
-					req.setAttribute("searchType", searchType);
-				}
-				else if((searchType.equals("titleContent"))) {
-					List<HashMap> qnaList = dao.selectByTitleOrContent(searchValue, requestPage);
-					req.setAttribute("qnaList", qnaList);
-				}
-				else {
-					List<HashMap> qnaList = dao.selectAll(requestPage);
-					req.setAttribute("qnaList", qnaList);
-				}
-			}
+			QnaDao dao = new QnaDaoImpl();
+			List<HashMap> qnaList = dao.selectAll(requestPage);
+			
+			//ì´ ì¤„ìˆ˜ ê°€ì ¸ì˜¤ê¸°
+			PageDao pageDao = new PageDaoImpl();
+			int cnt = pageDao.getCountQnaAll(Sql.QNA_COUNT_ALL_SQL);
+			System.out.println(cnt);
+			//getPageGroupResult(cnt)
+			PageManager pm = new PageManager(requestPage);
+			PageGroupResult pgr = pm.getPageGroupResult(cnt);
+			
+			req.setAttribute("qnaList", qnaList);
+			req.setAttribute("pageGroupResult", pgr); //ë§í¬ ì‹œì‘ë„˜ë²„, ëë„˜ë²„ ê°ì²´
 			
 			HttpSession session = req.getSession();
 			if(session.getAttribute("pcode") != null) {
@@ -108,7 +69,51 @@ public class QnaController extends HttpServlet{
 				int pcode = (int)value;
 				
 				req.setAttribute("pcode", pcode);
-				System.out.println(pcode + "list¿¡¼­ È®ÀÎ");
+				System.out.println(pcode + "listì—ì„œ í™•ì¸");
+			}
+		}
+		else if(action.equals("qna_search")) {
+			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
+			
+			QnaDao dao = new QnaDaoImpl();
+			String searchType = req.getParameter("searchType");
+			String searchValue = req.getParameter("searchValue");
+			
+			if(searchType.equals("nickname")) {
+				
+				//ì´ ì¤„ìˆ˜ ê°€ì ¸ì˜¤ê¸°
+				PageDao pageDao = new PageDaoImpl();
+				int cnt = pageDao.getCountQnaSearchNickname(searchValue);
+				
+				//getPageGroupResult(cnt)
+				PageManager pm = new PageManager(requestPage);
+				PageGroupResult pgr = pm.getPageGroupResult(cnt);
+				
+				
+				List<HashMap> qnaList = dao.selectByNickname(searchValue, requestPage);
+				req.setAttribute("qnaList", qnaList);
+				req.setAttribute("pageGroupResult", pgr); //ë§í¬ ì‹œì‘ë„˜ë²„, ëë„˜ë²„ ê°ì²´
+				
+				req.setAttribute("searchValue", searchValue);
+				req.setAttribute("searchType", searchType);
+			}
+			else if((searchType.equals("titleContent"))) {
+				
+				//ì´ ì¤„ìˆ˜ ê°€ì ¸ì˜¤ê¸°
+				PageDao pageDao = new PageDaoImpl();
+				int cnt = pageDao.getCountQnaSearchTitleContent(searchValue);
+				
+				//getPageGroupResult(cnt)
+				PageManager pm = new PageManager(requestPage);
+				PageGroupResult pgr = pm.getPageGroupResult(cnt);
+				
+				
+				List<HashMap> qnaList = dao.selectByTitleOrContent(searchValue, requestPage);
+				req.setAttribute("qnaList", qnaList);
+				req.setAttribute("pageGroupResult", pgr); //ë§í¬ ì‹œì‘ë„˜ë²„, ëë„˜ë²„ ê°ì²´
+				
+				req.setAttribute("searchValue", searchValue);
+				req.setAttribute("searchType", searchType);
 			}
 		}
 		else if(action.equals("qna_input")) {
@@ -123,10 +128,9 @@ public class QnaController extends HttpServlet{
 			int pcode = (int)value;
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
-			String img = null; //ÆÄÀÏ¾÷·Îµå ±¸ÇöÇÊ¿ä
 			
 			QnaDao dao = new QnaDaoImpl();
-			Qna qna = new Qna(pcode, title, content, img); 
+			Qna qna = new Qna(pcode, title, content); 
 			dao.insert(qna);
 			
 			List<HashMap> qnaList = dao.selectAll(requestPage);
@@ -136,7 +140,7 @@ public class QnaController extends HttpServlet{
 			HttpSession session = req.getSession();
 			
 			QnaDao dao = new QnaDaoImpl();
-			int qno = Integer.parseInt(req.getParameter("qno")); //È­¸é¿¡¼­ °¡Á®¿Í
+			int qno = Integer.parseInt(req.getParameter("qno")); //í™”ë©´ì—ì„œ ê°€ì ¸ì™€
 			HashMap qnaDetail = dao.selectByQno(qno);
 			req.setAttribute("qnadetail", qnaDetail);
 			
@@ -145,11 +149,11 @@ public class QnaController extends HttpServlet{
 				int pcodeValue= (int)value;
 				int pcode = pcodeValue;
 				
-				System.out.println( pcode + "À¯Àú·Î±×ÀÎ µÇÀÖÀ»¶§ ÇÇÄÚµåÈ®ÀÎ");
+				System.out.println( pcode + "ìœ ì €ë¡œê·¸ì¸ ë˜ìˆì„ë•Œ í”¼ì½”ë“œí™•ì¸");
 				req.setAttribute("userpcode", pcode);
 			}else if(session.getAttribute("pcode") == null){
 				int pcode = 0;
-				System.out.println( pcode + "À¯Àú·Î±×ÀÎ ¾ÈµÇÀÖÀ»¶§ ÇÇÄÚµåÈ®ÀÎ");
+				System.out.println( pcode + "ìœ ì €ë¡œê·¸ì¸ ì•ˆë˜ìˆì„ë•Œ í”¼ì½”ë“œí™•ì¸");
 				req.setAttribute("pcode", pcode);
 			}
 			if(session.getAttribute("mcode") != null) {
@@ -195,11 +199,11 @@ public class QnaController extends HttpServlet{
 				int pcodeValue= (int)value;
 				int pcode = pcodeValue;
 				
-				System.out.println( pcode + "À¯Àú·Î±×ÀÎ µÇÀÖÀ»¶§ ÇÇÄÚµåÈ®ÀÎ");
+				System.out.println( pcode + "ìœ ì €ë¡œê·¸ì¸ ë˜ìˆì„ë•Œ í”¼ì½”ë“œí™•ì¸");
 				req.setAttribute("userpcode", pcode);
 			}else if(session.getAttribute("pcode") == null){
 				int pcode = 0;
-				System.out.println( pcode + "À¯Àú·Î±×ÀÎ ¾ÈµÇÀÖÀ»¶§ ÇÇÄÚµåÈ®ÀÎ");
+				System.out.println( pcode + "ìœ ì €ë¡œê·¸ì¸ ì•ˆë˜ìˆì„ë•Œ í”¼ì½”ë“œí™•ì¸");
 				req.setAttribute("pcode", pcode);
 			}
 			if(session.getAttribute("mcode") != null) {
@@ -211,7 +215,7 @@ public class QnaController extends HttpServlet{
 		else if(action.equals("qna_delete")) {
 			int requestPage = Integer.parseInt(req.getParameter("reqPage"));
 			
-			int qno = Integer.parseInt(req.getParameter("qno")); //È­¸é¿¡¼­ °¡Á®¿Í
+			int qno = Integer.parseInt(req.getParameter("qno")); //í™”ë©´ì—ì„œ ê°€ì ¸ì™€
 			QnaDao dao = new QnaDaoImpl();
 			dao.delete(qno);
 			
@@ -222,7 +226,7 @@ public class QnaController extends HttpServlet{
 		}
 		else if(action.equals("comment_save")) {
 			
-			int qno = Integer.parseInt(req.getParameter("qno")); //È­¸é¿¡¼­ °¡Á®¿Í
+			int qno = Integer.parseInt(req.getParameter("qno")); //í™”ë©´ì—ì„œ ê°€ì ¸ì™€
 			HttpSession session = req.getSession();
 			if(session.getAttribute("mcode") != null) {
 				
@@ -263,11 +267,14 @@ public class QnaController extends HttpServlet{
 		if(action.equals("qna_list")) {
 			dispatcherUrl = "jsp/board/qnaList.jsp";
 		}
+		else if(action.equals("qna_search")) {
+			dispatcherUrl = "jsp/board/qnaSearchList.jsp";
+		}
 		else if(action.equals("qna_input")) {
 			dispatcherUrl = "jsp/board/qnaInput.jsp";
 		}
 		else if(action.equals("qna_save")) {
-			dispatcherUrl = "jsp/board/qnaList.jsp";
+			dispatcherUrl = "qna_list";
 		}
 		else if(action.equals("qna_detail")) {
 			dispatcherUrl = "jsp/board/qnaDetail.jsp";

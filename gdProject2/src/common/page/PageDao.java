@@ -8,4 +8,5 @@ public interface PageDao {
 	int getCountNotice(String sql);
 	int getCountQnaAll(String sql);
 	int getCountQnaSearchNickname(String searchValue);
+	int getCountQnaSearchTitleContent(String searchValue);
 }

@@ -152,9 +152,7 @@
 						</tr>
 						<tr class="contents_box">
 							<td class="a" rowspan="4" colspan="4">
-								${qnadetail.img}
 								${qnadetail.content}
-								
 		 	  				</td>
 						</tr>
 					</tbody>	

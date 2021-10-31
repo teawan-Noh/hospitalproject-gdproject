@@ -20,11 +20,12 @@ import dao.user.ManagerDao;
 import dao.user.ManagerDaoImpl;
 import model.user.Patient;
 import model.user.Subject;
-
+import common.Sql;
 import common.page.PageDao;
 import common.page.PageDaoImpl;
 import common.page.PageGroupResult;
 import common.page.PageManager;
+import common.page.PageManager2;
 
 @WebServlet(name="ManagerController", 
 	urlPatterns= {"/mg_doctor_list", "/mg_doctor_search", "/mg_doctor_delete", 
@@ -93,12 +94,15 @@ public class ManagerController extends HttpServlet{
 		
 		else if(action.equals("mg_patient_list")) {
 			
+			
 			ManagerDao dao = new ManagerDaoImpl();
 			List<HashMap<String, String>> patientList = dao.selectPatientAll();
 			
 			req.setAttribute("patientList", patientList);
-		}
+			
+		}	
 		else if(action.equals("mg_patient_search")) {
+			
 			
 			String name = req.getParameter("search");
 			

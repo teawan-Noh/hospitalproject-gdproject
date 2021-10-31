@@ -154,7 +154,7 @@ public class Sql {
 		= "select * from qna where subject like ? order by no desc";
 
 	public static final String QNA_SELECT_BY_QNO_SQL 
-		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt, q.img, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
+		= "select q.qno, q.title, p.pcode, p.nickname, q.writedate, q.cnt, q.content, c.content as ccontent, c.writedate as cwritedate, m.id" 
 			+ " from qna q" 
 			+ " left outer join patient p on q.pcode = p.pcode" 
 			+ " left outer join comments c on q.qno = c.qno" 
@@ -162,10 +162,10 @@ public class Sql {
 			+ " where q.qno = ?";
 
 	public static final String QNA_INSERT_SQL 
-		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)";
+		= "insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, null, 0)";
 
 	public static final String QNA_UPDATE_SQL 
-		= "update qna set title = ?, content = ?, img = ? where qno = ?";
+		= "update qna set title = ?, content = ? where qno = ?";
 
 	public static final String QNA_DELETE_SQL 
 		= "delete from qna where qno = ?";
@@ -181,6 +181,9 @@ public class Sql {
 	
 	public static final String QNA_COUNT_SEARCH_NICKNAME_SQL 
 		= "select count(*) as cnt from qna q inner join patient p on q.pcode = p.pcode where nickname like ?";
+	
+	public static final String QNA_COUNT_SEARCH_TITLE_CONTENT_SQL 
+		= "select count(*) as cnt from qna q inner join patient p on q.pcode = p.pcode where title like ? or content like ?";
 	
 	//코멘트 테이블
 	public static final String COMMNETS_INSERT_SQL 

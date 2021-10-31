@@ -54,12 +54,12 @@ public class PageManager {
 	
 	public static void main(String[] args) {
 		//System.out.println((12 - 1) / 3 + 1);
-		PageManager pm = new PageManager(3);
+		PageManager pm = new PageManager(10);
 		PageRowResult prr = pm.getPageRowResult();
 		System.out.println(prr.getRowStartNumber());
 		System.out.println(prr.getRowEndNumber());
 		
-		PageGroupResult pgr = pm.getPageGroupResult(12);
+		PageGroupResult pgr = pm.getPageGroupResult(10);
 		System.out.println(pgr.getGroupStartNumber());
 		System.out.println(pgr.getGroupEndNumber());
 	}

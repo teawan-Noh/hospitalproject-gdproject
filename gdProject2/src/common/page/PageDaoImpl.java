@@ -176,4 +176,32 @@ public class PageDaoImpl implements PageDao {
 		return cnt;
 	}
 
+	@Override
+	public int getCountQnaSearchTitleContent(String searchValue) {
+		int cnt = 0;
+		Connection connection = null;
+		PreparedStatement pStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = JDBCUtil.getConnection();
+			pStatement = connection.prepareStatement(Sql.QNA_COUNT_SEARCH_TITLE_CONTENT_SQL);
+			pStatement.setString(1, '%'+searchValue+'%');
+			pStatement.setString(2, '%'+searchValue+'%');
+			resultSet = pStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				System.out.println("Å¸ÀÌÆ²ÄÁÅÙÃ÷½áÄ¡");
+				cnt = resultSet.getInt("cnt");
+				
+			}
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			JDBCUtil.close(resultSet, pStatement, connection);
+		}
+		
+		return cnt;
+	}
 }
