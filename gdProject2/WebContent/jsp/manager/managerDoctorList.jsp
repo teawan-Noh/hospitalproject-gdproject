@@ -18,6 +18,14 @@ $(document).ready(function(){
 		}
 	});
 	
+	$(document).on("click", "#delete_btn", function(){
+		var dcodeValue = $(this).val();
+    	if(confirm("삭제하시겠습니까?") == true){
+    		alert("삭제되었습니다.");
+       		location.href = "mg_doctor_delete?dcode=" + dcodeValue;
+    	}
+    });
+	
 });
 </script>
 </head>
@@ -42,21 +50,6 @@ $(document).ready(function(){
         .table thead {
         	background-color: rgb(243, 243, 243) !important;
         }
-        #date{
-        	width: 300px;
-        	height: 50px;
-        	border: 1px solid rgb(243, 243, 243);
-        	border-radius: 5px;
-       	}
-       	#submitbtn {
-       		width: 75px;
-       		height: 28px;
-       		background-color: rgb(70, 145, 140);
-       		color: white;
-       		font-size: 1.1rem;
-       		border:none;
-       		border-radius: 5px;
-       	}
        	.table{
        		text-align: center;
        	}
@@ -112,7 +105,7 @@ $(document).ready(function(){
     							<td class="subject">${doctor.sname}</td>
     							<td>${doctor.licenseno}</td>
     							<td>
-    								<a href="mg_doctor_delete?dcode=${doctor.dcode}"><button class="button">삭제</button></a>
+    								<button id="delete_btn" value="${doctor.dcode}" >삭제</button>
     							</td>
     						</tr>
     					</c:forEach>
