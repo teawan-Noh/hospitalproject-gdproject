@@ -639,4 +639,10 @@ select n from t
 select * from doctor;
 
 
+select * from reservation;
+
+select to_char(rsvdate, 'yyyy-mm-dd') rsvdate from reservation where dcode = 1 group by to_char(rsvdate, 'yyyy-mm-dd');
+
+
+
 
