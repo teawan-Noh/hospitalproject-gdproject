@@ -62,6 +62,7 @@ $(function(){
 				}else{
 					$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
 					$("#idChk").css({"color":"tomato"});
+					$("#id").val('');
 					return false;
 				}
 			});
