@@ -59,10 +59,13 @@ $(function(){
 				if(result){
 					$("#idChk").html("사용가능한 아이디입니다.");
 					$("#idChk").css({"color":"blue"});
+					$("input[name='pw']").focus();
+					
 				}else{
 					$("#idChk").html("사용 불가능합니다. 다시 입력해주세요.");
 					$("#idChk").css({"color":"tomato"});
 					$("#id").val('');
+					$("#id").focus();
 					return false;
 				}
 			});
