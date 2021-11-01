@@ -148,7 +148,6 @@ public class QnaController extends HttpServlet{
 			
 			req.setAttribute("qnadetail", qnaDetail);
 			
-			
 			if(session.getAttribute("pcode") != null) {
 				Object value = session.getAttribute("pcode");
 				int pcodeValue= (int)value;
@@ -168,7 +167,6 @@ public class QnaController extends HttpServlet{
 				req.setAttribute("managerpcode", mcode);
 				
 			}
-			
 			Qna qna = dao.selectCntByQno(qno);
 			
 			int cnt = qna.getCnt()+1;
@@ -229,7 +227,6 @@ public class QnaController extends HttpServlet{
 			List<HashMap> qnaList = dao.selectAll(requestPage);
 			
 			req.setAttribute("qnaList", qnaList);
-			
 		}
 		else if(action.equals("comment_save")) {
 			
@@ -241,8 +238,6 @@ public class QnaController extends HttpServlet{
 				int mcode = (int)value;
 				String content = req.getParameter("content");
 				
-				
-				
 				Comments comment = new Comments(qno, mcode, content);
 				
 				QnaDao dao = new QnaDaoImpl();
@@ -250,8 +245,6 @@ public class QnaController extends HttpServlet{
 				
 				HashMap qnaDetail = dao.selectByQno(qno);
 				req.setAttribute("qnadetail", qnaDetail);
-				
-				
 			}
 		}
 		else if(action.equals("comment_test")) {

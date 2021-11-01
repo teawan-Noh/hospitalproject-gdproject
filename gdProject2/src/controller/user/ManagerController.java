@@ -103,7 +103,6 @@ public class ManagerController extends HttpServlet{
 		}	
 		else if(action.equals("mg_patient_search")) {
 			
-			
 			String name = req.getParameter("search");
 			
 			ManagerDao dao = new ManagerDaoImpl();
