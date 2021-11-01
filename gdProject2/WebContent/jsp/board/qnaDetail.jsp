@@ -175,7 +175,7 @@
     			<a href="qna_modify?qno=${qnadetail.qno}">
     				<button type = "submit" class="submitbtn">수정</button>
 		   		</a>
-    			<a href="qna_delete?qno=${qnadetail.qno}">
+    			<a href="qna_delete?qno=${qnadetail.qno}&reqPage=1">
     				<button type = "submit" class="submitbtn">삭제</button>
 		   		</a>
 	    	</div>

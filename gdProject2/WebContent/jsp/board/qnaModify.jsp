@@ -90,7 +90,7 @@
 			  	<div class="approve_reject_button">
 		            <button class="submitbtn" type = "submit">수정</button>
 		            <input type="text" name="qno" value="${qnadetail.qno}" hidden="hidden"/>
-		            <button class="submitbtn" type = "button" onclick="location.href = 'qna_detail'">취소</button>
+		            <button class="submitbtn" type = "button" onclick="location.href = 'qna_detail?qno=${qnadetail.qno}'">취소</button>
 		        </div>
  			</form>
     		</div>

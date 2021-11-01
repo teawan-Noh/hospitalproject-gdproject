@@ -581,6 +581,7 @@ select count(*) from patient where id = 'aaa1234';
 
 select id, pw from patient where id ='aaa1234' and pw = '1234';
 
+delete from doctor where dcode = 26 and dcode = 25;
 select id, pw from doctor where id = 'id1' and pw = 'pw1';
 
 select id, pw from manager where id = 'manager1' and pw = '1234';
@@ -719,4 +720,6 @@ select * from rest where approved != '½ÂÀÎ' || approved != '´ë±â';
 select * from rest;
 select count(*) from reservation where dcode = 12 and to_char(rsvdate, 'yyyy-mm-dd') = to_char('2021-11-02');
 select * from doctor;
-delete from doctor where dcode = 25 and dcode = 26;
+delete from doctor where dcode = 26;
+select * from reservation;
+select * from doctor where dcode = 10;
