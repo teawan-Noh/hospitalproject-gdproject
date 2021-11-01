@@ -428,6 +428,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         });
                         $(this).addClass("active");
                         let url = "subject-doctor";
+                        
                         $.get(
                             url,
                             { subject: $(this).text() },
@@ -506,6 +507,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                             $(item).removeClass("active");
                         });
                         
+                    	$(".rest").each(function(idx, item){
+                    		console.log($(item).closest("rest-children"));
+                    		$(item).removeClass("rest");
+                    		
+                    	});
                         $(".rsv-time")
                             .children()
                             .each(function (idx, item) {
