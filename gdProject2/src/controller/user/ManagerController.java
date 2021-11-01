@@ -82,7 +82,7 @@ public class ManagerController extends HttpServlet{
 		}
 		else if(action.equals("mg_doctor_delete")) {
 			
-			int dcode = Integer.parseInt(req.getParameter("dcode")); //화면에서 가져와
+			int dcode = Integer.parseInt(req.getParameter("dcode"));
 			
 			ManagerDao dao = new ManagerDaoImpl();
 			dao.deleteDoctor(dcode);
@@ -94,15 +94,12 @@ public class ManagerController extends HttpServlet{
 		
 		else if(action.equals("mg_patient_list")) {
 			
-			
 			ManagerDao dao = new ManagerDaoImpl();
 			List<HashMap<String, String>> patientList = dao.selectPatientAll();
 			
 			req.setAttribute("patientList", patientList);
-			
 		}	
 		else if(action.equals("mg_patient_search")) {
-			
 			
 			String name = req.getParameter("search");
 			
@@ -118,7 +115,6 @@ public class ManagerController extends HttpServlet{
 				List<HashMap<String, String>> patientList = dao.selectPatientAll();
 				req.setAttribute("patientList", patientList);
 			}
-			
 		}
 		else if(action.equals("mg_rest_list")) {
 			
@@ -145,16 +141,15 @@ public class ManagerController extends HttpServlet{
 		}
 		else if(action.equals("mg_rest_detail")) {
 			
-			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			int rcode = Integer.parseInt(req.getParameter("rcode"));
 			ManagerDao dao = new ManagerDaoImpl(); 
 			
 			HashMap<String, String> restDetail = dao.selectRestByRcode(rcode);
 			req.setAttribute("restdetail", restDetail);
-			System.out.println(restDetail);
 		}
 		else if(action.equals("mg_rest_approve")) {
 			
-			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			int rcode = Integer.parseInt(req.getParameter("rcode"));
 			ManagerDao dao = new ManagerDaoImpl(); 
 			dao.updateRestApprove(rcode);
 			
@@ -164,7 +159,7 @@ public class ManagerController extends HttpServlet{
 		}
 		else if(action.equals("mg_rest_reject")) {
 			
-			int rcode = Integer.parseInt(req.getParameter("rcode")); //화면에서 가져와
+			int rcode = Integer.parseInt(req.getParameter("rcode"));
 			ManagerDao dao = new ManagerDaoImpl(); 
 			dao.updateRestReject(rcode);
 			

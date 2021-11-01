@@ -26,8 +26,7 @@ public class QnaDaoImpl implements QnaDao{
 	      try {
 	         connection = JDBCUtil.getConnection();
 	         pStatement = connection.prepareStatement(Sql.QNA_INSERT_SQL);
-	         //insert into qna values (qna_seq.nextval, ?, ?, ?, sysdate, ?, 0)
-	         //***셋팅 수정
+	         
 	         pStatement.setInt(1, qna.getPcode());
 	         pStatement.setString(2, qna.getTitle());
 	         pStatement.setString(3, qna.getContent());
@@ -50,18 +49,16 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_UPDATE_SQL);
-			//update qna set title = ?, content = ? where q qno = ?
-			pStatement.setString(1, qna.getTitle()); // ?값 셋팅 
-			pStatement.setString(2, qna.getContent()); // ?값 셋팅 
-			pStatement.setInt(3, qna.getQno()); // ?값 셋팅 
-			//insert, delete, update에 사용
+			
+			pStatement.setString(1, qna.getTitle());  
+			pStatement.setString(2, qna.getContent()); 
+			pStatement.setInt(3, qna.getQno()); 
+			
 			pStatement.executeUpdate();
 			
 		} catch (Exception e) {
 			e.getStackTrace();
-			
 		} finally {
-			
 			JDBCUtil.close(null, pStatement, connection);
 		}
 		
@@ -75,19 +72,16 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_DELETE_SQL);
-			//delete from memo where memoid = ?
+			
 			pStatement.setInt(1, qno); // ?값 셋팅 
-			//insert, delete, update에 사용
+			
 			pStatement.executeUpdate();
 			
 		} catch (Exception e) {
 			e.getStackTrace();
-			
 		} finally {
-			
 			JDBCUtil.close(null, pStatement, connection);
 		}
-		
 	}
 
 	@Override
@@ -100,7 +94,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_ALL_SQL);
-			System.out.println("전체");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
@@ -121,7 +115,6 @@ public class QnaDaoImpl implements QnaDao{
 				hm.put("cnt",  Integer.toString(resultSet.getInt("cnt")));
 				qnaList.add(hm);
 			}
-			
 		}
 		catch(SQLException se) {
 			se.printStackTrace();
@@ -145,7 +138,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_NICKNAME_SQL);
-			System.out.println("닉네임");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
@@ -189,7 +182,7 @@ public class QnaDaoImpl implements QnaDao{
 		try {
 			connection = JDBCUtil.getConnection();
 			pStatement = connection.prepareStatement(Sql.QNA_SELECT_BY_TITLE_OR_CONTENT_SQL);
-			System.out.println("제목내용");
+			
 			PageManager pm = new PageManager(requestPage);
 			PageRowResult prr = pm.getPageRowResult();
 			
@@ -254,7 +247,6 @@ public class QnaDaoImpl implements QnaDao{
 				qnaDetail.put("cwritedate", resultSet.getString("cwritedate"));
 				qnaDetail.put("id", resultSet.getString("id"));
 			}
-			
 		}
 		catch(NumberFormatException se) {
 			se.printStackTrace();
@@ -285,15 +277,10 @@ public class QnaDaoImpl implements QnaDao{
 			
 		} catch (Exception e) {
 			e.getStackTrace();
-			
 		} finally {
-			
 			JDBCUtil.close(null, pStatement, connection);
 		}
-		
 	}
-
-
 
 	@Override
 	public int insertComment(Comments comment) {
@@ -340,7 +327,6 @@ public class QnaDaoImpl implements QnaDao{
 				qna = new Qna();
 				
 				qna.setCnt(resultSet.getInt("cnt"));
-				
 			}
 			
 		} catch (Exception e) {
