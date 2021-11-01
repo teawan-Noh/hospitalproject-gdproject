@@ -405,7 +405,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 });
                 // 캘린더 랜더링
                 calendar.render();
-                $("#calendar-container").hide();
+                $("#calendar").hide();
 
                 // 진료 과목 선택시
                 $(".subject").click(function () {
@@ -414,7 +414,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         .each(function (idx, item) {
                             $(item).remove();
                         });
-                    $("#calendar-container").hide();
+                    $("#calendar").hide();
                     if ($(this).hasClass("active")) {
                         $(this).removeClass("active");
                         subject = "";
@@ -499,7 +499,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                         dname = "";
                         rsvdate = "";
                         rsvtime = "";
-                        $("#calendar-container").hide();
+                        $("#calendar").hide();
                     } else {
                         
                     	$(".card-box.doctor").each(function (idx, item) {
@@ -516,8 +516,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 
                         $(doctor).addClass("active");
                         
-                        $("#calendar-container").show();
-
+                        $("#calendar").show();
+						calendar.render();
+						
                         let url = "schedule";
                         dcode = $(this)
                             .children(".doctor-profile")
