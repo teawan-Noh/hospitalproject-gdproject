@@ -123,7 +123,7 @@ $(function(){
 		}
 		
 
-		var reglino = /^[0-9]{,6}/;
+		var reglino = /^[0-9]{6}$/;
 		var reglinoResult = reglino.test(licenseno_value);
 		
 		if(!reglinoResult){
