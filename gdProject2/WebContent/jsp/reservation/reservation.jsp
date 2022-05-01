@@ -132,6 +132,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                 padding: 10px 0 0 0;
                 margin: 10px;
                 color: #468c91;
+                width: 45%;
             }
             .card-box.doctor .flex {
                 margin: 0 40px;

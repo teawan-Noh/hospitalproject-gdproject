@@ -109,7 +109,6 @@ public class ManagerController extends HttpServlet{
 				List<HashMap<String, String>> patientList = dao.selectPatientByName(name);
 				
 				req.setAttribute("patientList", patientList);
-				System.out.println(patientList);
 			}
 			else if(name == null) {
 				List<HashMap<String, String>> patientList = dao.selectPatientAll();

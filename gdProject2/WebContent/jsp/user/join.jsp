@@ -66,6 +66,7 @@ $(function(){
 					$("#idChk").css({"color":"tomato"});
 					$("#id").val('');
 					$("#id").focus();
+
 					return false;
 				}
 			});

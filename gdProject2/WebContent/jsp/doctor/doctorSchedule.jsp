@@ -134,12 +134,24 @@ $(function () {
                             var restdate = $(item)
                                 .find("restdate")
                                 .text();
+                            var day = $(item).find("day").text();
+
                             if (restdate != "") {
                                 calendar.addEvent({
                                     title: "휴진",
                                     start: restdate,
                                     color : "rgb(243, 243, 243)",
                                     textColor : "black",
+                                    classNames: ["rest-children"],
+                                });
+                            }
+                            else if (day != "") {
+                            	console.log(String(Number(day) - 1));
+                                calendar.addEvent({
+                                    title: "휴진",
+                                    color: "rgb(243, 243, 243",
+                                    textColor: "black",
+                                    daysOfWeek: [String(Number(day) - 1)],
                                     classNames: ["rest-children"],
                                 });
                             }
