@@ -84,7 +84,7 @@ insert into notice values(ncode.nextval,2,'공지사항 제목입니다30','공지사항 내용
 
 delete from notice;
 drop sequence ncode;
-create sequence ncode;
+create sequence qna_seq;
 select * from notice;
 select count(*) as cnt from notice
 
